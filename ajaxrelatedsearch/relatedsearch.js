@@ -21,17 +21,17 @@ RelatedSearch.prototype = {
       this.showContent = '<button id="' + this.domId + '" style="font-size: x-small; background-color: #FAFAFA;">show related</button>';
       this.hideContent = '<button id="' + this.domId + '" style="font-size: x-small; background-color: #FAFAFA;">hide related</button>';
     } else {
-      this.showContent = '<a id="' + this.domId + '" href="javascript:void(0)">' + content + '</a>';
-      this.hideContent = '<a id="' + this.domId + '" href="javascript:void(0)">' + content + '</a>';
+      this.showContent = '<a class="relatedsearchlink" style="text-decoration: none;" id="' + this.domId + '" href="javascript:void(0)">' + content + '</a>';
+      this.hideContent = '<a class="relatedsearchlink" style="text-decoration: none;" id="' + this.domId + '" href="javascript:void(0)">' + content + '</a>';
     }
 
-    this.holder.innerHTML = '<span class="action">' + this.showContent + '</span><div class="results" style="position: absolute; z-index: 1; width: 300px; font-size: small; border: solid 1px #999; background-color: #fff; margin: 5px; padding: 5px; display: none;"></div>';
+    this.holder.innerHTML = '<span class="action">' + this.showContent + '</span><div class="results" style="position: absolute; z-index: 1; width: 300px; font-size: small; border: solid 1px #999; background-color: #fff; margin: 10px 5px; padding: 5px; display: none;"></div>';
     
     this.type = this.holder.hasClassName('using:news') ? 'news' : 'blog';
     this.resultStyle = this.holder.hasClassName('withstyle:expanded') ? GSblogBar.RESULT_STYLE_EXPANDED : GSblogBar.RESULT_STYLE_COMPRESSED;
     this.orderBy = this.holder.hasClassName('orderby:relevance') ? GSearch.ORDER_BY_RELEVANCE : GSearch.ORDER_BY_DATE;
     
-    this.term = this.holder.getAttribute("title");
+    this.term = this.getTerm();
     this.action = document.getElementsByClassName('action', this.holder)[0];
     this.results = document.getElementsByClassName('results', this.holder)[0];
     
@@ -69,6 +69,15 @@ RelatedSearch.prototype = {
     document.getElementById(this.domId).onclick = function() {
       eval("self." + showOrHide + "();"); // this is a bit naughty, but who cares.
     }
+  },
+  
+  /*
+   * Get the search term and reset the abbr title to degrade a little nicer
+   */
+  getTerm: function() {
+    var title = this.holder.getAttribute("title");
+    this.holder.setAttribute("title", "search for " + title);
+    return title;
   }
 
 };
