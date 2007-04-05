@@ -1,0 +1,80 @@
+<html>
+<head>
+  <title>Related Search Test Bed</title>
+  <link href="http://www.google.com/uds/css/gsearch.css" rel="stylesheet" type="text/css"/>
+  <link href="http://www.google.com/uds/solutions/blogbar/gsblogbar.css" rel="stylesheet" type="text/css"/>
+  <link href="http://www.google.com/uds/solutions/newsbar/gsnewsbar.css" rel="stylesheet" type="text/css"/>
+  
+  <script src="prototype-1.5.1.js" type="text/javascript"></script>
+  <script src="relatedsearch.js" type="text/javascript"></script>
+  
+  <script src="http://www.google.com/uds/api?file=uds.js&amp;v=1.0&amp;key=internal-codesite" type="text/javascript"></script>
+  <script src="http://www.google.com/uds/solutions/blogbar/gsblogbar.js" type="text/javascript"></script>
+  <script src="http://www.google.com/uds/solutions/newsbar/gsnewsbar.js" type="text/javascript"></script>
+</head>
+
+<body>
+  
+<h1>Related Search Test Bed</h1>
+
+<p>
+  This is a simple test bed for the related search functionality. To create a related search box you simply have to plugin the right &lt;script&gt; tags and wrap a simple &lt;abbr&gt; tag with a few options:
+</p>
+
+<pre>
+&lt;abbr class="searchterm [using:news] [withstyle:expanded] [orderby:relevance]" title="search terms to search for"&gt;optional content&lt;/abbr&gt;
+</pre>
+
+<div class="entry">
+<h2>Default search for ajax</h2>
+<div class="content">This isn't wrapping a term, so a small button will be shown instead.</div>
+
+<pre>
+&lt;abbr class="searchterm" title="ajax"&gt;&lt;/abbr&gt;
+</pre>
+
+<abbr class="searchterm" title="ajax"></abbr>
+</div>
+
+<hr noshade="true" />
+
+<div class="entry">
+<h2>News search for ajax</h2>
+<div class="content">Wow this is a great entry posting on <abbr class="searchterm using:news" title="ajax">Ajax</abbr>. The link above is created via:</div>
+
+<pre>
+&lt;abbr class="searchterm using:news" title="ajax"&gt;Ajax&lt;/abbr&gt;
+</pre>
+</div>
+
+<hr noshade="true" />
+
+<div class="entry">
+<h2>Blog search with the expanded style</h2>
+<div class="content">This search explicitly uses blog search and gives expanded search results.</div>
+
+<abbr class="searchterm using:blog withstyle:expanded" title="ajax">ajax search using blog with style expanded</abbr>
+
+<pre>
+&lt;abbr class="searchterm using:blog withstyle:expanded" title="ajax"&gt;Ajax&lt;/abbr&gt;
+</pre>
+
+</div>
+
+<hr noshade="true" />
+
+<div class="entry">
+<h2>Blog search with the expanded style ordered by relevance</h2>
+<div class="content">This uses all of the options to give you <abbr class="searchterm using:blog withstyle:expanded orderby:relevance" title="ajax">results related to Ajax</abbr>
+
+<pre>
+&lt;abbr class="searchterm using:blog withstyle:expanded orderby:relevance" title="ajax"&gt;Ajax&lt;/abbr&gt;
+</pre>
+
+</div>
+
+</div>
+
+</body>
+</html>
+
