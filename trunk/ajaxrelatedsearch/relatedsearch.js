@@ -25,7 +25,7 @@ RelatedSearch.prototype = {
       this.hideContent = '<a class="relatedsearchlink" style="text-decoration: none;" id="' + this.domId + '" href="javascript:void(0)">' + content + '</a>';
     }
 
-    this.holder.innerHTML = '<span class="action">' + this.showContent + '</span><div class="dropshadow" style="position: absolute; background-color: #666; margin: 0; position: absolute; width: auto; z-index: 1; opacity: .95; filter: alpha(opacity=95);"><div class="results" style="position: relative; z-index: 2; width: 300px; font-size: small; border: solid 1px #999; background-color: #fff; margin: -2px 2px 2px -2px; padding: 5px; display: none;">Loading...</div></div>';
+    this.holder.innerHTML = '<span class="action">' + this.showContent + '</span><div class="dropshadow" style="position: absolute; background-color: #666; margin: 4px 0 0 0; position: absolute; width: auto; z-index: 1; opacity: .95; filter: alpha(opacity=95);"><div class="results" style="position: relative; z-index: 2; width: 300px; font-size: small; border: solid 1px #999; background-color: #fff; margin: -2px 2px 2px -2px; padding: 5px; display: none;">Loading...</div></div>';
     
     this.type = this.holder.hasClassName('using:news') ? 'news' : 'blog';
     this.resultStyle = this.holder.hasClassName('withstyle:expanded') ? GSblogBar.RESULT_STYLE_EXPANDED : GSblogBar.RESULT_STYLE_COMPRESSED;
