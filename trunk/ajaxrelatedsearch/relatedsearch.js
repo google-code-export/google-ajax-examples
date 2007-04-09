@@ -69,7 +69,7 @@ RelatedSearch.prototype = {
 
     var closeAttach = document.getElementsByClassName(titleClass, this.results)[0];
     if (closeAttach) {
-      closeAttach.innerHTML = closeAttach.innerHTML + '<img id="close' + this.domId + '" src="close.png" title="close" style="display: inline; margin: -16px 0 0 0; border: 0; padding: 0; float: right; cursor: pointer;"/>';
+      closeAttach.innerHTML = '<img id="close' + this.domId + '" src="close.png" title="close" style="display: inline; margin: 0; border: 0; padding: 0; float: right; cursor: pointer;"/> ' + closeAttach.innerHTML;
     
       var self = this;
       var closeImage = $('close' + this.domId).onclick = function() {
