@@ -25,7 +25,7 @@ RelatedSearch.prototype = {
       this.hideContent = '<a class="relatedsearchlink" style="text-decoration: none;" id="' + this.domId + '" href="javascript:void(0)">' + content + '</a>';
     }
 
-    this.holder.innerHTML = '<span class="action">' + this.showContent + '</span><div class="results" style="position: absolute; z-index: 1; width: 300px; font-size: small; border: solid 1px #999; background-color: #fff; margin: 10px 5px; padding: 5px; display: none;"></div>';
+    this.holder.innerHTML = '<span class="action">' + this.showContent + '</span><div class="dropshadow" style="position: absolute; background-color: #666; margin: 0; position: absolute; width: auto; z-index: 1; opacity: .9; filter: alpha(opacity=90);"><div class="results" style="position: relative; z-index: 2; width: 300px; font-size: small; border: solid 1px #999; background-color: #fff; margin: -2px 2px 2px -2px; padding: 5px; display: none;">Loading...</div></div>';
     
     this.type = this.holder.hasClassName('using:news') ? 'news' : 'blog';
     this.resultStyle = this.holder.hasClassName('withstyle:expanded') ? GSblogBar.RESULT_STYLE_EXPANDED : GSblogBar.RESULT_STYLE_COMPRESSED;
@@ -60,13 +60,26 @@ RelatedSearch.prototype = {
         executeList: [ this.term ]
       }
     };
+    
     eval("new GS" + this.type + "Bar(this.results, options);");
+
+    var titleClass = (this.type == 'news') ? 'titleBox_gsnb' : 'titleBox_gsblb';
+
+    var closeAttach = document.getElementsByClassName(titleClass, this.results)[0];
+    if (closeAttach) {
+      closeAttach.innerHTML = closeAttach.innerHTML + '<img id="close' + this.domId + '" src="close.png" title="close" style="display: inline; margin: -16px 0 0 0; border: 0; padding: 0; float: right; cursor: pointer;"/>';
+    
+      var self = this;
+      var closeImage = $('close' + this.domId).onclick = function() {
+        self.hide();
+      }
+    }
     this.results.show();
   },
   
   setHandler: function(showOrHide) {
     var self = this;
-    document.getElementById(this.domId).onclick = function() {
+    $(this.domId).onclick = function() {
       eval("self." + showOrHide + "();"); // this is a bit naughty, but who cares.
     }
   },
@@ -76,7 +89,11 @@ RelatedSearch.prototype = {
    */
   getTerm: function() {
     var title = this.holder.getAttribute("title");
-    this.holder.setAttribute("title", "search for " + title);
+    if (match = title.match(/^search for(:)?\s*(.*)/i)) {
+      title = match[2];
+    } else {
+      this.holder.setAttribute("title", "search for " + title);
+    }
     return title;
   }
 
