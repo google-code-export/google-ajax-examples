@@ -65,10 +65,14 @@
 
 <div class="entry">
 <h2>Blog search with the expanded style ordered by relevance</h2>
-<div class="content">This uses all of the options to give you <abbr class="searchterm using:blog withstyle:expanded orderby:relevance" title="ajax">results related to Ajax</abbr>
+<div class="content">This uses all of the options to give you <abbr class="searchterm using:blog withstyle:expanded orderby:relevance" title="search for ajax">results related to Ajax</abbr>.
+  
+<p>
+To play nice with non-JavaScript you can use a title of 'search for YOURTERM' and we strip out the 'search for'. This means that the mouseover for non-JavaScript will be at least readable.
+</p>
 
 <pre>
-&lt;abbr class="searchterm using:blog withstyle:expanded orderby:relevance" title="ajax"&gt;Ajax&lt;/abbr&gt;
+&lt;abbr class="searchterm using:blog withstyle:expanded orderby:relevance" title="search for ajax"&gt;Ajax&lt;/abbr&gt;
 </pre>
 
 </div>
