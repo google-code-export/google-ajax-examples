@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <script type="text/javascript" src="http://www.google.com/uds/loader?file=loader&amp;v=1&amp;key=ABQIAAAAEfCuQGsNiSWxRgf_vfNWaRTRERdeAiwZ9EeJWta3L_JZVS0bOBTXlvjd3rDmZZuD-sIFvFhBmWo5_g"></script>
+    <script type="text/javascript">
+
+    google.load("feeds", "1");
+
+    google.setOnLoadCallback(function() {
+      var feed = new google.feeds.Feed("http://www.digg.com/rss/index.xml");
+      feed.load(function(result) {
+        if (!result.error) {
+          var container = document.getElementById("feed");
+          for (var i = 0; i < result.feed.entries.length; i++) {
+            var div = document.createElement("div");
+            div.appendChild(document.createTextNode(result.feed.entries[i].title));
+            container.appendChild(div);
+          }
+        }
+      });
+    });
+
+    </script>
+  </head>
+  <body onload>
+    <div id="feed"></div>
+    
+    Here is the simplest feedbillboard example:
+    
+    <ul class="feedbillboard">
+      <li><a href="http://almaer.com/blog">techno.blog(Dion)</a> (<a href="http://almaer.com/blog/index.xml">RSS</a>)</li>
+      <li><a href="http://code.google.com/">Google Code</a> (<a href="http://code.google.com/feeds/updates.xml">RSS</a>)</li>
+      <li><a href="http://ajaxian.com/">Ajaxian</a> (<a href="http://ajaxian.com/feed">RSS</a>)</li>
+    </ul>
+    
+  </body>
+</html>

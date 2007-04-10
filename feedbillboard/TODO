@@ -19,3 +19,9 @@ options = {
   numberofentries: 5,
   access: randomly | inorder
 }
+
++----------------------+
+| Title                |
+| ... bit about it ... |
+| Ajaxian       Google |
++----------------------+
