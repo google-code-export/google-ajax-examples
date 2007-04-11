@@ -26,7 +26,7 @@ var FeedBillboardFinder = {
     // -- Get the options
     var options = {
       id: id,
-      numberofentries: 5,
+      numberofentries: 20,
       timeinterval: 10000,
       access: 'inorder'
     };
@@ -57,7 +57,7 @@ FeedBillboard.prototype = {
     
     this.feedOutput = [];
     
-    this.loaded = false;
+    this.placement = [];
     
     this.createBillboard();
   },
@@ -105,30 +105,59 @@ FeedBillboard.prototype = {
       return;
     }
     
-    var feed = this.chooseFeed(shown);
-
+    if ( (shown > this.options.numberofentries) || (shown > this.totalEntries()) ) {
+      window.clearInterval(this.intervalID);
+      return;
+    }
+    
+    var feedPlacement = this.chooseFeed(shown);
+    var feed = this.feedOutput[feedPlacement.feed];
+    
     var branding = '<div class="brandingBox_gsblb" style="margin-top: -12px;"><div class="gsc-branding"><table class="gsc-branding" cellpadding="0" cellspacing="0"><tbody><tr><td class="gsc-branding-text"><div class="gsc-branding-text">powered by</div></td><td class="gsc-branding-img-noclear"><a class="gsc-branding-clickable" target="_BLANK" href="http://blogsearch.google.com"><img class="gsc-branding-img-noclear" src="http://www.google.com/uds/css/small-logo.png"></a></td></tr></tbody></table></div></div></div>';
     
-    var title = '<div class="billboardtitle"><a href="' + feed.entries[0].url + '" title="' + feed.entries[0].publishedDate + '">' + feed.entries[0].title + '</a></div>';
-    var snippet = '<div class="billboardsnippet" style="color: grey; padding: 5px; height: 42px;">' + feed.entries[0].contentSnippet + '</div>'
+    var title = '<div class="billboardtitle"><a href="' + feed.entries[feedPlacement.entry].url + '" title="' + feed.entries[feedPlacement.entry].publishedDate + '">' + feed.entries[feedPlacement.entry].title + '</a></div>';
+    var snippet = '<div class="billboardsnippet" style="color: grey; padding: 5px;">' + feed.entries[feedPlacement.entry].contentSnippet + '</div>'
     var feedsource = '<div class="billboardsource"><a href="' + feed.linkURL + '" style="text-decoration: none; color: #000">' + feed.title + '</a></div>';
     
-    this.holder.innerHTML = '<div class="results" style="width: 240px; height: 90px; font-size: small; border: solid 1px #999; background-color: #fff; margin: 4px; padding: 5px;"><div id="fader">' + title + snippet + feedsource + '</div>' + branding;
+    var fader = 'fader' + this.options.id;
+    this.holder.innerHTML = '<div class="results" style="width: 260px; font-size: small; border: solid 1px #999; background-color: #fff; margin: 4px; padding: 5px;"><div id="' + fader + '">' + title + snippet + feedsource + '</div>' + branding;
 
     if (shown > 1) {
-      $('fader').setOpacity(0.0);
-      Effect.Appear($('fader'), { duration: 2.0 });
+      $(fader).setOpacity(0.0);
+      Effect.Appear($(fader), { duration: 2.0 });
     }
 
-		//google.feeds.Feed.getBranding(document.getElementById("branding"));
+    //google.feeds.Feed.getBranding(document.getElementById("branding"));
 
-    this.intervalID = window.setInterval(function() {
-      self.showEntry(++shown);
-    }, this.options.timeinterval);
+    if (!this.intervalID) {
+      this.intervalID = window.setInterval(function() {
+        self.showEntry(++shown);
+      }, this.options.timeinterval);
+    }
   },
   
-  chooseFeed: function(shown) {
-    return this.feedOutput[(shown % this.feedOutput.length) - 1];
+  totalEntries: function() {
+    if (this.placement.length < 1) this.makePlacement();
+    return this.placement.length;
+  },
+  
+  makePlacement: function() {
+    var count = 0;
+    
+    for (var i = 0; i < this.feedOutput.length; i++) {
+      for (var j = 0; j < this.feedOutput[i].entries.length; j++) {
+        this.placement[count++] = { feed: i, entry: j };
+      }
+    }
+  },
+  
+  chooseFeed: function(number) {
+    this.makePlacement();
+    
+    if (this.options.access == 'randomly') {
+      number = Math.floor ( Math.random ( ) * this.placement.length + 1 )
+    }
+    return this.placement[number - 1];
   }
   
 };
@@ -142,3 +171,4 @@ Event.observe(window, 'load', FeedBillboardFinder.find, false);
   <li><a href="http://ajaxian.com/">Ajaxian</a> (<a href="http://ajaxian.com/feed">RSS</a>)</li>
 </ul>
 */
+
