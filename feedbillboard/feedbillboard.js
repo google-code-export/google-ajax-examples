@@ -84,7 +84,7 @@ FeedBillboard.prototype = {
     for (var i = 0; i < this.feeds.length; i++) {
       this.load(this.feeds[i]);
     }
-    this.showEntry(true);
+    this.showEntry(1);
   },
   
   load: function(feedSettings) {
@@ -96,16 +96,16 @@ FeedBillboard.prototype = {
     });
   },
   
-  showEntry: function(isFirstTime) {
+  showEntry: function(shown) {
     var self = this;
     if (self.feedOutput.length < 1) {
       setTimeout(function() {
-        self.showEntry(true);
+        self.showEntry(1);
       }, 1000);
       return;
     }
     
-    var feed = this.chooseFeed();
+    var feed = this.chooseFeed(shown);
 
     var branding = '<div class="brandingBox_gsblb" style="margin-top: -12px;"><div class="gsc-branding"><table class="gsc-branding" cellpadding="0" cellspacing="0"><tbody><tr><td class="gsc-branding-text"><div class="gsc-branding-text">powered by</div></td><td class="gsc-branding-img-noclear"><a class="gsc-branding-clickable" target="_BLANK" href="http://blogsearch.google.com"><img class="gsc-branding-img-noclear" src="http://www.google.com/uds/css/small-logo.png"></a></td></tr></tbody></table></div></div></div>';
     
@@ -115,7 +115,7 @@ FeedBillboard.prototype = {
     
     this.holder.innerHTML = '<div class="results" style="width: 240px; font-size: small; border: solid 1px #999; background-color: #fff; margin: 4px; padding: 5px;"><div id="fader">' + title + snippet + feedsource + '</div>' + branding;
 
-    if (!isFirstTime) {
+    if (shown == 1) {
       $('fader').setOpacity(0.0);
       Effect.Appear($('fader'), { duration: 2.0 });
     }
@@ -123,12 +123,12 @@ FeedBillboard.prototype = {
 		//google.feeds.Feed.getBranding(document.getElementById("branding"));
 
     this.intervalID = window.setInterval(function() {
-      self.showEntry(false);
+      self.showEntry(++shown);
     }, this.options.timeinterval);
   },
   
-  chooseFeed: function() {
-    return this.feedOutput[1];
+  chooseFeed: function(shown) {
+    return this.feedOutput[shown];
   }
   
 };
