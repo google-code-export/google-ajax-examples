@@ -12,12 +12,58 @@
     </script>
   </head>
   <body>
-    Here is the simplest feedbillboard example:
+	<h1>Feed Billboard</h1>
+	
+	<p>
+		The feed billboard lets you put together a list of feeds, and have the widget rotate through them. It uses the Feed API to get access to the feeds in a normalized fashion.
+	</p>
+	<p>
+		The billboard is built to fully degrade on browsers that are not running JavaScript. The magic revolves around using a special class and options to a normal <code>&lt;ul&gt;</code>. The options for the ul class are:
+	</p>
+	<pre>
+&lt;ul class="feedbillboard numberofentries:5 access:randomly timeinterval:10"&gt;
+	</pre>
+	<ul>
+		<li><b>numberofentries</b>: The number of rotations before it stops</li>
+		<li><b>access</b>: Go through the items in serial, or randomly</li>
+		<li><b>timeinterval</b>: How many seconds in between flipping</li>
+	</ul>
+		
+	<hr noshade="true" />
+    <p>
+		Here is the simplest feedbillboard example.
+	</p>	
+	
+	<pre>
+&lt;ul class="feedbillboard"&gt;
+      &lt;li&gt;&lt;a href="http://code.google.com/"&gt;Google Code&lt;/a&gt; (&lt;a href="http://code.google.com/feeds/updates.xml"&gt;RSS&lt;/a&gt;)&lt;/li&gt;
+      &lt;li&gt;&lt;a href="http://ajaxian.com/"&gt;Ajaxian&lt;/a&gt; (&lt;a href="http://ajaxian.com/feed"&gt;RSS&lt;/a&gt;)&lt;/li&gt;
+      &lt;li&gt;&lt;a href="http://almaer.com/blog"&gt;techno.blog(Dion)&lt;/a&gt; (&lt;a href="http://almaer.com/blog/index.xml"&gt;RSS&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+	</pre>
     
     <ul class="feedbillboard">
       <li><a href="http://code.google.com/">Google Code</a> (<a href="http://code.google.com/feeds/updates.xml">RSS</a>)</li>
-      <li><a href="http://almaer.com/blog">techno.blog(Dion)</a> (<a href="http://almaer.com/blog/index.xml">RSS</a>)</li>
       <li><a href="http://ajaxian.com/">Ajaxian</a> (<a href="http://ajaxian.com/feed">RSS</a>)</li>
+      <li><a href="http://almaer.com/blog">techno.blog(Dion)</a> (<a href="http://almaer.com/blog/index.xml">RSS</a>)</li>
+    </ul>
+
+	<hr noshade="true" />
+	<p>
+		This is the same example but it uses a random access to the feed entries, change the number of entries, and change the time interval.
+	</p>
+	<pre>
+&lt;ul class="feedbillboard numberofentries:4 access:randomly timeinterval:4"&gt;
+      &lt;li&gt;&lt;a href="http://code.google.com/"&gt;Google Code&lt;/a&gt; (&lt;a href="http://code.google.com/feeds/updates.xml"&gt;RSS&lt;/a&gt;)&lt;/li&gt;
+      &lt;li&gt;&lt;a href="http://ajaxian.com/"&gt;Ajaxian&lt;/a&gt; (&lt;a href="http://ajaxian.com/feed"&gt;RSS&lt;/a&gt;)&lt;/li&gt;
+      &lt;li&gt;&lt;a href="http://almaer.com/blog"&gt;techno.blog(Dion)&lt;/a&gt; (&lt;a href="http://almaer.com/blog/index.xml"&gt;RSS&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+	</pre>
+
+    <ul class="feedbillboard numberofentries:4 access:randomly timeinterval:4">
+      <li><a href="http://code.google.com/">Google Code</a> (<a href="http://code.google.com/feeds/updates.xml">RSS</a>)</li>
+      <li><a href="http://ajaxian.com/">Ajaxian</a> (<a href="http://ajaxian.com/feed">RSS</a>)</li>
+      <li><a href="http://almaer.com/blog">techno.blog(Dion)</a> (<a href="http://almaer.com/blog/index.xml">RSS</a>)</li>
     </ul>
     
   </body>
