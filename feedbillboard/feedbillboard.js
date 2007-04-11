@@ -115,7 +115,7 @@ FeedBillboard.prototype = {
     
     this.holder.innerHTML = '<div class="results" style="width: 240px; font-size: small; border: solid 1px #999; background-color: #fff; margin: 4px; padding: 5px;"><div id="fader">' + title + snippet + feedsource + '</div>' + branding;
 
-    if (shown == 1) {
+    if (shown > 1) {
       $('fader').setOpacity(0.0);
       Effect.Appear($('fader'), { duration: 2.0 });
     }
@@ -128,7 +128,7 @@ FeedBillboard.prototype = {
   },
   
   chooseFeed: function(shown) {
-    return this.feedOutput[shown];
+    return this.feedOutput[shown % this.feedOutput.length];
   }
   
 };
