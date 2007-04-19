@@ -115,7 +115,7 @@ FeedBillboard.prototype = {
     
     var branding = '<div class="brandingBox_gsblb" style="margin-top: -12px;"><div class="gsc-branding"><table class="gsc-branding" cellpadding="0" cellspacing="0"><tbody><tr><td class="gsc-branding-text"><div class="gsc-branding-text">powered by</div></td><td class="gsc-branding-img-noclear"><a class="gsc-branding-clickable" target="_BLANK" href="http://blogsearch.google.com"><img class="gsc-branding-img-noclear" src="http://www.google.com/uds/css/small-logo.png"></a></td></tr></tbody></table></div></div></div>';
     
-    var title = '<div class="billboardtitle"><a href="' + feed.entries[feedPlacement.entry].url + '" title="' + feed.entries[feedPlacement.entry].publishedDate + '">' + feed.entries[feedPlacement.entry].title + '</a></div>';
+    var title = '<div class="billboardtitle"><a href="' + feed.entries[feedPlacement.entry].link + '" title="' + feed.entries[feedPlacement.entry].publishedDate + '">' + feed.entries[feedPlacement.entry].title + '</a></div>';
     var snippet = '<div class="billboardsnippet" style="color: grey; padding: 5px;">' + feed.entries[feedPlacement.entry].contentSnippet + '</div>'
     var feedsource = '<div class="billboardsource"><a href="' + feed.linkURL + '" style="text-decoration: none; color: #000">' + feed.title + '</a></div>';
     
