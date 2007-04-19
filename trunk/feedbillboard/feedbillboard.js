@@ -15,7 +15,7 @@ var FeedBillboardFinder = {
       var links = list[i].getElementsByTagName('a');
       if (links.length > 1) {
         var theFeed = {};
-        theFeed.title   = links[0].textContent;
+        theFeed.title   = links[0].innerHTML;
         theFeed.linkURL = links[0].getAttribute("href");
         theFeed.rssURL  = links[1].getAttribute("href");
         feeds.push(theFeed);
