@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+	<title>Google Developer Day 2007 - &#21271;&#20140;</title>
+
+	<link rel="stylesheet" href="styles/global.css" type="text/css" />
+
+	<script src="http://www.google.com/jsapi" type="text/javascript"></script>
+	<script src="scripts/blogreader.js" type="text/javascript"></script>
+
+	<script src="http://maps.google.com/maps?file=api&v=2&key=ABQIAAAAJjoQAkGmq5qsa0PKk9Y6nxSosDVG8KKPE1-m51RBrvYughuyMxR6OD3puaZpz75b_1Dm2z8HW1ae5Q" type="text/javascript"></script>
+            
+	<script type="text/javascript">
+	  var homelocation = "cn";
+	  var menu_home = "&#39318;&#39029;";
+	  var menu_sessions = "&#20250;&#35758;&#26085;&#31243;";
+	  var menu_local_info = "&#26412;&#22320;&#20449;&#24687;";
+    var blog_posted_by = "&#20316;&#32773;&#65306;";
+    var blog_read_more = "&#26356;&#22810;&#20449;&#24687;";
+	
+	  var headers = {
+      'mv' : "Google &#24320;&#21457;&#32773;&#26085;&mdash;&mdash;&#23665;&#26223;&#22478;",
+      'br' : "Google &#24320;&#21457;&#32773;&#26085;&mdash;&mdash;&#22307;&#20445;&#32599;",
+      'uk' : "Google &#24320;&#21457;&#32773;&#26085;&mdash;&mdash;&#20262;&#25958;",
+      'fr' : "Google &#24320;&#21457;&#32773;&#26085;&mdash;&mdash;&#24052;&#40654;",
+      'es' : "Google &#24320;&#21457;&#32773;&#26085;&mdash;&mdash;&#39532;&#24503;&#37324;",
+      'de' : "Google &#24320;&#21457;&#32773;&#26085;&mdash;&mdash;&#27721;&#22561;",
+      'jp' : "Google &#24320;&#21457;&#32773;&#26085;&mdash;&mdash;&#19996;&#20140;",
+      'au' : "Google &#24320;&#21457;&#32773;&#26085;&mdash;&mdash;&#24713;&#23612;",
+      'cn' : "Google &#24320;&#21457;&#32773;&#26085;&mdash;&mdash;&#21271;&#20140;",
+      'ru' : "Google &#24320;&#21457;&#32773;&#26085;&mdash;&mdash;&#33707;&#26031;&#31185;"
+    };
+    </script>
+   	<script type="text/javascript" src="scripts/mapdata.js"></script>
+   	<script type="text/javascript" src="scripts/timesfunctions.js"></script>
+   	<script type="text/javascript">
+   	window.onload = function() {
+   	   initMap();
+   	   initBlogReader();
+   	   getJSON();
+   	}
+   	
+   	function updateTimeBasedInfo() {
+      var nowShowingDiv = document.getElementById("nowShowingDiv");
+      var londonHour = locations["uk"].currentDateTime.hour;
+      var shouldShow = false;
+
+      if (londonHour < locations["uk"].webcasts.startTime) {
+       nowShowingDiv.innerHTML = (locations["uk"].webcasts.startTime-londonHour) + " Hours until Live Streaming from London!";
+       shouldShow = true;
+      }
+
+      var mvResult = getActiveSession("mv");
+      var ukResult = getActiveSession("uk");  
+      if (mvResult) {
+        nowShowingDiv.innerHTML = "Now Streaming Live Sessions: " + mvResult.html;
+        shouldShow = true;
+      }
+
+      if (ukResult) { 
+        nowShowingDiv.innerHTML = "Now Streaming Live Session: " + ukResult.html;
+        shouldShow = true;
+      }
+
+      if (shouldShow) {
+        nowShowingDiv.style.display = 'block';
+      } else {
+        nowShowingDiv.style.display = 'none';
+      }
+      
+      setTimeout(getJSON, 30000);
+    }
+    </script>
+    </head>
+    
+    <body onunload="GUnload()">
+		<div class="content">
+			<div class="header clearfix">
+				<div style="float:left;"><a href="index.html"><img src="images/logo.jpg"></a></div>
+		  		<h1 style="float:right;">&#21271;&#20140;</h1>
+			</div>
+		
+			<div class="menu">
+  			<ul>
+  				<li>&#39318;&#39029;</li>
+		 		<li><a href="cn-local.html">&#26412;&#22320;&#20449;&#24687;</a></li>
+  				<li><a href="cn-sessions.html">&#20250;&#35758;&#26085;&#31243;</a></li>
+			  	<li><a href="cn-register.html">&#27880;&#20876;</a></li>
+			  	<li><a href="index.html">&#20854;&#20182;&#22320;&#28857;</a></li>
+		  	</ul>
+			</div>
+		
+			<div class="map_layout">
+				<div id="map"></div>
+			</div>	
+	
+			<div class="bottom clearfix" style="padding-bottom:20px;">
+				<div class="schedule" style="display:inline; float:left; width:320px;">
+					<div class="clearfix">
+						<h2 style="float:left;">&#22320;&#28857;&#21644;&#26085;&#31243;</h2> 
+					</div>
+					
+					<p>Google&#24320;&#21457;&#32773;&#26085;&#20110; <span lang="en" xml:lang="en">2007 </span>&#24180; <span lang="en" xml:lang="en">5 </span>&#26376; <span lang="en" xml:lang="en">31 </span>&#26085;&#22312;<strong>&#21271;&#20140;&#26032;&#19990;&#32426;&#26085;&#33322;&#39277;&#24215;</strong>&#20030;&#21150;&#65292;&#22320;&#22336;&#22914;&#19979;&#65306; <br /></p><p style="padding-left:20px;">&#22320;&#22336; &#65306; &#21271;&#20140;&#28023;&#28096;&#21306;&#39318;&#20307;&#21335;&#36335;6&#21495;<br />  &#37038;&#32534; &#65306; 100044<br />     &#30005;&#35805; &#65306; (8610) 6849 2001<br />    &#20256;&#30495; &#65306; (8610) 6849 1103<br />    E-mail: <a href="mailto:bc@newcenturyhotel.com.cn">bc@newcenturyhotel.com.cn</a><br />    <a href="http://www.newcenturyhotel.com.cn">http://www.newcenturyhotel.com.cn</a> <br /></p><p><br />  &#20250;&#35758;&#26085;&#31243;&#31616;&#20171;&#22914;&#19979;&#65288;<a href="cn-sessions.html">&#35814;&#32454;&#26085;&#31243;&#23433;&#25490;</a>&#65289;&#65306; <br /></p><table class="schedule_overview">  <tbody>    <tr>      <td class="t_start">08:30</td>      <td class="t_s">-</td>      <td class="t_end">09:00</td>      <td class="s_session">&#31614;&#21040;</td>    </tr>    <tr>      <td class="t_start">09:00</td>      <td class="t_s">-</td>      <td class="t_end">10:15</td>      <td class="s_session">&#20027;&#39064;&#28436;&#35762;</td>    </tr>    <tr>      <td class="t_start">10:15</td>      <td class="t_s">-</td>      <td class="t_end">10:30</td>      <td class="s_session">&#33590;&#27463;</td>    </tr>    <tr>      <td colspan="4"><br />        &#20998;&#20250;&#22330;&#19968;&#65306;Google &#20135;&#21697;&#24320;&#21457;&#24179;&#21488; <br /></td>    </tr>    <tr>      <td class="t_start">10:30</td>      <td class="t_s">-</td>      <td class="t_end">11:30</td>      <td class="s_session">Google Geo API</td>    </tr>    <tr>      <td class="t_start">11:30</td>      <td class="t_s">-</td>      <td class="t_end">12:30</td>      <td class="s_session">&#21320;&#39184;</td>    </tr>    <tr>      <td class="t_start">12:30</td>      <td class="t_s">-</td>      <td class="t_end">13:30</td>      <td class="s_session">&#39640;&#23792;&#35770;&#22363;</td>    </tr>    <tr>      <td class="t_start">13:30</td>      <td class="t_s">-</td>      <td class="t_end">13:45</td>      <td class="s_session">&#33590;&#27463;</td>    </tr>    <tr>      <td class="t_start">13:45</td>      <td class="t_s">-</td>      <td class="t_end">14:45</td>      <td class="s_session">Google Web Toolkit</td>    </tr>    <tr>      <td class="t_start">14:45</td>      <td class="t_s">-</td>      <td class="t_end">15:45</td>      <td class="s_session">Google Data API</td>    </tr>    <tr>      <td class="t_start">15:45</td>      <td class="t_s">-</td>      <td class="t_end">16:45</td>      <td class="s_session">Guice</td>    </tr>		    <tr>      <td colspan="4"><br />        &#20998;&#20250;&#22330;&#20108;&#65306;Linux &#21644;&#24320;&#28304; <br /></td>    </tr>	    <tr>      <td class="t_start">10:30</td>      <td class="t_s">-</td>      <td class="t_end">11:30</td>      <td class="s_session">Google &#30340;&#24320;&#28304;&#31574;&#30053;</td>    </tr>		    <tr>      <td class="t_start">11:30</td>      <td class="t_s">-</td>      <td class="t_end">12:30</td>      <td class="s_session">&#21320;&#39184;</td>    </tr>		    <tr>      <td class="t_start">12:30</td>      <td class="t_s">-</td>      <td class="t_end">13:30</td>      <td class="s_session">&#39640;&#23792;&#35770;&#22363;</td>    </tr>		    <tr>      <td class="t_start">13:30</td>      <td class="t_s">-</td>      <td class="t_end">13:45</td>      <td class="s_session">&#33590;&#27463; </td>    </tr>		    <tr>      <td class="t_start">13:45</td>      <td class="t_s">-</td>      <td class="t_end">14:45</td>      <td class="s_session">Firefox &#24212;&#29992;&#24320;&#21457; </td>	  </tr>	  	  		    <tr>      <td class="t_start">14:45</td>      <td class="t_s">-</td>      <td class="t_end">15:45</td>      <td class="s_session">Python &#35821;&#35328; </td>	  </tr>	  	  	  		    <tr>      <td class="t_start">15:45</td>      <td class="t_s">-</td>      <td class="t_end">16:45</td>      <td class="s_session">Linux &#22269;&#38469;&#21270;&#21644;&#26412;&#22320;&#21270;&#32534;&#31243; </td>	  </tr>	  	    <tr>      <td class="t_start">17:00</td>      <td class="t_s">-</td>      <td class="t_end">19:00</td>      <td class="s_session">&#40481;&#23614;&#37202;&#20250; </td>	  </tr>  </tbody></table>
+					
+					<div style="margin-top: 1.2em;">
+						<div class="clearfix">
+							<h2 style="float:left;">&#20307;&#39564; Google Code</h2> 
+						</div>
+						<ul style="margin-bottom: 5px;" class="ul_apis">
+						<li><a href="http://code.google.com/apis/ajaxsearch/">Google AJAX Search API</a> - &#22312; JavaScript &#24212;&#29992;&#20013;&#33719;&#21462; Google &#25628;&#32034;&#32467;&#26524;&#12290;</li><li><a href="http://code.google.com/apis/ajaxfeeds/">Google AJAX Feed API</a> - &#22312; JavaScript &#20013;&#19979;&#36733;&#25110;&#23637;&#31034; Atom &#21644; RSS Feeds&#12290; </li><li><a href="http://code.google.com/apis/gdata/index.html">Google Data APIs</a> - &#20174; Google Calendar&#65292;Blogger &#31561;&#26381;&#21153;&#20013;&#35835;&#20889;&#25968;&#25454;&#12290; </li><li><a href="http://www.google.com/apis/gadgets/index.html">Google Gadgets</a> - Google Gadgets &ndash; &#20026; Google &#20010;&#24615;&#21270;&#39318;&#39029;&#21644; Google &#26700;&#38754;&#32534;&#20889;&#23567;&#24037;&#20855;&#12290;</li><li><span style="color:red;">&#26368;&#26032;&#65281;</span> <a href="http://code.google.com/apis/gears">Google Gears</a> - &#20801;&#35768; AJAX &#22312;&#32593;&#39029;&#27983;&#35272;&#22120;&#31163;&#32447;&#20351;&#29992;&#12290;</li><li><a href="http://www.google.com/apis/maps/">Google Maps API</a> - &#23558; Google &#22320;&#22270;&#23884;&#20837;&#21040;&#33258;&#24049;&#30340;&#32593;&#39029;&#20013;&#12290;</li><li><span style="color:red;">&#26368;&#26032; !</span> <a href="http://maps.google.com/preview">Google Mapplets</a> - &#22312; Google &#22320;&#22270;&#19978;&#21019;&#24314;&#23567;&#24212;&#29992;&#21644;&#22270;&#23618;&#12290;</li><li><a href="http://code.google.com/webtoolkit/">Google Web Toolkit</a> - &#20351;&#29992; Java &#35821;&#35328;&#32534;&#20889; AJAX &#24212;&#29992;&#12290;</li>
+						</ul>
+					</div>
+				</div>
+
+        <div class="blog" style="margin-bottom: 20px; background-color: #FFF9DD; border: 1px solid #CCC; display:inline; float:right;">
+          <div style="padding: 5px;">
+          <h2>Live Webcast</h2>
+          <div id="nowShowingDiv" style="padding: 12px 0; color: red;"></div>
+          <p>  
+          Check out the <a href="webcast-schedule.html">full schedule for streaming content from Mountain View and London</a>.  We will also be hosting the session videos after the event on this site.
+         </p> 
+         </div>
+        </div>
+			
+				<div class="blog" style="display:inline; float:right;">
+					<div class="clearfix">
+						<h2 style="float:left;">&#24320;&#21457;&#32773;&#26085;&#21338;&#23458;</h2> 
+						<div style="float:right;"><a href="http://googledeveloperday2007-cn.blogspot.com/atom.xml" class="subscribeLink">&#35746;&#38405;</a> <a href="http://googledeveloperday2007-cn.blogspot.com/atom.xml" class="subscribeLink"><img src="images/subscribe.gif"></a>
+					</div>
+				</div>
+				
+				<div id="googleblogs"></div>
+						
+				<p style="margin-top: 1em;">
+					<b><a href="http://googledeveloperday2007-cn.blogspot.com/">&#27983;&#35272;&#25152;&#26377;&#21338;&#23458;&#25991;&#31456; &raquo;</a></b>
+				</p><p>
+					<b><a href="http://blogsearch.google.com/blogsearch?hl=en&amp;q=Google+Developer+Day&amp;btnG=Blogs+">&#30456;&#20851;&#21338;&#23458;&#25991;&#31456;&#65288;&#20351;&#29992;Google Blog Search&#25628;&#32034;&#65289; &raquo;</a></b>
+				</p>
+				<p><b><a href="http://www.technorati.com/search/Google+Developer+Day">&#30456;&#20851;&#21338;&#23458;&#25991;&#31456;&#65288;&#20351;&#29992;Technorati&#25628;&#32034;&#65289; &raquo;</a></b></p>
+			</div>
+
+      <div class="blog" style="margin-top: 20px; display:inline; float:right;">
+                                              <div class="clearfix">
+                                                      <h2 style="float:left;">Photos</h2>
+                                                      <div style="float:right;"><a href="http://picasaweb.google.com/data/feed/base/user/developerday/albumid/5067067257663197569?kind=photo&alt=rss&hl=en_US" class="subscribeLink">Subscribe</a> <a href="http://picasaweb.google.com/data/feed/base/user/developerday/albumid/5067067257663197569?kind=photo&alt=rss&hl=en_US" class="subscribeLink"><img src="images/subscribe.gif"></a>
+                                              </div>
+                                      </div>
+
+      <div id="photoslideshow" style="padding: 0px; z-index: 3;">
+      <div id="photoslideshow_shader" style="width: 340px; height: 227px; margin: 0; z-index: 1; background-color: #ddd;">
+      <embed style="z-index: 2; margin: -4px 4px -4px -4px;" type="application/x-shockwave-flash" src="http://picasaweb.google.com/s/c/bin/slideshow.swf" width="340" height="227" flashvars="host=picasaweb.google.com&RGB=0x000000&feed=http%3A%2F%2Fpicasaweb.google.com%2Fdata%2Ffeed%2Fapi%2Fuser%2Fdeveloperday%2Falbumid%2F5067067257663197569%3Fkind%3Dphoto%26alt%3Drss" pluginspage="http://www.macromedia.com/go/getflashplayer"></embed>
+      </div>
+
+      <div id="photocontent" style="padding-top: 10px;">
+      <p>We and the community are taking photos at the event.</p>
+      <p>View <a href="http://picasaweb.google.com/developerday">our photos</a> and check out photos taken by the community via: <a href="http://picasaweb.google.com/lh/searchbrowse?q=gdd07">Picasa</a>, <a href="http://flickr.com/search/?q=gdd07">Flickr</a>, or <a href="http://photobucket.com/images/gdd07/">Photobucket</a>.</p></div>
+      </div>
+
+		</div>
+		</div>
+
+		<div class="footer">
+			<p>&#169; 2007 Google - <a
+                          href="http://www.google.com/">Google &#39318;&#39029;</a>
+                        - <a href="http://googledeveloperday2007-cn.blogspot.com/atom.xml">RSS Feed</a><br>
+			</p>
+		</div>
+	</div>
+<script src="https://ssl.google-analytics.com/urchin.js" type="text/javascript"></script>
+<script type="text/javascript">
+_uacct="UA-18071-1"; _uanchor=1; urchinTracker();
+</script>
+</body>
+</html>
