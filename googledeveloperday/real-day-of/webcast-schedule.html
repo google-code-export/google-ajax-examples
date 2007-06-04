@@ -1,0 +1,229 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+	<title>Google Developer Day 2007 - Webcast Session Schedule</title>
+	<link rel="stylesheet" href="styles/global.css" type="text/css" />
+	<script type="text/javascript" src="scripts/mapdata.js"></script>
+  <script type="text/javascript" src="scripts/timesfunctions.js"></script>
+  <script type="text/javascript">
+  var initialId = 25827;
+
+  function clearRows() {
+    for (var item in [11.5, 1.75, 2.75, 3.75, 4.75]) { // UK
+      var row = document.getElementById(item);
+      if (row) {
+        row.className = '';
+        var cell = document.getElementById("watch-" + item);
+        cell.innerHTML = '';
+        cell.style.display = 'none';
+      }
+    }
+      
+    for (var item in [9.0, 11.0, 1.0, 2.0, 3.5, 4.5]) { // USA
+      var row = document.getElementById(item);
+      if (row) {
+        row.className = '';
+        for (var i = 1; i < 6; i++) {
+          var cell = document.getElementById("watch-" + item + "-" + i);
+          cell.innerHTML = '';
+          cell.style.display = 'none';
+        }
+      }
+    }
+  }
+  
+  function updateTimeBasedInfo() {
+    var nowShowingDiv = document.getElementById("nowShowingDiv");
+    var londonHour = locations["uk"].currentDateTime.hour;
+    var windowOpen = "window.open('','popup','scrollbars=no,resizable=no,width=410,height=400')";
+    
+    if (londonHour < locations["uk"].webcasts.startTime) {
+     nowShowingDiv.innerHTML = (locations["uk"].webcasts.startTime-londonHour) + " Hours until Live Streaming starts from London!";
+     nowShowingDiv.style.display = 'block';
+    }
+
+    var mvResult = getActiveSession("mv");
+    var ukResult = getActiveSession("uk");  
+    if (mvResult) {
+      var row = document.getElementById(mvResult.sessionId);
+
+      if (row) {
+        clearRows();
+        row.className = 'sessionLive';
+      
+        for (var i = 1; i < 6; i++) {
+          var cell = document.getElementById("watch-" + mvResult.sessionId + "-" + i);
+          if (cell) {
+          cell.innerHTML = '<div style="margin-top: 10px;"><a onclick="' + windowOpen + '" href="http://google.client.shareholder.com/visitors/event/build2/mediaPresentation.cfm?MediaID=' + (initialId + i) + '&player=1" title="Join this webcast" target="popup">Watch Live Stream!</a></div>';
+            cell.style.display = 'block';
+          }
+        }
+      }
+
+      nowShowingDiv.innerHTML = "Now Streaming Live Sessions in California";
+      nowShowingDiv.style.display = 'block';
+    }
+    
+    if (ukResult) { 
+      var row = document.getElementById(ukResult.sessionId);
+      if (row) {
+        clearRows();
+        row.className = 'sessionLive';
+        
+        var cell = document.getElementById("watch-" + ukResult.sessionId);
+        if (cell) {
+          cell.innerHTML = '<div style="margin-top: 10px;"><a onclick="' + windowOpen + '" href="http://google.client.shareholder.com/visitors/event/build2/mediaPresentation.cfm?MediaID=' + (initialId + i) + '&player=1" title="Join this webcast" target="popup">Watch Live Stream!</a></div>';
+          cell.style.display = 'block';
+        }
+      }
+      
+      nowShowingDiv.innerHTML = "Now Streaming Live Sessions in London";
+      nowShowingDiv.style.display = 'block';
+    }
+
+    setTimeout(getJSON, 30000);
+  }
+  
+  window.onload = function() {
+    getJSON();
+  }
+  
+  </script>
+  <style type="text/css">
+  .sessionLive {
+    background-color: #FFF9DD;
+    border: 1px solid #CCC;
+    padding: 8px;
+  }
+  
+  #nowShowingDiv {
+    background-color: #FFF9DD;
+    border: 1px solid #CCC;
+    padding: 8px;
+    font-size: x-large;
+    display: none;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  
+  #livestream td {
+    background-color: #FFF9DD;
+  }
+  
+  .times div {
+    padding-top: 15px;
+    font-size: small;
+    color: blue;
+  }
+  </style>
+</head>
+<body>
+	<div class="content">
+		<div class="header clearfix">
+			<div style="float:left;"><a href="mv-home.html"><img src="images/logo.jpg"></a></div>
+			<h1 style="float:right;">Webcast Schedule</h1>
+		</div>
+	
+		<div class="menu">
+			<ul>
+				<li><a href="mv-home.html">Home</a></li>
+				<li><a href="mv-local.html">Local Information</a></li>
+				<li><a href="mv-sessions.html">Sessions</a></li>
+				<li><a href="mv-register.html">Registration</a></li>
+				<li><a href="index.html">Other Locations</a></li>
+			</ul>
+		</div>
+
+		<div class="content_body">
+		  <p>As the webcasts go live, the schedule will show you by placing a yellow background through the presentation that is currently being shown. At that time, you will be able to click on the webcast streaming link at the top of the table column that is above the presentation that you are interested in watching.</p>
+		  
+		  <p>Don't worry if you miss a presentation. We will be uploading these sessions for you to watch at a later date. When a presentation is available you will see a link appear in the session notes for each country</p>
+		  
+		  <br/>
+		  
+		  <div id="nowShowingDiv"></div>
+
+		  <div class="sessionschedule">
+		  <h2>London Webcasts</h2>
+		  
+		  <p>The times for London are in British Summer Time. For example, 12:00 in London is 4:00 in California (8 hours earlier).</p>
+		  
+		  <p>All of the webcasts are streaming from <a href="http://google.client.shareholder.com/visitors/event/build2/mediapresentation.cfm?mediaid=25827&player=1">this location, so click here to watch!</a></p>
+
+		  <table class="schedule" border="0" cellspacing="0" width="100%">
+		    <tr id="11.5"><td class="times" style="width:120px">12:00 - 13:00 BST</div></td><td>Opening Keynote <div id="watch-12.0"></div></td></tr>
+		    <tr id="1.75"><td class="times" style="width:120px">13:45 - 14:30</td><td>Google Maps: New features in the Maps API <div id="watch-1.75"></div></td></tr>
+		    <tr id="2.75"><td class="times" style="width:120px">14:45 - 15:30</td><td>Google Earth, KML and the Geoweb <div id="watch-2.75"></div></td></tr>
+		    <tr id="3.75"><td class="times" style="width:120px">15:45 - 16:30</td><td>Building better AJAX applications <div id="watch-3.75"></div></td></tr>
+		    <tr id="4.75"><td class="times" style="width:120px">16:45 - 17:30</td><td>Google Gadgets API <div id="watch-4.75"></div></td></tr>
+	    </table>
+	    
+	    <br/><br/>
+	    
+	    <h2>California Webcasts</h2>
+	    
+	    <p>The times for California are in Pacific Daylight Time. For example, 10am in California is 6pm in London.</p>
+
+		  <table class="schedule" border="0" cellspacing="0">
+                    <tr id="livestream"><td class="times" style="width:120px">&nbsp;</td>
+                      <td><a onclick="window.open('','popup','scrollbars=no,resizable=no,width=410,height=400')" href="http://google.client.shareholder.com/visitors/event/build2/mediaPresentation.cfm?MediaID=25828&player=1" target="popup">Watch the webcasts in this column</a></td>
+                      <td><a onclick="window.open('','popup','scrollbars=no,resizable=no,width=410,height=400')" href="http://google.client.shareholder.com/visitors/event/build2/mediaPresentation.cfm?MediaID=25829&player=1" target="popup">Watch the webcasts in this column</a></td>
+                      <td><a onclick="window.open('','popup','scrollbars=no,resizable=no,width=410,height=400')" href="http://google.client.shareholder.com/visitors/event/build2/mediaPresentation.cfm?MediaID=25830&player=1" target="popup">Watch the webcasts in this column</a></td>
+                      <td><a onclick="window.open('','popup','scrollbars=no,resizable=no,width=410,height=400')" href="http://google.client.shareholder.com/visitors/event/build2/mediaPresentation.cfm?MediaID=25831&player=1" target="popup">Watch the webcasts in this column</a></td>
+                      <td><a onclick="window.open('','popup','scrollbars=no,resizable=no,width=410,height=400')" href="http://google.client.shareholder.com/visitors/event/build2/mediaPresentation.cfm?MediaID=25832&player=1" target="popup">Watch the webcasts in this column</a></td>
+                    </tr>
+		    <tr id="9.0"><td class="times" style="width:120px">10:00 - 11:00 PDT</td><td>Opening Keynote <div id="watch-10.0-1"></td><td colspan="4">&nbsp;</td></tr>
+		    <tr id="11.0"><td class="times" style="width:120px">11:00 - 11:50</td>
+		      <td>Building better AJAX applications with Google Gears <div id="watch-11.0-1"></div></td>
+		      <td>Google Maps API Introduction <div id="watch-11.0-2"></div></td>
+		      <td>Intro to Google Data APIs: Mashing up Google Calendar, Spreadsheets and More <div id="watch-11.0-2"></div></td>
+		      <td>YouTube APIs: Where We Are and Where We're Going <div id="watch-11.0-3"></div></td>
+		      <td>Extending Google SketchUp: A Developer's View <div id="watch-11.0-4"></div></td>
+		    </tr>
+
+		    <tr id="1.0"><td class="times" style="width:120px">1:00 - 1:50 PM</td>
+		      <td>Google and the Geoweb <div id="watch-1.0-1"></div></td>
+		      <td>Enterprise Search APIs: Making Information Accessible at Work <div id="watch-1.0-2"></div></td>
+		      <td>The Google AJAX APIs <div id="watch-1.0-3"></div></td>
+		      <td>A Computing System for the World's Information: A Look Behind the Scenes at Google <div id="watch-1.0-4"></div></td>
+		      <td>&nbsp;</td>
+		    </tr>
+		    <tr id="2.0"><td class="times" style="width:120px">2:00 - 2:50 PM</td>
+		      <td>Mashups with the Google Mashup Editor <div id="watch-2.0-1"></div></td>
+		      <td>KML on Earth - Advanced Topics <div id="watch-2.0-2"></div></td>
+		      <td>New Features in the Google Maps API <div id="watch-2.0-3"></div></td>
+		      <td>Fast, Beautiful, Easy: Pick Three -- Building Web User Interfaces in the Java Programming Language with Google Web Toolkit <div id="watch-2.0-4"></div></td>
+		      <td>Testing Distributed Systems with AJAX, XML - Lessons Learned from Google Checkout <div id="watch-2.0-5"></div></td>
+		    </tr>
+		    <tr id="3.5"><td class="times" style="width:120px">3:30 - 4:20 PM</td>
+		      <td>Making Maps Mashups Discoverable <div id="watch-3.5-1"></div></td>
+		      <td>Advanced Topics in Gdata <div id="watch-3.5-2"></div></td>
+		      <td>Google Desktop Gadgets - Access, Share and Personalize Information <div id="watch-3.5-3"></div></td>
+		      <td>Python Design Patterns <div id="watch-3.5-4"></div></td>
+		      <td>&nbsp;</td>
+		    </tr>
+		    <tr id="4.5"><td class="times" style="width:120px">4:30 - 5:20 PM</td>
+		      <td>Theorizing from Data: Avoiding the Capital Mistake <div id="watch-4.5-1"></div></td>
+		      <td>KML Search and Developing Maps Mashups Using KML/GeoRSS <div id="watch-4.5-2"></div></td>
+		      <td>Distribute Your Content With Universal Gadgets <div id="watch-4.5-3"></div></td>
+		      <td>Building Better AJAX Applications: Nuts &amp; Bolts... and Gears... and Gears &amp; Bolts <div id="watch-4.5-4"></div></td>
+		      <td>Custom Search Engine - Google Search in Your Hands <div id="watch-4.5-5"></div></td>
+		    </tr> 
+	    </table>
+
+		  </div>
+		</div>
+
+  		<div class="footer">
+  			<p>&#169; 2007 Google - <a href="http://www.google.com/">Google Home</a>
+  			</p>
+  		</div>
+  	</div>
+  </div>
+<script src="https://ssl.google-analytics.com/urchin.js" type="text/javascript"></script>
+<script type="text/javascript">
+_uacct="UA-18071-1"; _uanchor=1; urchinTracker();
+</script>
+</body>
+</html>

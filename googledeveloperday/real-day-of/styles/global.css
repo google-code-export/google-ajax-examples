@@ -1,0 +1,467 @@
+/* Clearfix */
+.clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.clearfix {display: inline-block;}
+
+/* Hides from IE-mac \*/
+* html .clearfix {height: 1%;}
+.clearfix {display: block;}
+/* End hide from IE-mac */
+
+
+/* default styles */
+
+body {
+  padding: 0;
+  margin: 0;
+  font: 0.74em Arial, Helvetica, sans-serif;
+  line-height: 1.5em;
+  background: #fff;
+  color: #454545;
+}
+
+a {
+  color: #0000cc;
+  background: inherit;
+}
+
+h1 {
+  font: Arial, Helvetica, sans-serif;
+  letter-spacing: -1px;
+  padding: 2px 0 0 0px;
+  margin: 0;
+  color: #464548;
+  background: inherit;
+}
+
+h1 a, h2 a {
+  text-decoration: none;
+  color: #464548;
+  background: inherit;
+}
+
+h2 {
+  margin: 0 0 5px 0;
+  padding: 0;
+  font: bold 1.5em Arial, Helvetica, sans-serif;
+  letter-spacing: -1px;
+  color: #000;
+  background: inherit;
+}
+
+h2 .yellow {
+  color: #FFFCD1;
+  background: inherit;
+}
+
+.local h3 {
+    font-weight: bold;
+    color: #369b05;
+}
+
+
+p { margin: 0 0 5px 0; }
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+form {
+  margin: 0;
+}
+
+input.search {
+  width: 145px;
+  height: 22px;
+  border: none;
+  background: #fff url(../images/input.gif) no-repeat;
+  padding: 5px 10px 0 25px;
+  color: #808080;
+}
+
+input.button {
+  border: 0;
+  height: 27px;
+  width: 76px;
+  background: #ABC43C url(../images/button.gif) no-repeat;
+  color: #FFF;
+  font: bold 1.1em Arial, Helvetica, Sans-Serif;
+}
+
+input.login {
+  width: 150px;
+  border: none;
+  background: url(../images/logininput.gif);
+  padding: 4px;
+}
+
+/* layout */
+.header {
+  width: 740px;
+}
+
+.header a img {
+  border:0px;
+  position:relative;
+  left: -5px;
+}
+
+.header h1 {
+  position:relative;
+  padding: 10px 0;
+  top: 10px;
+  left: -10px;
+  font-family: Arial;
+}
+
+.content {
+  margin: 10px auto; /* centers */
+  width: 740px;
+}
+
+.content_body {
+  width: 100%;
+}
+
+.logo {
+  float: left;
+  width: 400px;
+  height: 60px;
+  padding: 10px 0 11px 10px;
+}
+
+.logo h1 {
+  height: 40px;
+  background: #fff url(../images/logo.jpg) no-repeat scroll center left;
+}
+
+.menu {
+  width:720px;
+  padding: 0px 10px 20px 0px;
+}
+
+.menu li {
+  color: black;
+  padding: 0px 20px 16px 0px;
+  display: inline;
+}
+
+.logo p {
+  font-size: 0.9em;
+  color: #808080;
+  padding: 0 0 0 7px;
+  background: inherit;
+}
+
+
+.top_info {
+  width: 540px;
+  margin: 12px 0 5px 0;
+  padding: 0 5px 5px 0;
+  text-align: right;
+  background: #FFF;
+  color: #444;
+}
+
+.slogan {
+  text-align: right;
+  width: 160px;
+}
+
+.photos {
+  height: 30px;
+}
+
+.photos li {
+  float: left;
+  padding: 0 5px;
+  margin: 0;
+  background: #FFF;
+  display: inline;
+}
+
+.photos li.active {
+  background: #FFF url(../images/photos.gif) no-repeat center bottom;
+  color: #C3593C;
+  font-weight: bold;
+  padding-bottom: 8px;
+}
+
+.photos a {
+  font-weight: bold;
+  color: #4A8EBC;
+  background: inherit;
+}
+
+.photo_item {
+  display:inline;
+  padding: 0px 5px;
+}
+
+.header_right {
+  float: right;
+  width: 350px;
+  height: 72px;
+}
+
+.grey {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #ccc;
+  background: inherit;
+}
+
+.subheader {
+  clear: both;
+  margin: 3px 0 10px 0;
+  padding: 8px;
+  background: #f4f4f4;
+  color: #808080;
+  border-bottom: 1px solid #ccc;
+}
+
+/* left side */
+
+.left {
+  float: left;
+  width: 490px;
+  margin: 0 0 10px 0;
+}
+
+.left_articles {
+  margin: 0 0 15px 0;
+  padding: 0 0 0 10px;
+}
+
+.lt {
+  height: 10px;
+  background: #6E6E6E url(../images/lt.gif) no-repeat;
+  color: #FFF;
+}
+
+.lbox {
+  color: #eee;
+  padding: 3px 12px;
+  margin: 0 0 15px 0;
+  background: #6E6E6E url(../images/lb.gif) no-repeat bottom left;
+  height: 178px;
+}
+
+.lbox a {
+  color: #FFFCD1;
+  background: inherit;
+}
+
+.lbox h2 {
+  color: #FFF;
+  background: #6E6E6E;
+}
+
+.thumb {
+  float: left;
+  width: 150px;
+  border: 1px solid #d4d4d4;
+  color: #fff;
+  background: #6e6e6e;
+  margin: 0 15px 15px 0;
+  padding: 5px;
+}
+
+.thumb p { margin: 0; padding: 3px; color: #FFF; background: #6e6e6e; }
+
+/* right side */
+
+.right {
+  float: right;
+  width: 245px;
+  margin: 0 0 10px 0;
+}
+
+.right a {
+  color: #FFFCD1;
+  background: inherit;
+}
+
+.rt {
+  background-color: #369b05;
+  color: #FFF;
+  height: 7px;
+}
+
+.right_articles {
+  font-size: 0.9em;
+  background-color: #369b05;
+  color: #FEE1D5;
+  padding: 4px 8px;
+  margin: 0 0 10px 0;
+}
+
+.image {
+  float: right;
+  margin: 0 9px 3px 0;
+}
+
+/* Bottom */
+
+.bottom {
+  clear: both;
+  width: 740px;
+}
+
+/* Footer */
+
+.footer {
+  clear: both;
+  text-align: center;
+  line-height: 1.8em;
+  color: #808080;
+  background: #FFF;
+  padding-top: 60px;
+  padding-bottom:10px;
+}
+
+/* blog */
+.blog {
+  width: 370px;
+}
+
+.blogentry {
+  padding: 5px 0;
+}
+
+.info {
+  float: right;
+  width: 490px;
+}
+
+.subscribeLink, a.subscribeLink:hover {
+  color: #BB4900;
+  text-decoration: underline;
+}
+
+.subscribeLink img {
+  border: none;
+  vertical-align: middle;
+}
+
+ul.ul_apis li {
+  padding-bottom: 5px;
+}
+
+
+/* Feed */
+.feed {
+  float: right;
+  color: #C3593C;
+}
+
+/* Full Schedule */
+.session {
+  width:700px;
+  position:relative;
+  left:40px;
+  padding-bottom:20px;
+}
+
+.session .title {
+  font-weight: bold;
+  color: #369b05;
+  font-size: medium;
+}
+
+.session .presenters {
+  color:#333333;
+  font-weight:bold;
+}
+
+.session .materials {
+  font-weight: bold;
+  margin-top: 8px;
+}
+
+/* Map */
+.map_layout {
+  margin: 0 0 20px 0;
+  width: 740px;
+  height: 300px;
+  background-color: #CCC;
+  z-index: 1;
+  opacity: .90; filter: alpha(opacity=90);
+  border: 1px solid #CCC;
+}
+
+.map_locations ul li {
+  padding-top: 7px;
+}
+
+.map_locations ul li a {
+    background-position-y: center;
+    background-position-x: left;
+    background-repeat: no-repeat;
+    background-image: url(http://labs.google.com/ridefinder/images/mm_20_red.png);
+    padding: 10px 10px 10px 20px;
+}
+
+#map {
+  position: relative; margin: -5px 5px 5px -5px; width: 740px; height: 300px; z-index: 2; border: 1px solid black; background-color: #fff;
+}
+
+#map a {
+  background: none;
+}
+
+/* sessions */
+table.schedule {
+  border-color:black;
+  border-width:0 0 1px 1px;
+  border-style:solid;
+}
+
+table.schedule tr td {
+    border-color:black;
+    border-width:1px 1px 0 0;
+    border-style:solid;
+    margin:0;
+    padding:5px;
+    text-align:center;
+    font-size:14px;
+    color:black;
+}
+
+table.schedule tr td.times {
+    width:120px;
+    background-color:#339933;
+    color:#FFF;
+}
+
+table.schedule_overview tr td.t_start {
+   text-align:right;
+   vertical-align:top;
+}
+
+table.schedule_overview tr td.t_end {
+   text-align:right;
+   vertical-align:top;
+   padding-right:10px;
+}
+
+table.schedule_overview tr td.t_s{
+   vertical-align:top;
+}
+
+.sessionschedule {
+    margin-bottom: 20px;
+}
+
+.registration {
+  width: 550px;
+  padding-top:20px;
+}
