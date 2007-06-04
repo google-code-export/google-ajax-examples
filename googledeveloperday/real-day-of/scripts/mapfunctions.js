@@ -58,7 +58,7 @@ function getElementPosition(element) {
 
 function updateTimeBasedInfo() { 
   updateMarkerColors();
-  //displayNowShowing();
+  displayNowShowing();
 }
 
 function loadMarkers() {
