@@ -6,13 +6,13 @@ var searchCounter;
 
 var pageFiles = [
   location.pathname,
-  'gears_db.js',
   'gears_base.js',
-  'firebug.js',
-  'json.js',
+  '../scripts/gears_db.js',
+  '../scripts/firebug/firebug.js',
+  '../scripts/firebug/firebug.html',
+  '../scripts/firebug/firebug.css',
+  '../scripts/json_util.js',
   'style.css',
-  'firebug.html',
-  'firebug.css',
   'capture.gif'];
 
 
