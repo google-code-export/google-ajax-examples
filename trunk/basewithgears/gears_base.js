@@ -197,6 +197,12 @@ function displaySearchResults(url) {
   var feed = json.feed;
   var entries = feed.entry || [];
   var html = ['<h2>',feed.title.$t,'</h2>'];
+
+  if (!feed.entry) {
+    document.getElementById("itemresults").innerHTML = "Sorry, old chap. Nothing for you. Try again!";
+    return;
+  }
+
   for (var i = 0; i < feed.entry.length; ++i) {
     var entry = feed.entry[i];
     var title = entry.title.$t;
@@ -221,5 +227,5 @@ function displaySearchResults(url) {
     html.push('</div>');
   }
 
-  document.getElementById("agenda").innerHTML = html.join("");
+  document.getElementById("itemresults").innerHTML = html.join("");
 }
