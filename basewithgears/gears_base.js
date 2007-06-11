@@ -199,7 +199,8 @@ function displaySearchResults(url) {
   var html = ['<h2>',feed.title.$t,'</h2>'];
 
   if (!feed.entry) {
-    document.getElementById("itemresults").innerHTML = "Sorry, old chap. Nothing for you. Try again!";
+    html.push('<h2>Nothing</h2>');
+    document.getElementById("itemresults").innerHTML = html.join("");
     return;
   }
 
