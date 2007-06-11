@@ -185,6 +185,7 @@ function loadFeed(json) {
   var feed = {id: id, JSON: jsonString}; 
   db.forceRow('BaseFeeds', feed);
   if (searchCounter < 0) {
+    searchCounter = 0;
     document.getElementById('captureStatus').innerHTML = 'Capture complete.';
   }
 }
