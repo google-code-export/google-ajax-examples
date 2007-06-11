@@ -178,13 +178,13 @@ function getSelfHref(linkArray) {
 
 function loadFeed(json) {
   searchCounter--;
-  document.getElementById('captureStatus').innerHTML = 'Capturing..';
+  document.getElementById('captureStatus').innerHTML = 'Capturing..' + searchCounter;
   var id = getSelfHref(json.feed.link);
 
   var jsonString = json.toJSONString();
   var feed = {id: id, JSON: jsonString}; 
   db.forceRow('BaseFeeds', feed);
-  if (searchCounter < 0) {
+  if (searchCounter <= 0) {
     searchCounter = 0;
     document.getElementById('captureStatus').innerHTML = 'Capture complete.';
   }
