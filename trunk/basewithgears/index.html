@@ -1,0 +1,63 @@
+<html debug="false">
+<head>
+<title>Google Base Searcher - with Gears!</title>
+<link rel="stylesheet" type="text/css" href="style.css" media="all" />
+<script type="text/javascript"  src="../scripts/firebug/firebug.js"></script>
+<script type="text/javascript"  src="http://gears-dblib.googlecode.com/svn/trunk/scripts/gears_db.js"></script>
+<script type="text/javascript"  src="../scripts/json_utils.js"></script>
+<script type="text/javascript"  src="gears_base.js"></script>
+</head>
+<body>
+
+<div id="agenda" style="float: right; width:80%"></div>
+
+<div id="leftbar_container">
+<div id="leftbar_shader">
+<div id="leftbar">
+<h3>Google Base On a Plane</h3>
+<div style="float:left; width: 200px">
+<form onsubmit="handleSubmit(); return false;">
+  <input type="text" id="submitValue" style="width:10em;">
+  <br/>
+  <select id="itemtypes">
+    <option value="products">Products</option>
+    <option value="housing">Housing</option>
+    <option value="jobs">Jobs</option>
+    <option value="services">Services</option>
+    <option value="news and articles">News & Articles</option>
+    <option value="vehicles">Vehicles</option>
+    <option value="personals">Personals</option>
+    <option value="reference articles">Reference Articles</option>
+    <option value="reviews">Reviews</option>
+    <option value="events and activities">Events & Activities</option>
+    <option value="wanted ads">Wanted ADs</option>
+    <option value="recipes">Recipes</option>
+    <option value="travel packages">Travel Packages</option>
+    <option value="course schedules">Course Schedules</option>
+    <option value="mobile">Mobile</option>
+    <option value="business locations">Business Locations</option>
+  </select>    
+  <br/>
+  <input type="submit" value="Search">
+</form>
+
+<p><br /><b>Search terms:</b></p>
+
+<p><span id="status">&nbsp;</span></p>
+
+<div id="debug">
+<a href="javascript:captureSearches()"><img src="capture.gif"/>Manual Capture</a>
+<div id="captureStatus">
+</div>
+
+<a href="javascript:clearTables()">Clear Tables</a>
+<a href="javascript:clearServer()">Clear Server Files</a>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+
+</body>
+</html>
