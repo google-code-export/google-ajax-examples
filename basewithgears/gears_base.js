@@ -29,7 +29,7 @@ window.onload = function () {
     return;
   }
   
-  getStore(); // Load in the offline resources (js/css/etc
+  getStore(); // Load in the offline resources (js/css/etc)
 
   db = new GearsDB('gears-base');
 
@@ -65,7 +65,7 @@ function handleSubmit() {
 
   // Insert the new item.
   // The Gears database automatically escapes/unescapes inserted values.
-  var query1 = {Phrase: phrase, Itemtype: itemtype}; 
+  var query1 = { Phrase: phrase, Itemtype: itemtype };
   db.insertRow('BaseQueries', query1); 
   // Update the UI.
   elm.value = '';
@@ -93,57 +93,12 @@ function displaySearches() {
   }
 }
 
-function getStore() { // return the store, create if needed
-  store = localServer.openStore(STORE_NAME);
-  if (!store) {
-    store = localServer.createStore(STORE_NAME);
-  }
-  return store;
-}
-
-function clearServer() {
-  if (localServer.openStore(STORE_NAME)) {
-    localServer.removeStore(STORE_NAME);
-    store = null;
-  }
-}
-
-function clearTables() {
-  if (db) {
-    db.run('delete from BaseQueries');
-    db.run('delete from BaseFeeds');
-  }
-  displaySearches();
-}
-
-function capture() {
-  capturePageFiles();
-  captureSearches();
-}
-
-function captureSearches() {
-  var searches = getSearches();
-  searchCounter = searches.length;
-  for (var i = 0; i < searches.length; i++) {
-    getJSON(searches[i].Phrase, searches[i].Itemtype, "loadFeed");
-  }
-
-}
-
-function capturePageFiles() {
-  store.capture(pageFiles, function(url, success, captureId) {
-    console.log(url + ' capture ' + (success ? 'succeeded' : 'failed'));
-  });
-}
-
 /**
  * Creates a script tag in the page that loads in the 
  * JSON feed for the specified key/ID. 
  * Once loaded, it calls cm_loadMapJSON.
  */
 function getJSON(searchTerm, itemType, callbackName) {
-
-  // Retrieve the JSON feed.
   var script = document.createElement('script');
 
   var url = formUrl(searchTerm, itemType);
@@ -153,17 +108,16 @@ function getJSON(searchTerm, itemType, callbackName) {
   document.documentElement.firstChild.appendChild(script);
 }
 
-function formUrl(searchTerm, itemType) {
-  var url = 'http://www.google.com/base/feeds/snippets/-/' + itemType + 
-            '?alt=json-in-script&start-index=1&max-results=25&bq=' + searchTerm.replace(/ /g, '+');
-  return url;
-}
-
 function loadAndDisplayFeed(json) {
   searchCounter = 1;
   loadFeed(json);
   displaySearchResults(getSelfHref(json.feed.link));
 }  
+
+function formUrl(searchTerm, itemType) {
+  return 'http://www.google.com/base/feeds/snippets/-/' + itemType + 
+         '?alt=json-in-script&start-index=1&max-results=25&bq=' + searchTerm.replace(/ /g, '+');
+}
 
 function getSelfHref(linkArray) {
   var id = "";
@@ -191,7 +145,7 @@ function loadFeed(json) {
 }
 
 function displaySearchResults(url) {
-  var row = db.selectRow('BaseFeeds', 'id = "' + url + '"');
+  var row = db.selectRow('BaseFeeds', 'id = ?', [ url ]);
   var jsonString = row.JSON; 
   eval("var json=" + jsonString + ";");
   var feed = json.feed;
@@ -229,4 +183,50 @@ function displaySearchResults(url) {
   }
 
   document.getElementById("itemresults").innerHTML = html.join("");
+}
+
+// -- Capture Methods
+
+function getStore() { // return the store, create if needed
+  store = localServer.openStore(STORE_NAME);
+  if (!store) {
+    store = localServer.createStore(STORE_NAME);
+  }
+  return store;
+}
+
+function capture() {
+  capturePageFiles();
+  captureSearches();
+}
+
+function captureSearches() {
+  var searches = getSearches();
+  searchCounter = searches.length;
+  for (var i = 0; i < searches.length; i++) {
+    getJSON(searches[i].Phrase, searches[i].Itemtype, "loadFeed");
+  }
+}
+
+function capturePageFiles() {
+  store.capture(pageFiles, function(url, success, captureId) {
+    console.log(url + ' capture ' + (success ? 'succeeded' : 'failed'));
+  });
+}
+
+// -- Debug Methods
+
+function clearServer() {
+  if (localServer.openStore(STORE_NAME)) {
+    localServer.removeStore(STORE_NAME);
+    store = null;
+  }
+}
+
+function clearTables() {
+  if (db) {
+    db.run('delete from BaseQueries');
+    db.run('delete from BaseFeeds');
+  }
+  displaySearches();
 }
