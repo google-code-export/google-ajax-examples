@@ -84,7 +84,7 @@ var GSpreadsheet = function(key, json, options) {
  */
 GSpreadsheet.load = function(key, options, callback) {
   if (!options['worksheet']) options['worksheet'] = 'od6';
-  var worksheet = options['worksheet']
+  var worksheet = options['worksheet'];
   
   var callbackName = "GSpreadsheet.loader_" + key + "_" + worksheet;
   eval(callbackName + " = function(json) { var gs = new GSpreadsheet(key, json, options); callback(gs); }");
