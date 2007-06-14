@@ -1,92 +1,45 @@
-var STORE_NAME = 'gears-spreadsheets';
-var localServer;
-var store;
-var db;
-var searchCounter;
+var content;
+var searchCounter = 0;
 
-var pageFiles = [
-  location.pathname,
-  'gears_base.js',
-  '../scripts/gears_db.js',
-  '../scripts/firebug/firebug.js',
-  '../scripts/firebug/firebug.html',
-  '../scripts/firebug/firebug.css',
-  '../scripts/json_util.js',
-  'style.css',
-  'capture.gif'];
+// -- Onload initialization
 
+var hasGears = function() {
+  return window.google && google.gears;
+}
 
 window.onload = function () {
-  if (!window.google || !google.gears) {
-    alert('Google Gears is not installed');
-    return;
-  }
+//  content = hasGears() ? new GearsBaseContent() : new CookieBaseContent();
+  content = new CookieBaseContent();
 
-  try {
-    localServer = google.gears.factory.create('beta.localserver', '1.0');
-  } catch (ex) {
-    alert('Could not create local server: ' + ex.message);
-    return;
-  }
-  
-  getStore(); // Load in the offline resources (js/css/etc)
-
-  db = new GearsDB('gears-base');
-
-  if (db) {
-    db.run('create table if not exists BaseQueries' +
-            ' (Phrase varchar(255), Itemtype varchar(100))');
-    db.run('create table if not exists BaseFeeds' + 
-            ' (id varchar(255), JSON text)');
-
-    // Initialize the UI at startup.
-    displaySearches();
-    capturePageFiles();
-    captureSearches();
-    setInterval(captureSearches, 600000);
-  }
-
-  // Enable or disable UI elements
-  var init_succeeded = !!db;
-  var inputs = document.getElementsByTagName('input');
-  for (var i = 0, el; el = inputs[i]; i++) {
-    el.disabled = !init_succeeded;
-  }
+  // Initialize the UI at startup.
+  displayQueries();
 };
 
-function handleSubmit() {
-   if (!google.gears.factory || !db) {
-    return;
-  }
+// -- External interface
 
+function addQuery() {
   var elm = document.getElementById('submitValue');
   var phrase = elm.value;
   var itemtype = document.getElementById('itemtypes').value;
 
   // Insert the new item.
-  // The Gears database automatically escapes/unescapes inserted values.
-  var query1 = { Phrase: phrase, Itemtype: itemtype };
-  db.insertRow('BaseQueries', query1); 
+  content.addQuery({ Phrase: phrase, Itemtype: itemtype });
+
   // Update the UI.
   elm.value = '';
-  displaySearches();
+  displayQueries();
   getJSON(phrase, itemtype, "loadAndDisplayFeed");
-  captureSearches();
 }
 
-function getSearches() {
-  return db.selectAll('select * from BaseQueries');
-}
-
-function displaySearches() {
-  var searches = getSearches();
+function displayQueries() {
+  var searches = content.getQueries();
   
   var status = document.getElementById('status');
   status.innerHTML = '';
   for (var i = 0; i < searches.length; ++i) {
     var searchLink = document.createElement('a');
     var url = formUrl(searches[i].Phrase, searches[i].Itemtype);
-    searchLink.setAttribute("href", "javascript:displaySearchResults('" + url + "')");
+    searchLink.setAttribute("href", "javascript:displayFeed('" + url + "')");
     searchLink.appendChild(document.createTextNode(searches[i].Phrase + " (" + searches[i].Itemtype + ")"));
     status.appendChild(searchLink);
     status.appendChild(document.createElement('br'));
@@ -98,56 +51,47 @@ function displaySearches() {
  * JSON feed for the specified key/ID. 
  * Once loaded, it calls cm_loadMapJSON.
  */
-function getJSON(searchTerm, itemType, callbackName) {
+function getJSONByUrl(url, callbackName) {
   var script = document.createElement('script');
 
-  var url = formUrl(searchTerm, itemType);
   script.setAttribute('src', url + "&callback=" + callbackName);
   script.setAttribute('id', 'jsonScript');
   script.setAttribute('type', 'text/javascript');
   document.documentElement.firstChild.appendChild(script);
 }
 
+function getJSON(searchTerm, itemType, callbackName) {
+  var url = formUrl(searchTerm, itemType);
+  getJSONByUrl(url, callbackName);
+}
+
 function loadAndDisplayFeed(json) {
   searchCounter = 1;
   loadFeed(json);
-  displaySearchResults(getSelfHref(json.feed.link));
+  displayFeed(getSelfHref(json.feed.link));
 }  
-
-function formUrl(searchTerm, itemType) {
-  return 'http://www.google.com/base/feeds/snippets/-/' + itemType + 
-         '?alt=json-in-script&start-index=1&max-results=25&bq=' + searchTerm.replace(/ /g, '+');
-}
-
-function getSelfHref(linkArray) {
-  var id = "";
-  for (var i = 0; i < linkArray.length; i++) {
-    if (linkArray[i].rel == "self") {
-      id = linkArray[i].href;
-      break;
-    } 
-  }
-  return id;
-}
 
 function loadFeed(json) {
   searchCounter--;
   document.getElementById('captureStatus').innerHTML = 'Capturing..' + searchCounter;
   var id = getSelfHref(json.feed.link);
+  
+  content.setFeed({ id: id, JSON: json.toJSONString() });
 
-  var jsonString = json.toJSONString();
-  var feed = {id: id, JSON: jsonString}; 
-  db.forceRow('BaseFeeds', feed);
   if (searchCounter <= 0) {
     searchCounter = 0;
     document.getElementById('captureStatus').innerHTML = 'Capture complete.';
   }
 }
 
-function displaySearchResults(url) {
-  var row = db.selectRow('BaseFeeds', 'id = ?', [ url ]);
-  var jsonString = row.JSON; 
-  eval("var json=" + jsonString + ";");
+function displayFeed(url) {
+  var baseResult = content.getFeed(url);
+  if (baseResult == null) { // load it asynchronous
+    getJSONByUrl(url, "loadAndDisplayFeed");
+    return;
+  }
+  
+  eval("var json=" + baseResult + ";");
   var feed = json.feed;
   var entries = feed.entry || [];
   var html = ['<h2>',feed.title.$t,'</h2>'];
@@ -161,9 +105,9 @@ function displaySearchResults(url) {
   for (var i = 0; i < feed.entry.length; ++i) {
     var entry = feed.entry[i];
     var title = entry.title.$t;
-    var content = entry.content.$t;
+    var feedContent = entry.content.$t;
     html.push('<div class="item">');
-    html.push('<h3><a href="', entry.link[0].href, '" target="_blank">', title, '</a></h3>', content, '<br>');
+    html.push('<h3><a href="', entry.link[0].href, '" target="_blank">', title, '</a></h3>', feedContent, '<br>');
     html.push('<table>');
     for (var key in entry) {
       if (entry.hasOwnProperty(key) && key.substr(0, 2)=='g$') {
@@ -185,48 +129,174 @@ function displaySearchResults(url) {
   document.getElementById("itemresults").innerHTML = html.join("");
 }
 
+function formUrl(searchTerm, itemType) {
+  return 'http://www.google.com/base/feeds/snippets/-/' + itemType + 
+         '?alt=json-in-script&start-index=1&max-results=25&bq=' + searchTerm.replace(/ /g, '+');
+}
+
+function getSelfHref(linkArray) {
+  var id = "";
+  for (var i = 0; i < linkArray.length; i++) {
+    if (linkArray[i].rel == "self") {
+      id = linkArray[i].href;
+      break;
+    } 
+  }
+  return id;
+}
+
+// -- Content Storage Options
+
+var GearsBaseContent = function() {
+  this.storeName = 'gears-base';
+  this.pageFiles = [
+    location.pathname,
+    'gears_base.js',
+    '../scripts/gears_db.js',
+    '../scripts/firebug/firebug.js',
+    '../scripts/firebug/firebug.html',
+    '../scripts/firebug/firebug.css',
+    '../scripts/json_util.js',
+    'style.css',
+    'capture.gif' ];
+      
+  try {
+    this.localServer = google.gears.factory.create('beta.localserver', '1.0');
+  } catch (e) {
+    alert('Could not create local server: ' + e.message);
+    return;
+  }
+  
+  // Load in the offline resources (js/css/etc)
+  this.store = this.localServer.openStore(this.storeName) || this.localServer.createStore(this.storeName);
+
+  this.db = new GearsDB('gears-base');
+
+  if (this.db) {
+    this.db.run('create table if not exists BaseQueries' +
+            ' (Phrase varchar(255), Itemtype varchar(100))');
+    this.db.run('create table if not exists BaseFeeds' + 
+            ' (id varchar(255), JSON text)');
+  }
+  
+  document.getElementById('debug').style.display = 'block'; // show the debug area
+  this.capturePageFiles(); // Capture everything
+  this.captureQueries();
+  setInterval(this.captureQueries, 600000);
+};
+
+// -- Get the data that we need
+
+GearsBaseContent.prototype.getFeed = function(url) {
+  var row = this.db.selectRow('BaseFeeds', 'id = ?', [ url ]);
+  return row.JSON;
+}
+
+GearsBaseContent.prototype.setFeed = function(feed) {
+  this.db.forceRow('BaseFeeds', feed);
+}
+
+GearsBaseContent.prototype.getQueries = function() {
+  return this.db.selectAll('select * from BaseQueries');
+}
+
+GearsBaseContent.prototype.addQuery = function(query) {
+  // The Gears database automatically escapes/unescapes inserted values.
+  this.db.insertRow('BaseQueries', query); 
+  content.captureQueries();
+}
+
+
 // -- Capture Methods
 
-function getStore() { // return the store, create if needed
-  store = localServer.openStore(STORE_NAME);
-  if (!store) {
-    store = localServer.createStore(STORE_NAME);
-  }
-  return store;
-}
-
-function capture() {
-  capturePageFiles();
-  captureSearches();
-}
-
-function captureSearches() {
-  var searches = getSearches();
+GearsBaseContent.prototype.captureQueries = function() {
+  var searches = this.getQueries();
   searchCounter = searches.length;
   for (var i = 0; i < searches.length; i++) {
     getJSON(searches[i].Phrase, searches[i].Itemtype, "loadFeed");
   }
 }
 
-function capturePageFiles() {
-  store.capture(pageFiles, function(url, success, captureId) {
+GearsBaseContent.prototype.capturePageFiles = function() {
+  this.store.capture(this.pageFiles, function(url, success, captureId) {
     console.log(url + ' capture ' + (success ? 'succeeded' : 'failed'));
   });
 }
 
 // -- Debug Methods
 
-function clearServer() {
-  if (localServer.openStore(STORE_NAME)) {
-    localServer.removeStore(STORE_NAME);
-    store = null;
+GearsBaseContent.prototype.clearServer = function() {
+  if (this.localServer.openStore(this.storeName)) {
+    this.localServer.removeStore(this.storeName);
+    this.store = null;
   }
 }
 
-function clearTables() {
-  if (db) {
-    db.run('delete from BaseQueries');
-    db.run('delete from BaseFeeds');
+GearsBaseContent.prototype.clearTables = function() {
+  if (this.db) {
+    this.db.run('delete from BaseQueries');
+    this.db.run('delete from BaseFeeds');
   }
-  displaySearches();
+  displayQueries();
+}
+
+
+// -- Cookie Storage only stores the queries, and grabs the content as needed (since you have to be online anyway)
+
+var CookieBaseContent = function() {
+  this.baseFeeds = {};
+  this.baseQueries = [];
+  this.cookieName = 'gears-base';
+};
+
+CookieBaseContent.prototype.getFeed = function(url) {
+  if (!this.baseFeeds[url]) {
+    getJSONByUrl(url, "loadFeed");
+  }
+  return this.baseFeeds[url];
+}
+
+CookieBaseContent.prototype.setFeed = function(feed) {
+  this.baseFeeds[feed.id] = feed.JSON;
+}
+
+CookieBaseContent.prototype.getQueries = function() {
+  if (this.baseQueries.length == 0) {
+    this.baseQueries = this.getQueriesFromCookie() || [];
+  }
+  return this.baseQueries;
+}
+
+CookieBaseContent.prototype.addQuery = function(query) {
+  this.baseQueries.push(query);
+  this.setQueriesInCookie();
+}
+
+CookieBaseContent.prototype.setQueriesInCookie = function() {
+  var queries = [];
+  for (var x = 0; x < this.baseQueries.length; x++) {
+    var q = this.baseQueries[x];
+    queries.push(q.Phrase + '+-+' + q.Itemtype);
+  }
+  document.cookie = this.cookieName + '=' + queries.join('|') + '; path=/';
+}
+
+CookieBaseContent.prototype.getQueriesFromCookie = function() {
+	var nameEQ = this.cookieName + "=";
+	var ca = document.cookie.split(';');
+	var queryObjects = [];
+	for(var i=0;i < ca.length;i++) {
+		var c = ca[i];
+		while (c.charAt(0)==' ') c = c.substring(1,c.length);
+		if (c.indexOf(nameEQ) == 0) { 
+		  var queries = c.substring(nameEQ.length,c.length).split('|');
+	  
+      for (var x = 0; x < queries.length; x++) {
+        var pieces = queries[x].split('+-+');
+        queryObjects.push({ Phrase: pieces[0], Itemtype: pieces[1] });
+      }
+		  return queryObjects;
+	  }
+	}
+	return null;
 }
