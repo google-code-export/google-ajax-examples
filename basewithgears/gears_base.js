@@ -1,6 +1,18 @@
 var content;
 var searchCounter = 0;
 
+/*
+ * Gears Base holds all of the logic for the Gears Base application. It is split into
+ *
+ * - The external interface
+ *   . Onload setup (Choose the right content access adapter, and show the queries)
+ *   . addQuery, displayQueries, getJSONByUrl, getJSON, displayFeed, formUrl, getSelfHref
+ * 
+ * - Content Access Adapters
+ *   . GearsBaseContent: If Gears is installed, the application will work offline, and will run locally
+ *   . CookieBaseContent: If Gears is not installed, the application will only work online, and a cookie will store your searches
+ */
+
 // -- Onload initialization
 
 var hasGears = function() {
