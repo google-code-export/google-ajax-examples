@@ -8,8 +8,7 @@ var hasGears = function() {
 }
 
 window.onload = function () {
-//  content = hasGears() ? new GearsBaseContent() : new CookieBaseContent();
-  content = new CookieBaseContent();
+  content = hasGears() ? new GearsBaseContent() : new CookieBaseContent();
 
   // Initialize the UI at startup.
   displayQueries();
