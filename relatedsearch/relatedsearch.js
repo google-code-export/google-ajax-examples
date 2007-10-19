@@ -1,7 +1,8 @@
 var RelatedSearchFinder = {
   find: function() {
     var count = 0;
-    document.getElementsByClassName('searchterm').each(function(node) {
+    //document.getElementsByClassName('searchterm').each(function(node) {
+    $$('.searchterm').each(function(node) {
       new RelatedSearch(node, ++count);
     });
   }
