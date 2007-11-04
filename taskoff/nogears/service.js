@@ -1,4 +1,4 @@
-function saveData() {
+function saveTask() {
   document.getElementById("tasklist").innerHTML = "Task added.";
   var description = escape(document.getElementById("description").value);
 
