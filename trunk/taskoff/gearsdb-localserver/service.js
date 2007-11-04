@@ -15,27 +15,6 @@ function getLocalTasks() {
     return tasks;
 }
 
-function downloadUrl(url, callback) {
-  var xhr = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Msxml2.XMLHTTP');
-  xhr.open("GET", url);
-  xhr.onreadystatechange = function() {
-    if (xhr.readyState == 4 && xhr.status == 200) {
-      callback(xhr.responseText);
-    }
-  }
-  xhr.send('');
-}
-
-function downloadTasks() {
-  downloadUrl(GET_TASKS_URL, function(data) {
-      if (data) {
-        var tasks = data.split('\n');
-        displayTasks(tasks);
-        updateTasks(tasks);
-      }
-  });
-} 
-
 function saveRemoteTask(id, description) {
   var url = ADD_TASK_URL + description;
   downloadUrl(url, function(data) {
@@ -45,14 +24,14 @@ function saveRemoteTask(id, description) {
   });
 }
 
-function saveData() {
+function saveTask() {
   var description = document.getElementById('description').value;
   document.getElementById('description').value = '';
-
+  
   try {
     db.execute('insert into Tasks (description, notsaved) values (?, 1)', [ description ]);
   } catch (e) {
-    //console.log(e);
+    console.log("Error adding task: " + description + ":" + e);
   }
 
   saveRemoteTask(db.lastInsertRowId, description);
@@ -76,7 +55,7 @@ function updateTasks(tasks) {
 }
 
 function setupStore() {
-  var pageFiles = [ location.pathname, 'gears_init.js' ];
+  var pageFiles = [ location.pathname, 'service.js', '../gears_init.js', '../common.js', '../style.css' ];
   var localServer;
   var storeName = 'taskoff';
   
@@ -89,7 +68,9 @@ function setupStore() {
 
   // Load in the offline resources (js/css/etc)
   var store = localServer.openStore(storeName) || localServer.createStore(storeName);
-  store.capture(pageFiles, function() {});
+  store.capture(pageFiles, function(url, success, captureId) {
+    console.log(url + ' captured ' + (success ? 'succeeded' : 'failed'));
+  });  
 }
 
 window.onload = function() {
@@ -97,3 +78,8 @@ window.onload = function() {
    setupStore();
    getTasks();
 };
+
+setInterval(function() { // Every now and then check
+  getTasks();
+}, 60000);
+

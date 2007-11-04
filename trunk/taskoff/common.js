@@ -5,20 +5,30 @@ var ADD_TASK_URL = "../service/addtask.php?description=";
 var DELETE_TASKS_URL = "../service/deletetasks.php";
 
 function downloadUrl(url, callback) {
-  var xhr = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Msxml2.XMLHTTP');
-  xhr.open("GET", url);
-  xhr.onreadystatechange = function() {
-    if (xhr.readyState == 4 && xhr.status == 200) {
-      callback(xhr.responseText);
+  try {
+    var xhr = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Msxml2.XMLHTTP');
+    xhr.open("GET", url);
+    xhr.onreadystatechange = function() {
+      if (!xhr['status']) return;
+    
+      if (xhr.readyState == 4 && xhr.status == 200) {
+        callback(xhr.responseText);
+      }
     }
+    xhr.send('');
+  } catch (e) {
+    console.log("Offline: " + e);
   }
-  xhr.send('');
 }
 
 function downloadTasks() {
-  downloadUrl(GET_TASKS_URL, function(data) {
+  var url = GET_TASKS_URL + "?bustCache=" + new Date().getTime();
+  downloadUrl(url, function(data) {
       if (data) {
         var tasks = data.split('\n');
+        if (tasks[tasks.length - 1] == '') { // nuke an empty item
+          tasks.pop();
+        }
         displayTasks(tasks);
         updateTasks(tasks);
       }
@@ -48,6 +58,8 @@ function clearTasks() {
 
 
 // -- DEBUG
+
+if (!console) { window.console = {log: function(){}}; }
 
 function clearStore() {
   google.gears.factory.create('beta.localserver', '1.0').removeStore('taskoff');

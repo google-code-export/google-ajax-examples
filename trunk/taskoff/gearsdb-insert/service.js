@@ -25,7 +25,7 @@ function saveRemoteTask(id, description) {
   });
 }
 
-function saveData() {
+function saveTask() {
   var description = document.getElementById('description').value;
   db.execute('insert into Tasks (description, notsaved) values (?, 1)', [ description ]);
 
