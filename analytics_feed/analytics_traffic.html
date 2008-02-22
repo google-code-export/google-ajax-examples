@@ -1,79 +1,73 @@
 <html>
-  <head>
+<head>
 
-  </head>
-  <body>
-    <div id="popularPosts">
+</head>
+<body>
+  <div id="popularPosts">
 
-    </div>
-    
-    
-    <script type="text/javascript">
-    var maxDataPoint = 0;
-    var graphDataNames = [];
-    var graphData = [];
-    function storeData(obj) {
-      for (var i=0; i < 5; i++) {
-        var regex = /\/apis\/ajaxsearch\/(.*)/;
-        var relaURL = obj.value.items[i].Key.match(regex)[1];
-        var pageViews = obj.value.items[i].Cell[0].Primary;
-        
-        
-        pageViews = parseFloat(pageViews.replace(',',''));
-        if(parseFloat(pageViews) > maxDataPoint) {
-          maxDataPoint = pageViews;
-        }
-        graphDataNames.unshift(relaURL);
-		console.log(pageViews);
-        graphData.push(pageViews);
+  </div>
+
+
+  <script type="text/javascript">
+  var maxDataPoint = 0;
+  var graphDataNames = [];
+  var graphData = [];
+  function storeData(obj) {
+    for (var i=0; i < 5; i++) {
+      var regex = /\/apis\/ajaxsearch\/(.*)/;
+      var relaURL = obj.value.items[i].Key.match(regex)[1];
+      var pageViews = obj.value.items[i].Cell[0].Primary;
+
+
+      pageViews = parseFloat(pageViews.replace(',',''));
+      if(parseFloat(pageViews) > maxDataPoint) {
+        maxDataPoint = pageViews;
       }
+      graphDataNames.unshift(relaURL);
+      console.log(pageViews);
+      graphData.push(pageViews);
     }
-    
-    function setMaxPoint() {
-      var numDivisions = 0;
-      while(maxDataPoint > 100) {
-        maxDataPoint = maxDataPoint / 10;
-        numDivisions++;
-      }
-      maxDataPoint = Math.floor((maxDataPoint+1));
-      while(numDivisions > 0) {
-        maxDataPoint = maxDataPoint * (10);
-        numDivisions--;
-      }
+  }
+
+  function setMaxPoint() {
+    var numDivisions = 0;
+    while(maxDataPoint > 100) {
+      maxDataPoint = maxDataPoint / 10;
+      numDivisions++;
     }
-    
-    function setDataPoints() {
-      for (var i=0; i < graphData.length; i++) {
-        graphData[i] = Math.floor(100*graphData[i] / maxDataPoint);
-      }
-      return(graphData);      
+    maxDataPoint = Math.floor((maxDataPoint+1));
+    while(numDivisions > 0) {
+      maxDataPoint = maxDataPoint * (10);
+      numDivisions--;
     }
-    
-    function topcontentCallback(obj) { 
+  }
 
-      
-
-      var graphData = storeData(obj);
-      setMaxPoint();
-      graphData = setDataPoints();
-      console.log(graphData);
-      console.log(graphDataNames);
-      
-      
-      console.log(maxDataPoint);
-      var graph = document.createElement('img');
-      graph.src = "http://www.google.com/chart?cht=bhs&chs=500x160&chd=t:"+graphData.join(',')+"&chco=3072F3&chls=1,3.75,1&chxt=x,y&chxl=1:|"+graphDataNames.join('|')+"&chxr=0,0,"+maxDataPoint+"&chtt=Top+Ranked+AJAX+Search+Pages&chbh=20,2&chg=20,5,5,4";
-      console.log(graph.src);
-      document.getElementById("popularPosts").appendChild(graph);
-      
-      
-      
+  function setDataPoints() {
+    for (var i=0; i < graphData.length; i++) {
+      graphData[i] = Math.floor(100*graphData[i] / maxDataPoint);
     }
+    return(graphData);      
+  }
 
-    </script>
+  function topcontentCallback(obj) {
+    var graphData = storeData(obj);
+    setMaxPoint();
+    graphData = setDataPoints();
+    console.log(graphData);
+    console.log(graphDataNames);
 
-    <script type="text/javascript" src="http://pipes.yahoo.com/pipes/pipe.run?_id=641d127f63df1a29127d53385132782d&_render=json&_callback=topcontentCallback"></script>
-  </body>
+
+    console.log(maxDataPoint);
+    var graph = document.createElement('img');
+    graph.src = "http://www.google.com/chart?cht=bhs&chs=500x160&chd=t:"+graphData.join(',')+"&chco=3072F3&chls=1,3.75,1&chxt=x,y&chxl=1:|"+graphDataNames.join('|')+"&chxr=0,0,"+maxDataPoint+"&chtt=Top+Ranked+AJAX+Search+Pages&chbh=20,2&chg=20,5,5,4";
+    console.log(graph.src);
+    document.getElementById("popularPosts").appendChild(graph);
+  }
+
+  </script>
+
+  <script type="text/javascript" src="http://pipes.yahoo.com/pipes/pipe.run?_id=641d127f63df1a29127d53385132782d&_render=json&_callback=topcontentCallback"></script>
+</body>
 </html>
 
 
