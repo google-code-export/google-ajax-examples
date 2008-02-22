@@ -3,20 +3,18 @@
 
 </head>
 <body>
-  <div id="popularPosts">
-
-  </div>
-
 
   <script type="text/javascript">
   var maxDataPoint = 0;
   var graphDataNames = [];
   var graphData = [];
-  function storeData(obj) {
+  var dataObject = null;
+  
+  function storeData(obj, columnToDisplay) {
     for (var i=0; i < 5; i++) {
       var regex = /\/apis\/ajaxsearch\/(.*)/;
       var relaURL = obj.value.items[i].Key.match(regex)[1];
-      var pageViews = obj.value.items[i].Cell[0].Primary;
+      var pageViews = obj.value.items[i].Cell[columnToDisplay].Primary;
 
 
       pageViews = parseFloat(pageViews.replace(',',''));
@@ -46,23 +44,82 @@
     for (var i=0; i < graphData.length; i++) {
       graphData[i] = Math.floor(100*graphData[i] / maxDataPoint);
     }
-    return(graphData);      
+    return(graphData);
   }
 
   function topcontentCallback(obj) {
-    var graphData = storeData(obj);
+    var html = '<select id="graphData" onchange="changeGraphData(this.value);">';
+    html += '<option value=0>Page Views</option>';
+    html += '<option value=1>Unique Page Views</option>';
+    html += '</select>';
+    html += '<div id="popularPosts">';
+    html += '</div>';
+    document.getElementsByTagName('body')[0].innerHTML = html;
+    dataObject = obj;
+    
+    insertGraph(0);
+  }
+  
+  function insertGraph(dataColumnToDisplay) {
+    storeData(dataObject, dataColumnToDisplay);
     setMaxPoint();
     graphData = setDataPoints();
+    var title = 'AJAX+Search+Pages+';
+    title += dataColumnToDisplay == 0 ? '(Page+Views+Today)' : '(Unique+Page+Views+Today)';
+    
+    
+    sortArrays();
+
+    
+    var graph = document.createElement('img');
+    graph.src = "http://www.google.com/chart?cht=bhs&chs=500x160&chd=t:"+graphData.join(',')+"&chco=3072F3&chls=1,3.75,1&chxt=x,y&chxl=1:|"+graphDataNames.join('|')+"&chxr=0,0,"+maxDataPoint+"&chtt="+title+"&chbh=20,2&chg=20,5,5,4";
+    
     console.log(graphData);
     console.log(graphDataNames);
-
-
     console.log(maxDataPoint);
-    var graph = document.createElement('img');
-    graph.src = "http://www.google.com/chart?cht=bhs&chs=500x160&chd=t:"+graphData.join(',')+"&chco=3072F3&chls=1,3.75,1&chxt=x,y&chxl=1:|"+graphDataNames.join('|')+"&chxr=0,0,"+maxDataPoint+"&chtt=Top+Ranked+AJAX+Search+Pages&chbh=20,2&chg=20,5,5,4";
     console.log(graph.src);
+    
+    
     document.getElementById("popularPosts").appendChild(graph);
   }
+  
+  function sortArrays() {
+    var changed = true;
+// simple bubble sort
+    while(changed) {
+      changed = false;
+      for (var i=0; i < graphData.length; i++) {
+        if(i != graphData.length-1) {
+          if(graphData[i] < graphData[i+1]) {
+            var tempData = graphData[i];
+            graphData[i] = graphData[i+1];
+            graphData[i+1] = tempData;
+            
+            var tempData = graphDataNames[i];
+            graphDataNames[i] = graphDataNames[i+1];
+            graphDataNames[i+1] = tempData;
+            
+            changed = true;
+          }
+        }
+      }
+    }
+  }
+  
+  
+  function resetData() {
+    maxDataPoint = 0;
+    graphDataNames = [];
+    graphData = [];
+    document.getElementById("popularPosts").innerHTML = '';
+  }
+  
+  
+  function changeGraphData(clickValue) {
+    resetData();
+    insertGraph(clickValue)
+  }
+  
 
   </script>
 
