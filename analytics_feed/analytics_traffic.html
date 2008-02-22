@@ -23,7 +23,7 @@
         if(parseFloat(pageViews) > maxDataPoint) {
           maxDataPoint = pageViews;
         }
-        graphDataNames.push(relaURL);
+        graphDataNames.unshift(relaURL);
         graphData.push(pageViews);
       }
     }
@@ -62,7 +62,7 @@
       console.log(maxDataPoint);
       var graph = document.createElement('img');
       graph.src = "http://www.google.com/chart?cht=bhs&chs=500x160&chd=t:"+graphData.join(',')+"&chco=3072F3&chls=1,3.75,1&chxt=x,y&chxl=1:|"+graphDataNames.join('|')+"&chxr=0,0,"+maxDataPoint+"&chtt=Top+Ranked+AJAX+Search+Pages&chbh=20,2&chg=20,5,5,4";
-      
+      console.log(graph.src);
       document.getElementById("popularPosts").appendChild(graph);
       
       
