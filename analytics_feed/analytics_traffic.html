@@ -10,7 +10,7 @@
   var graphData = [];
   var dataObject = null;
   
-  function storeData(obj, columnToDisplay) {
+  function storeData(obj, columnToDisplay, graphType) {
     for (var i=0; i < 5; i++) {
       var regex = /\/apis\/ajaxsearch\/(.*)/;
       var relaURL = obj.value.items[i].Key.match(regex)[1];
@@ -21,7 +21,8 @@
       if(parseFloat(pageViews) > maxDataPoint) {
         maxDataPoint = pageViews;
       }
-      graphDataNames.unshift(relaURL);
+
+      graphType == 0 ? graphDataNames.unshift(relaURL) : graphDataNames.push(relaURL);
       console.log(pageViews);
       graphData.push(pageViews);
     }
@@ -48,20 +49,24 @@
   }
 
   function topcontentCallback(obj) {
-    var html = '<select id="graphData" onchange="changeGraphData(this.value);">';
+    var html = '<select id="dataColumn" onchange="changeGraph();">';
     html += '<option value=0>Page Views</option>';
     html += '<option value=1>Unique Page Views</option>';
+    html += '</select>';
+    html += '<select id="graphType" onchange="changeGraph();">';
+    html += '<option value=0>Bar (horizontal)</option>';
+    html += '<option value=1>Pie</option>';
     html += '</select>';
     html += '<div id="popularPosts">';
     html += '</div>';
     document.getElementsByTagName('body')[0].innerHTML = html;
     dataObject = obj;
     
-    insertGraph(0);
+    insertGraph(0, 0);
   }
   
-  function insertGraph(dataColumnToDisplay) {
-    storeData(dataObject, dataColumnToDisplay);
+  function insertGraph(dataColumnToDisplay, graphType) {
+    storeData(dataObject, dataColumnToDisplay, graphType);
     setMaxPoint();
     graphData = setDataPoints();
     var title = 'AJAX+Search+Pages+';
@@ -72,7 +77,11 @@
 
     
     var graph = document.createElement('img');
-    graph.src = "http://www.google.com/chart?cht=bhs&chs=500x160&chd=t:"+graphData.join(',')+"&chco=3072F3&chls=1,3.75,1&chxt=x,y&chxl=1:|"+graphDataNames.join('|')+"&chxr=0,0,"+maxDataPoint+"&chtt="+title+"&chbh=20,2&chg=20,5,5,4";
+    if(graphType == 0) {
+      graph.src = "http://www.google.com/chart?cht=bhs&chs=500x160&chd=t:"+graphData.join(',')+"&chco=3072F3&chls=1,3.75,1&chxt=x,y&chxl=1:|"+graphDataNames.join('|')+"&chxr=0,0,"+maxDataPoint+"&chtt="+title+"&chbh=20,2&chg=20,5,5,4";
+    } else {
+      graph.src = "http://www.google.com/chart?cht=p3&chs=470x150&chd=t:"+graphData.join(',')+"&chco=3072F3&chls=2,4,1&chdl=Data&chxt=x,y&chtt="+title+"&chxl=0:|"+graphDataNames.join('|');
+    }
     
     console.log(graphData);
     console.log(graphDataNames);
@@ -81,6 +90,7 @@
     
     
     document.getElementById("popularPosts").appendChild(graph);
+
   }
   
   function sortArrays() {
@@ -115,9 +125,12 @@
   }
   
   
-  function changeGraphData(clickValue) {
+  function changeGraph() {
+    var dataColumn = document.getElementById('dataColumn').value;
+    var graphType = document.getElementById('graphType').value;
+
     resetData();
-    insertGraph(clickValue)
+    insertGraph(dataColumn, graphType);
   }
   
 
