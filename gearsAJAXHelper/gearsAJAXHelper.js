@@ -33,7 +33,7 @@
      * Called to initialize the library.
      */
     initialize : function(dbname, storename, cacheResources) {
-      if(!this._gearsInstalled() || typeof dbname != 'string' || 
+      if(!this.gearsInstalled() || typeof dbname != 'string' || 
          typeof storename != 'string') {
         return;
       }
@@ -62,7 +62,7 @@
      * A function for refreshing the Database and LocalServer
      */
     refresh : function() {
-      if(!this._gearsInstalled()) {
+      if(!this.gearsInstalled()) {
         return;
       }
       if(this._cacheResources) {
@@ -76,7 +76,7 @@
      * For returning the VALUE associated with a KEY
      */
     returnKeyVal : function(key) {
-      if(!this._gearsInstalled()) {
+      if(!this.gearsInstalled()) {
         return;
       }
       var rs = this._db.execute('SELECT * FROM ' + this._dbName + 
@@ -91,7 +91,7 @@
      * For storing a KEV/VALUE pair in the local Database.
      */
     storeKeyVal : function(key, value) {
-      if(!this._gearsInstalled()) {
+      if(!this.gearsInstalled()) {
         return;
       }
       if(!this.returnKeyVal(key)) {
@@ -222,7 +222,7 @@
     /** 
      * Returns true/false if Gears is installed or not.
      */
-    _gearsInstalled : function() {
+    gearsInstalled : function() {
       return (!window.google || !google.gears) ? false : true;
     }
   }

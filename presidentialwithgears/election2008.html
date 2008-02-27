@@ -265,7 +265,7 @@ limitations under the License.
 </head>
 <body>
   <div id="election2008">
-    <div id="gearsdisclaimer"><center><img border=0 src="icon_small.png"/><a href="http://gears.google.com/">Install Gears for Faster Results</center></a></div>
+    <div id="gearsdisclaimer" style="display:none;"><center><img border=0 src="icon_small.png"/><a href="http://gears.google.com/">Install Gears for Faster Results</center></a></div>
     <div id="header">&nbsp;</div>
     <div id="newsColumn">
       <div class="core-box">
@@ -328,6 +328,9 @@ limitations under the License.
   </div>
   <script type="text/javascript" charset="utf-8">
     gearsAJAXHelper.initialize("election", "election", false);
+    if(!gearsAJAXHelper.gearsInstalled()) {
+      document.getElementById('gearsdisclaimer').style.display = 'inline';
+    }
   </script>
 <script src="http://www.google.com/jsapi?key=ABQIAAAA1XbMiDxx_BTCY2_FkPh06RTkaoGH2D6LxpY8UsEdablylGHRYhSYAEULg1z-1Xjq3JQHHYRaBBtiaA" type="text/javascript"></script>
 <script src="gsnewsbox.js" type="text/javascript"></script>
