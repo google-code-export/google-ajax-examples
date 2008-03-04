@@ -110,7 +110,7 @@ NewsBox.fetch = function(query, cb) {
 NewsBox.prototype.loadNewsBox = function(query, title) {
   this.headerTitle = title;
   var html = gearsAJAXHelper.returnKeyVal(query);
-
+  this.lastQuery = query;
   if(html && query != 'united states any_politics') {
     console.log("Query: " + query + " -- loaded from Gears.");
     var newsBoxDiv = document.getElementById('newsbox');
@@ -123,7 +123,6 @@ NewsBox.prototype.loadNewsBox = function(query, title) {
     this.footer = this.root.childNodes[2];
     this.news.execute(query);
   } else {
-    this.lastQuery = query;
     this.news.execute(query);
   }
 }
