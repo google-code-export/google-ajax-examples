@@ -24,7 +24,8 @@ function NewsBox(container, opt_options) {
   this.currentResult = null;
   this.moreTitle = "Read More";
   this.autoOpenMode = false;
-
+  this.lastQuery = "";
+  
   // animation stuff (todo allow override, smoothing?)
   this.animate = false;
   this.deltaPx = 12;
@@ -109,7 +110,7 @@ NewsBox.fetch = function(query, cb) {
 NewsBox.prototype.loadNewsBox = function(query, title) {
   this.headerTitle = title;
   var html = gearsAJAXHelper.returnKeyVal(query);
-  
+
   if(html && query != 'united states any_politics') {
     console.log("Query: " + query + " -- loaded from Gears.");
     var newsBoxDiv = document.getElementById('newsbox');
@@ -122,6 +123,7 @@ NewsBox.prototype.loadNewsBox = function(query, title) {
     this.footer = this.root.childNodes[2];
     this.news.execute(query);
   } else {
+    this.lastQuery = query;
     this.news.execute(query);
   }
 }
@@ -164,8 +166,8 @@ NewsBox.prototype.searchComplete = function() {
         }
       }
       var html = document.getElementById('newsbox').innerHTML;
-      gearsAJAXHelper.storeKeyVal(this.news.Cb, html);
-      console.log("Query: " + this.news.Cb + " -- loaded from Internet.");
+      gearsAJAXHelper.storeKeyVal(this.lastQuery, html);
+      console.log("Query: " + this.lastQuery + " -- loaded from Internet.");
 
     } else {
       // todo mark as no results? Whats the
