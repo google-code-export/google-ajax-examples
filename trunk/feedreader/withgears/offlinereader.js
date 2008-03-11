@@ -2,7 +2,7 @@ var feeds = {};
 var storeName = 'offlinereader';
 var db;
 
-if (google) {
+if (google && google.load) {
   google.load('feeds', '1');
 }
 
