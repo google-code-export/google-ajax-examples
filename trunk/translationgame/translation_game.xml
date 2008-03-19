@@ -50,7 +50,7 @@
           <option value="it|en">Italian to English</option>
           <option value="ja|en">Japanese to English</option>
           <option value="ko|en">Korean to English</option>
-          <option value="pt|en">Portuguese to English</option>
+          <option value="pt-PT|en">Portuguese to English</option>
           <option value="se|en">Spanish to English</option>
           <option value="ru|en">Russian to English</option>
         </select>
