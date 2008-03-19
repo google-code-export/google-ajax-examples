@@ -184,7 +184,7 @@ TranslationGame.prototype.inputClosure = function(self, input) {
     var userAnswerFieldset = _gel('user_answer_fieldset');
     
     if(input.value.toLowerCase() == self.answer.toLowerCase()) {
-      this.correctWord(self);
+      self.correctWord(self);
     } else {
       userAnswerFieldset.style.border = '1px solid red';
       for(i in userAnswerFieldset.childNodes) {
