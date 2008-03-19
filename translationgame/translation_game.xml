@@ -31,16 +31,6 @@
           <option class="line-above" value="zh-CN|zh-TW">Chinese (Simplified to Traditional) BETA</option>
           <option value="zh-TW|zh-CN">Chinese (Traditional to Simplified) BETA</option>
           <option class="line-above" value="en|ar">English to Arabic BETA</option>
-          <option value="en|zh-CN">English to Chinese (Simplified) BETA</option>
-          <option value="en|zh-TW">English to Chinese (Traditional) BETA</option>
-          <option value="en|fr">English to French</option>
-          <option value="en|de">English to German</option>
-          <option value="en|it">English to Italian</option>
-          <option value="en|ja">English to Japanese BETA</option>
-          <option value="en|ko">English to Korean BETA</option>
-          <option value="en|pt">English to Portuguese</option>
-          <option value="en|ru">English to Russian BETA</option>
-          <option value="en|es">English to Spanish</option>
           <option class="line-above" value="fr|en">French to English</option>
           <option value="fr|de">French to German</option>
           <option class="line-above" value="de|en">German to English</option>
@@ -50,6 +40,16 @@
           <option value="ko|en">Korean to English BETA</option>
           <option value="pt|en">Portuguese to English</option>
           <option value="ru|en">Russian to English BETA</option>
+          <option value="se|en">Spanish to English</option>
+          <option value="en|zh-CN">English to Chinese (Simplified) BETA</option>
+          <option value="en|zh-TW">English to Chinese (Traditional) BETA</option>
+          <option value="en|fr">English to French</option>
+          <option value="en|de">English to German</option>
+          <option value="en|it">English to Italian</option>
+          <option value="en|ja">English to Japanese BETA</option>
+          <option value="en|ko">English to Korean BETA</option>
+          <option value="en|pt">English to Portuguese</option>
+          <option value="en|ru">English to Russian BETA</option>
           <option selected="" value="en|es">English to Spanish</option>
         </select>
         <br/>
