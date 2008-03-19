@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+    <ModulePrefs
+        title="__MSG_title__"
+        directory_title="Google Feed Gadget"
+        title_url="http://www.google.com/uds/solutions/dynamicfeed/index.html"
+        description="__MSG_description__"
+        author="Derek C."
+        author_affiliation="Google Inc."
+        author_location="Atherton, CA"
+        author_email="DerekC.Feedback+DynamicFeedgadget@gmail.com"
+	screenshot="/ig/modules/dynamicfeed.png"
+	thumbnail="/ig/modules/dynamicfeed-thm.png"
+        scrolling="false"
+        scaling="false"
+        singleton="false"
+        category="tools"
+     >
+     <Locale messages="dynamicfeed_content/ALL_ALL.xml"/>
+
+     <Require feature="google-domain"/>
+     <Require feature="setprefs"/>
+     <Require feature="settitle"/>
+     <Require feature="dynamic-height"/>
+     
+    </ModulePrefs>
+    <UserPref
+      name="category"
+      display_name="__MSG_fg_category__"
+      datatype="string"
+      default_value="Hollywood"/> 
+    <UserPref
+      name="query"
+      display_name="__MSG_fg_query__"
+      datatype="string"
+      default_value="People, E-Online"/> 
+    <UserPref
+      name="numresults"
+      display_name="__MSG_fg_numresults__"
+      datatype="string"
+      default_value="4"/> 
+
+    <UserPref
+      name="saved"
+      default_value=""
+      datatype="hidden"/> 
+
+    <UserPref
+      name="feeds_json"
+      default_value=""
+      datatype="hidden"/> 
+
+<Content type="html"> <![CDATA[
+
+  <script src="http://www.google.com/jsapi?key=internal-ig-feedgadget"
+    type="text/javascript"></script>
+  <script src="http://www.google.com/uds/loader?file=feeds&v=1"
+    type="text/javascript"></script>
+  <script src="http://www.lisbakken.com/gadgets/dynamicfeed/gfdynamicfeedcontrol23.js" type="text/javascript"></script>
+  <script src="/ig/modules/todo_content/json.js"
+    type="text/javascript"></script>
+
+  <style type="text/css">
+    @import url("http://www.google.com/uds/solutions/dynamicfeed/gfdynamicfeedcontrol.css");
+    .gfg-list {
+      display:none;
+    }
+    .loading__MODULE_ID__ {
+      width: 100%;
+      padding-top: 30px;
+      font-size : 16px;
+      text-align : center;
+      color : #aaaaaa;
+    }
+    .feedgadget__MODULE_ID__ {
+      
+      width : 100%;
+      font-size : 12px;
+    }
+    .feedgadget__MODULE_ID__ .gfg-root {
+      border : none;
+      margin-left : -5px;
+    }
+    .feedgadget__MODULE_ID__ .gfg-root .gfg-title {
+      display : none;
+    }
+    .feedgadget__MODULE_ID__ .gfg-root .gfg-subtitle {
+      text-align: left;
+      padding-left: 8px;
+    }
+    .feedgadget__MODULE_ID__ .gfg-root .gfg-entry {
+      margin-top : 0px;
+      height : 6.8em;
+    }
+    .feedgadget__MODULE_ID__ .gfg-root .gfg-entry .gf-result {
+      padding-left : 12px;
+    }
+    .feedgadget__MODULE_ID__ .gfg-root .gfg-listentry {
+      padding-left : 7px;
+      padding-right : 0px;
+      margin-right : 0px;
+    }
+    .feedgadget__MODULE_ID__ .gfg-root .gfg-listentry-highlight {
+      border-left: 2px solid rgb(235,220,10);
+      padding-left : 5px;
+      background-image : none;
+    }
+    .gfg-collapse-closed {
+      background-image: url(http://www.lisbakken.com/gadgets/dynamicfeed/arrow_close.gif);
+      background-repeat:no-repeat;
+      background-position:center; 
+    }
+    .gfg-collapse-open {
+      background-image: url(http://www.lisbakken.com/gadgets/dynamicfeed/arrow_open.gif);
+      background-repeat:no-repeat;
+      background-position:center; 
+    }
+  </style>
+
+  <script type="text/javascript">
+
+    function OnLoad__MODULE_ID__() {
+      new fg__MODULE_ID__();
+    }
+    _IG_RegisterOnloadHandler(OnLoad__MODULE_ID__);
+
+    function fg__MODULE_ID__() {
+      // Browser fun..
+      if (window.ActiveXObject) {
+        this.ie = this[window.XMLHttpRequest ? 'ie7' : 'ie6'] = true;
+      } else if (document.childNodes && !document.all &&
+	         !navigator.taintEnabled) {
+	 this.safari = true;
+      } else if (document.getBoxObjectFor != null) {
+	this.gecko = true;
+      }
+
+      this.loadFeeds();
+    }
+
+    fg__MODULE_ID__.prototype.loadFeeds = function() {
+      this.prefs = null;
+      this.prefs = new _IG_Prefs(__MODULE_ID__);
+      this.category = this.prefs.getString('category');
+      if (this.category) {
+        _IG_SetTitle(this.category, __MODULE_ID__);
+        var loading = _gel('loading__MODULE_ID__');
+        loading.innerHTML = '__MSG_loading_simple__ ' +
+        _hesc(this.category) + '...'; 
+      }	
+      var query = this.prefs.getString('query');
+      var saved = this.prefs.getString('saved');
+      var feeds = this.prefs.getString('feeds_json');
+
+      if (saved == query && feeds) {
+	      this.feeds = eval(feeds);
+        this.showGadget();
+      } else {
+        query = query.replace(/, +/g, ',');
+        var queries = query.split(',');
+        this.findFeeds(queries);
+      }
+    }
+    
+    fg__MODULE_ID__.prototype.isURL = function(url) {
+      var arf = url.match(/^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$/i);
+      return arf;
+    }
+    
+    fg__MODULE_ID__.prototype.findFeeds = function(queries) {
+      this.feeds = [];
+      this.expected = queries.length;
+      for (var i=0; i < queries.length; i++) {
+	var self = this;
+	var cb = function(result) { self.feedSearchDone(result); };
+      if(this.isURL(queries[i])) {
+        var result = {
+          entries : [{url : queries[i]}]
+        };
+        this.feedSearchDone(result);
+      } else {
+        google.feeds.findFeeds(queries[i], cb);
+      }
+        
+      }
+    }
+	
+    fg__MODULE_ID__.prototype.feedSearchDone = function(result) {
+      if (!result.error && result.entries.length > 0) {
+        var obj = { url:result.entries[0].url, title:result.query };
+	this.feeds.push(obj);
+      } else {
+        this.expected--;
+      }
+      if (this.feeds.length == this.expected) {
+	// Save state
+	this.prefs.set('saved', this.prefs.getString('query'));
+	  this.prefs.set('feeds_json', JSON.stringify(this.feeds));
+        this.showGadget();
+      }
+    }
+
+    fg__MODULE_ID__.prototype.showGadget = function() {
+      var num = this.prefs.getString('numresults');
+      var self = this;
+      var options = {
+        numResults : num,
+        stacked : ((this.feeds.length > 1) ? true : false),
+        displayTime : 7500,
+        transitionTime : 2000,
+        hoverTime : 90,
+        scrollOnFadeOut : false,
+        collapseable : true,
+        sortByDate : true,
+        feedLoadCallback : _IG_AdjustIFrameHeight
+      };
+      new GFdynamicFeedControl(this.feeds, 'feedgadget__MODULE_ID__', options);
+    }
+
+    fg__MODULE_ID__.prototype.grabThemeColors = function() {
+      this.theme = {
+	fg: '#cccccc',
+	bg: '#ffffff'
+      };
+
+      var bg_style = (this.ie ? "backgroundColor" : "background-color");
+      var mtitle = _gel("m___MODULE_ID___h").parentNode;
+
+      if (mtitle.currentStyle) {
+        this.theme.bg = mtitle.currentStyle[bg_style];
+	this.theme.fg = mtitle.currentStyle['color'];
+      } else if (document.defaultView && document.defaultView.getComputedStyle) {
+	var cs = document.defaultView.getComputedStyle(mtitle,null);
+        this.theme.bg = cs.getPropertyValue(bg_style);
+	this.theme.fg = cs.getPropertyValue('color');
+      }
+
+      var newStyle = document.createElement('style');
+      var styleText = ".feedgadget__MODULE_ID__ .gfg-root " +
+	".gfg-listentry-highlight {border-left: 2px solid " + this.theme.fg +
+        ";}";
+
+      styleText += ".feedgadget__MODULE_ID__ .gfg-root " +
+	".gfg-subtitle {background-color:" + this.theme.bg + ";}";
+
+      styleText += ".feedgadget__MODULE_ID__ .gfg-root " +
+	".gfg-subtitle a {color:" + this.theme.fg + ";}";
+
+      var head = document.getElementsByTagName('head')[0];
+      head.appendChild(newStyle);
+
+      if (this.ie) {
+	newStyle.styleSheet.cssText = styleText;
+      } else {
+	newStyle.appendChild(document.createTextNode(styleText));
+      }
+    }
+
+</script>
+
+  <div class="feedgadget__MODULE_ID__" id="feedgadget__MODULE_ID__"> 
+    <div class="loading__MODULE_ID__" id="loading__MODULE_ID__">
+	__MSG_loading__
+    </div>
+  </div>
+
+]]>
+</Content>
+</Module>
