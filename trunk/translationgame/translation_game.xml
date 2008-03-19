@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<Module>
+  <ModulePrefs title="Language Learner" 
+  author_location="Mountain View, CA" 
+  author_email="lisbakke.feedback+translationgame@gmail.com"
+  author_affiliation="Google" 
+  description="This gadget uses the Google AJAX Language API and Google AJAX Search API to help you learn new languages.  It quizzes you on nouns in other languages.">
+    <Require feature="dynamic-height" /> 
+  </ModulePrefs>
+  <UserPref name="show_pictures" datatype="bool" default_value="false" display_name="Show Picture Hints" />
+  <Content type="html">
+    <![CDATA[
+    <head>
+      <script src="http://www.google.com/jsapi?key=internal" type="text/javascript"></script>
+      <style type="text/css" media="screen">
+        legend {
+          color:black;
+          font-size:10px;
+        }
+        
+        fieldset {
+          border:1px solid black;
+        }
+      </style>
+    </head>
+    <body>
+      <div id="main">
+        <select name="langpair" id="langpair" style="font-size:9px;">
+          <option value="ar|en">Arabic to English BETA</option>
+          <option value="zh|en">Chinese to English BETA</option>
+          <option class="line-above" value="zh-CN|zh-TW">Chinese (Simplified to Traditional) BETA</option>
+          <option value="zh-TW|zh-CN">Chinese (Traditional to Simplified) BETA</option>
+          <option class="line-above" value="en|ar">English to Arabic BETA</option>
+          <option value="en|zh-CN">English to Chinese (Simplified) BETA</option>
+          <option value="en|zh-TW">English to Chinese (Traditional) BETA</option>
+          <option value="en|fr">English to French</option>
+          <option value="en|de">English to German</option>
+          <option value="en|it">English to Italian</option>
+          <option value="en|ja">English to Japanese BETA</option>
+          <option value="en|ko">English to Korean BETA</option>
+          <option value="en|pt">English to Portuguese</option>
+          <option value="en|ru">English to Russian BETA</option>
+          <option value="en|es">English to Spanish</option>
+          <option class="line-above" value="fr|en">French to English</option>
+          <option value="fr|de">French to German</option>
+          <option class="line-above" value="de|en">German to English</option>
+          <option value="de|fr">German to French</option>
+          <option class="line-above" value="it|en">Italian to English</option>
+          <option value="ja|en">Japanese to English BETA</option>
+          <option value="ko|en">Korean to English BETA</option>
+          <option value="pt|en">Portuguese to English</option>
+          <option value="ru|en">Russian to English BETA</option>
+          <option selected="" value="en|es">English to Spanish</option>
+        </select>
+        <br/>
+        <br/>
+        
+        <div id="words" style="float:left;font-size:12px;"></div><div style="float:right;font-size:12px;">Score: <span id="score">0/0</span></div><br style="clear:both;" />
+        <fieldset id="user_answer_fieldset">
+          <legend>Answer</legend>
+          <input type="text" id="user_answer" size="15" />
+          <input type="button" id="next_clicker" value="next word" />
+          <input type="button" id="cheat_clicker" value="cheat" />
+        </fieldset>
+      </div>
+
+      <div id="results">
+        <div id="branding"></div>
+      </div>
+
+      <script type="text/javascript" src="http://www.lisbakken.com/gadgets/translation_game/translation_game.js"></script>
+
+    </body>
+
+
+    ]]>
+  </Content> 
+</Module>
