@@ -4,7 +4,7 @@ google.load("search", "1");
 google.setOnLoadCallback(initialize);
 
 function initialize() {
-  _IG_FetchContent('http://www.lisbakken.com/gadgets/translation_game/allNouns.json', function (responseText) {
+  _IG_FetchContent('http://google-ajax-examples.googlecode.com/svn/trunk/translationgame/allNouns.json', function (responseText) {
     eval(responseText);
     var translation_game = new TranslationGame(nouns);
     GSearch.getBranding(_gel('branding'));
