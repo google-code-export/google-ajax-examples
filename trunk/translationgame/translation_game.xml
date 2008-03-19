@@ -11,7 +11,7 @@
   <Content type="html">
     <![CDATA[
     <head>
-      <script src="http://www.google.com/jsapi?key=internal" type="text/javascript"></script>
+      <script src="http://www.google.com/jsapi" type="text/javascript"></script>
       <style type="text/css" media="screen">
         legend {
           color:black;
@@ -68,7 +68,7 @@
         <div id="branding"></div>
       </div>
 
-      <script type="text/javascript" src="http://www.lisbakken.com/gadgets/translation_game/translation_game.js"></script>
+      <script type="text/javascript" src="http://google-ajax-examples.googlecode.com/svn/trunk/translationgame/translation_game.js"></script>
 
     </body>
 
