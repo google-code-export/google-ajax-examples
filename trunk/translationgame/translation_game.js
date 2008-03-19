@@ -21,7 +21,7 @@ function PreloadedWord() {
 }
 
 PreloadedWord.prototype.setNoun = function(noun) {
-  this.noun = noun;
+  this.noun = noun.toLowerCase();
   this.doneLoading = this.checkDone();
 }
 
