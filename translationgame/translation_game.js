@@ -47,7 +47,7 @@ PreloadedWord.prototype.setImages = function(images) {
 
 PreloadedWord.prototype.checkDone = function() {
   // if(this.noun && this.answer && this.numLoaded == this.numTotal && this.images) {
-  console.log('showpics: ' + this.showPics);
+  // console.log('showpics: ' + this.showPics);
   if(this.noun && this.answer && this.showPics == true && this.images != null) {
     console.log('we got images 1')
     return true;
@@ -64,6 +64,7 @@ PreloadedWord.prototype.checkDone = function() {
 function TranslationGame(nouns) {
   this.prefs = new _IG_Prefs();
   this.showPics = this.prefs.getBool("show_pictures");
+  console.log('showpics: ' + this.showPics);
   this.currentWord = null;
   this.answer = null;
   this.timePerQuestion = 15000; // 15 seconds per question
