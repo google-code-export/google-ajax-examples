@@ -20,6 +20,7 @@
         }
         body {
           background-color: #CCCCCC;
+          height: 340px;
         }
         fieldset {
           border:1px solid black;
@@ -67,12 +68,14 @@
           <input type="button" id="next_clicker" value="next word" />
           <input type="button" id="cheat_clicker" value="cheat" />
         </fieldset>
+        
+          <div id="results">
+            <div id="branding"></div>
+          </div>
+        </body>
       </div>
 
-      <div id="results">
-        <div id="branding"></div>
-      </div>
-    </body>
+
 
 
     ]]>
