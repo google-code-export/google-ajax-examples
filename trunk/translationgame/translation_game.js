@@ -51,7 +51,7 @@ PreloadedWord.prototype.checkDone = function() {
     return true;
   }
 
-  if(this.noun && this.answer && this.showPics) {
+  if(this.noun && this.answer && !this.showPics) {
     return true;
   }
 
