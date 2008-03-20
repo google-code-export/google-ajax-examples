@@ -46,15 +46,11 @@ PreloadedWord.prototype.setImages = function(images) {
 }
 
 PreloadedWord.prototype.checkDone = function() {
-  // if(this.noun && this.answer && this.numLoaded == this.numTotal && this.images) {
-  // console.log('showpics: ' + this.showPics);
-  if(this.noun && this.answer && this.showPics == true && this.images != null) {
-    console.log('we got images 1')
+  if(this.noun && this.answer && this.showPics && this.images) {
     return true;
   }
 
-  if(this.noun && this.answer && this.showPics == false) {
-    console.log('we got images 2')
+  if(this.noun && this.answer && this.showPics) {
     return true;
   }
 
@@ -64,7 +60,6 @@ PreloadedWord.prototype.checkDone = function() {
 function TranslationGame(nouns) {
   this.prefs = new _IG_Prefs();
   this.showPics = this.prefs.getBool("show_pictures");
-  console.log('showpics: ' + this.showPics);
   this.currentWord = null;
   this.answer = null;
   this.timePerQuestion = 15000; // 15 seconds per question
@@ -76,11 +71,10 @@ function TranslationGame(nouns) {
   this.scoreEl = _gel('score');
 
   if(this.showPics) {
-    _gel('picturesFieldset').style.display = "block";
-    // var fieldset = document.createElement('fieldset');
-    // fieldset.innerHTML = '<legend>Picture Hints</legend><div id="pictures"></div>';
-    // var results = _gel('results');
-    // results.insertBefore(fieldset, results.childNodes[0]);
+    var fieldset = document.createElement('fieldset');
+    fieldset.innerHTML = '<legend>Picture Hints</legend><div id="pictures"></div>';
+    var results = _gel('results');
+    results.insertBefore(fieldset, results.childNodes[0]);
   } else {
     _IG_AdjustIFrameHeight();
   }
@@ -215,7 +209,6 @@ TranslationGame.prototype.initNewNoun = function() {
         this.answer = preloadWordObject.answer;
         this.displayWords(preloadWordObject);
         if(this.showPics) {
-          console.log(preloadWordObject);
           this.displayPictures(preloadWordObject);
           _IG_AdjustIFrameHeight();
         }
@@ -239,9 +232,8 @@ TranslationGame.prototype.displayWords = function(wordObject) {
 
 TranslationGame.prototype.displayPictures = function(wordObject) {
   var picturesDiv = _gel('pictures');
-  console.log(wordObject.images);
-  // picturesDiv.innerHTML = '';
-  // picturesDiv.appendChild(wordObject.images);
+  picturesDiv.innerHTML = '';
+  picturesDiv.appendChild(wordObject.images);
 }
 
 TranslationGame.prototype.grabRandomNoun = function() {
