@@ -71,11 +71,11 @@ function TranslationGame(nouns) {
   this.langpair = _gel("langpair").value.split('|');
   this.scoreEl = _gel('score');
 
-
   if(this.showPics) {
     var fieldset = document.createElement('fieldset');
     fieldset.innerHTML = '<legend>Picture Hints</legend><div id="pictures"></div>';
-    _gel('results').insertBefore(fieldset, _gel('results').childNodes[0]);
+    var results = _gel('results');
+    results.insertBefore(fieldset, results.childNodes[0]);
   } else {
     _IG_AdjustIFrameHeight();
   }
@@ -232,10 +232,9 @@ TranslationGame.prototype.displayWords = function(wordObject) {
 }
 
 TranslationGame.prototype.displayPictures = function(wordObject) {
-  var picturesDiv = _gel('results');
-  console.log(picturesDiv);
-  // picturesDiv.innerHTML = '';
-  // picturesDiv.appendChild(wordObject.images);
+  var picturesDiv = _gel('pictures');
+  picturesDiv.innerHTML = '';
+  picturesDiv.appendChild(wordObject.images);
 }
 
 TranslationGame.prototype.grabRandomNoun = function() {
