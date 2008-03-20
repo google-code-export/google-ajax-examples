@@ -11,10 +11,11 @@ function initialize() {
   });
 }
 
-function PreloadedWord() {
+function PreloadedWord(showPics) {
   this.noun = null;
   this.answer = null;
   this.images = null;
+  this.showPics = showPics;
   // this.numLoaded = 0;
   // this.numTotal = 0;
   this.doneLoading = false;
@@ -46,7 +47,6 @@ PreloadedWord.prototype.setImages = function(images) {
 }
 
 PreloadedWord.prototype.checkDone = function() {
-  console.log(this.noun + " -- " + this.answer + " -- " + this.showPics + " -- " + this.images)
   if(this.noun && this.answer && this.showPics && this.images) {
     return true;
   }
@@ -92,7 +92,7 @@ TranslationGame.prototype.initPreLoader = function() {
 }
 
 TranslationGame.prototype.preloadWord = function() {
-  var newPreloadWord = new PreloadedWord();
+  var newPreloadWord = new PreloadedWord(this.showPics);
   var noun = this.grabRandomNoun();
   this.translate(this.langpair[0], this.langpair[1], newPreloadWord, noun);
   if(this.showPics) {
