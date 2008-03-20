@@ -47,12 +47,13 @@ PreloadedWord.prototype.setImages = function(images) {
 
 PreloadedWord.prototype.checkDone = function() {
   // if(this.noun && this.answer && this.numLoaded == this.numTotal && this.images) {
-  if(this.noun && this.answer && this.showPics && this.images != null) {
+  console.log('showpics: ' + this.showPics);
+  if(this.noun && this.answer && this.showPics == true && this.images != null) {
     console.log('we got images 1')
     return true;
   }
 
-  if(this.noun && this.answer && !this.showPics) {
+  if(this.noun && this.answer && this.showPics == false) {
     console.log('we got images 2')
     return true;
   }
