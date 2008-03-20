@@ -67,6 +67,12 @@
       </div>
 
       <div id="results">
+        <script type="text/javascript" charset="utf-8">
+          
+        </script>
+        <fieldset id="picturesFieldset" style="display:none;">
+          <legend>Picture Hints</legend><div id="pictures"></div>
+        </fieldset>
         <div id="branding"></div>
       </div>
 
