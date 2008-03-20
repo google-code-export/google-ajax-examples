@@ -46,6 +46,7 @@ PreloadedWord.prototype.setImages = function(images) {
 }
 
 PreloadedWord.prototype.checkDone = function() {
+  console.log(this.noun + " -- " + this.answer + " -- " + this.showPics + " -- " + this.images)
   if(this.noun && this.answer && this.showPics && this.images) {
     return true;
   }
