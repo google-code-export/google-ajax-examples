@@ -69,6 +69,9 @@
         </fieldset>
         
           <div id="results">
+            <fieldset id='fieldsetId' style='display:none'>
+              <legend>Picture Hints</legend><div id="pictures"></div>
+            </fieldset>            
             <div id="branding"></div>
           </div>
         </body>
