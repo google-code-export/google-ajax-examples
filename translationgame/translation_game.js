@@ -231,6 +231,7 @@ TranslationGame.prototype.displayPictures = function(wordObject) {
 }
 
 TranslationGame.prototype.resize = function(wordObject) {
+      console.log('shit, ' + wordObject.numImagesLoaded);
   if(wordObject.numImagesLoaded > 5) {
     _IG_AdjustIFrameHeight();
   } else {
