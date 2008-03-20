@@ -72,10 +72,11 @@ function TranslationGame(nouns) {
   this.scoreEl = _gel('score');
 
   if(this.showPics) {
-    var fieldset = document.createElement('fieldset');
-    fieldset.innerHTML = '<legend>Picture Hints</legend><div id="pictures"></div>';
-    var results = _gel('results');
-    results.insertBefore(fieldset, results.childNodes[0]);
+    _gel('picturesFieldset').style.display = "block";
+    // var fieldset = document.createElement('fieldset');
+    // fieldset.innerHTML = '<legend>Picture Hints</legend><div id="pictures"></div>';
+    // var results = _gel('results');
+    // results.insertBefore(fieldset, results.childNodes[0]);
   } else {
     _IG_AdjustIFrameHeight();
   }
