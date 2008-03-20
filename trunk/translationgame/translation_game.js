@@ -15,6 +15,7 @@ function PreloadedWord(showPics) {
   this.noun = null;
   this.answer = null;
   this.images = null;
+  this.numImagesLoaded = 0;
   this.showPics = showPics;
   this.doneLoading = false;
 }
@@ -32,6 +33,10 @@ PreloadedWord.prototype.setAnswer = function(answer) {
 PreloadedWord.prototype.setImages = function(images) {
   this.images = images;
   this.doneLoading = this.checkDone();
+}
+
+PreloadedWord.prototype.imageLoaded = function() {
+  this.numImagesLoaded++;
 }
 
 PreloadedWord.prototype.checkDone = function() {
@@ -197,10 +202,8 @@ TranslationGame.prototype.initNewNoun = function() {
         this.preloadedWords.push(this.preloadWord());
         this.answer = preloadWordObject.answer;
         this.displayWords(preloadWordObject);
-        _IG_AdjustIFrameHeight();
         if(this.showPics) {
           this.displayPictures(preloadWordObject);
-          _IG_AdjustIFrameHeight();
         }
         this.clearNoun();
         break;
@@ -224,6 +227,18 @@ TranslationGame.prototype.displayPictures = function(wordObject) {
   var picturesDiv = _gel('pictures');
   picturesDiv.innerHTML = '';
   picturesDiv.appendChild(wordObject.images);
+  this.resize(wordObject);
+}
+
+TranslationGame.prototype.resize = function(wordObject) {
+  if(wordObject.numImagesLoaded > 5) {
+    _IG_AdjustIFrameHeight();
+  } else {
+    var self = this;
+    window.setTimeout(function(){
+      self.resize(wordObject);
+    }, 100);
+  }
 }
 
 TranslationGame.prototype.grabRandomNoun = function() {
@@ -289,7 +304,9 @@ TranslationGame.prototype.searchComplete = function(searcher, preloadWord) {
     for (var i = 0; i < searcher.results.length; i++) {
       var result = searcher.results[i];
       var newImage = document.createElement('img');
-      
+      newImage.onload = function(){
+        preloadWord.imageLoaded();
+      };
       newImage.src = result.unescapedUrl;
       if(i == 4) {
         center.appendChild(document.createElement('br'));
