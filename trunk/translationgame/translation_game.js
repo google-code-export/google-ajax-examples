@@ -4,7 +4,7 @@ google.load("search", "1");
 google.setOnLoadCallback(initialize);
 
 function initialize() {
-  _IG_FetchContent('http://google-ajax-examples.googlecode.com/svn/trunk/translationgame/allNouns.json', function (responseText) {
+  _IG_FetchContent('allNouns.json', function (responseText) {
     eval(responseText);
     var translation_game = new TranslationGame(nouns);
     GSearch.getBranding(_gel('branding'));
@@ -16,8 +16,6 @@ function PreloadedWord(showPics) {
   this.answer = null;
   this.images = null;
   this.showPics = showPics;
-  // this.numLoaded = 0;
-  // this.numTotal = 0;
   this.doneLoading = false;
 }
 
@@ -30,16 +28,6 @@ PreloadedWord.prototype.setAnswer = function(answer) {
   this.answer = answer;
   this.doneLoading = this.checkDone();
 }
-
-// PreloadedWord.prototype.setNumImages = function(num) {
-//   this.numTotal = num;
-// }
-
-// PreloadedWord.prototype.imageLoaded = function() {
-//   this.numLoaded++;
-//   console.log(this.noun + " -- " + this.numLoaded);
-//   this.doneLoading = this.checkDone();
-// }
 
 PreloadedWord.prototype.setImages = function(images) {
   this.images = images;
@@ -297,13 +285,10 @@ TranslationGame.prototype.searchComplete = function(searcher, preloadWord) {
   if (searcher.results && searcher.results.length > 0) {
     var images = document.createElement('div');
     var center = document.createElement('center');
-    // preloadWord.setNumImages(searcher.results.length);
     for (var i = 0; i < searcher.results.length; i++) {
       var result = searcher.results[i];
       var newImage = document.createElement('img');
-      // newImage.onload = function() {
-      //   preloadWord.imageLoaded();
-      // };
+      
       newImage.src = result.unescapedUrl;
       if(i == 4) {
         center.appendChild(document.createElement('br'));

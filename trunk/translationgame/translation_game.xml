@@ -12,7 +12,7 @@
     <![CDATA[
     <head>
       <script src="http://www.google.com/jsapi" type="text/javascript"></script>
-      <script type="text/javascript" src="http://google-ajax-examples.googlecode.com/svn/trunk/translationgame/translation_game.js"></script>
+      <script type="text/javascript" src="translation_game.js"></script>
       <style type="text/css" media="screen">
         legend {
           color:black;
