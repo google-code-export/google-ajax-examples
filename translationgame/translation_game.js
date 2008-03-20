@@ -47,11 +47,13 @@ PreloadedWord.prototype.setImages = function(images) {
 
 PreloadedWord.prototype.checkDone = function() {
   // if(this.noun && this.answer && this.numLoaded == this.numTotal && this.images) {
-  if(this.noun && this.answer && this.showPics && this.images) {
+  if(this.noun && this.answer && this.showPics && this.images != null) {
+    console.log('we got images 1')
     return true;
   }
 
   if(this.noun && this.answer && !this.showPics) {
+    console.log('we got images 2')
     return true;
   }
 
@@ -211,6 +213,7 @@ TranslationGame.prototype.initNewNoun = function() {
         this.answer = preloadWordObject.answer;
         this.displayWords(preloadWordObject);
         if(this.showPics) {
+          console.log(preloadWordObject);
           this.displayPictures(preloadWordObject);
           _IG_AdjustIFrameHeight();
         }
