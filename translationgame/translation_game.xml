@@ -69,7 +69,7 @@
 
       <div id="results">
         <fieldset id="picturesFieldset" style="display:none;">
-          <legend>Picture Hints</legend><div id="pictures"></div>
+          <legend>Picture Hints</legend><div id="pictures">&nbsp;</div>
         </fieldset>
         <div id="branding"></div>
       </div>
