@@ -234,9 +234,9 @@ TranslationGame.prototype.displayWords = function(wordObject) {
 
 TranslationGame.prototype.displayPictures = function(wordObject) {
   var picturesDiv = _gel('pictures');
-  // console.log(picturesDiv);
-  picturesDiv.innerHTML = '';
-  picturesDiv.appendChild(wordObject.images);
+  console.log(wordObject.images);
+  // picturesDiv.innerHTML = '';
+  // picturesDiv.appendChild(wordObject.images);
 }
 
 TranslationGame.prototype.grabRandomNoun = function() {
