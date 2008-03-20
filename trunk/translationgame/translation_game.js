@@ -61,6 +61,7 @@ function TranslationGame(nouns) {
 
   if(this.showPics) {
     var fieldset = document.createElement('fieldset');
+    fieldset.style.height = '100px';
     fieldset.innerHTML = '<legend>Picture Hints</legend><div id="pictures"></div>';
     var results = _gel('results');
     results.insertBefore(fieldset, results.childNodes[0]);
