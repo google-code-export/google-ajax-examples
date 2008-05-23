@@ -1,0 +1,112 @@
+<!--
+   Copyright (c) 2008 Google Inc.
+ 
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+  
+       http://www.apache.org/licenses/LICENSE-2.0
+  
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+-->
+
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2008 Google, Inc. All Rights Reserved.
+  Author: vadims@google.com
+-->
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute"
+    backgroundAlpha="0.0" backgroundColor="#ffffff"
+    initialize="init()" paddingBottom="0" paddingTop="0" paddingRight="0"
+    paddingLeft="0" horizontalScrollPolicy="off">
+
+  <mx:Style>
+    @font-face {
+      src: local( "freesans" );
+      font-family: freefont;
+    }
+
+    @font-face {
+      src: local( "freesans" );
+      font-weight: bold;
+      font-family: freefont;
+    }
+  </mx:Style>
+
+  <mx:Script>
+        <![CDATA[
+    [Embed(source="small-logo.png")]
+    [Bindable]
+    public var smallLogo:Class;
+        ]]>
+    </mx:Script>
+
+  <mx:HBox horizontalGap="0"
+      horizontalScrollPolicy="off" height="100%"
+      width="100%" borderThickness="0"
+      verticalAlign="middle" paddingLeft="0" paddingRight="0">
+
+    <mx:HBox id="newsBarBox" horizontalGap="0" cornerRadius="5"
+      horizontalScrollPolicy="off" borderStyle="solid" height="100%"
+      width="100%" borderThickness="1" borderColor="#AAAAAA"
+      verticalAlign="middle" paddingLeft="6" paddingRight="6">
+
+      <mx:Label id="keywordLabel" fontFamily="freefont" fontWeight="bold"
+          fontSize="12" paddingTop="5" text=""/>
+      <mx:VRule id="seperator" height="100%" strokeColor="#AAAAAA"
+          shadowColor="#AAAAAA" strokeWidth="1" width="9"/>
+      <mx:Label id="sourceLabel" fontFamily="freefont" fontSize="12"
+          paddingTop="5" text=""/>
+      <mx:Label id="headlineLabel" fontFamily="freefont" fontSize="12"
+          useHandCursor="true" buttonMode="true" mouseChildren="false"
+          paddingTop="5" text=""
+          width="{newsBarBox.width - keywordLabel.width - seperator.width - sourceLabel.width - 6}"/>
+    </mx:HBox>
+    <mx:VBox id="attributionBox" horizontalAlign="center" verticalGap="0">
+      <mx:Label text="powered by" fontSize="10" id="attribution"/>
+      <mx:Image id="attributionLogo" source="{smallLogo}"/>
+    </mx:VBox>
+  </mx:HBox>
+
+
+  <mx:Script>
+        <![CDATA[
+    import flash.events.MouseEvent;
+
+    import newsbar.NewsBar;
+
+    private function init():void {
+
+      attributionBox.validateNow();
+
+      // adjust newsbar width.
+      newsBarBox.width = Application.application.width -
+         Math.max(attribution.width, attributionLogo.width);
+
+      var expression:String = Application.application.parameters.expression
+          || 'Google, Apple, Microsoft';
+
+      var bar:newsbar.NewsBar = new newsbar.NewsBar(expression, keywordLabel,
+          sourceLabel, headlineLabel);
+
+      newsBarBox.addEventListener(MouseEvent.MOUSE_OVER,
+          function(event:MouseEvent):void {
+            bar.pause();
+          }
+      );
+
+      newsBarBox.addEventListener(MouseEvent.MOUSE_OUT,
+          function(event:MouseEvent):void {
+            bar.play();
+          }
+      );
+    }
+        ]]>
+  </mx:Script>
+
+
+</mx:Application>
