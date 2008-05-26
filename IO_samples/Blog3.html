@@ -58,11 +58,11 @@ limitations under the License.
 <body>
 <script language="Javascript" type="text/javascript">  
   var diggFeed = null;
-  function FeedLoaded(context, result, status, details) {
-     diggFeed = result;
+  function FeedLoaded(result) {
+     diggFeed = result.responseData;
   }
 </script>
-<script src="http://ajax.googleapis.com/ajax/services/feed/load?callback=FeedLoaded&context=0&v=1.0&num=4&q=http://digg.com/rss/index.xml"></script>
+<script src="http://ajax.googleapis.com/ajax/services/feed/load?callback=FeedLoaded&v=1.0&num=4&q=http://digg.com/rss/index.xml"></script>
 
 <div id="header">
   <h1>My Blog </h1>
