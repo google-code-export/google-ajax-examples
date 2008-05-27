@@ -1,0 +1,122 @@
+
+.addressbook {
+	width: 706px;
+	height: 525px;
+	background-image: url(images/addressbook-skin.png);
+	font-family: "Lucida Grande", Arial, Verdana, Helvetica, sans-serif;
+}
+
+.addressbook .header {
+	text-align: center;
+	padding: 5px;
+	border: solid 0px red;
+	padding-top: 10px;
+	height: 45px;
+}
+
+.addressbook #content {
+	border: solid 0px red;
+	height: 460px;
+}
+
+.addressbook #content ul#tabs {
+	border: solid 0px red;
+	float: left;
+	width: 117px;
+	height: 430px;
+	padding: 0;
+	margin: 5px 0 0 19px;
+	list-style: none;
+}
+
+.addressbook #content ul#tabs li {
+	border: solid 0px red;
+	padding: 5px 5px 5px 22px;
+	font-size: x-small;
+	background-image: url(images/addressbook-icon.png);
+	background-position: 4px 50%;
+	background-repeat: no-repeat;
+}
+
+.addressbook #content ul#tabs li.selected {
+	background-color: #3875d7;
+	color: #fff;
+}
+
+.addressbook #content ul#tabs li.highlighted {
+	color: #999;
+	cursor: pointer;
+}
+
+.addressbook #content #right {
+	float: right;
+	width: 530px;
+	height: 420px;
+	padding: 10px;
+	margin: 0;
+}
+
+#name {
+  height: 38px;
+  cursor: pointer;
+}
+
+// Slider
+/* put the left rounded edge on the track */
+#slider #trackleft {
+  background: transparent url(images/slider-images-track-left.png) no-repeat top left;
+}
+
+/* put the track and the right rounded edge on the track */
+#slider {
+  position: absolute;
+  width: 200px; 
+  height: 9px;
+  top: 440px;
+  left: 260px;
+	background: transparent url(images/slider-images-track-right.png) no-repeat top right;
+}
+
+#slider #past {
+  float: left;
+}
+
+#slider #now {
+  float: right;
+  width: 50px;
+}
+
+.control {
+  font-size: 10px;
+  color: #999;
+}
+
+#slider #handle {
+  width: 19px; 
+  height: 20px;
+}
+
+#slider #history {
+  margin-top: 16px;
+}
+
+#editsave {
+  position: absolute;
+  top: 440px;
+  left: 200px;
+}
+
+#timestamp {
+  position: absolute;
+  top: 476px;
+  left: 540px;
+}
+
+table tr {
+  vertical-align: top;
+  height: 34px;
+}
+table td.colname {
+  color: #666;
+  padding-right: 15px;
+}
