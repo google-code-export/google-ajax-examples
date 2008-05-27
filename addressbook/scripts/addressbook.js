@@ -228,6 +228,8 @@ function contentsChanged() { // test to see if the data has changed or not in th
     if (!contactInfo.hasOwnProperty(i)) continue;
     var key = contactInfo[i];
     
+    if (key == 'timestamp') continue; // ignore timestamp
+    
     var formValue = (key == 'id') ? $(key).value : $(key).innerHTML;
 
     if (formValue != savedContact[key]) return true;
