@@ -51,7 +51,7 @@ function edit(button) {
     save(button);
   }
   
-  $('name').onclick = null;
+  $('name').onclick = null; // the h2 header shouldn't be clickable while editing
 }
 
 function save(button) {
@@ -63,7 +63,7 @@ function save(button) {
     $(info).innerHTML = $('save-' + info).value;
 	});
 	
-  $(button).onclick = function() {
+  $('name').onclick = $(button).onclick = function() { // reset the button and h2 header
     edit(button);
   }
   
@@ -112,7 +112,7 @@ ContactHolder.prototype = {
     this.db = new GearsDB('addressbook');
     var db = this.db;
 
-    if (true) {
+    if (false) {
       db.dropTable('contacts');
 
       db.run('create table if not exists contacts (' +
