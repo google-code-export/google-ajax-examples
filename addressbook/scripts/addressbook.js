@@ -112,7 +112,7 @@ ContactHolder.prototype = {
     this.db = new GearsDB('addressbook');
     var db = this.db;
 
-    if (false) {
+    if (true) {
       db.dropTable('contacts');
 
       db.run('create table if not exists contacts (' +
