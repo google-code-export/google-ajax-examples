@@ -59,7 +59,7 @@
 if (!("console" in window)) { 
   window.console = {
     'log': function(s) {
-      alert(s);
+      //alert(s);
     }
   }
 }
