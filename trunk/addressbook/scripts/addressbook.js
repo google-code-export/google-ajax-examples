@@ -4,7 +4,6 @@ var contactCurrentIndex;
 var savedContact = {};
 var contactHolder;
 
-var loadDummyData = true;
 var slider;
 var selectedElement;
 var contactInfo = $A(['id', 'timestamp', 'name', 'email', 'phone', 'street', 'city', 'state', 'zip']);
@@ -109,23 +108,9 @@ ContactHolder.prototype = {
     return names;
   },
   
-  initDb: function() {
-    var db = this.db = new GearsDB('addressbook');
-
-    db.run('create table if not exists contacts (' +
-               'id integer not null,' +
-               'name varchar(255) not null,' +
-               'email varchar(255),' +
-               'phone varchar(12),' +
-               'street varchar(255),' +
-               'city varchar(255),' +
-               'state varchar(2),' +
-               'zip varchar(10),' +
-               'timestamp int not null)');
-
-    db.run('CREATE INDEX IF NOT EXISTS contacts_id_index ON contacts (id)');
-
-    if (loadDummyData) {
+  loadDummyData: function() {
+    var db = this.db;
+    if (db) {
       db.run('delete from contacts');
 
       // initialize the "now" data
@@ -148,6 +133,25 @@ ContactHolder.prototype = {
       db.run('insert into contacts (id, name, email, phone, street, city, state, zip, timestamp) values (?, ?, ?, ?, ?, ?, ?, ?, ?)', [5, 'Rob Sanheim', 'rob@sanheim.com', '608 293 8937', '8399 Seeking Alpha Avenue', 'Madison', 'WI', '30495', 1183532400000]);
       db.run('insert into contacts (id, name, email, phone, street, city, state, zip, timestamp) values (?, ?, ?, ?, ?, ?, ?, ?, ?)', [5, 'Rob Sanheim', 'rob@sanheim.com', '929 222 9999', '834 Raily Ninja Street', 'Dukie', 'NC', '30495', 1192258800000]);
     }
+    this.load();
+    initTabs();
+  },
+  
+  initDb: function() {
+    var db = this.db = new GearsDB('addressbook');
+
+    db.run('create table if not exists contacts (' +
+               'id integer not null,' +
+               'name varchar(255) not null,' +
+               'email varchar(255),' +
+               'phone varchar(12),' +
+               'street varchar(255),' +
+               'city varchar(255),' +
+               'state varchar(2),' +
+               'zip varchar(10),' +
+               'timestamp int not null)');
+
+    db.run('CREATE INDEX IF NOT EXISTS contacts_id_index ON contacts (id)');
   }
 };
 
@@ -222,6 +226,7 @@ function saveDb() {
   initTabs(); // in case a name changed
   select($('id' + newContact.id), true); // reload it!  
 }
+
 
 function contentsChanged() { // test to see if the data has changed or not in the form
   for (var i in contactInfo) {
