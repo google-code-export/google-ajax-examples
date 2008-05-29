@@ -112,6 +112,13 @@
   left: 540px;
 }
 
+#loaddata {
+  position: absolute;
+  top: 498px;
+  left: 24px;
+  width: 20px;
+}
+
 table tr {
   vertical-align: top;
   height: 34px;
