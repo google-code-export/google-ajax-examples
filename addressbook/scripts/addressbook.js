@@ -110,8 +110,7 @@ ContactHolder.prototype = {
   },
   
   initDb: function() {
-    this.db = new GearsDB('addressbook');
-    var db = this.db;
+    var db = this.db = new GearsDB('addressbook');
 
     db.run('create table if not exists contacts (' +
                'id integer not null,' +
