@@ -4,6 +4,7 @@ var contactCurrentIndex;
 var savedContact = {};
 var contactHolder;
 
+var loadDummyData = true;
 var slider;
 var selectedElement;
 var contactInfo = $A(['id', 'timestamp', 'name', 'email', 'phone', 'street', 'city', 'state', 'zip']);
@@ -112,21 +113,21 @@ ContactHolder.prototype = {
     this.db = new GearsDB('addressbook');
     var db = this.db;
 
-    if (true) {
-      db.dropTable('contacts');
+    db.run('create table if not exists contacts (' +
+               'id integer not null,' +
+               'name varchar(255) not null,' +
+               'email varchar(255),' +
+               'phone varchar(12),' +
+               'street varchar(255),' +
+               'city varchar(255),' +
+               'state varchar(2),' +
+               'zip varchar(10),' +
+               'timestamp int not null)');
 
-      db.run('create table if not exists contacts (' +
-                 'id integer not null,' +
-                 'name varchar(255) not null,' +
-                 'email varchar(255),' +
-                 'phone varchar(12),' +
-                 'street varchar(255),' +
-                 'city varchar(255),' +
-                 'state varchar(2),' +
-                 'zip varchar(10),' +
-                 'timestamp int not null)');
+    db.run('CREATE INDEX IF NOT EXISTS contacts_id_index ON contacts (id)');
 
-      db.run('CREATE INDEX IF NOT EXISTS contacts_id_index ON contacts (id)');
+    if (loadDummyData) {
+      db.run('delete from contacts');
 
       // initialize the "now" data
       // Dion
