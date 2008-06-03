@@ -243,7 +243,7 @@ var CALENDARMAP_ADD = {
    */
   
   // This is the key for http://code.google.com/events/calendar domain
-  MAP_API_KEY: 'ABQIAAAArM7h3NX7hYkBySUFFdiEOhQRf2STcHXVuVmvt6wOtbdr4-n7NRTCVvmdDn_PrkyH8xOtGUESVEsrhA',  
+  MAP_API_KEY: 'ABQIAAAA-O3c-Om9OcvXMOJXreXHAxQGj0PqsCtxKvarsoS-iqLdqZSKfxS27kJqGZajBjvuzOBLizi931BUow',  
   //MAP_API_KEY: 'ABQIAAAArM7h3NX7hYkBySUFFdiEOhTXgcnWInS6SUxJWNu1tHgPYn_KLRTz6_YV9rZt8stoyxlq9Lq909f97A',
 
   /**
