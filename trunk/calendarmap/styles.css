@@ -1,0 +1,92 @@
+#calendar_checkbox table, #calendar_checkbox td, #calendar_checkbox tr {
+  padding: 3px;
+  border: 0px solid black;
+  background-color: white;
+  text-align: left;
+  vertical-align: top;
+  color: #000;
+}
+
+#calendarmap_header table, #calendarmap_header td, #calendarmap_header tr {
+  padding: 3px;
+  border: 0px;
+  background-color: white;
+  text-align: left;
+  vertical-align: top;
+  line-height: 2em;
+  color: #000;
+}
+
+#map_map {
+  border: 1px solid #C3D9FF; 
+  float: left; 
+  width: 67%; 
+  height: 400px
+}
+
+#map_sidebar {
+  border: 1px solid #C3D9FF; 
+  float: left; 
+  width: 27%; 
+  height: 400px; 
+  overflow-y:scroll
+}
+
+#add_map {
+  border: 1px solid #3366CC; 
+  width: 400px; 
+  height: 300px;
+}
+
+#add_success {
+  color: green;
+}
+
+#add_status {
+  color: red;
+  font-style: bold;
+}
+
+#add_addcontent table, #add_addcontent td, #add_addcontent tr, #add_addcontent th {
+  padding: 6px;
+  border: 0px solid #3366CC;
+  background-color: white;
+  text-align: left;
+  vertical-align: top;
+  color: #000;
+}
+
+.add_missing {
+  visibility: hidden;
+  color: red;
+}
+
+.add_tiny {
+  color: gray;
+  width: 450px;
+  font-size: 11px;
+}
+
+table.datepicker {
+  line-height: 100%;
+  border: 0px;
+}
+
+table.datepicker td{
+  padding: 0px 0px;
+  margin: 0px;
+}
+
+tr.datepicker_titleRow td {
+  border: 0px;
+  color: white;
+  margin: 0px;
+}
+
+tr.datepicker_titleRow td a, tr.datepicker_titleRow td a:hover {
+  background: black;
+  color: white;
+}
+img.noborder {
+  border: 0px none;
+}

@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>Calendar - Add </title>
+   <link rel="stylesheet" type="text/css" href="http://code.google.com/css/ui-datepicker.css" />
+   <link rel="stylesheet" type="text/css" href="styles.css" />
+   <script src="http://www.google.com/jsapi" type="text/javascript"></script>   
+   <script src="calendarmap_common.js" type="text/javascript"></script>
+   <script src="ui-datepicker.js" type="text/javascript"></script>
+   <script src="json.js" type="text/javascript"></script>   
+   <script src="add.js" type="text/javascript"></script>
+   <script type="text/javascript">
+   // detect Safari user
+   if (CALENDARMAP_ADD.isSafariUser()) {
+    jQuery(document).ready(function() {
+      // Block out content for Safari browser
+      // GData JS API does not support Safari.
+      jQuery(CALENDARMAP_ADD.INTRO_DIV).empty();
+      jQuery(CALENDARMAP_ADD.ADDCONTENT_DIV).html(CALENDARMAP_ADD.SAFARI_WARNING);
+    });
+   } else {
+     // Load the Google data JavaScript client library.
+     google.loader.ApiKey = CALENDARMAP_ADD.MAP_API_KEY;
+     google.load('gdata', '1.x');
+     google.setOnLoadCallback(CALENDARMAP_ADD.main);
+   }
+   </script>
+  </head>
+
+  <body>
+
+<div id="calendarmap_header">
+    <a href="calendar.html"><img class="noborder" src="images/icon_calendarview.png"/ align="bottom"></a> 
+    <a href="calendar.html">Calendar View</a> 
+    | 
+    <a href="map.html" class="selected"><img class="noborder" src="images/icon_mapview.png"/></a> 
+    <a href="map.html" class="selected">Map View</a> 
+    |
+    <a href="add.html"><img class="noborder" src="images/icon_add.png"/></a> 
+    <a href="add.html">Add Event</a> 
+</div>
+
+<div style="clear:both"></div>
+
+<div id="loginNotice" class="indent" style="color:#cc0000; font-weight:bold; display:none">
+  Because this is a third-party app that uses your Google account authentication, you'll need to grant access to it by clicking the "Login" button. 
+</div>
+
+<div class="indent">
+<input id="add_loginbutton" type="button" value="Authenticate"/>
+</div>
+  
+ <div id="add_status">&nbsp;</div>
+ <div id="add_addcontent">
+   <table class="columns">
+     <tr>
+       <td>
+         <table class="columns">
+          <tr>       
+            <td>Event Title: <span id="add_eventtitle_missing" class="add_missing"></span></td>
+            <td><input id="add_eventtitle" style="width:450px;" type="text"></td>
+          </tr> 
+          <tr>
+            <td>Description: <span id="add_eventcontent_missing" class="add_missing"></span></td>
+            <td><textarea id="add_eventcontent" style="width:450px;" rows="5" cols="40"></textarea></td>
+          </tr>
+
+          <tr>
+          <td>When: <span id="add_eventwhen_missing" class="add_missing"></span> </td>
+          <td>
+            <input id="add_startdate" type="text" size="12"> <select id="add_starttime"></select> to 
+            <input id="add_enddate" type="text" size="12"> <select id="add_endtime"></select>
+            <input id="add_allday" type="checkbox"> All day 
+            <div class="add_tiny">
+            Enter these times according to the time zone that your computer uses.
+            For example, if your computer is set to Eastern time, enter 6:00pm for 
+            an event that happens in the Pacific time zone at 3:00pm.             
+          </div>
+          </td>
+        </tr>
+        <tr>
+          <td>Address: <span id="add_eventwhere_missing" class="add_missing"></span></td>
+          <td>
+             <input id="add_eventwhere" type="text" style="width:330px;">  
+             <input type="button" id="add_geosearch" value="Locate on Map"/>
+          </td>
+        </tr>
+        <tr>
+          <td>Building/Room: </td><td><input id="add_eventbldg" type="text"></td>
+        </tr>
+        <tr>
+          <td colspan="2">&nbsp;</td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <input type="button" id="add_createevent" value="Create Event">
+          </td>
+        </tr>
+        </table>
+      </td>
+    <td>
+      <table class="columns">
+        <tr>
+          <td>
+            <div id="add_map"></div>
+          </td>       
+        </tr>
+      </table>
+    </td>
+   </tr>
+   </table>
+ </div>
+ 
+
+  </body>
+</html>
+
+
