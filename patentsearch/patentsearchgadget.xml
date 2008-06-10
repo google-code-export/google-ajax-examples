@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+  <ModulePrefs
+  title="Patent Search"
+  directory_title="Google Feed Gadget"
+  title_url="http://www.google.com/uds/solutions/dynamicfeed/index.html"
+  description="__MSG_description__"
+  author="Rashmi"
+  author_affiliation="Google Inc."
+  author_location="Atherton, CA"
+  author_email="DerekC.Feedback+DynamicFeedgadget@gmail.com"
+  screenshot="/ig/modules/dynamicfeed.png"
+  thumbnail="/ig/modules/dynamicfeed-thm.png"
+  scrolling="false"
+  scaling="false"
+  singleton="false"
+  category="tools"
+  >
+  <Locale messages="dynamicfeed_content/ALL_ALL.xml"/>
+
+  <Require feature="google-domain"/>
+  <Require feature="setprefs"/>
+  <Require feature="settitle"/>
+  <Require feature="dynamic-height" />
+
+</ModulePrefs>
+
+<Content type="html"> 
+  <![CDATA[
+
+  <div id="searchForm"></div>
+
+  <script src="http://www.google.com/jsapi" type="text/javascript"></script>
+  <script type="text/javascript" charset="utf-8">
+    google.load('search', '1.0');
+    
+    var psearch = null;
+    var searchform = null;
+    
+    function onLoad() {
+      searchform = new google.search.SearchForm(false, _gel('searchForm'));
+      searchform.setOnSubmitCallback(this, formSubmit)
+      psearch = new google.search.PatentSearch();
+      psearch.setSearchCompleteCallback(this, searchComplete, [psearch])
+    }
+    
+    function formSubmit(form) {
+      // GSearch is the same thing as google.search
+       // Here you'll want to set any of the options from dropdowns that you'll make.  Aka you'll want to set the restriction like this: 
+       //        psearch.setRestriction(google.search.Search.RESTRICT_TYPE, google.search.PatentSearch.TYPE_ISSUED_PATENTS)
+       //        and set the result order like this:
+       //        psearch.setResultOrder(google.search.Search.ORDER_BY_RELEVANCE)
+       //        
+       //        don't forget that when grabbing the values of the dropdowns for the restrict type and order by that you can use Gadget's wrapper method _gel('id') to perform document.getElementById('id').
+       //         -->
+      psearch.execute(form.input.value);
+    }
+    
+    function searchComplete(searcher) {
+      // <!-- Plop all of the results onto the page -->
+      console.log(searcher);
+      // <!-- Use the values in the searcher object... i think it's searcher.results that you'll want, and in there you'll find all of the interesting information that you will need to display -->
+    }
+    
+    google.setOnLoadCallback(onLoad);
+  </script>
+  ]]>
+</Content>
+</Module>
