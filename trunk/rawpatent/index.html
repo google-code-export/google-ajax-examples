@@ -169,6 +169,10 @@
       // Set the callback so that when results are returned from a search
       // we can generate the output for them
       psearch.setSearchCompleteCallback(this, searchComplete, [psearch]);
+      
+      // Default search
+      searchform.input.value = 'subaru';
+      psearch.execute('subaru');
     }
 
     function formSubmit(form) {
