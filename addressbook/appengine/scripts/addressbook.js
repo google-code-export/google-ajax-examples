@@ -92,7 +92,7 @@ ContactHolder.prototype = {
       method: 'get',
       onSuccess: function(transport) {
         alert('Loaded dummy data!');
-        window.reload();
+        window.location.reload();
       }
     });
   },
