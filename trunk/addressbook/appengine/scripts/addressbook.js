@@ -86,6 +86,16 @@ ContactHolder.prototype = {
     this.db.insertRow('contacts', contact);
     this.load(); // naughty side effect. just reload
   },
+  
+  loadDummyData: function() {
+    new Ajax.Request('/loaddummy', {
+      method: 'get',
+      onSuccess: function(transport) {
+        alert('Loaded dummy data!');
+        window.reload();
+      }
+    });
+  },
       
   load: function() {
     var that = this;
