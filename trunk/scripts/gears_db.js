@@ -66,12 +66,13 @@ if (!("console" in window)) {
 
 // -- GearsDB itself!
 
-function GearsDB(name) {
+function GearsDB(name, debug) {
   this.db = this.getDB(name);
+  this.debug = (debug == 'true') ? true : false;
 }
 
 GearsDB.prototype.getDB = function(name) {
-  console.log("DB Name: " + name);
+  if (this.debug) console.log("DB Name: " + name);
   try {
     var db = google.gears.factory.create('beta.database', '1.0');
     db.open(name);
@@ -114,7 +115,7 @@ GearsDB.prototype.run = function(sql, args) {
   try {
     var argvalue = '';
     if (args) argvalue = " with args: " + args.join(', ');
-    console.log("SQL: " + sql + argvalue);
+    if (this.debug) console.log("SQL: " + sql + argvalue);
     
     return this.db.execute(sql, args);
   } catch (e) {
