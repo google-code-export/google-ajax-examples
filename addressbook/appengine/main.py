@@ -18,7 +18,6 @@
 import datetime
 import logging
 import os
-import simplejson
 import wsgiref.handlers
 
 from google.appengine.ext import webapp
