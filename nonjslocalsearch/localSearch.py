@@ -1,16 +1,4 @@
-# Copyright (c) 2008 Google Inc.
-  
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-# 
-#    http://www.apache.org/licenses/LICENSE-2.0
-# 
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+# Copyright 2008 Google Inc. All Rights Reserved.
 
 """A static map implementation of Google Maps that provides savepoints.
 
@@ -117,7 +105,6 @@ MAP_SIZE = [256,256]
 MAP_KEY = 'ABQIAAAA1XbMiDxx_BTCY2_FkPh06RR20YmIEbERyaW5EQEiVNF0mpNGfBSRb' \
     '_rzgcy5bqzSaTV8cyi2Bgsx3g'
 
-  
 class Point():
   """Stores a simple (x,y) point.  It is used for storing x/y pixels.
 
@@ -299,6 +286,8 @@ def CalcBoundsFromPoints(lats, lngs):
     the southwest and northeast lat/lng bounds of a map.  It should look 
     like this: [[southwestLat, southwestLat], [northeastLat, northeastLng]]
   """
+  lats = [float(x) for x in lats]
+  lngs = [float(x) for x in lngs]
   flats = map(float,lats)
   flngs = map(float,lngs)
   west = min(flngs)
@@ -358,8 +347,8 @@ def DoSearch(query, MAP_SIZE):
   lats = []
   lngs = []
   for i in points:
-    lats.append(float(i['lat']))
-    lngs.append(float(i['lng']))
+    lats.append(i['lat'])
+    lngs.append(i['lng'])
     letter = ord('a')
     letter = unichr(letter + index)
     markers +=  '%s,%s,midred%s|' % (i['lat'], i['lng'], str(letter))

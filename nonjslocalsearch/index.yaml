@@ -10,7 +10,7 @@ indexes:
 # automatically uploaded to the admin console when you next deploy
 # your application using appcfg.py.
 
-# Used 2 times in query history.
+# Used 3 times in query history.
 - kind: SavedMapPoint
   properties:
   - name: city
@@ -23,7 +23,7 @@ indexes:
   - name: url
   - name: user
 
-# Used 11 times in query history.
+# Used 7 times in query history.
 - kind: SavedMapPoint
   properties:
   - name: user
