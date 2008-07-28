@@ -1,0 +1,47 @@
+<html>
+<head>
+  <title>Knight Rider: KITT Examples</title>
+</head>
+<body>
+
+<h1>Knight Rider: KITT Examples</h1>
+
+<p>
+  This is the example page that shows how you can run some Kitt examples that wipe from left to right to left.
+</p>
+
+<h2>Default Kitt-y</h2>
+
+<p>
+  Here we have a div with the default kitt id, and then <code>new Kitt();</code> goes on and finds it and does its deed. We could delete that div and it will be created, which happens when an element can't be found. It gets created at the end of the body.
+</p>
+
+<div id="kitt"></div>
+
+<br />
+
+<h2>Evil Kitt.... Kat</h2>
+
+<p>
+  This version shows how you can pass in settings to tweak the bugger. In particular it hides the generated buttons to start and stop the animation, and programatically starts it, and then stops it a few seconds later:
+  
+  <pre><code>var evilkitt = new Kitt({id: 'evilkitt', animateBackgroundColor: 'red', hideButtons: true });
+evilkitt.start();
+setTimeout(function() { evilkitt.stop(); }, 6000);</code></pre>
+</p>
+  
+<div id="evilkitt"></div>
+
+<script src="kitt.js" type="text/javascript"></script>
+<script type="text/javascript">
+window.onload = function() {
+  new Kitt(); // default kitt-y
+  
+  var evilkitt = new Kitt({id: 'evilkitt', animateBackgroundColor: 'red', hideButtons: true });
+  evilkitt.start();
+  setTimeout(function() { evilkitt.stop(); }, 6000);
+}
+</script>
+
+</body>
+</html>
