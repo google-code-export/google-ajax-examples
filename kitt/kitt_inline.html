@@ -1,0 +1,66 @@
+<html>
+<head>
+  <title>KITT</title>
+  <style type="text/css">
+  #kitt-holder {
+    position: relative;
+    background: white;
+    border: 1px solid #aaa;
+    padding: 1px;
+    height: 0.8em;
+    width: 300px;
+    overflow: hidden;
+  }
+
+  #kitt-whoosh {
+    position:relative;
+    width: 10%;
+    height: 100%;
+    left: 0;
+    background: navy;
+  }
+
+  </style>
+</head>
+<body>
+  
+<input type="button" id="startkitt" value="Start" onclick="start()"/>
+<input type="button" id="stopkitt" value="Stop" onclick="stop()"/>
+  
+<script type="text/javascript">
+var interval;
+var frequency = 40;
+
+// The saw function goes from 0 to 1 for half the duration and back to 0 in
+// the second half.
+function saw(t, dur) {
+  t = t % dur;
+  v = t / dur;
+  if (v > 0.5) {
+    v = 1 - v;
+  }
+  return v * 2;
+}
+
+function start() {
+  interval = setInterval(animate, frequency);
+}
+
+function stop() {
+  if (interval) clearInterval(interval);
+}
+
+function animate() {
+  var thumb = document.getElementById('kitt-whoosh');
+  var t = new Date();
+  thumb.style.left = Math.round(saw(t, frequency * 100) * 90) + '%';
+}
+
+</script>
+
+<div id="kitt-holder">
+  <div id="kitt-whoosh"></div>
+</div>
+
+</body>
+</html>
