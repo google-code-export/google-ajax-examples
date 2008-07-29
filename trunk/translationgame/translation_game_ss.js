@@ -19,7 +19,7 @@ google.load("visualization", "1");
 
 google.setOnLoadCallback(initialize);
 var gadgetHelper = null;
-var nouns [];
+var nouns = [];
 
 function initialize() {
   var prefs = new _IG_Prefs(); // User preferences
