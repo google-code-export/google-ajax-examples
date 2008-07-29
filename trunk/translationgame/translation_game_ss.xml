@@ -6,6 +6,8 @@
   author_affiliation="Google" 
   description="This gadget uses the Google AJAX Language API and Google AJAX Search API to help you learn new languages.  It quizzes you on nouns in other languages.">
     <Require feature="dynamic-height" /> 
+    <Require feature="idi"/>
+    <Require feature="locked-domain" />
   </ModulePrefs>
   <UserPref name="show_pictures" datatype="bool" default_value="false" display_name="Show Picture Hints" />
   <Content type="html">
