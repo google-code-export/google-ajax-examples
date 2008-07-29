@@ -9,6 +9,8 @@
     <Require feature="idi"/>
     <Require feature="locked-domain" />
   </ModulePrefs>
+  <UserPref name="_table_query_url" display_name="Data source url"
+  required="true"/>
   <UserPref name="show_pictures" datatype="bool" default_value="false" display_name="Show Picture Hints" />
   <Content type="html">
     <![CDATA[
