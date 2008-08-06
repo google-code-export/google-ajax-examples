@@ -2,7 +2,7 @@
         "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-  <title>Custom Events &raquo; Attaching and Detaching</title>
+  <title>jQuery Custom Events &raquo; Attaching and Detaching</title>
   <style type="text/css">
   body {
     padding: 0;
@@ -69,6 +69,7 @@
     <span style="color: #999">Settings</span> 
     <input type="checkbox" id="colorchange" /> Change colour?
     <input type="checkbox" id="contentchange" /> Change content?
+
 </div>
 
 <div id="main">
@@ -78,6 +79,7 @@
         <li id="shakespeare">William Shakespeare</li>
         <li id="fry">Stephen Fry</li>
         <li id="wright">Stephen Wright</li>
+
         <li id="gandhi">Mahatma Gandhi</li>
         <li id="mlk">Martin Luther King</li>
     </ul>
@@ -86,7 +88,8 @@
     </div>
 </div>
 
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/prototype/1.6.0.2/prototype.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js"></script>
+
 <script type="text/javascript">
 var quotes = {
     'shakespeare': "All the world's a stage, And all the men and women merely players; They have their exits and their entrances, And one man in his time plays many parts, His acts being seven ages.",
@@ -96,40 +99,32 @@ var quotes = {
     'mlk': "A nation that continues year after year to spend more money on military defense than on programs of social uplift is approaching spiritual doom."
 }
 
-document.observe("dom:loaded", function() {
-    $('colorchange').onchange = function(e) {
+var doc = $(document);
+doc.ready(function() {
+	
+    $('#colorchange').change(function(e) {
         if (e.target.checked) {
-            document.observe('selected:choice', changeColor);
+            doc.bind('selected:choice', changeColor);
         } else {
-            document.stopObserving('selected:choice', changeColor);
+            doc.unbind('selected:choice', changeColor);
         }
-    }
+    })
 
-    $('contentchange').onchange = function(e) {
+    $('#contentchange').change(function(e) {
         if (e.target.checked) {
-            document.observe('selected:choice', changeContent);
+            doc.bind('selected:choice', changeContent);
         } else {
-            document.stopObserving('selected:choice', changeContent);
+            doc.unbind('selected:choice', changeContent);
         }
-    }
+    })
     
-    $$('ul#leftchoices li').each(function(el) {
-        el.observe('click', function(e) {
-            el.fire('selected:choice');
-            
-            // if ($('colorchange').checked) {
-            //     changeColor();
-            // }
-            // 
-            // if ($('contentchange').checked) {
-            //     changeContent(el.id);
-            // }
-        });
+    $('ul#leftchoices li').click(function(e) {
+        doc.trigger('selected:choice', [$(this)]);
     });
 });
 
-function changeContent(e) {
-    $('rightcontent').innerHTML = quotes[e.target.id];
+function changeContent(e, ele) {
+    $('#rightcontent').html(quotes[ele.attr("id")]);
 }
 
 function changeColor(e) {
