@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:app="http://www.appcelerator.org">
+<head>
+  <title>Appcelerator Custom Events &raquo; Attaching and Detaching</title>
+  <script src="scripts/appcelerator.js" type="text/javascript"></script>
+  <style type="text/css">
+  body {
+    padding: 0;
+    margin: 0;
+    background-color: #4f4e45;
+    font-family: Tahoma, Arial, sans-serif;
+  }
+  
+  #header {
+    height: 30px;
+    background-color: #111;
+    color: #EEE;
+    font-size: 10pt;
+    padding-top: 4px;
+    border-bottom: 1px solid #333;
+  }
+  
+  #main {
+    margin: 20px auto;  
+    height: 181px;
+    width: 610px;
+  }
+  
+  #main h2 {
+    font-weight: normal;
+    margin: 0;
+    color: #ff9600;
+    font-size: 14pt;
+    font-family: Tahoma, Arial, sans-serif;
+    padding-bottom: 1em;
+  }
+  
+  #leftchoices {
+    padding: 0;
+    margin: 0;
+    float: left;
+    font-size: 12pt;
+    list-style-type: none;
+    width: 180px;
+  }
+  
+  #leftchoices li {
+    padding: 5px;
+  }
+
+  #leftchoices li:hover {
+    background-color: #333;
+    color: #999;
+    cursor: pointer;
+  }
+  
+  #rightcontent {
+    float: right;
+    width: 385px;
+    padding: 5px 20px;
+    color: #999;
+  }
+
+  </style>
+</head>
+<body style="visibility:hidden" 
+	on="l:app.compiled then visible or 
+		l:message then script[document.body.style.backgroundColor = (document.body.style.backgroundColor == 'rgb(255, 255, 255)') ? '#4f4e45' : '#ffffff';]
+		if expr[document.getElementById('colorchange').checked]">
+
+<div id="header" align="center">
+    <span style="color: #999">Settings</span> 
+    <input type="checkbox" id="colorchange" /> Change colour?
+    <input type="checkbox" id="contentchange" /> Change content?
+
+</div>
+
+<div id="main">
+    <h2>Testing custom events and interception (Appcelerator Port)</h2>
+    
+    <ul id="leftchoices">				
+				<input id="shakespeare" type="hidden" value="All the world's a stage, And all the men and women merely players; They have their exits and their entrances, And one man in his time plays many parts, His acts being seven ages."/>
+        <li on="click then l:message[text=$shakespeare]">William Shakespeare</li>
+				
+				<input id="fry" type="hidden" value="An original idea. That can't be too hard. The library must be full of them."/>
+        <li on="click then l:message[text=$fry]">Stephen Fry</li>
+
+				
+				<input id="wright" type="hidden" value="I almost had a psychic girlfriend but she left me before we met."/>
+        <li on="click then l:message[text=$wright]">Stephen Wright</li>
+				
+				<input id="gandhi" type="hidden" value="An eye for an eye, and soon the whole world is blind."/>
+        <li on="click then l:message[text=$gandhi]">Mahatma Gandhi</li>
+				
+				<input id="mlk" type="hidden" value="A nation that continues year after year to spend more money on military defense than on programs of social uplift is approaching spiritual doom."/>
+        <li on="click then l:message[text=$mlk]">Martin Luther King</li>
+    </ul>
+
+    <div id="rightcontent" on="l:message then value[text] if expr[document.getElementById('contentchange').checked]">
+        &laquo; Choose an option from the menus to my left
+    </div>
+</div>
+</body>
+</html>
