@@ -1,3 +1,21 @@
+/**
+  Copyright 2008 Google Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.  
+  
+  @author Brad Neuberg (http://codinginparadise.org)
+*/
+
 if (typeof console == 'undefined') { // No Firebug on IE
   console = {};
   console.debug = window.alert;
@@ -16,6 +34,7 @@ function MovieTool() {
   this.MAX_FILE_SIZE = 1000000; // 1 MBs - max size of a file that can be uploaded
   this.TOTAL_QUOTA = 5000000; // 5 MBs - total quota for movies for a user
   this.UPLOAD_RETRIES = 3; // number of times to retry if there is an error
+  
   this.geoAddress_ = null;
   this.movieList_ = [];
   this.pauseUpload_ = false;
