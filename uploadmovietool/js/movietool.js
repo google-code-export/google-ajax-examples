@@ -91,6 +91,15 @@ MovieTool.prototype.run = function() {
 
 MovieTool.prototype.getLocation = function(callback) {
   var geolocation = google.gears.factory.create('beta.geolocation');
+  if (!geolocation.getPermission('Upload Movie Tool', '', 
+                                  'This sample can use your '
+                                + 'geographic coordinates in order to tag '
+                                + 'uploaded videos with your location')) {
+    document.getElementById('location').innerHTML = 'Permission denied';
+    callback();
+    return;
+  }
+  
   var self = this;
   geolocation.getCurrentPosition(
     function(p) {
