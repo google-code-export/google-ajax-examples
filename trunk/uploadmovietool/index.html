@@ -1,0 +1,96 @@
+<html>
+  <head>
+    <script src="js/gears_init.js"></script>
+    <script src="js/movietool.js"></script>
+    
+    <style>
+      #fileList {
+        margin-top: 1em;
+        margin-bottom: 1em;
+      }
+      
+      #fileList th,
+      #fileList td {
+        padding: 0.5em;
+      }
+      
+      #fileList .statusCol,
+      #fileList .filenameCol {
+        width: 10em;
+      }
+
+ 			#fileList .locationCol {
+				width: 20em;
+			}
+      
+      #fileList th {
+        background-color: #FFFFF2;
+			}
+			
+			#logout {
+				display: block;
+				float: right;
+				padding-right: 1.5em;
+			}
+    </style>
+  </head>
+  
+  <body>
+		<a id="logout" href="{{ logout_url }}">Logout from {{ user.nickname }}</a>
+		
+    <h1>Geolocation and Resumable/Large/Multiple File Uploads Demo</h1>
+    
+    <p>
+      This demo allows you to select multiple movies, and then upload them
+      in a resumable way with feedback using the Gears Blob and
+      File System API. We also use the Geolocation API to figure out what
+      your location is for tagging the video, and the Google App Engine to 
+      store everything on the back-end. Videos will be deleted every
+      30 minutes automatically, and only you can view your own videos
+      to avoid copyright issues on this demo app. Due to current limitations 
+      in the Google App Engine, videos must be 1 MB or less in size, 
+      while your total quota of uploaded videos must be less than 5 MB.
+    </p>
+    
+    <p>Your location: <span id="location">Getting location...</span></p>
+    
+    <div>
+      Select movies to upload: 
+      
+      <button id="movieSelect" onclick="movie.selectFiles()" disabled="disabled">
+				Select
+			</button>
+			
+      <button id="movieUpload" onclick="movie.upload()" disabled="disabled">
+				Upload
+			</button>
+			
+      <button id="moviePause" onclick="movie.pauseUpload()" disabled="disabled">
+				Pause
+			</button>
+			
+			<button id="movieResume" onclick="movie.resumeUpload()" disabled="disabled">
+				Resume
+			</button>
+			
+			<button id="clearMovies" onclick="movie.clearMovies()" disabled="disabled">
+			  Clear
+			</button>
+
+      <table id="fileList" border="1">
+        <tr class="header">
+          <th class="filenameCol">Filename</th>
+					<th class="locationCol">Location</th>
+          <th class="statusCol">Status</th>
+          <th class="uploadedCol">Uploaded</th>
+        </tr>
+        
+        <tr id="loadingFilesMsg">
+          <td colspan="4">
+            Loading file list...
+          </td>
+        </tr>
+      </table>
+    </div>
+  </body>
+</html>
