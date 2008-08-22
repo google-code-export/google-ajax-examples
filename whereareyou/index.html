@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <title>Where are you? Finding your location using the Ajax ClientLocation API</title>
+  <style type="text/css">
+  body {
+    padding: 0;
+    margin: 0;
+    background-color: #4f4e45;
+    font-family: Tahoma, Arial, sans-serif;
+  }
+  
+  #header {
+    height: 30px;
+    background-color: #111;
+    color: #EEE;
+    font-size: 10pt;
+    padding-top: 4px;
+    border-bottom: 1px solid #333;
+  }
+  
+  #main {
+    margin: 20px auto;  
+    width: 610px;
+  }
+  
+  #main h2 {
+    font-weight: normal;
+    margin: 0;
+    color: #ff9600;
+    font-size: 16pt;
+    font-family: Tahoma, Arial, sans-serif;
+    padding-bottom: 1em;
+  }
+  
+  a {
+    color: #fff;
+  }
+
+  #cantfindyou {
+      font-size: 18pt;
+  }
+  
+  #map {
+      display: none;
+      height: 300px;
+      border: 1px solid black;
+      margin: 10px 4px;
+  }
+  </style>
+</head>
+<body>
+
+<div id="main">
+    <h2>I think that you are talking to me from...</h2>
+
+    <div id="cantfindyou"></div>
+
+    <div id="map"></div>
+    
+    <p>
+        More resources on Geo Location APIs that we offer:
+        <ul>
+            <li><a href="http://code.google.com/apis/ajax/documentation/#ClientLocation">AJAX Location API Docs</a></li>
+            <li><a href="http://code.google.com/apis/gears/api_geolocation.html">Gears GeoLocation API</a></li>
+            <li><a href="http://gearsblog.blogspot.com/2008/08/gears-04-is-here.html">Gears 0.4</a></li>
+
+        </ul>
+    </p>
+</div>
+
+<script type="text/javascript" src="http://www.google.com/jsapi?key=ABQIAAAAJjoQAkGmq5qsa0PKk9Y6nxQdF2TG78juI7gyCxAZXlcasg4lQxTlaYHDB6IKUESWIPTqiJvXPeiwhg"></script>
+<script type="text/javascript">
+google.load("maps", "2.x");
+
+google.setOnLoadCallback(function() {
+    if (google.loader.ClientLocation) {
+        var cl = google.loader.ClientLocation;
+        var location = [cl.address.city, cl.address.region, cl.address.country].join(', ');
+        
+        createMap(cl.latitude, cl.longitude, location);
+    } else {
+        document.getElementById('cantfindyou').innerHTML = "Crap, I don't know. Good hiding!";
+    }
+});
+
+function createMap(lat, lng, location) {
+    var mapElement = document.getElementById("map");
+    mapElement.style.display = 'block';
+    var map = new google.maps.Map2(mapElement);
+    map.addControl(new GLargeMapControl());
+    map.addControl(new GMapTypeControl());
+    map.setCenter(new google.maps.LatLng(lat, lng), 13);
+    map.openInfoWindow(map.getCenter(), document.createTextNode(location));
+}
+</script>
+</body>
+</html>
