@@ -24,6 +24,7 @@ if (typeof console == 'undefined') { // No Firebug on IE
 function MovieTool() {
   // Google App Engine currently has a 1 MB limit on requests, responses,
   // and Data Store puts()
+  
   /*
   this.CHUNK_BYTES = 1000000;  // 1 MB
   this.MAX_FILE_SIZE = 20000000; // ~20 MBs - max size of a file that can be uploaded
@@ -33,6 +34,7 @@ function MovieTool() {
   this.CHUNK_BYTES = 200000;  // 200K
   this.MAX_FILE_SIZE = 1000000; // 1 MBs - max size of a file that can be uploaded
   this.TOTAL_QUOTA = 5000000; // 5 MBs - total quota for movies for a user
+  
   this.UPLOAD_RETRIES = 3; // number of times to retry if there is an error
   
   this.geoAddress_ = null;
@@ -439,8 +441,9 @@ MovieTool.prototype.sendChunk = function(entry, chunk, start, end, total,
 MovieTool.prototype.updateStatus = function(fileName, statusMsg, percent) {
   var row = null;
   var table = document.getElementById('fileList');
-  for (var i = 0; i < table.childNodes.length; i++) {
-    row = table.childNodes[i];
+  var rows = table.getElementsByTagName('tr');
+  for (var i = 0; i < rows.length; i++) {
+    row = rows[i];
     if (row.nodeType != 1 || row.className.indexOf('header') != -1
         || row.getAttribute('filename') != fileName) {
       continue;
