@@ -2,7 +2,7 @@
         "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-  <title>Where are you? Finding your location using the Ajax ClientLocation API</title>
+  <title>Where are you? Finding your location using the W3C Geolocation Spec API</title>
   <style type="text/css">
   body {
     padding: 0;
@@ -58,10 +58,11 @@
     <div id="cantfindyou"></div>
 
     <div id="map"></div>
-    
+
     <p>
-        This version just uses the ClientLocation API, but <a href="geometa.html">this one</a> uses geometa.js, a shim that gives you the <a href="http://dev.w3.org/geo/api/spec-source.html">HTML5 Geolocation spec API</a> across Gears and ClientLocation.
+        This version uses the <a href="http://dev.w3.org/geo/api/spec-source.html">HTML5 Geolocation spec API</a> across Gears and ClientLocation. You can also see my <a href="index.html">first version that just uses the ClientLocation API</a>.
     </p>
+    
     <p>
         More resources on Geo Location APIs that we offer:
         <ul>
@@ -73,16 +74,29 @@
     </p>
 </div>
 
+<script type="text/javascript" src="scripts/geometa.js"></script>
+
 <script type="text/javascript" src="http://www.google.com/jsapi?key=ABQIAAAAJjoQAkGmq5qsa0PKk9Y6nxQdF2TG78juI7gyCxAZXlcasg4lQxTlaYHDB6IKUESWIPTqiJvXPeiwhg"></script>
 <script type="text/javascript">
 google.load("maps", "2.x");
 
 google.setOnLoadCallback(function() {
-    if (google.loader.ClientLocation) {
-        var cl = google.loader.ClientLocation;
-        var location = [cl.address.city, cl.address.region, cl.address.country].join(', ');
-        
-        createMap(cl.latitude, cl.longitude, location);
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            var location = "";
+            if (navigator.geolocation.type == "Gears") {
+                if (position.gearsAddress) {
+                    location = [position.gearsAddress.city, position.gearsAddress.region, position.gearsAddress.country].join(', ');
+                } else {
+                    location = "Zoomed in on: " + position.latitude + ", " + position.longitude;
+                }
+            } else if (navigator.geolocation.type == "ClientLocation") {
+                location = [position.address.city, position.address.region, position.address.country].join(', ');
+            }
+            createMap(position.latitude, position.longitude, location);
+        }, function() {
+            document.getElementById('cantfindyou').innerHTML = "Crap, I don't know. Good hiding!";
+        });        
     } else {
         document.getElementById('cantfindyou').innerHTML = "Crap, I don't know. Good hiding!";
     }
