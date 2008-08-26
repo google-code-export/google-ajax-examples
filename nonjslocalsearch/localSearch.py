@@ -14,7 +14,7 @@ __author__ = 'lisbakke@google.com (Ben Lisbakken)'
 import os
 import math
 import cgi
-import simplejson
+from django.utils import simplejson
 import wsgiref.handlers
 
 from google.appengine.api import users
