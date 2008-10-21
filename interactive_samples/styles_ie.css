@@ -299,3 +299,19 @@ td.footer {
 .db_roundedcornr_content {
   background-color: #92c1f0;
 }
+
+span.category div {
+  margin-left: 15px;
+}
+
+span.categoryTitle {
+  font-size: 90%;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+}
+
+span.subCategoryTitle {
+  font-size: 85%;
+  font-family: Arial, sans-serif;
+  font-weight: normal;
+}

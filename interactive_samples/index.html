@@ -20,45 +20,29 @@
 <html>
 <head>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  
-  <script src="utils.js" type="text/javascript" charset="utf-8"></script>
+  <link rel="shortcut icon" href="favicon.ico" >
 
   <!-- CSS -->
-  <link rel="stylesheet" href="lightbox/lightbox.css" media="screen,projection" type="text/css" />
-  
   <!--[if !IE]><!-->
     <link rel="stylesheet" href="styles.css" media="screen,projection" type="text/css" />
   <!-- <![endif]-->
   <!--[if IE]>
     <link rel="stylesheet" href="styles_ie.css" media="screen,projection" type="text/css" />
   <![endif]-->
+  <link rel="stylesheet" type="text/css" href="codemirror/css/docs.css"/>
   
   <!-- JavaScript -->
   
   <title>AJAX APIs Interactive Sampler</title>
-  
-  <script type="text/javascript" src="lightbox/prototype.js"></script>
-  <script type="text/javascript" src="lightbox/lightbox-iframe.js"></script>
   <script src="codemirror/js/codemirror.js" type="text/javascript" charset="utf-8"></script>
-  <link rel="stylesheet" type="text/css" href="codemirror/css/docs.css"/>
-  
+  <script src="utils.js" type="text/javascript" charset="utf-8"></script>
   <script type="text/javascript" charset="utf-8">
   
   var is;
-  
   function init() {
-
     is = new InteractiveSample();
     is.init(document.getElementById('editor'));
-  }
-  
-  function showInline() {
-    _gel('outputContainer').style.display = 'table-cell';
-    var codeContainer = _gel('codeContainer');
-    var codeIframe = codeContainer.getElementsByTagName('iframe')[0];
-    codeIframe.style.width = "100%";
-  }
-  
+  }  
   
   addEvent(window, 'load', init);
   </script>
@@ -130,8 +114,8 @@
         <td id="outputContainer">
           <h2>Run</h2>
           <div style="width: 300px;margin-top:18px;">
-            <a href="iframeit.html" style="text-decoration: none" class="lbOn"><input type="button" value="Run All" onclick="is.prepareAllCodeRun();" /></a>
-            <input type="button" value="Run JS" onclick="is.runJS();" />
+            <input type="button" value="Run" onclick="is.prepareAllCodeRun();" />
+            <div id="runbox"></div>
           </div>
         </td>
 

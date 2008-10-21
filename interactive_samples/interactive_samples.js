@@ -1,1 +1,25 @@
-var codeArray = [{"category":"Basic","samples":[{"files":["change_color.html","change_color.js"],"sampleName":"Change Color"},{"files":["custom_camera.html","custom_camera.js"],"sampleName":"Custom Camera"},{"files":["hello_world.html","hello_world.js"],"sampleName":"Hello World"},{"files":["red_square.html","red_square.js"],"sampleName":"Red Square"},{"files":["simple_texture.html","simple_texture.js"],"sampleName":"Simple Texture"}]},{"category":"Advanced","samples":[{"files":["culling.html","culling.js"],"sampleName":"Culling"},{"files":["display_fps.html","display_fps.js"],"sampleName":"Display FPS"},{"files":["draw_shapes.html","draw_shapes.js"],"sampleName":"Draw Shapes"},{"files":["instance_override.html","instance_override.js"],"sampleName":"Instance Override"},{"files":["instancing.html","instancing.js"],"sampleName":"Instancing"},{"files":["multiple_clients.html","multiple_clients.js"],"sampleName":"Multiple Clients"},{"files":["multiple_views.html","multiple_views.js"],"sampleName":"Multiple Views"},{"files":["phong_shading.html","phong_shading.js"],"sampleName":"Phong Shading"},{"files":["picking.html","picking.js"],"sampleName":"Picking"},{"files":["render_mode.html","render_mode.js"],"sampleName":"Render Mode"},{"files":["rotate_model.html","rotate_model.js"],"sampleName":"Rotate Model"},{"files":["stencil_example.html","stencil_example.js"],"sampleName":"Stencil Example"},{"files":["texture_samplers.html","texture_samplers.js"],"sampleName":"Texture Samplers"},{"files":["z-sorting.html","z-sorting.js"],"sampleName":"Z-Sorting"}]}]
+// TODO: add in alt property so the hover on the links can describe them
+var codeArray = [
+  {
+    "category":"Search-General",
+    "samples":[
+      {"files":["search/hello_world.js"], "sampleName":"Hello World"},
+      {"files":["search/restrict_search.js"], "sampleName":"Set Site Restrict"},
+      {"files":["search/tabbed_display_mode.js"], "sampleName":"Tabbed Display Mode"},
+      {"files":["search/large_result_set.js"], "sampleName":"Large Result Set"},
+      {"files":["search/expand_mode.js"], "sampleName":"Expand Mode"}
+    ]
+  },
+  {
+    "category":"Search-LocalSearch",
+    "samples":[
+      {"files":["search/center_map.js"], "sampleName":"Center Map"}
+    ]
+  },
+  {
+    "category":"Feeds-General",
+    "samples":[
+      {"files":["feeds/hello_world.js"], "sampleName":"Hello World"}
+    ]
+  }
+];

@@ -14,15 +14,16 @@ var fileTypes = {
 
 function InteractiveSample(){
   this.categories = [];
+  this.subCategories = [];
   this.codeTitles = [];
   this.adjustCodeBoxAmount = 50;
   this.selectCode;
   this.codeDiv;
+  this.runBox = document.getElementById('runbox');
   this.codeLIs = [];
   this.currentCode = new Object();
   this.curI = '';
 	this.cleanWindowObj;
-	
   // Assume we're offline until we know that file reading doesn't work
 	this.online = false;
 };
@@ -65,20 +66,66 @@ InteractiveSample.prototype.createCategories = function() {
   this.selectCode = _gel('selectCode');
   
   for (var i=0; i < codeArray.length; i++) {
-    var container = _cel('span');
-    container.className = 'category';
+    var category = codeArray[i].category;
+    var container = subCategory = categoryDiv = subCategoryDiv = null;
     
-    var catName = _cel('span');
+    if (category.indexOf('-') != -1) {
+      // that means that this category is a subcategory
+      var categorySplit = category.split('-');
+      category = categorySplit[0];
+      subCategory = categorySplit[1];
+    }
+
+    categoryDiv = document.getElementById(category);
+    if (categoryDiv == null) {
+      categoryDiv = _cel('span');
+      categoryDiv.className = 'category';
+      categoryDiv.id = category;
+      var catName = _cel('span');
+      catName.className = 'categoryTitle';
+      var img = _cel('img');
+      img.className = 'collapse';
+      img.src = 'images/cleardot.gif';
+      // addEvent(img, 'click', this.toggleExpand(img), false);
+
+      catName.appendChild(img);
+      catName.innerHTML += category;
+
+      categoryDiv.appendChild(catName);
+      this.selectCode.appendChild(categoryDiv);
+      
+      // This line might be confusing.  It's here because there are two ways
+      // to show/hide menus.  #1 is show/hiding a category which has
+      // sub categories.  In this case we will show/hide the subcategory
+      // divs.  This gets set in addShowHideClicks().  If the category has no
+      // sub categories, then we will show/hide the list items that are in the
+      // category, which is the same thing we do with subcategories.
+      // THUS, if a category has subcategories, set it's click handler one way.
+      // If a category has no subcategories, then we treat it like a subcategory
+      if (subCategory) {
+        this.categories.push(categoryDiv);
+      }
+    }
     
-    var img = _cel('img');
-    img.className = 'collapse';
-    img.src = 'images/cleardot.gif';
-    // addEvent(img, 'click', this.toggleExpand(img), false);
+    if (subCategory) {
+      subCategoryDiv = document.createElement('div');
+      
+      var subCatName = _cel('span');
+      subCatName.className = 'subCategoryTitle';
+      
+      var img = _cel('img');
+      img.className = 'collapse';
+      img.src = 'images/cleardot.gif';
+      // addEvent(img, 'click', this.toggleExpand(img), false);
+      
+      subCatName.appendChild(img);
+      subCatName.innerHTML += subCategory;
+      
+      subCategoryDiv.appendChild(subCatName);
+      categoryDiv.appendChild(subCategoryDiv);
+    }
     
-    catName.appendChild(img);
-    catName.innerHTML += codeArray[i].category;
-    
-    container.appendChild(catName);
+    container = subCategoryDiv || categoryDiv;
     
     var ul = _cel('ul');
     ul.className = 'categoryItems';
@@ -110,33 +157,61 @@ InteractiveSample.prototype.createCategories = function() {
       ul.appendChild(li);
     }
     
-    this.selectCode.appendChild(container);
-    this.categories.push(container);
+    this.subCategories.push(container);
   }  
 };
 
-InteractiveSample.prototype.toggleShowHide = function(category, interactiveSample) {
+InteractiveSample.prototype.toggleShowHideLIs = function(category) {
   return function() {
-    var li = category.nextSibling;
+    var ul = category.nextSibling;
     var el = category.childNodes[0];
     if (el.className == 'expand') 
       el.className = 'collapse';
     else
       el.className = 'expand';
     
-    if (li.style.display == 'none') {
-      li.style.display = 'block';
+    if (ul.style.display == 'none') {
+      ul.style.display = 'block';
     } else {
-      li.style.display = 'none';
+      ul.style.display = 'none';
+    }
+  };
+};
+
+InteractiveSample.prototype.toggleShowHideSubCategories = function(category) {
+  return function() {
+    var subCategory = category;
+    
+    // Change the collapse img to a + or a -
+    var collapseImg = category.childNodes[0];
+    if (collapseImg.className == 'expand') 
+      collapseImg.className = 'collapse';
+    else
+      collapseImg.className = 'expand';
+    
+    
+    // Grab all of the sub-category Divs and hide/show them
+    while (subCategory = subCategory.nextSibling) {
+      if (subCategory.style.display == 'none') {
+        subCategory.style.display = 'block';
+      } else {
+        subCategory.style.display = 'none';
+      }
     }
   };
 };
 
 InteractiveSample.prototype.addShowHideClicks = function() {
   for (var i=0; i < this.categories.length; i++) {
-    categoryName = this.categories[i].childNodes[0];
-    addEvent(categoryName, 'click', this.toggleShowHide(categoryName, this));
+    var cat = this.categories[i].childNodes[0];
+    addEvent(cat, 'click', this.toggleShowHideSubCategories(cat));
   }
+  
+  for (var i=0; i < this.subCategories.length; i++) {
+    var subCat = this.subCategories[i].childNodes[0];
+    console.log(subCat);
+    addEvent(subCat, 'click', this.toggleShowHideLIs(subCat));
+  };
 };
 
 InteractiveSample.prototype.loadLocally = function(relativeUrl, filename, fileType, opt_changeCodeMirror) {
@@ -220,8 +295,9 @@ InteractiveSample.prototype.showSample = function(is_instance, files, thisLI, de
     var tab_bar = _gel('tab_bar');
     tab_bar.innerHTML = '';
     
-    // prototype syntax
-    files.each(function (file, index) {
+    for (var i=0; i < files.length; i++) {
+      var file = files[i];
+      var index = i;
       
       var tabClass = 'lb';
       if (index == 0) {
@@ -244,7 +320,7 @@ InteractiveSample.prototype.showSample = function(is_instance, files, thisLI, de
       containerDiv.innerHTML = html;
       
       tab_bar.appendChild(containerDiv);
-    });
+    }
     
     // is_instance.loadCode(files[0], textArea);
     is_instance.curI = files[0];
@@ -289,90 +365,20 @@ InteractiveSample.prototype.decreaseCodeBoxHeight = function() {
 };
 
 InteractiveSample.prototype.prepareAllCodeRun = function() {
-  // TODO: Change this so it doesn't rely on the first file being HTML
-  // TODO: Change this to use REGEX to replace
-	this.deleteOldWindowStuff();
-	
   this.currentCode[this.curI].code = this.getCode();
-  
-  var html = '';
-  for (var i in this.currentCode) {
-    if (i.indexOf('.html') != -1)
-      html = this.currentCode[i].code;
-  }
-  var nextStart = 0;
-  var replacing = true;
-  
-  while(replacing) {
-    var scriptLoc = html.indexOf('<script src="', nextStart);
-    if (scriptLoc != -1) {
-      nextStart = scriptLoc;
-      var scriptSrc = scriptLoc + 13;
-      var scriptSrcEnd = html.indexOf('"', scriptSrc);
-      var script = html.substring(scriptSrc, scriptSrcEnd);
-      var endScriptLoc = html.indexOf('</script>', scriptLoc) + 9;
-      var found = false;
-      for (var z in this.currentCode) {
-        if (z == script) {
-          found = true;
-          script = '<script type="text/javascript" charset="utf-8">'+this.currentCode[z].code+'</script>';
-        }
-      }
-      
-      // for (var z=0; z < this.currentCode.length; z++) {
-      //   if (this.currentCode[z].fileName == script) {
-      //     found = true;
-      //     script = '<script type="text/javascript" charset="utf-8">'+this.currentCode[z].code+'</script>';
-      //   }
-      // }
-      if (found)
-        html = html.substring(0, scriptLoc) + script + html.substring(endScriptLoc);      
-    } else {
-      replacing = false;
-    }
-  }
-  
-  // console.log(html);
-  window.codeToRun = html;
-  
-  // console.log(html.slice(scriptLoc, endScriptLoc));
-  // console.log(html);
+  window.codeToRun = this.getCode();
+  console.log(window.codeToRun);
+  this.createIframe();
 };
 
-InteractiveSample.prototype.runJS = function() {
-  // TODO don't assume that we run javascript in any order.  Make it so that 
-  // it checks the HTML for which order JS goes in
-  var hash = window.location.hash;
-  window.is.startJS();  
-};
-
-InteractiveSample.prototype.deleteOldWindowStuff = function() {
-	for (var i in window) {
-		if (typeof this.cleanWindowObj[i] == 'boolean' && this.cleanWindowObj[i] == true) {} else delete window[i];
-	}
-};
-
-InteractiveSample.prototype.startJS = function() {
-	this.deleteOldWindowStuff();
-  this.currentCode[this.curI].code = this.getCode();
+InteractiveSample.prototype.createIframe = function() {
+  var iFrame = document.createElement('iframe');
+  iFrame.src = 'iframes/search.html';
   
-  for (var i in this.currentCode) {
-  // for (var i=0; i < this.currentCode.length; i++) {
-		if (i.indexOf('.html') != -1) {
-			// Now add the HTML to the page
-			_gel('HTMLforInlineJavascript').innerHTML = this.currentCode[i].code;
-		}
-    if (i.indexOf('.js') != -1) {
-      window.eval(this.currentCode[i].code);
-    }
-  }
-	try {
-		window.onload();
-	} catch(e) {
-		alert(e.message);
-	}
-	
+  this.runBox.innerHTML = '';
+  this.runBox.appendChild(iFrame);
 };
+
 
 InteractiveSample.prototype.changeCodeMirror = function(content, lang) {
   if (lang == 'javascript') {
