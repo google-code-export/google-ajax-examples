@@ -17,9 +17,21 @@ var codeArray = [
     ]
   },
   {
-    "category":"Feeds-General",
+    "category":"Feeds",
     "samples":[
       {"files":["feeds/hello_world.js"], "sampleName":"Hello World"}
+    ]
+  },
+  {
+    "category":"Language",
+    "samples":[
+      {"files":["language/hello_world.js"], "sampleName":"Simple Translate"}
+    ]
+  },
+  {
+    "category":"Libraries",
+    "samples":[
+      {"files":["libraries/hello_world.js"], "sampleName":"Load jQuery"}
     ]
   }
 ];

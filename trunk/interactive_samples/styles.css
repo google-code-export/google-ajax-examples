@@ -296,3 +296,11 @@ span.subCategoryTitle {
   font-family: Arial, sans-serif;
   font-weight: normal;
 }
+
+span.categoryOpen div, span.categoryOpen ul {
+  display: block;
+}
+
+span.categoryClosed div, span.categoryClosed ul {
+  display: none;
+}
