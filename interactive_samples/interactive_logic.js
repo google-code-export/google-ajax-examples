@@ -2,9 +2,8 @@
 // TODO:
 // Make it so that you can make the code editing window wider...
 // Make it so that you can click links to the documentation of each object
-// Add Ping Pong
-// Fix the spacing in the editor (when u hit tab)
-// Try to see if for the javascript part you can eval line by line so that you can output the line number
+
+// TODO: make css rules for minimizing stuff easily
 
 var fileTypes = {
   'js' : 'javascript', 
@@ -64,7 +63,6 @@ InteractiveSample.prototype.init = function(codeDiv) {
 InteractiveSample.prototype.createCategories = function() {
   // codeArray is from interactive_samples.js
   this.selectCode = _gel('selectCode');
-  
   for (var i=0; i < codeArray.length; i++) {
     var category = codeArray[i].category;
     var container = subCategory = categoryDiv = subCategoryDiv = null;
@@ -79,12 +77,12 @@ InteractiveSample.prototype.createCategories = function() {
     categoryDiv = document.getElementById(category);
     if (categoryDiv == null) {
       categoryDiv = _cel('span');
-      categoryDiv.className = 'category';
+      categoryDiv.className = 'category categoryClosed';
       categoryDiv.id = category;
       var catName = _cel('span');
       catName.className = 'categoryTitle';
       var img = _cel('img');
-      img.className = 'collapse';
+      img.className = 'expand';
       img.src = 'images/cleardot.gif';
       // addEvent(img, 'click', this.toggleExpand(img), false);
 
@@ -94,22 +92,11 @@ InteractiveSample.prototype.createCategories = function() {
       categoryDiv.appendChild(catName);
       this.selectCode.appendChild(categoryDiv);
       
-      // This line might be confusing.  It's here because there are two ways
-      // to show/hide menus.  #1 is show/hiding a category which has
-      // sub categories.  In this case we will show/hide the subcategory
-      // divs.  This gets set in addShowHideClicks().  If the category has no
-      // sub categories, then we will show/hide the list items that are in the
-      // category, which is the same thing we do with subcategories.
-      // THUS, if a category has subcategories, set it's click handler one way.
-      // If a category has no subcategories, then we treat it like a subcategory
-      if (subCategory) {
-        this.categories.push(categoryDiv);
-      }
+      this.categories.push(categoryDiv);
     }
     
     if (subCategory) {
       subCategoryDiv = document.createElement('div');
-      
       var subCatName = _cel('span');
       subCatName.className = 'subCategoryTitle';
       
@@ -144,12 +131,14 @@ InteractiveSample.prototype.createCategories = function() {
       
       if (i == 0 && j == 0) {
         this.showSample(this, files, li, true)();
+        this.hideAllCategoriesExcept(categoryDiv);
       }
       
       if (window.location.hash.length > 0) {
         var hashName = nameToHashName(item.sampleName);
         if (window.location.hash.substring(1) == hashName) {
           this.showSample(this, files, li)();
+          this.hideAllCategoriesExcept(categoryDiv);
         }
       }
       
@@ -157,8 +146,10 @@ InteractiveSample.prototype.createCategories = function() {
       ul.appendChild(li);
     }
     
-    this.subCategories.push(container);
-  }  
+    if (container != categoryDiv) {
+      this.subCategories.push(container);
+    }
+  }
 };
 
 InteractiveSample.prototype.toggleShowHideLIs = function(category) {
@@ -180,37 +171,45 @@ InteractiveSample.prototype.toggleShowHideLIs = function(category) {
 
 InteractiveSample.prototype.toggleShowHideSubCategories = function(category) {
   return function() {
-    var subCategory = category;
-    
     // Change the collapse img to a + or a -
-    var collapseImg = category.childNodes[0];
-    if (collapseImg.className == 'expand') 
+    var collapseImg = category.childNodes[0].childNodes[0];
+    if (collapseImg.className == 'expand') {
       collapseImg.className = 'collapse';
-    else
+      category.className = 'category categoryOpen';
+    } else {
       collapseImg.className = 'expand';
-    
-    
-    // Grab all of the sub-category Divs and hide/show them
-    while (subCategory = subCategory.nextSibling) {
-      if (subCategory.style.display == 'none') {
-        subCategory.style.display = 'block';
-      } else {
-        subCategory.style.display = 'none';
-      }
+      category.className = 'category categoryClosed';
     }
   };
 };
 
+InteractiveSample.prototype.hideAllCategoriesExcept = function(category) {
+  for (var i=0; i < this.categories.length; i++) {
+    var curCategory = this.categories[i];
+    var collapseImg = curCategory.childNodes[0].childNodes[0];
+    if (curCategory != category) {
+      curCategory.className = 'category categoryClosed';
+      collapseImg.className = 'expand';
+    } else {
+      curCategory.className = 'category categoryOpen';
+      collapseImg.className = 'collapse';
+    }
+  };
+};
+
+
 InteractiveSample.prototype.addShowHideClicks = function() {
   for (var i=0; i < this.categories.length; i++) {
-    var cat = this.categories[i].childNodes[0];
-    addEvent(cat, 'click', this.toggleShowHideSubCategories(cat));
+    var cat = this.categories[i];
+    var catTitle = cat.childNodes[0];
+    console.log(cat, 1);
+    addEvent(catTitle, 'click', this.toggleShowHideSubCategories(cat));
   }
   
   for (var i=0; i < this.subCategories.length; i++) {
-    var subCat = this.subCategories[i].childNodes[0];
-    console.log(subCat);
-    addEvent(subCat, 'click', this.toggleShowHideLIs(subCat));
+    var subCatTitle = this.subCategories[i].childNodes[0];
+    console.log(subCatTitle, 2);
+    addEvent(subCatTitle, 'click', this.toggleShowHideLIs(subCatTitle));
   };
 };
 
@@ -327,6 +326,18 @@ InteractiveSample.prototype.showSample = function(is_instance, files, thisLI, de
   };
 };
 
+// InteractiveSample.prototype.hideAllCategoriesExcept = function(expandCategory) {
+//   for (var i=0; i < this.categories.length; i++) {
+//     var category = this.categories[i];
+//     console.log(category, expandCategory);
+//     if (category == expandCategory) {
+//       this.showSubCategories(category);
+//     } else {
+//       this.hideSubCategories(category);
+//     }
+//   };
+// };
+
 InteractiveSample.prototype.changeTab = function(i, is_instance) {
   return function() {
     var siblings = this.parentNode.childNodes;
@@ -367,7 +378,6 @@ InteractiveSample.prototype.decreaseCodeBoxHeight = function() {
 InteractiveSample.prototype.prepareAllCodeRun = function() {
   this.currentCode[this.curI].code = this.getCode();
   window.codeToRun = this.getCode();
-  console.log(window.codeToRun);
   this.createIframe();
 };
 
@@ -378,7 +388,6 @@ InteractiveSample.prototype.createIframe = function() {
   this.runBox.innerHTML = '';
   this.runBox.appendChild(iFrame);
 };
-
 
 InteractiveSample.prototype.changeCodeMirror = function(content, lang) {
   if (lang == 'javascript') {
