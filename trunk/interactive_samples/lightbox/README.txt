@@ -1,1 +1,0 @@
-Lightbox is not part of this project.  It is only in this project so that a version of the interactive sampler can be run from here.  Lightbox is not released under this license.
