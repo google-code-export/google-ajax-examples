@@ -48,7 +48,6 @@ div {
 #codeContainer {
   width:80%;
   height:500px;
-  padding-left: 9px;
   padding-right: 9px;
 
 }
@@ -85,9 +84,8 @@ div {
 }
 
 #outputContainer {
-  /*    width: 400px;*/
-  /*    height: 400px;*/
-  /*    width: 70%;*/
+  width: 80%;
+  padding-right: 9px;
 }
 
 #consoleContainer {
@@ -322,4 +320,8 @@ span.categoryOpen div, span.categoryOpen ul {
 
 span.categoryClosed div, span.categoryClosed ul {
   display: none;
+}
+
+#runbox iframe {
+  width: 100%;
 }

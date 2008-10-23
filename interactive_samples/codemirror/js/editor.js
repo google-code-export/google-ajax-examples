@@ -311,7 +311,7 @@ var Editor = (function(){
     this.container = this.doc.body;
     this.win = window;
     this.history = new History(this.container, this.options.undoDepth, this.options.undoDelay,
-                               this, options.onChange);
+                               this, options.onChange, options.onLoad);
 
     if (!Editor.Parser)
       throw "No parser loaded.";
@@ -375,7 +375,7 @@ var Editor = (function(){
   Editor.prototype = {
     // Import a piece of code into the editor.
     importCode: function(code) {
-      this.history.push(null, null, asEditorLines(code));
+      this.history.push(null, null, asEditorLines(code), true);
       this.history.reset();
     },
 

@@ -26,11 +26,12 @@
 // delay (of no input) after which it commits a set of changes, and,
 // unfortunately, the 'parent' window -- a window that is not in
 // designMode, and on which setTimeout works in every browser.
-function History(container, maxDepth, commitDelay, editor, onChange) {
+function History(container, maxDepth, commitDelay, editor, onChange, onLoad) {
   this.container = container;
   this.maxDepth = maxDepth; this.commitDelay = commitDelay;
   this.editor = editor; this.parent = editor.parent;
   this.onChange = onChange;
+  this.onLoad = onLoad;
   // This line object represents the initial, empty editor.
   var initial = {text: "", from: null, to: null};
   // As the borders between lines are represented by BR elements, the
@@ -86,20 +87,21 @@ History.prototype = {
   },
 
   // Push a changeset into the document.
-  push: function(from, to, lines) {
+  push: function(from, to, lines, newDoc) {
     var chain = [];
     for (var i = 0; i < lines.length; i++) {
       var end = (i == lines.length - 1) ? to : this.container.ownerDocument.createElement("BR");
       chain.push({from: from, to: end, text: lines[i]});
       from = end;
     }
-    this.pushChains([chain], from == null && to == null);
+    this.pushChains([chain], from == null && to == null, newDoc);
   },
 
-  pushChains: function(chains, doNotHighlight) {
+  pushChains: function(chains, doNotHighlight, newDoc) {
     this.commit(doNotHighlight);
     this.addUndoLevel(this.updateTo(chains, "applyChain"));
     this.redoHistory = [];
+    if (newDoc) this.onLoad();
   },
 
   // Clear the undo history, make the current document the start

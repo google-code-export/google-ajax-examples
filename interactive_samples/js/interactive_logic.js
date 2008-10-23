@@ -224,6 +224,7 @@ InteractiveSample.prototype.loadLocally = function(relativeUrl, filename, fileTy
     code : data
   };  
   console.log(relativeUrl + ': loaded locally.');
+  this.prepareAllCodeRun();
   return true;
 }
 
@@ -236,6 +237,7 @@ InteractiveSample.prototype.loadRemotely = function(relativeUrl, filename, fileT
     is_instance.currentCode[filename] = {
       code : data
     };
+    is_instance.prepareAllCodeRun();
   });
 }
 

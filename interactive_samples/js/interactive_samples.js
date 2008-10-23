@@ -19,7 +19,7 @@ var codeArray = [
   {
     "category":"Feeds",
     "samples":[
-      {"files":["feeds/hello_world.js"], "sampleName":"Hello World"}
+      {"files":["feeds/hello_world.js"], "sampleName":"Simple Feed"}
     ]
   },
   {
