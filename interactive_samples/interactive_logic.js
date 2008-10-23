@@ -197,18 +197,15 @@ InteractiveSample.prototype.hideAllCategoriesExcept = function(category) {
   };
 };
 
-
 InteractiveSample.prototype.addShowHideClicks = function() {
   for (var i=0; i < this.categories.length; i++) {
     var cat = this.categories[i];
     var catTitle = cat.childNodes[0];
-    console.log(cat, 1);
     addEvent(catTitle, 'click', this.toggleShowHideSubCategories(cat));
   }
   
   for (var i=0; i < this.subCategories.length; i++) {
     var subCatTitle = this.subCategories[i].childNodes[0];
-    console.log(subCatTitle, 2);
     addEvent(subCatTitle, 'click', this.toggleShowHideLIs(subCatTitle));
   };
 };
@@ -227,7 +224,6 @@ InteractiveSample.prototype.loadLocally = function(relativeUrl, filename, fileTy
     code : data
   };  
   console.log(relativeUrl + ': loaded locally.');
-  
   return true;
 }
 
@@ -291,8 +287,8 @@ InteractiveSample.prototype.showSample = function(is_instance, files, thisLI, de
     
     
     // add file names at top
-    var tab_bar = _gel('tab_bar');
-    tab_bar.innerHTML = '';
+    // var tab_bar = _gel('tab_bar');
+    // tab_bar.innerHTML = '';
     
     for (var i=0; i < files.length; i++) {
       var file = files[i];
@@ -318,7 +314,7 @@ InteractiveSample.prototype.showSample = function(is_instance, files, thisLI, de
       
       containerDiv.innerHTML = html;
       
-      tab_bar.appendChild(containerDiv);
+      // tab_bar.appendChild(containerDiv);
     }
     
     // is_instance.loadCode(files[0], textArea);
@@ -376,37 +372,50 @@ InteractiveSample.prototype.decreaseCodeBoxHeight = function() {
 };
 
 InteractiveSample.prototype.prepareAllCodeRun = function() {
-  this.currentCode[this.curI].code = this.getCode();
-  window.codeToRun = this.getCode();
-  this.createIframe();
+  try {
+    this.currentCode[this.curI].code = this.getCode();
+    window.codeToRun = this.getCode();
+    this.createIframe();
+  } catch (e) {
+    // this will fail sometimes and that's OK.  It just means that CodeMirror
+    // doesn't have the code loaded that we are trying to use.
+  }
+  
 };
+
+InteractiveSample.prototype.setNewCodeRunIframeWidthHeight = function(iFrame) {
+  var fakeDiv = document.createElement('div');
+  fakeDiv.id = 'fakeCalcDiv';
+  $(this.runBox).prepend(fakeDiv);
+  var outputDiv = $('#outputDiv');
+  var containerHeight = outputDiv.height();
+  var containerCurPos = outputDiv.offset();
+  var curDivPos = $('#fakeCalcDiv').offset();
+  
+
+  
+  var height = containerHeight - curDivPos.top + containerCurPos.top - 15;
+  var width = outputDiv.width();
+  
+  this.runBox.removeChild(fakeDiv);
+  $(iFrame).css('height', height + 'px');
+}
 
 InteractiveSample.prototype.createIframe = function() {
   var iFrame = document.createElement('iframe');
   iFrame.src = 'iframes/search.html';
-  
+  iFrame.id = 'runFrame';
+  this.setNewCodeRunIframeWidthHeight(iFrame);
   this.runBox.innerHTML = '';
   this.runBox.appendChild(iFrame);
 };
 
 InteractiveSample.prototype.changeCodeMirror = function(content, lang) {
-  if (lang == 'javascript') {
-    window.jsEditor.setCode(content);
-    window.jsEditor.frame.style.display = 'inline';
-    window.htmlEditor.frame.style.display = 'none';
-  } else if (lang == 'html') {
-    window.htmlEditor.setCode(content);
-    window.htmlEditor.frame.style.display = 'inline';
-    window.jsEditor.frame.style.display = 'none';
-  }
+  window.jsEditor.setCode(content);
 };
 
 InteractiveSample.prototype.getCode = function() {
-  if (window.htmlEditor.frame.style.display != 'none') {
-    return window.htmlEditor.getCode();
-  } else if (window.jsEditor.frame.style.display != 'none') {
-    return window.jsEditor.getCode();
-  }
+  return window.jsEditor.getCode();
 };
 
 // Todo have the window automatically size to the size of the window
