@@ -2,6 +2,10 @@ body {
   font-family: Arial, sans-serif;
 }
 
+td {
+  padding: 0px;
+}
+
 #container {
   width: 100%;
   margin:0pt auto;
@@ -18,6 +22,7 @@ div {
 
 #header {
   height: 50px;
+  padding-left: 15px;
 }
 
 /*#footer {
@@ -35,24 +40,35 @@ div {
   display: inline;
 }
 
-.codepress {
-  width:100%;
-  height:550px;
-/*  overflow-x: hidden;*/
-}
-
 #codeContainer {
-  width:80%;
-  height:500px;
-  padding-left: 9px;
-  padding-right: 9px;
-
+  width: 80%;
+  height: 500px;
+/*  padding-right: 9px;*/
 }
 
 #selectContainer {
   width:20%;
   height:100%;
-  padding-bottom: 3px;
+  border: 1px solid #999;
+}
+
+#outputContainer {
+  height: 300px;
+}
+
+#consoleContainer {
+  height: 300px;
+  width: 30%;
+  border: 1px solid #999;
+}
+
+#editor {
+  height: 500px;
+  border: 1px solid #999;
+}
+
+#edit {
+  height: 95%;
 }
 
 #selectCode {
@@ -80,18 +96,6 @@ div {
   padding-left: 0px;
 }
 
-#outputContainer {
-  /*    width: 400px;*/
-  /*    height: 400px;*/
-  /*    width: 70%;*/
-}
-
-#consoleContainer {
-  height: 300px;
-  width: 30%;
-  border: 1px solid #999;
-}
-
 iframe {
 /*  overflow-x: hidden;*/
 }
@@ -99,6 +103,7 @@ iframe {
 .contentTable {
   width: 100%;
   height: 100%;
+  margin-top: 10px;
 }
 
 #header {
@@ -120,7 +125,10 @@ iframe {
 h2 {
   border-bottom:1px solid #CCCCCC;
   font-size:1.3em;
-  margin-bottom:0pt;
+  padding-top: 5px;
+  background: #E5ECF9;
+  margin: 0px;
+  padding-left: 15px;
   font-family:Helvetica,Arial,sans-serif;
 }
 
@@ -131,7 +139,8 @@ h2 {
   margin:0pt;
   padding:0.1em 0pt;
   white-space:nowrap;
-  width:100%;
+  margin-left: 2px;
+  margin-right: 2px;
 }
 
 li.selected {
@@ -230,7 +239,7 @@ td.footer {
 #googleLogoTD {
   text-align:right; 
   vertical-align:middle;
-  padding-right: 7px;
+  padding-right: 15px;
 }
 
 #tab_bar {
@@ -289,12 +298,14 @@ span.categoryTitle {
   font-size: 90%;
   font-family: Arial, sans-serif;
   font-weight: bold;
+  cursor: pointer;
 }
 
 span.subCategoryTitle {
   font-size: 85%;
   font-family: Arial, sans-serif;
   font-weight: normal;
+  cursor: pointer;
 }
 
 span.categoryOpen div, span.categoryOpen ul {
@@ -304,3 +315,110 @@ span.categoryOpen div, span.categoryOpen ul {
 span.categoryClosed div, span.categoryClosed ul {
   display: none;
 }
+
+.proxy {
+	border: 1px dashed #000/*#3399ff*/;
+	z-index:9999;
+}
+
+.ui-resizable-se { 
+	cursor: se-resize; 
+	width: 13px; 
+	height: 13px; 
+	right: 0px; 
+	bottom: 0px; 
+	background: url(images/resize.gif) no-repeat 0 0;
+}
+#outputDrag {
+	cursor: move;
+}
+#runbox {
+  width: 100%;
+  height: 100%;
+}
+
+#runbox iframe {
+  border: 0px none white;
+  border-top: 1px solid #999;
+  width: 100%;
+  height: 100%;
+/*  border: 0px none #999;*/
+}
+
+#outputDiv {
+  border: 1px solid #999;
+  height: 100%;
+  background-color: white;
+  z-index: 1000;
+}
+
+
+
+
+
+/* ------ PUSH UP THE WEB CSS -------*/
+#pushup {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  margin: 0;
+  padding: 4px;
+  background: #ffffc6;
+  border: 1px solid #b0dfc8;
+  z-index: 9999;
+  text-decoration: none;
+  font-family: Arial, Helvetica, sans-serif;
+}
+* html #pushup {
+  position: absolute;
+  top: expression(_pushupIETop = 10 + (document.documentElement.scrollTop || 0) + 'px');
+}
+#pushup * {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+}
+.withReminder { padding-bottom: 6px; }
+#pushup a {
+  outline-style: none;
+  text-decoration: none;
+}
+
+#pushup .pushup_messageLink {
+  float: left;
+  position: relative;
+  color: #4293cd;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+#pushup .pushup_icon {
+  position: relative;
+  float: left;
+  height: 22px;
+  width: 22px;
+  margin-right: 5px;
+  overflow: hidden;
+  vertical-align: middle;
+}
+
+#pushup .pushup_message {
+  position: relative;
+  float: left;
+  margin-right: 3px;
+  line-height: 22px;
+  vertical-align: middle;
+}
+
+#pushup .pushup_reminder {
+  float: left;
+  clear: both;
+  font-size: 10px;
+  color: #84a2ac;
+  margin-left: 27px;
+  cursor: pointer;
+}
+
+#pushup .pushup_messageLink:hover,
+#pushup .pushup_reminder:hover { text-decoration: underline; }
