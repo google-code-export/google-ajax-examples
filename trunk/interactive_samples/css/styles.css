@@ -174,7 +174,7 @@ img.expand, img.collapse {
   padding:0pt;
   position:relative;
   width:9px;
-  background-image:url(images/sprites.gif);
+  background-image:url(../images/sprites.gif);
   vertical-align:middle;
   cursor: pointer;
 }
@@ -211,7 +211,7 @@ img.expand:hover {
 }*/
 
 #gc-footer-img {
-  background-image:url(images/sprites.gif);
+  background-image:url(../images/sprites.gif);
   background-position:-28px -28px;
   display:inline;
   float:left;
@@ -257,18 +257,18 @@ td.footer {
 }
 
 .db_top div {
-  background: url(images/db_tl.png) no-repeat top left;
+  background: url(../images/db_tl.png) no-repeat top left;
 }
 .db_top {
-  background: #92c1f0 url(images/db_tr.png) no-repeat top right;
+  background: #92c1f0 url(../images/db_tr.png) no-repeat top right;
 }
 
 .lb_top div {
-  background: url(images/lb_tl.png) no-repeat top left;
+  background: url(../images/lb_tl.png) no-repeat top left;
 }
 
 .lb_top {
-  background: #D0E4F6 url(images/lb_tr.png) no-repeat top right;
+  background: #D0E4F6 url(../images/lb_tr.png) no-repeat top right;
 }
 
 .db_top div, .db_top, 
@@ -327,7 +327,7 @@ span.categoryClosed div, span.categoryClosed ul {
 	height: 13px; 
 	right: 0px; 
 	bottom: 0px; 
-	background: url(images/resize.gif) no-repeat 0 0;
+	background: url(../images/resize.gif) no-repeat 0 0;
 }
 #outputDrag {
 	cursor: move;
@@ -353,8 +353,75 @@ span.categoryClosed div, span.categoryClosed ul {
 }
 
 
+/* ------ Drop Shadows ------- */
+#shadowContainer {
+  width: 500px;
+  height: 500px;
+  position: absolute;
+  top:0px;
+  left:-1000px;
+}
+
+.bottomShadows {
+  top: 467px;
+}
+
+.rightShadows {
+  right: -17px;
+}
+
+.brShadow {
+  background: url(../images/drop_shadows/br.png) no-repeat;
+  width: 58px;
+  height: 50px;
+  position: absolute;
+  right: -17px;
+}
+
+.blShadow {
+  background: url(../images/drop_shadows/bl.png) no-repeat;
+  width: 45px;
+  height: 51px;
+  position: absolute;
+  left: 0px;
+}
+
+.bShadow {
+  background: url(../images/drop_shadows/b1px.png) repeat;
+  height: 51px;
+  width: 414px;
+  position: absolute;
+  right: 41px;
+}
+
+.trShadow {
+  background: url(../images/drop_shadows/tr.png) no-repeat;
+  width: 58px;
+  height: 51px;
+  position: absolute;
+  right: -17px;
+  top: 0px;
+}
+
+.rShadow {
+  background: url(../images/drop_shadows/r1px.png) repeat;
+  height: 416px;
+  width: 58px;
+  position: absolute;
+  right: -17px;
+  top: 51px;
+}
 
 
+/* ------ Fix jQuery 'no drag over iFrame' CSS rules */
+#dragsafe {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 600px;
+  height: 600px;
+  z-index: 9999;
+}
 
 /* ------ PUSH UP THE WEB CSS -------*/
 #pushup {
@@ -365,7 +432,7 @@ span.categoryClosed div, span.categoryClosed ul {
   padding: 4px;
   background: #ffffc6;
   border: 1px solid #b0dfc8;
-  z-index: 9999;
+  z-index: 9000;
   text-decoration: none;
   font-family: Arial, Helvetica, sans-serif;
 }

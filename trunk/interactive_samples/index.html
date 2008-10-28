@@ -31,7 +31,7 @@
   <!-- JavaScript -->
   <title>AJAX APIs Interactive Sampler</title>
   <script src="codemirror/js/codemirror.js" type="text/javascript" charset="utf-8"></script>
-  <script src="utils.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/utils.js" type="text/javascript" charset="utf-8"></script>
   <script src="js/interactive_samples.js" type="text/javascript" charset="utf-8"></script>
   <script src="js/interactive_logic.js" type="text/javascript" charset="utf-8"></script>
   <script src="http://www.google.com/jsapi" type="text/javascript" charset="utf-8"></script>
@@ -39,9 +39,19 @@
   google.load('jquery', '1');
   google.load('jqueryui', '1');
   var is;
+  var mousePos = {'x': 0, 'y': 0};
   function init() {
     is = new InteractiveSample();
     is.init(document.getElementById('editor'));
+
+
+    // So that we can track the mouse movement
+    $().mousemove(function(e){
+      mousePos.x = e.pageX;
+      mousePos.y = e.pageY;
+    }); 
+    
+
 
     var width = $("#outputDiv").width();
     var height = $("#outputDiv").height();
@@ -49,15 +59,89 @@
     $("#outputDiv").resizable({
       handles: "se",
       helper: 'proxy',
-      stop: function() {is.setNewCodeRunIframeWidthHeight($('#runFrame'));}
+      resize: function(e, ui) {
+        updateDragSafeDiv();
+      },
+      stop: function(e, ui) {
+        hideDragSafeDiv();
+        setShadowDivSize('shadowContainer', ui.size.width, ui.size.height);
+        is.setNewCodeRunIframeWidthHeight($('#runFrame'));
+      }
     });
     
     $("#outputDiv").draggable({ 
-      handle: "outputDrag"
-      // start: maximizeRunBox
+      handle: "outputDrag",
+      drag: function(e, ui) {
+        updateDragSafeDiv();
+        setShadowDivPosition('shadowContainer', ui.position.top, ui.position.left);
+      },
+      stop: function(e, ui) {
+        hideDragSafeDiv();
+      }
     });
     
+    var outputContainer = $("#outputContainer");
+    var outputContainerWidth = $(outputContainer).width();
+    var outputContainerHeight = $(outputContainer).height();
+    var outputContainerPos = $(outputContainer).position();
+    
+    setShadowDivSize('shadowContainer', outputContainerWidth, outputContainerHeight);
+    setShadowDivPosition('shadowContainer', outputContainerPos.top, outputContainerPos.left);
+    showShadowDiv('shadowContainer');
   }
+  
+  function updateDragSafeDiv() {
+    var newTop = mousePos.y - 300;
+    var newLeft = mousePos.x - 300;
+    $('#dragsafe').css('top', newTop + 'px').css('left', newLeft + 'px');
+  }
+  
+  function hideDragSafeDiv() {
+    $('#dragsafe').css('top', '-600px').css('left', '-600px');
+  }
+  
+  
+  function showShadowDiv(containerName) {
+    $('#' + containerName).show();
+  }
+  
+  
+  function setShadowDivPosition(containerName, top, left) {
+    containerName = '#' + containerName;
+    var shadowContainer = $(containerName);
+    $(shadowContainer).css('top', top + 'px').css('left', left + 'px');
+  }
+  
+  function setShadowDivSize(containerName, newWidth, newHeight) {
+    containerName = '#' + containerName;
+    var shadowContainer = $(containerName);
+    var oldWidth = $(shadowContainer).width();
+    var oldHeight = $(shadowContainer).height();
+    
+    var changeWidth = newWidth - oldWidth;
+    var changeHeight = newHeight - oldHeight;
+    
+    // Make bottom 1px shadow width change
+    var bShadow = $(containerName + " div.bShadow")[0];
+    var bShadowWidth = $(bShadow).width();
+    var newBShadowWidth = bShadowWidth + changeWidth;
+    $(bShadow).css('width', newBShadowWidth + 'px');
+    
+    // Make right 1px shadow height change
+    var rShadow = $(containerName + " div.rShadow")[0];
+    var rShadowHeight = $(rShadow).height();
+    var newRShadowHeight = rShadowHeight + changeHeight;
+    $(rShadow).css('height', newRShadowHeight + 'px');
+    
+    var bShadows = $(containerName + " .bottomShadows");
+    var bShadowsCurTop = $(bShadows[0]).position().top;
+    // alert(bShadowsCurTop);
+    var newBShadowsTop = bShadowsCurTop + changeHeight;
+    $(bShadows).css('top', newBShadowsTop + 'px');
+    
+    $(shadowContainer).css('width', newWidth + 'px').css('height', newHeight + 'px');
+  }
+  
   
   google.setOnLoadCallback(init);
   </script>
@@ -77,6 +161,7 @@
       </table>
       
     </div>
+
 
     <div id="content" style="height:500px;">
       <table class="contentTable">
@@ -119,13 +204,25 @@
           
       </tr>
       <tr>
+        
+
+        
+          
+          <div id="shadowContainer">
+            <div class="blShadow bottomShadows">&nbsp;</div>
+            <div class="bShadow bottomShadows">&nbsp;</div>
+            <div class="brShadow bottomShadows rightShadows">&nbsp;</div>
+            <div class="rShadow rightShadows">&nbsp;</div>
+            <div class="trShadow rightShadows">&nbsp;</div>
+          </div>
         <td id="outputContainer" colspan=2>
+          
           <!-- to change height/width, change #outputContainer in the CSS -->
           <div id="outputDiv" class="draggable resizable">
             <div id="outputDrag">
-              <h2>Run</h2>
+              <h2>Run <input type="button" value="Run" onclick="is.prepareAllCodeRun();"></h2>
             </div>
-            <input type="button" value="Run" onclick="is.prepareAllCodeRun();">
+            
             <div id="runbox"></div>
           </div>
         </td>
@@ -149,6 +246,14 @@
 </div>
 
 <div id="HTMLforInlineJavascript" style="display:none;"></div>
+
+<!-- 
+  There's a bug in jQuery UI where if you drag over an iFrame
+  then you can't drag anymore.  Putting an invisible div over the
+  iFrame fixes it.
+  -->
+<div id="dragsafe"></div>
+
 
 <script src="js/pushup.js" type="text/javascript" charset="utf-8"></script>
 </body>
