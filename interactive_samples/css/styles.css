@@ -417,7 +417,7 @@ span.categoryClosed div, span.categoryClosed ul {
 #dragsafe {
   position: absolute;
   top: 0px;
-  left: 0px;
+  left: -600px;
   width: 600px;
   height: 600px;
   z-index: 9999;

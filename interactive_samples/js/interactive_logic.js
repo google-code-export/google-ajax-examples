@@ -1,3 +1,6 @@
+// Anonymous function, keep the global namespace squeeky clean..
+(function() {
+
 // For browserFun
 // TODO:
 // Make it so that you can make the code editing window wider...
@@ -15,16 +18,19 @@ function InteractiveSample(){
   this.categories = [];
   this.subCategories = [];
   this.codeTitles = [];
-  this.adjustCodeBoxAmount = 50;
   this.selectCode;
   this.codeDiv;
-  this.runBox = document.getElementById('runbox');
+  this.runBox;
   this.codeLIs = [];
   this.currentCode = new Object();
   this.curI = '';
 	this.cleanWindowObj;
+	
   // Assume we're offline until we know that file reading doesn't work
 	this.online = false;
+	
+	this.uiEffects;
+	this.runBox;
 };
 
 function sortByCategory(a, b) {
@@ -58,6 +64,11 @@ InteractiveSample.prototype.init = function(codeDiv) {
     // after we run a sample... so samples can get run a lot and not clutter
     // the window object.
   this.cleanWindowObj = singleLevelKeyCopy(window);
+  
+  this.uiEffects = new UIEffects();
+  this.uiEffects.init(this);
+  this.runBox = new RunBox();
+  this.runBox.init(this);
 };
 
 InteractiveSample.prototype.createCategories = function() {
@@ -224,7 +235,7 @@ InteractiveSample.prototype.loadLocally = function(relativeUrl, filename, fileTy
     code : data
   };  
   console.log(relativeUrl + ': loaded locally.');
-  this.prepareAllCodeRun();
+  this.runCode();
   return true;
 }
 
@@ -237,7 +248,7 @@ InteractiveSample.prototype.loadRemotely = function(relativeUrl, filename, fileT
     is_instance.currentCode[filename] = {
       code : data
     };
-    is_instance.prepareAllCodeRun();
+    is_instance.runCode();
   });
 }
 
@@ -324,18 +335,6 @@ InteractiveSample.prototype.showSample = function(is_instance, files, thisLI, de
   };
 };
 
-// InteractiveSample.prototype.hideAllCategoriesExcept = function(expandCategory) {
-//   for (var i=0; i < this.categories.length; i++) {
-//     var category = this.categories[i];
-//     console.log(category, expandCategory);
-//     if (category == expandCategory) {
-//       this.showSubCategories(category);
-//     } else {
-//       this.hideSubCategories(category);
-//     }
-//   };
-// };
-
 InteractiveSample.prototype.changeTab = function(i, is_instance) {
   return function() {
     var siblings = this.parentNode.childNodes;
@@ -357,14 +356,6 @@ InteractiveSample.prototype.changeTab = function(i, is_instance) {
   };
 };
 
-InteractiveSample.prototype.increaseCodeBoxHeight = function() {
-  var curHeight = this.textArea.style.height;
-  curHeight = curHeight.substr(0, curHeight.indexOf('px'));
-  var newHeight = parseInt(curHeight) + this.adjustCodeBoxAmount;
-  newHeight += 'px';
-  this.textArea.style.height = newHeight;
-};
-
 InteractiveSample.prototype.decreaseCodeBoxHeight = function() {
   var curHeight = this.textArea.style.height;
   curHeight = curHeight.substr(0, curHeight.indexOf('px'));
@@ -373,47 +364,24 @@ InteractiveSample.prototype.decreaseCodeBoxHeight = function() {
   this.textArea.style.height = newHeight;
 };
 
-InteractiveSample.prototype.prepareAllCodeRun = function() {
+InteractiveSample.prototype.runCode = function() {
   try {
     this.currentCode[this.curI].code = this.getCode();
-    window.codeToRun = this.getCode();
-    this.createIframe();
+    is.codeToRun = this.getCode();
+    this.runBox.runCode();
   } catch (e) {
     // this will fail sometimes and that's OK.  It just means that CodeMirror
     // doesn't have the code loaded that we are trying to use.
   }
-  
-};
-
-InteractiveSample.prototype.setNewCodeRunIframeWidthHeight = function(iFrame) {
-  var fakeDiv = document.createElement('div');
-  fakeDiv.id = 'fakeCalcDiv';
-  $(this.runBox).prepend(fakeDiv);
-  var outputDiv = $('#outputDiv');
-  var containerHeight = outputDiv.height();
-  var containerCurPos = outputDiv.offset();
-  var curDivPos = $('#fakeCalcDiv').offset();
-  
-
-  
-  var height = containerHeight - curDivPos.top + containerCurPos.top - 15;
-  var width = outputDiv.width();
-  
-  this.runBox.removeChild(fakeDiv);
-  $(iFrame).css('height', height + 'px');
-}
-
-InteractiveSample.prototype.createIframe = function() {
-  var iFrame = document.createElement('iframe');
-  iFrame.src = 'iframes/search.html';
-  iFrame.id = 'runFrame';
-  this.setNewCodeRunIframeWidthHeight(iFrame);
-  this.runBox.innerHTML = '';
-  this.runBox.appendChild(iFrame);
 };
 
 InteractiveSample.prototype.changeCodeMirror = function(content, lang) {
-  window.jsEditor.setCode(content);
+  try {
+    window.jsEditor.setCode(content);
+  } catch (e) {
+    // hasn't loaded
+  }
+  
 };
 
 InteractiveSample.prototype.getCode = function() {
@@ -426,3 +394,249 @@ InteractiveSample.prototype.increaseWidth = function() {
   var container = document.getElementById('container');
   var curWidth = container.style.maxWidth = '1800px';
 };
+
+/* 
+ * UIEffects sets up all of the jQuery UI stuff for draggable etc.
+ */
+function UIEffects() {
+  this.is;
+  this.mousePos;
+}
+
+UIEffects.prototype.init = function(is) {
+  this.is = is;
+  
+  this.mousePos = {
+    'x': 0,
+    'y': 0
+  }
+  
+  var me = this;
+  // So that we can track the mouse movement
+  $().mousemove(function(e){
+    me.mousePos.x = e.pageX;
+    me.mousePos.y = e.pageY;
+  }); 
+  
+  this.setOutputDivResizable();
+  this.setOutputDivDraggable();
+  this.setOutputDivShadow();
+  this.setWindowResize();
+};
+
+UIEffects.prototype.setWindowResize = function() {
+  var me = this;
+  $(window).bind('resize', function() {
+    me.setOutputDivShadow();
+  });
+};
+
+
+UIEffects.prototype.setOutputDivResizable = function() {
+  var me = this;
+  var width = $("#outputDiv").width();
+  var height = $("#outputDiv").height();
+  $("#outputDiv").css('position', 'absolute').css('width', width).css('height', height);
+  $("#outputDiv").resizable({
+    handles: "se",
+    helper: 'proxy',
+    resize: function(e, ui) {
+      me.updateDragSafeDiv();
+    },
+    stop: function(e, ui) {
+      me.hideDragSafeDiv();
+      me.setShadowDivSize('shadowContainer', ui.size.width, ui.size.height);
+      me.is.runBox.setNewCodeRunIframeWidthHeight($('#runFrame'));
+    }
+  });
+};
+
+UIEffects.prototype.setOutputDivDraggable = function(first_argument) {
+  var me = this;
+  $("#outputDiv").draggable({ 
+    handle: "outputDrag",
+    drag: function(e, ui) {
+      me.updateDragSafeDiv();
+      me.setShadowDivPosition('shadowContainer', ui.position.top, ui.position.left);
+    },
+    stop: function(e, ui) {
+      me.hideDragSafeDiv();
+    }
+  });
+};
+
+UIEffects.prototype.setOutputDivShadow = function() {
+  var outputContainer = $("#outputDiv");
+  var outputContainerWidth = $(outputContainer).width();
+  var outputContainerHeight = $(outputContainer).height();
+  var outputContainerPos = $(outputContainer).position();
+  
+  this.setShadowDivSize('shadowContainer', outputContainerWidth, outputContainerHeight);
+  this.setShadowDivPosition('shadowContainer', outputContainerPos.top, outputContainerPos.left);
+  this.showShadowDiv('shadowContainer');
+};
+
+UIEffects.prototype.updateDragSafeDiv = function() {
+  var newTop = this.mousePos.y - 300;
+  var newLeft = this.mousePos.x - 300;
+  $('#dragsafe').css('top', newTop + 'px').css('left', newLeft + 'px');
+}
+
+UIEffects.prototype.hideDragSafeDiv = function() {
+  $('#dragsafe').css('top', '-600px').css('left', '-600px');
+}
+
+UIEffects.prototype.showShadowDiv = function(containerName) {
+  $('#' + containerName).show();
+}
+
+UIEffects.prototype.setShadowDivPosition = function(containerName, top, left) {
+  containerName = '#' + containerName;
+  var shadowContainer = $(containerName);
+  $(shadowContainer).css('top', top + 'px').css('left', left + 'px');
+}
+
+UIEffects.prototype.setShadowDivSize = function(containerName, newWidth, newHeight) {
+  containerName = '#' + containerName;
+  var shadowContainer = $(containerName);
+  var oldWidth = $(shadowContainer).width();
+  var oldHeight = $(shadowContainer).height();
+  
+  var changeWidth = newWidth - oldWidth;
+  var changeHeight = newHeight - oldHeight;
+  
+  // Make bottom 1px shadow width change
+  var bShadow = $(containerName + " div.bShadow")[0];
+  var bShadowWidth = $(bShadow).width();
+  var newBShadowWidth = bShadowWidth + changeWidth;
+  $(bShadow).css('width', newBShadowWidth + 'px');
+  
+  // Make right 1px shadow height change
+  var rShadow = $(containerName + " div.rShadow")[0];
+  var rShadowHeight = $(rShadow).height();
+  var newRShadowHeight = rShadowHeight + changeHeight;
+  $(rShadow).css('height', newRShadowHeight + 'px');
+  
+  var bShadows = $(containerName + " .bottomShadows");
+  var bShadowsCurTop = $(bShadows[0]).position().top;
+  // alert(bShadowsCurTop);
+  var newBShadowsTop = bShadowsCurTop + changeHeight;
+  $(bShadows).css('top', newBShadowsTop + 'px');
+  
+  $(shadowContainer).css('width', newWidth + 'px').css('height', newHeight + 'px');
+}
+
+
+function RunBox() {
+  this.outputContainer;
+  this.shadowContainer;
+  this.runBoxPoppedOut;
+  this.popoutWindow;
+  this.is;
+  this.runBoxDiv;
+  this.popoutRunBoxDiv;
+}
+
+RunBox.prototype.init = function(is) {
+  this.runBoxDiv = document.getElementById('runbox');
+  this.runBoxPoppedOut = false;
+  this.outputContainer = $("#outputContainer");
+  this.shadowContainer = $("#shadowContainer");
+  this.is = is;
+};
+
+RunBox.prototype.hideOnScreenRun = function() {
+  // body...
+};
+
+RunBox.prototype.createIframe = function() {
+  var iFrame = $('<iframe src="iframes/search.html" id="runFrame"></iframe>');
+  iFrame = this.setNewCodeRunIframeWidthHeight(iFrame);
+  $(this.runBoxDiv).empty().append(iFrame);
+};
+
+
+RunBox.prototype.setNewCodeRunIframeWidthHeight = function(iFrame) {
+  var fakeDiv = $('<div id="fakeCalcDiv"></div>');
+  $(this.runBoxDiv).prepend(fakeDiv);
+  var outputDiv = $('#outputDiv');
+  var containerHeight = outputDiv.height();
+  var containerCurPos = outputDiv.offset();
+  var curDivPos = $(fakeDiv).offset();
+  var height = containerHeight - curDivPos.top + containerCurPos.top - 15;
+  var width = outputDiv.width();
+
+  return $(iFrame).css('height', height + 'px');
+}
+
+RunBox.prototype.runCode = function() {
+  if (this.runBoxPoppedOut == false) {
+    this.createIframe();
+  } else {
+    // Run code in the popout window
+    var runbox = this.popoutWindow.document.getElementById('runbox');
+    runbox.innerHTML = '';
+
+    this.popoutWindow.is = {
+      'codeToRun': this.is.codeToRun
+    };
+
+    var newFrame = $('<iframe src="../iframes/search.html" id="runFrame"></iframe>').get(0);
+    runbox.appendChild(newFrame);
+  }
+};
+
+RunBox.prototype.changeToPopout = function() {
+  this.runBoxPoppedOut = true;
+  $(this.outputContainer).hide();
+  $(this.shadowContainer).hide();
+  this.popoutWindow = window.open('iframes/popout.html','popout', 'left=20,top=20,width=600,height=500,toolbar=1,resizable=1');
+  this.popoutWindow.is = {
+    'codeToRun': this.is.codeToRun
+  };
+  var me = this;
+  addEvent(this.popoutWindow, 'load', function() {
+    me.is.runCode();
+    
+    var run = me.popoutWindow.document.getElementById('run');
+    
+    window.addEvent(run, 'click', function() {
+      me.is.runCode();
+    });
+    
+    var popin = me.popoutWindow.document.getElementById('popin');
+    
+    window.addEvent(popin, 'click', function() {
+      me.changeToInline();
+      me.popoutWindow.close();    
+    });
+     
+  });
+  // this.popoutWindow.onload = function() {
+  //   var run = me.popoutWindow.document.getElementById('run');
+  //   run.onclick = function() {
+  //     me.is.runCode();
+  //   }
+  //   
+  //   var popin = me.popoutWindow.document.getElementById('popin');
+  //   popin.onclick = function() {
+  //     me.changeToInline();
+  //     me.popoutWindow.close();
+  //   }
+  //   
+  //   me.is.runCode();
+  // }
+}
+
+RunBox.prototype.changeToInline = function() {
+  this.runBoxPoppedOut = false;
+  $(this.outputContainer).show();
+  $(this.shadowContainer).show();
+  this.is.runCode();
+};
+
+
+// Create and export the interactive sample instance to the global.
+is = new InteractiveSample();
+window.is = is;
+})();
