@@ -36,113 +36,13 @@
   <script src="js/interactive_logic.js" type="text/javascript" charset="utf-8"></script>
   <script src="http://www.google.com/jsapi" type="text/javascript" charset="utf-8"></script>
   <script type="text/javascript" charset="utf-8">
+  
   google.load('jquery', '1');
   google.load('jqueryui', '1');
-  var is;
-  var mousePos = {'x': 0, 'y': 0};
+  
   function init() {
-    is = new InteractiveSample();
     is.init(document.getElementById('editor'));
-
-
-    // So that we can track the mouse movement
-    $().mousemove(function(e){
-      mousePos.x = e.pageX;
-      mousePos.y = e.pageY;
-    }); 
-    
-
-
-    var width = $("#outputDiv").width();
-    var height = $("#outputDiv").height();
-    $("#outputDiv").css('position', 'absolute').css('width', width).css('height', height);
-    $("#outputDiv").resizable({
-      handles: "se",
-      helper: 'proxy',
-      resize: function(e, ui) {
-        updateDragSafeDiv();
-      },
-      stop: function(e, ui) {
-        hideDragSafeDiv();
-        setShadowDivSize('shadowContainer', ui.size.width, ui.size.height);
-        is.setNewCodeRunIframeWidthHeight($('#runFrame'));
-      }
-    });
-    
-    $("#outputDiv").draggable({ 
-      handle: "outputDrag",
-      drag: function(e, ui) {
-        updateDragSafeDiv();
-        setShadowDivPosition('shadowContainer', ui.position.top, ui.position.left);
-      },
-      stop: function(e, ui) {
-        hideDragSafeDiv();
-      }
-    });
-    
-    var outputContainer = $("#outputContainer");
-    var outputContainerWidth = $(outputContainer).width();
-    var outputContainerHeight = $(outputContainer).height();
-    var outputContainerPos = $(outputContainer).position();
-    
-    setShadowDivSize('shadowContainer', outputContainerWidth, outputContainerHeight);
-    setShadowDivPosition('shadowContainer', outputContainerPos.top, outputContainerPos.left);
-    showShadowDiv('shadowContainer');
   }
-  
-  function updateDragSafeDiv() {
-    var newTop = mousePos.y - 300;
-    var newLeft = mousePos.x - 300;
-    $('#dragsafe').css('top', newTop + 'px').css('left', newLeft + 'px');
-  }
-  
-  function hideDragSafeDiv() {
-    $('#dragsafe').css('top', '-600px').css('left', '-600px');
-  }
-  
-  
-  function showShadowDiv(containerName) {
-    $('#' + containerName).show();
-  }
-  
-  
-  function setShadowDivPosition(containerName, top, left) {
-    containerName = '#' + containerName;
-    var shadowContainer = $(containerName);
-    $(shadowContainer).css('top', top + 'px').css('left', left + 'px');
-  }
-  
-  function setShadowDivSize(containerName, newWidth, newHeight) {
-    containerName = '#' + containerName;
-    var shadowContainer = $(containerName);
-    var oldWidth = $(shadowContainer).width();
-    var oldHeight = $(shadowContainer).height();
-    
-    var changeWidth = newWidth - oldWidth;
-    var changeHeight = newHeight - oldHeight;
-    
-    // Make bottom 1px shadow width change
-    var bShadow = $(containerName + " div.bShadow")[0];
-    var bShadowWidth = $(bShadow).width();
-    var newBShadowWidth = bShadowWidth + changeWidth;
-    $(bShadow).css('width', newBShadowWidth + 'px');
-    
-    // Make right 1px shadow height change
-    var rShadow = $(containerName + " div.rShadow")[0];
-    var rShadowHeight = $(rShadow).height();
-    var newRShadowHeight = rShadowHeight + changeHeight;
-    $(rShadow).css('height', newRShadowHeight + 'px');
-    
-    var bShadows = $(containerName + " .bottomShadows");
-    var bShadowsCurTop = $(bShadows[0]).position().top;
-    // alert(bShadowsCurTop);
-    var newBShadowsTop = bShadowsCurTop + changeHeight;
-    $(bShadows).css('top', newBShadowsTop + 'px');
-    
-    $(shadowContainer).css('width', newWidth + 'px').css('height', newHeight + 'px');
-  }
-  
-  
   google.setOnLoadCallback(init);
   </script>
 </head>
@@ -194,7 +94,7 @@
               path : 'codemirror/js/',
               height : '100%',
               content: '',
-              onLoad: function() {is.prepareAllCodeRun();}
+              onLoad: function() {is.runCode();}
             });
             </script>
 
@@ -220,7 +120,21 @@
           <!-- to change height/width, change #outputContainer in the CSS -->
           <div id="outputDiv" class="draggable resizable">
             <div id="outputDrag">
-              <h2>Run <input type="button" value="Run" onclick="is.prepareAllCodeRun();"></h2>
+              <h2>
+                <table style="width:100%;">
+                  <tbody>
+                    <tr>
+                      <td style="width:10%">
+                        <span onclick="is.runCode();" style="cursor: pointer;">Run <img src="images/play10x10.png"></span>
+                      </td>
+                      <td align=right style="width:90%">
+                        <span onclick="is.runBox.changeToPopout();" style="cursor: pointer;"><img src="images/new-window.gif" alt="Pop-out"></span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                
+              </h2>
             </div>
             
             <div id="runbox"></div>

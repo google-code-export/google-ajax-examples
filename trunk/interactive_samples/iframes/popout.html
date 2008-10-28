@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+  <head>
+    <title>AJAX APIs Interactive Samples</title>
+    <link rel="stylesheet" href="../css/styles.css" type="text/css" media="screen" charset="utf-8">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+  </head>
+  <body style="height:80%;">
+
+    <div id="outputDiv" style="position:absolute;width: 98%;height:98%;">
+
+      <div id="outputDrag">
+        <h2>
+          <table style="width: 100%;">
+            <tbody>
+              <tr>
+                <td style="width: 10%;">
+                  <span style="cursor: pointer;" id="run">Run <img src="../images/play10x10.png"/></span>
+                </td>
+                <td align="right" style="width: 90%;">
+                  <span style="cursor: pointer;" id="popin" onclick="window.close();"><img src="../images/pop-in.gif" alt="Pop-in"/></span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </h2>
+      </div>
+      <div id="runbox"><!-- <iframe id="runFrame" src="../iframes/search.html"></iframe> --></div>
+    </div>
+    
+    <script type="text/javascript" charset="utf-8">
+    function resizeIframe() {
+      var newHeight = $('#outputDiv').height() - $('#outputDrag').height() - 1;
+      $('#runFrame').css('height', newHeight + 'px');
+      console.log(window.parent);
+    }
+    
+    $(window).bind('resize', function() {
+      window.resizeIframe();
+    });
+    </script>
+  </body>
+</html>
