@@ -317,7 +317,7 @@ span.categoryClosed div, span.categoryClosed ul {
 }
 
 .proxy {
-	border: 1px dashed #000/*#3399ff*/;
+	border: 1px dashed #000;/*#3399ff*/
 	z-index:9999;
 }
 

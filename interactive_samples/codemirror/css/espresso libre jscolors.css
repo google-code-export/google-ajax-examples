@@ -4,6 +4,7 @@
   font-family: monospace;
   font-size: 10pt;
   color: black;
+  background-color: #2A211C;
 }
 
 pre.code, .editbox {
@@ -23,20 +24,20 @@ span.js-atom {
 }
 
 span.js-variable {
-  color: black;
+  color: #BDAE9D;
 }
 
 span.js-variabledef {
-  color: black;
+  color: #FF9358;
 }
 
 span.js-localvariable {
 /*  color: #004499;*/
-  color: black;
+  color: #BDAE9D;
 }
 
 span.js-property {
-  color: black;
+  color: #BDAE9D;
 }
 
 span.js-comment {
@@ -45,4 +46,18 @@ span.js-comment {
 
 span.js-string {
   color: #008800;
+}
+
+
+/* Textmate Espresso Libre*/
+span.js-comment {
+  color: #0066FF;
+}
+
+span.js-keyword {
+  color: #43A8ED;
+}
+
+span.js-punctuation {
+  color: #BDAE9D;
 }

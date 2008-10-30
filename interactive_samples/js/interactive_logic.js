@@ -95,7 +95,6 @@ InteractiveSample.prototype.createCategories = function() {
       var img = _cel('img');
       img.className = 'expand';
       img.src = 'images/cleardot.gif';
-      // addEvent(img, 'click', this.toggleExpand(img), false);
 
       catName.appendChild(img);
       catName.innerHTML += category;
@@ -114,7 +113,6 @@ InteractiveSample.prototype.createCategories = function() {
       var img = _cel('img');
       img.className = 'collapse';
       img.src = 'images/cleardot.gif';
-      // addEvent(img, 'click', this.toggleExpand(img), false);
       
       subCatName.appendChild(img);
       subCatName.innerHTML += subCategory;
@@ -138,7 +136,7 @@ InteractiveSample.prototype.createCategories = function() {
       
       this.codeTitles.push(li);
       var files = codeArray[i].samples[j].files;
-      addEvent(li, 'click', this.showSample(this, files, li));
+      $(li).bind('click', this.showSample(this, files, li));
       
       if (i == 0 && j == 0) {
         this.showSample(this, files, li, true)();
@@ -212,12 +210,12 @@ InteractiveSample.prototype.addShowHideClicks = function() {
   for (var i=0; i < this.categories.length; i++) {
     var cat = this.categories[i];
     var catTitle = cat.childNodes[0];
-    addEvent(catTitle, 'click', this.toggleShowHideSubCategories(cat));
+    $(catTitle).bind('click', this.toggleShowHideSubCategories(cat));
   }
   
   for (var i=0; i < this.subCategories.length; i++) {
     var subCatTitle = this.subCategories[i].childNodes[0];
-    addEvent(subCatTitle, 'click', this.toggleShowHideLIs(subCatTitle));
+    $(subCatTitle).bind('click', this.toggleShowHideLIs(subCatTitle));
   };
 };
 
@@ -318,7 +316,7 @@ InteractiveSample.prototype.showSample = function(is_instance, files, thisLI, de
       
       var containerDiv = _cel('div');
       containerDiv.className = 'roundedcornr_box';
-      addEvent(containerDiv, 'click', is_instance.changeTab(file, is_instance));
+      $(containerDiv).bind('click', is_instance.changeTab(file, is_instance));
       
       var html = '<div class="' + tabClass + '_top" ><div></div></div>';
       html += '<div class="' + tabClass + '_roundedcornr_content" >';
@@ -430,7 +428,6 @@ UIEffects.prototype.setWindowResize = function() {
     me.setOutputDivShadow();
   });
 };
-
 
 UIEffects.prototype.setOutputDivResizable = function() {
   var me = this;
@@ -580,9 +577,8 @@ RunBox.prototype.runCode = function() {
     this.popoutWindow.is = {
       'codeToRun': this.is.codeToRun
     };
-
-    var newFrame = $('<iframe src="../iframes/search.html" id="runFrame"></iframe>').get(0);
-    runbox.appendChild(newFrame);
+    
+    this.popoutWindow.addIframe();
   }
 };
 
@@ -591,41 +587,7 @@ RunBox.prototype.changeToPopout = function() {
   $(this.outputContainer).hide();
   $(this.shadowContainer).hide();
   this.popoutWindow = window.open('iframes/popout.html','popout', 'left=20,top=20,width=600,height=500,toolbar=1,resizable=1');
-  this.popoutWindow.is = {
-    'codeToRun': this.is.codeToRun
-  };
   var me = this;
-  addEvent(this.popoutWindow, 'load', function() {
-    me.is.runCode();
-    
-    var run = me.popoutWindow.document.getElementById('run');
-    
-    window.addEvent(run, 'click', function() {
-      me.is.runCode();
-    });
-    
-    var popin = me.popoutWindow.document.getElementById('popin');
-    
-    window.addEvent(popin, 'click', function() {
-      me.changeToInline();
-      me.popoutWindow.close();    
-    });
-     
-  });
-  // this.popoutWindow.onload = function() {
-  //   var run = me.popoutWindow.document.getElementById('run');
-  //   run.onclick = function() {
-  //     me.is.runCode();
-  //   }
-  //   
-  //   var popin = me.popoutWindow.document.getElementById('popin');
-  //   popin.onclick = function() {
-  //     me.changeToInline();
-  //     me.popoutWindow.close();
-  //   }
-  //   
-  //   me.is.runCode();
-  // }
 }
 
 RunBox.prototype.changeToInline = function() {
