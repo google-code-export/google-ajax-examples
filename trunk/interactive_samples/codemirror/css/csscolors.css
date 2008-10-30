@@ -4,6 +4,8 @@
   font-family: monospace;
   font-size: 10pt;
   color: black;
+/*  background-color: #F0F0F0;*/
+  background-color: #FAFAFA;
 }
 
 pre.code, .editbox {
