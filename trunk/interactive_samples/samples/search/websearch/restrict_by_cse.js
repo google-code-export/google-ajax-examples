@@ -1,3 +1,6 @@
+// How to restrict a search to a Custom Search Engine
+// http://www.google.com/cse/
+
 google.load('search', '1.0');
 
 function OnLoad() {
@@ -6,9 +9,9 @@ function OnLoad() {
 
   // Add in a WebSearch
   var webSearch = new google.search.WebSearch();
-  
-  // Restrict our search to pages from the Cartoon Newtowrk
-  webSearch.setSiteRestriction('www.cartoonnetwork.com');
+
+  // Restrict our search to pages from our CSE
+  webSearch.setSiteRestriction('017576662512468239146:omuauf_lfve', 'lectures');
   
   // Add the searcher to the SearchControl
   searchControl.addSearcher(webSearch);

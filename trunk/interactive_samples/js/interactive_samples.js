@@ -11,6 +11,23 @@ var codeArray = [
     ]
   },
   {
+    "category":"Search-Video Search",
+    "samples":[
+      {"files":["search/videosearch/youtube_channel.js"], "sampleName":"YouTube Channels"},
+      {"files":["search/videosearch/youtube_feed.js"], "sampleName":"YouTube Feed"},
+      {"files":["search/videosearch/youtube_setresultorder.js"], "sampleName":"Set Result Order"}
+    ]
+  },
+  {
+    "category":"Search-Web Search",
+    "samples":[
+      {"files":["search/websearch/restrict_by_cse.js"], "sampleName":"Restrict by CSE"},
+      {"files":["search/websearch/set_lang_restrict.js"], "sampleName":"Set Language Restriction"},
+      {"files":["search/websearch/set_geo_restrict.js"], "sampleName":"Set Geo Restriction"}
+    ]
+  },
+
+  {
     "category":"Search-LocalSearch",
     "samples":[
       {"files":["search/center_map.js"], "sampleName":"Center Map"}

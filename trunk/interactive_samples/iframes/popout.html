@@ -15,10 +15,10 @@
             <tbody>
               <tr>
                 <td style="width: 10%;">
-                  <span style="cursor: pointer;" id="run">Run <img src="../images/play10x10.png"/></span>
+                  <span style="cursor: pointer;" onclick="runCode();" id="run">Run <img src="../images/play10x10.png"/></span>
                 </td>
                 <td align="right" style="width: 90%;">
-                  <span style="cursor: pointer;" id="popin" onclick="window.close();"><img src="../images/pop-in.gif" alt="Pop-in"/></span>
+                  <span style="cursor: pointer;" id="popin" onclick="closeMe();"><img src="../images/pop-in.gif" alt="Pop-in"/></span>
                 </td>
               </tr>
             </tbody>
@@ -29,14 +29,41 @@
     </div>
     
     <script type="text/javascript" charset="utf-8">
+    var dad = window.opener;
+    var runBox = $('#runbox');
     function resizeIframe() {
       var newHeight = $('#outputDiv').height() - $('#outputDrag').height() - 1;
       $('#runFrame').css('height', newHeight + 'px');
       console.log(window.parent);
     }
     
+    function runCode() {
+      // This sets is.codeToRun
+      dad.is.runCode();
+    }
+    
+    function addIframe() {
+      // This iframe reads is.codeToRun
+      var newFrame = $('<iframe src="../iframes/search.html" id="runFrame"></iframe>').get(0);
+      $(runBox).html(newFrame);
+    }
+    
+    
+    function closeMe() {
+      window.close();
+    }
+    
+    $(window).bind('unload', function() {
+      dad.is.runBox.changeToInline();
+    });
+    
     $(window).bind('resize', function() {
       window.resizeIframe();
+    });
+    
+    // onload function
+    $(function () {
+      runCode();
     });
     </script>
   </body>
