@@ -354,7 +354,7 @@ span.categoryClosed div, span.categoryClosed ul {
 
 
 /* ------ Drop Shadows ------- */
-#shadowContainer {
+#runShadowContainer {
   width: 500px;
   height: 500px;
   position: absolute;

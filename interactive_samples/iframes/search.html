@@ -13,7 +13,12 @@
     <script src="http://www.google.com/jsapi?key=ABQIAAAA1XbMiDxx_BTCY2_FkPh06RTqeYreOyMxW_7YzhnuMkKlF4T-nxR7oFIOodVzzBaO_ZwLpMjF_UJIqw" type="text/javascript"></script>
     
     <script type="text/javascript">
-    window.eval(window.parent.is.codeToRun);
+    try {
+      window.eval(window.parent.is.codeToRun);
+    } catch (e) {
+      alert("Error: " + e.message);
+    }
+    
     </script>
   </head>
   <body>

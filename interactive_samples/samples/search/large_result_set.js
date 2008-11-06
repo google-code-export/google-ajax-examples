@@ -2,22 +2,25 @@ google.load('search', '1.0');
 
 function OnLoad() {
 
-  // create a tabbed mode search control
-  var tabbed = new google.search.SearchControl();
-  tabbed.setResultSetSize(google.search.Search.LARGE_RESULTSET);
+  // create a search control
+  var searchControl = new google.search.SearchControl();
+  
+  // Set the Search Control to get the most number of results
+  searchControl.setResultSetSize(google.search.Search.LARGE_RESULTSET);
 
-  tabbed.addSearcher(new google.search.LocalSearch());
-  tabbed.addSearcher(new google.search.WebSearch());
-  tabbed.addSearcher(new google.search.BlogSearch());
-  tabbed.addSearcher(new google.search.NewsSearch());
-  tabbed.addSearcher(new google.search.BookSearch());
-  tabbed.addSearcher(new google.search.PatentSearch());
+  // Create 3 searchers and add them to the control
+  searchControl.addSearcher(new google.search.WebSearch());
+  searchControl.addSearcher(new google.search.BlogSearch());
+  searchControl.addSearcher(new google.search.PatentSearch());
 
-  // draw in tabbed layout mode
+  // Set the options to draw the control in tabbed mode
   var drawOptions = new google.search.DrawOptions();
   drawOptions.setDrawMode(google.search.SearchControl.DRAW_MODE_TABBED);
-  tabbed.draw(document.getElementById("content"), drawOptions);
+  
+  // Draw the control onto the page
+  searchControl.draw(document.getElementById("content"), drawOptions);
 
-  tabbed.execute("Subaru STI");
+  // Search!
+  searchControl.execute("Subaru STI");
 }
 google.setOnLoadCallback(OnLoad, true);

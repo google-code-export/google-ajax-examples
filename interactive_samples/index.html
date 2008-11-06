@@ -23,23 +23,21 @@
   <link rel="shortcut icon" href="favicon.ico">
 
   <!-- CSS -->
-  <link rel="stylesheet" href="css/styles.css" 
+  <link rel="stylesheet" href="css/styles.css"
       media="screen,projection" type="text/css">
-  <link rel="stylesheet" href="codemirror/css/docs.css" 
+  <link rel="stylesheet" href="codemirror/css/docs.css"
       media="screen,projection" type="text/css">
-  
+
   <!-- JavaScript -->
   <title>AJAX APIs Interactive Sampler</title>
   <script src="codemirror/js/codemirror.js" type="text/javascript" charset="utf-8"></script>
-  <script src="js/utils.js" type="text/javascript" charset="utf-8"></script>
   <script src="js/interactive_samples.js" type="text/javascript" charset="utf-8"></script>
   <script src="js/interactive_logic.js" type="text/javascript" charset="utf-8"></script>
   <script src="http://www.google.com/jsapi" type="text/javascript" charset="utf-8"></script>
   <script type="text/javascript" charset="utf-8">
-  
   google.load('jquery', '1');
   google.load('jqueryui', '1');
-  
+
   function init() {
     is.init(document.getElementById('editor'));
   }
@@ -47,6 +45,23 @@
   </script>
 </head>
 <body>
+    <!-- <div id="editShadowContainer">
+              <div class="blShadow bottomShadows">&nbsp;</div>
+              <div class="bShadow bottomShadows">&nbsp;</div>
+              <div class="brShadow bottomShadows rightShadows">&nbsp;</div>
+              <div class="rShadow rightShadows">&nbsp;</div>
+              <div class="trShadow rightShadows">&nbsp;</div>
+            </div> -->
+
+  <div id="runShadowContainer">
+    <div class="blShadow bottomShadows">&nbsp;</div>
+    <div class="bShadow bottomShadows">&nbsp;</div>
+    <div class="brShadow bottomShadows rightShadows">&nbsp;</div>
+    <div class="rShadow rightShadows">&nbsp;</div>
+    <div class="trShadow rightShadows">&nbsp;</div>
+  </div>
+
+
   <div id="container">
     <div class="bluediv">
       <table style="width:100%;">
@@ -59,7 +74,7 @@
           </td>
         </tr>
       </table>
-      
+
     </div>
 
 
@@ -70,22 +85,16 @@
             <h2>Pick</h2>
             <div id="selectCode"></div>
           </td>
-          
-          
-          
-          
+
+
+
+
           <td id="codeContainer">
-
-            <!-- <div id="tab_bar"></div>
-
-            <div id="button_bar">&nbsp;</div> -->
-
             <!-- todo check styles on here -->
             <div id="editor">
               <div style="height:5%;"><h2>Edit</h2></div>
               <div id="edit"></div>
             </div>
-
             <script type="text/javascript" charset="utf-8">
             var jsEditor = new CodeMirror(document.getElementById('edit'), {
               parserfile : ["tokenizejavascript.js", "parsejavascript.js"],
@@ -99,24 +108,17 @@
             </script>
 
           </td>
-          
-          
-          
+
+
+
       </tr>
       <tr>
-        
 
-        
-          
-          <div id="shadowContainer">
-            <div class="blShadow bottomShadows">&nbsp;</div>
-            <div class="bShadow bottomShadows">&nbsp;</div>
-            <div class="brShadow bottomShadows rightShadows">&nbsp;</div>
-            <div class="rShadow rightShadows">&nbsp;</div>
-            <div class="trShadow rightShadows">&nbsp;</div>
-          </div>
+
+
+
         <td id="outputContainer" colspan=2>
-          
+
           <!-- to change height/width, change #outputContainer in the CSS -->
           <div id="outputDiv" class="draggable resizable">
             <div id="outputDrag">
@@ -133,20 +135,20 @@
                     </tr>
                   </tbody>
                 </table>
-                
+
               </h2>
             </div>
-            
+
             <div id="runbox"></div>
           </div>
         </td>
-      </tr>    
-      
-      
-      
+      </tr>
+
+
+
       <tr>
         <td class="footer">
-          <div style="background-image: url(images/sprites.gif);background-position: -28px -28px;height:53px;margin:12px 0pt;width:143px;"></div>
+          <div style="background-image: url(images/sprites.gif);background-position: -28px -28px;height:53px;margin:12px 0;width:143px;"></div>
         </td>
         <td class="footer" style="vertical-align: middle; font-size:80%; text-align: center">
           ©2008 Google -
@@ -161,7 +163,7 @@
 
 <div id="HTMLforInlineJavascript" style="display:none;"></div>
 
-<!-- 
+<!--
   There's a bug in jQuery UI where if you drag over an iFrame
   then you can't drag anymore.  Putting an invisible div over the
   iFrame fixes it.
