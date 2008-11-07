@@ -2,17 +2,18 @@
 // TODO: add in ability to specify the html boilerplate
 var codeArray = [
   {
-    "category":"Search-General",
+    "category":"Search API-General",
     "samples":[
       {"files":["search/hello_world.js"], "sampleName":"Hello World"},
       {"files":["search/restrict_search.js"], "sampleName":"Set Site Restrict"},
       {"files":["search/tabbed_display_mode.js"], "sampleName":"Tabbed Display Mode"},
       {"files":["search/large_result_set.js"], "sampleName":"Large Result Set"},
-      {"files":["search/expand_mode.js"], "sampleName":"Expand Mode"}
+      {"files":["search/expand_mode.js"], "sampleName":"Expand Mode"},
+      {"files":["search/raw_search.js"], "sampleName":"Raw Search"}
     ]
   },
   {
-    "category":"Search-Video Search",
+    "category":"Search API-Video Search",
     "samples":[
       {"files":["search/videosearch/youtube_channel.js"], "sampleName":"YouTube Channels"},
       {"files":["search/videosearch/youtube_feed.js"], "sampleName":"YouTube Feed"},
@@ -20,21 +21,21 @@ var codeArray = [
     ]
   },
   {
-    "category":"Search-Web Search",
+    "category":"Search API-Web Search",
     "samples":[
       {"files":["search/websearch/restrict_by_cse.js"], "sampleName":"Restrict by CSE"},
       {"files":["search/websearch/set_lang_restrict.js"], "sampleName":"Set Language Restriction"}
     ]
   },
   {
-    "category":"Search-Local Search",
+    "category":"Search API-Local Search",
     "samples":[
       {"files":["search/localsearch/mapBoundLocalSearchControl.js"], "sampleName":"LocalSearch + Map"},
       {"files":["search/localsearch/mapBoundLocalSearchControlWithMarkers.js"], "sampleName":"LocalSearch + Markers"}
     ]
   },
   {
-    "category":"Search-News Search",
+    "category":"Search API-News Search",
     "samples":[
       {"files":["search/newssearch/geo_restrict.js"], "sampleName":"Geo Restriction"},
       {"files":["search/newssearch/topic_restrict.js"], "sampleName":"Topic Restriction"},
@@ -43,7 +44,7 @@ var codeArray = [
     ]
   },
   {
-    "category":"Search-Image Search",
+    "category":"Search API-Image Search",
     "samples":[
       {"files":["search/imagesearch/size_restrict.js"], "sampleName":"Size Restriction"},
       {"files":["search/imagesearch/color_restrict.js"], "sampleName":"Color Restriction"},
@@ -52,19 +53,25 @@ var codeArray = [
     ]
   },
   {
-    "category":"Feeds",
+    "category":"Search API-Patent Search",
+    "samples":[
+      {"files":["search/patentsearch/type_restrict.js"], "sampleName":"Type Restriction"}
+    ]
+  },
+  {
+    "category":"Feeds API",
     "samples":[
       {"files":["feeds/hello_world.js"], "sampleName":"Simple Feed"}
     ]
   },
   {
-    "category":"Language",
+    "category":"Language API",
     "samples":[
       {"files":["language/hello_world.js"], "sampleName":"Simple Translate"}
     ]
   },
   {
-    "category":"Libraries",
+    "category":"Libraries API",
     "samples":[
       {"files":["libraries/hello_world.js"], "sampleName":"Load jQuery"}
     ]

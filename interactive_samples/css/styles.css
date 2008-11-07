@@ -27,7 +27,7 @@ div {
 
 /*#footer {
   width: 100%;
-  
+
 }*/
 
 #selectSample {
@@ -48,7 +48,6 @@ div {
 
 #selectContainer {
   width:20%;
-  height:100%;
   border: 1px solid #999;
 }
 
@@ -73,11 +72,9 @@ div {
 
 #selectCode {
   width:100%;
-  height: auto;
+  height: 465px;
   overflow: auto;
-  overflow-x: hidden;
-  margin-bottom: 3px;
-  margin-top: 20px;
+  margin-top: 5px;
 }
 
 .category {
@@ -130,6 +127,7 @@ h2 {
   margin: 0px;
   padding-left: 15px;
   font-family:Helvetica,Arial,sans-serif;
+  height: 20px;
 }
 
 .bluediv {
@@ -237,7 +235,7 @@ td.footer {
 }
 
 #googleLogoTD {
-  text-align:right; 
+  text-align:right;
   vertical-align:middle;
   padding-right: 15px;
 }
@@ -271,19 +269,19 @@ td.footer {
   background: #D0E4F6 url(../images/lb_tr.png) no-repeat top right;
 }
 
-.db_top div, .db_top, 
+.db_top div, .db_top,
 .lb_top div, .lb_top {
   height: 5px;
   font-size: 1px;
 }
 .lb_roundedcornr_content,
-.db_roundedcornr_content { 
-  padding: 0px 10px; 
+.db_roundedcornr_content {
+  padding: 0px 10px;
   font-size: 80%;
 }
 
 .lb_roundedcornr_content {
-  background-color: #D0E4F6;    
+  background-color: #D0E4F6;
 }
 
 .db_roundedcornr_content {
@@ -321,12 +319,12 @@ span.categoryClosed div, span.categoryClosed ul {
 	z-index:9999;
 }
 
-.ui-resizable-se { 
-	cursor: se-resize; 
-	width: 13px; 
-	height: 13px; 
-	right: 0px; 
-	bottom: 0px; 
+.ui-resizable-se {
+	cursor: se-resize;
+	width: 13px;
+	height: 13px;
+	right: 0px;
+	bottom: 0px;
 	background: url(../images/resize.gif) no-repeat 0 0;
 }
 #outputDrag {
