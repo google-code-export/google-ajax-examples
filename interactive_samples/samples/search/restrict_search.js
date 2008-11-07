@@ -1,4 +1,8 @@
-google.load('search', '1.0');
+/*
+*  How to restrict a search to a specific website.
+*/
+
+google.load('search', '1');
 
 function OnLoad() {
   // Create a search control
@@ -6,10 +10,10 @@ function OnLoad() {
 
   // Add in a WebSearch
   var webSearch = new google.search.WebSearch();
-  
+
   // Restrict our search to pages from the Cartoon Newtowrk
   webSearch.setSiteRestriction('www.cartoonnetwork.com');
-  
+
   // Add the searcher to the SearchControl
   searchControl.addSearcher(webSearch);
 

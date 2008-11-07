@@ -1,7 +1,9 @@
-// How to restrict a search to a Custom Search Engine
-// http://www.google.com/cse/
+/*
+*  How to restrict a search to a Custom Search Engine
+*  http://www.google.com/cse/
+*/
 
-google.load('search', '1.0');
+google.load('search', '1');
 
 function OnLoad() {
   // Create a search control
@@ -12,7 +14,7 @@ function OnLoad() {
 
   // Restrict our search to pages from our CSE
   webSearch.setSiteRestriction('017576662512468239146:omuauf_lfve', 'lectures');
-  
+
   // Add the searcher to the SearchControl
   searchControl.addSearcher(webSearch);
 
@@ -20,7 +22,7 @@ function OnLoad() {
   searchControl.draw(document.getElementById("content"));
 
   // execute an inital search
-  searchControl.execute('scooby doo');
+  searchControl.execute('design');
 }
 
 google.setOnLoadCallback(OnLoad, true);
