@@ -14,35 +14,6 @@
     };
   }
 
-  function readFile(relativePathToFile) {
-    var curPath = location.href;
-    var fileLoc = curPath.indexOf('file:///');
-    var lastSlash = curPath.lastIndexOf('/');
-    curPath = curPath.substring(0, lastSlash + 1);
-    if (fileLoc != -1) {
-      curPath = curPath.substring(fileLoc + 8);
-    }
-    var filepath = curPath + relativePathToFile;
-    filepath = filepath.replace(/\//g, '\\');
-    filepath = filepath.replace(/%20/g, ' ');
-
-    try {
-      netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
-    } catch (e) {
-      return null;
-    }
-    var file = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile);
-    file.initWithPath( filepath );
-    if ( file.exists() == false ) {
-      alert("File does not exist");
-    }
-    var is = Components.classes["@mozilla.org/network/file-input-stream;1"].createInstance( Components.interfaces.nsIFileInputStream );
-    is.init( file,0x01, 00004, null);
-    var sis = Components.classes["@mozilla.org/scriptableinputstream;1"].createInstance( Components.interfaces.nsIScriptableInputStream );
-    sis.init( is );
-    var output = sis.read( sis.available() );
-    return output;
-  }
   var fileTypes = {
     'js' : 'javascript',
     'html' : 'html',
@@ -63,9 +34,6 @@
     this.codeLIs = [];
     this.currentCode = new Object();
     this.curI = '';
-
-  // Assume we're offline until we know that file reading doesn't work
-    this.online = false;
 
     this.uiEffects;
     this.runBox;
@@ -243,24 +211,6 @@
     };
   };
 
-  InteractiveSample.prototype.loadLocally = function(relativeUrl, filename, fileType, opt_changeCodeMirror) {
-    // readFile is in utils.js
-    var data = readFile(relativeUrl);
-    if (data == null) {
-      this.online = true;
-      return false;
-    }
-    if (opt_changeCodeMirror == true) {
-      this.changeCodeMirror(data, fileType);
-    }
-    is_instance.currentCode[filename] = {
-      code : data
-    };
-    console.log(relativeUrl + ': loaded locally.');
-    this.runCode();
-    return true;
-  }
-
   InteractiveSample.prototype.loadRemotely = function(relativeUrl, filename, fileType, opt_changeCodeMirror) {
     is_instance = this;
     $.get(relativeUrl, function(data, status) {
@@ -291,13 +241,8 @@
 
       is_instance = this;
 
-      if (!this.online) {
-        this.loadLocally(relativeUrl, filename, fileType, opt_changeCodeMirror);
-      }
 
-      if (this.online) {
-        this.loadRemotely(relativeUrl, filename, fileType, opt_changeCodeMirror);
-      }
+      this.loadRemotely(relativeUrl, filename, fileType, opt_changeCodeMirror);
     }
   };
 

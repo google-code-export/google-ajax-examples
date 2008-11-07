@@ -1,5 +1,5 @@
 /*
-*  How to restrict a search to a specific language.
+*  How to restrict a news search to a geographic location.
 */
 
 google.load('search', '1');
@@ -8,21 +8,21 @@ function OnLoad() {
   // Create a search control
   var searchControl = new google.search.SearchControl();
 
-  // Create a WebSearcher
-  var webSearch = new google.search.WebSearch();
+  // Create a NewsSearcher
+  var newsSearch = new google.search.NewsSearch();
 
-  // Set the language to German
+  // Set the geolocation to Australia
   var extendedArgs = google.search.Search.RESTRICT_EXTENDED_ARGS;
-  webSearch.setRestriction(extendedArgs, {lr:'lang_de'});
+  newsSearch.setRestriction(extendedArgs, {'geo':'Australia'});
 
   // Add the searcher to the SearchControl
-  searchControl.addSearcher(webSearch);
+  searchControl.addSearcher(newsSearch);
 
   // tell the searcher to draw itself and tell it where to attach
   searchControl.draw(document.getElementById("content"));
 
-  // Scooby doo in German!
-  searchControl.execute('scooby doo');
+  // Australian for...
+  searchControl.execute('Fosters');
 }
 
 google.setOnLoadCallback(OnLoad, true);

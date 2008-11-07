@@ -1,4 +1,5 @@
 // TODO: add in alt property so the hover on the links can describe them
+// TODO: add in ability to specify the html boilerplate
 var codeArray = [
   {
     "category":"Search-General",
@@ -22,15 +23,32 @@ var codeArray = [
     "category":"Search-Web Search",
     "samples":[
       {"files":["search/websearch/restrict_by_cse.js"], "sampleName":"Restrict by CSE"},
-      {"files":["search/websearch/set_lang_restrict.js"], "sampleName":"Set Language Restriction"},
-      {"files":["search/websearch/set_geo_restrict.js"], "sampleName":"Set Geo Restriction"}
+      {"files":["search/websearch/set_lang_restrict.js"], "sampleName":"Set Language Restriction"}
     ]
   },
-
   {
-    "category":"Search-LocalSearch",
+    "category":"Search-Local Search",
     "samples":[
-      {"files":["search/center_map.js"], "sampleName":"Center Map"}
+      {"files":["search/localsearch/mapBoundLocalSearchControl.js"], "sampleName":"LocalSearch + Map"},
+      {"files":["search/localsearch/mapBoundLocalSearchControlWithMarkers.js"], "sampleName":"LocalSearch + Markers"}
+    ]
+  },
+  {
+    "category":"Search-News Search",
+    "samples":[
+      {"files":["search/newssearch/geo_restrict.js"], "sampleName":"Geo Restriction"},
+      {"files":["search/newssearch/topic_restrict.js"], "sampleName":"Topic Restriction"},
+      {"files":["search/newssearch/news_edition_restrict.js"], "sampleName":"News Edition Restriction"},
+      {"files":["search/newssearch/search_by_date.js"], "sampleName":"Search by Date"}
+    ]
+  },
+  {
+    "category":"Search-Image Search",
+    "samples":[
+      {"files":["search/imagesearch/size_restrict.js"], "sampleName":"Size Restriction"},
+      {"files":["search/imagesearch/color_restrict.js"], "sampleName":"Color Restriction"},
+      {"files":["search/imagesearch/imagetype_restrict.js"], "sampleName":"Imagetype Restriction"},
+      {"files":["search/imagesearch/filetype_restrict.js"], "sampleName":"Filetype Restriction"}
     ]
   },
   {

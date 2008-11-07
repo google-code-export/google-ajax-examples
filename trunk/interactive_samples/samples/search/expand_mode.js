@@ -1,6 +1,8 @@
-// Sets which searchers to have "expaneded" and "collapsed" when drawn
+/*
+*  How to set searchers to be "expanded" or"collapsed" when drawn
+*/
 
-google.load('search', '1.0');
+google.load('search', '1');
 
 function OnLoad() {
 

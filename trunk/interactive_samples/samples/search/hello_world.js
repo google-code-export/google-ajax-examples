@@ -1,4 +1,8 @@
-google.load('search', '1.0');
+/*
+*  The Hello World of the AJAX Search API
+*/
+
+google.load('search', '1');
 
 function OnLoad() {
   // Create a search control

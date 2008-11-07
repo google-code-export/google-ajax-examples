@@ -1,4 +1,8 @@
-google.load('search', '1.0');
+/*
+*  How to draw results in tabbed mode.
+*/
+
+google.load('search', '1');
 
 function OnLoad() {
 
@@ -13,7 +17,7 @@ function OnLoad() {
   // draw in tabbed layout mode
   var drawOptions = new google.search.DrawOptions();
   drawOptions.setDrawMode(google.search.SearchControl.DRAW_MODE_TABBED);
-  
+
   // Draw the tabbed view in the content div
   tabbed.draw(document.getElementById("content"), drawOptions);
 
