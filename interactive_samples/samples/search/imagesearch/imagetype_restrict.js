@@ -11,6 +11,9 @@ function OnLoad() {
   // Create an ImageSearch
   var imageSearch = new google.search.ImageSearch();
 
+  // Restrict to faces.  Other options include:
+  // IMAGETYPE_NEWS
+  // IMAGETYPE_PHOTO
   imageSearch.setRestriction(google.search.ImageSearch.RESTRICT_IMAGETYPE,
                              google.search.ImageSearch.IMAGETYPE_FACES);
 
