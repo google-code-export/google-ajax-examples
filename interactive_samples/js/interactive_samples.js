@@ -11,7 +11,7 @@ var codeArray = [
       {"files":["search/large_result_set.js"], "sampleName":"Large Result Set"},
       {"files":["search/expand_mode.js"], "sampleName":"Expand Mode"},
       {"files":["search/raw_search.js"], "sampleName":"Raw Search"},
-      {"files":["search/show_query.js"], "sampleName":"Show Search Query"},
+      {"files":["search/show_query.js"], "sampleName":"Show Search Query"}
     ]
   },
   {
@@ -65,7 +65,14 @@ var codeArray = [
   {
     "category":"Feeds API",
     "samples":[
-      {"files":["feeds/hello_world.js"], "sampleName":"Simple Feed"}
+      {"files":["feeds/load_feed.js"], "sampleName":"Load Feed"},
+      {"files":["feeds/historical_entries.js"], "sampleName":"Historical Entries"},
+      {"files":["feeds/results_in_xml.js"], "sampleName":"Results in XML"},
+      {"files":["feeds/feed_control.js"], "sampleName":"Feed Control"},
+      {"files":["feeds/lookup_feed.js"], "sampleName":"Lookup Feed"},
+      {"files":["feeds/find_feed.js"], "sampleName":"Find Feed"}
+
+//      {"files":["feeds/dynamic_feed.js"], "sampleName":"Dynamic Feed Control"}
     ]
   },
   {
@@ -73,7 +80,7 @@ var codeArray = [
     "samples":[
       {"files":["language/translation/translate.js"], "sampleName":"Translate"},
       {"files":["language/translation/batch_translate.js"], "sampleName":"Batch Translate"},
-            {"files":["language/translation/detect_language.js"], "sampleName":"Language Detect"}
+      {"files":["language/translation/detect_language.js"], "sampleName":"Language Detect"}
     ]
   },
   {
