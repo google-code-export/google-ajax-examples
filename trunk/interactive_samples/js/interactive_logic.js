@@ -362,6 +362,34 @@
     var curWidth = container.style.maxWidth = '1800px';
   };
 
+  InteractiveSample.prototype.outputSource = function() {
+    var url = 'iframes/search.html';
+    var is_instance = this;
+    $.get(url, function(data, success) {
+      if (success) {
+        var code = is_instance.getCode();
+        code = '    '.concat(code);
+        var newLine = code.indexOf('\n');
+        while (newLine != -1) {
+          var start = code.slice(0, newLine);
+          var end = code.slice(newLine+1);
+          end = '\n    '.concat(end);
+          code = start.concat(end);
+          newLine = code.indexOf('\n', newLine + 1);
+        }
+
+        var data = data.replace(
+                '    try {\n' +
+                '      window.eval(window.parent.is.codeToRun);\n' +
+                '    } catch (e) {\n' +
+                '      alert("Error: " + e.message);\n' +
+                '    }', code);
+
+        is_instance.uiEffects.showSource(data);
+      }
+    });
+  }
+
   /*
    * UIEffects sets up all of the jQuery UI stuff for draggable etc.
   */
@@ -389,6 +417,7 @@
     this.setOutputDivDraggable();
     this.setOutputDivShadow();
     this.setWindowResize();
+    this.initShowSourceDiv();
   };
 
   UIEffects.prototype.setWindowResize = function() {
@@ -492,6 +521,25 @@
     $(shadowContainer).css('width', newWidth + 'px').css('height', newHeight + 'px');
   }
 
+  UIEffects.prototype.initShowSourceDiv = function() {
+    $("#codeOutput").dialog({
+      modal: true,
+      overlay: {
+        opacity: 0.5,
+        background: "black"
+      },
+      height: 600,
+      width: 800,
+      resizable: false,
+      autoOpen: false,
+      draggable: false
+    });
+    $("div.ui-dialog > div.ui-resizable-handle").css('display', 'none');
+  }
+
+  UIEffects.prototype.showSource = function(code) {
+    $('#codeOutput').html('<textarea style="width:100%; height: 100%;">' + code + '<\/textarea>').dialog('open');
+  }
 
   function RunBox() {
     this.outputContainer;

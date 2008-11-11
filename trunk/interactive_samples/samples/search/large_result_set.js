@@ -12,7 +12,7 @@ function OnLoad() {
   // Set the Search Control to get the most number of results
   searchControl.setResultSetSize(google.search.Search.LARGE_RESULTSET);
 
-  // Create 3 searchers and add them to the control
+  // Create 2 searchers and add them to the control
   searchControl.addSearcher(new google.search.WebSearch());
   searchControl.addSearcher(new google.search.BlogSearch());
 
