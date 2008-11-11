@@ -16,7 +16,7 @@
 -->
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-  "http://www.w3.org/TR/html4/loose.dtd">
+        "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
@@ -24,9 +24,9 @@
 
   <!-- CSS -->
   <link rel="stylesheet" href="css/styles.css"
-      media="screen,projection" type="text/css">
+        media="screen,projection" type="text/css">
   <link rel="stylesheet" href="codemirror/css/docs.css"
-      media="screen,projection" type="text/css">
+        media="screen,projection" type="text/css">
 
   <!-- JavaScript -->
   <title>AJAX APIs Interactive Sampler</title>
@@ -35,141 +35,163 @@
   <script src="js/interactive_logic.js" type="text/javascript" charset="utf-8"></script>
   <script src="http://www.google.com/jsapi" type="text/javascript" charset="utf-8"></script>
   <script type="text/javascript" charset="utf-8">
-  google.load('jquery', '1');
-  google.load('jqueryui', '1');
+    google.load('jquery', '1');
+    google.load('jqueryui', '1');
 
-  function init() {
-    is.init(document.getElementById('editor'));
-  }
-  google.setOnLoadCallback(init);
+    function init() {
+      is.init(document.getElementById('editor'));
+    }
+    google.setOnLoadCallback(init);
   </script>
 </head>
 <body style="padding-top: 15px">
-    <!-- <div id="editShadowContainer">
-              <div class="blShadow bottomShadows">&nbsp;</div>
-              <div class="bShadow bottomShadows">&nbsp;</div>
-              <div class="brShadow bottomShadows rightShadows">&nbsp;</div>
-              <div class="rShadow rightShadows">&nbsp;</div>
-              <div class="trShadow rightShadows">&nbsp;</div>
-            </div> -->
 
-  <div id="runShadowContainer">
-    <div class="blShadow bottomShadows">&nbsp;</div>
-    <div class="bShadow bottomShadows">&nbsp;</div>
-    <div class="brShadow bottomShadows rightShadows">&nbsp;</div>
-    <div class="rShadow rightShadows">&nbsp;</div>
-    <div class="trShadow rightShadows">&nbsp;</div>
-  </div>
+<div id="runShadowContainer">
+  <div class="blShadow bottomShadows">&nbsp;</div>
+  <div class="bShadow bottomShadows">&nbsp;</div>
+  <div class="brShadow bottomShadows rightShadows">&nbsp;</div>
+  <div class="rShadow rightShadows">&nbsp;</div>
+  <div class="trShadow rightShadows">&nbsp;</div>
+</div>
 
 
-  <div id="container">
-    <div class="bluediv">
-      <table style="width:100%;">
-        <tr>
-          <td>
-            <h1 id="header">AJAX APIs Interactive Samples</h1>
-          </td>
-          <td id="googleLogoTD">
-            <img src="images/google-small.png" alt="Google Logo">
-          </td>
-        </tr>
+<div id="container">
+<div class="bluediv">
+  <table style="width:100%;">
+    <tr>
+      <td>
+        <h1 id="header">AJAX APIs Interactive Samples</h1>
+      </td>
+      <td id="googleLogoTD">
+        <img src="images/google-small.png" alt="Google Logo">
+      </td>
+    </tr>
+  </table>
+
+</div>
+
+
+<div id="content" style="height:500px;">
+<table class="contentTable">
+<tr>
+  <td id="selectContainer">
+    <h2>
+      <!--
+        This table is here because all other H2's have tables so they are
+        different heights and I couldn't fix it with CSS.  This is a HACK.
+      -->
+      <table>
+        <tbody>
+          <tr>
+            <td>
+              Pick
+            </td>
+          </tr>
+        </tbody>
       </table>
+    </h2>
+    <div id="selectCode"></div>
+  </td>
 
+
+
+
+  <td id="codeContainer">
+    <!-- todo check styles on here -->
+    <div id="editor">
+      <div style="height:5%;">
+        <h2>
+          <table style="width: 100%">
+            <tbody>
+              <tr>
+                <td>Edit</td>
+                <td align="right">
+                          <span id="outputSource" style="font-size: 80%;" onclick="is.outputSource();return false;">
+                            view src
+                            <img src="images/export.gif" alt="Show Source" />
+                          </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </h2>
+      </div>
+      <div id="edit"></div>
     </div>
+    <script type="text/javascript" charset="utf-8">
+      var jsEditor = new CodeMirror(document.getElementById('edit'), {
+        parserfile : ["tokenizejavascript.js", "parsejavascript.js"],
+        stylesheet : 'codemirror/css/jscolors.css',
+        autoMatchParens : true,
+        path : 'codemirror/js/',
+        height : '100%',
+        content: '',
+        onLoad: function() {is.runCode();}
+      });
+    </script>
 
-
-    <div id="content" style="height:500px;">
-      <table class="contentTable">
-        <tr>
-          <td id="selectContainer">
-            <h2>Pick</h2>
-            <div id="selectCode"></div>
-          </td>
-
-
-
-
-          <td id="codeContainer">
-            <!-- todo check styles on here -->
-            <div id="editor">
-              <div style="height:5%;"><h2>Edit</h2></div>
-              <div id="edit"></div>
-            </div>
-            <script type="text/javascript" charset="utf-8">
-            var jsEditor = new CodeMirror(document.getElementById('edit'), {
-              parserfile : ["tokenizejavascript.js", "parsejavascript.js"],
-              stylesheet : 'codemirror/css/jscolors.css',
-              autoMatchParens : true,
-              path : 'codemirror/js/',
-              height : '100%',
-              content: '',
-              onLoad: function() {is.runCode();}
-            });
-            </script>
-
-          </td>
+  </td>
 
 
 
-      </tr>
-      <tr>
+</tr>
+<tr>
 
 
 
 
-        <td id="outputContainer" colspan=2>
+  <td id="outputContainer" colspan=2>
+    <!-- to change height/width, change #outputContainer in the CSS -->
+    <div id="outputDiv" class="draggable resizable">
+      <div id="outputDrag">
+        <h2>
+          <table style="width:100%;">
+            <tbody>
+              <tr>
+                <td style="width:10%">
+                  <span onclick="is.runCode();" style="cursor: pointer;">Run <img src="images/play10x10.png"></span>
+                </td>
+                <td align=right style="width:90%">
+                  <span onclick="is.runBox.changeToPopout();" style="cursor: pointer;"><img src="images/new-window.gif" alt="Pop-out"></span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </h2>
+      </div>
 
-          <!-- to change height/width, change #outputContainer in the CSS -->
-          <div id="outputDiv" class="draggable resizable">
-            <div id="outputDrag">
-              <h2>
-                <table style="width:100%;">
-                  <tbody>
-                    <tr>
-                      <td style="width:10%">
-                        <span onclick="is.runCode();" style="cursor: pointer;">Run <img src="images/play10x10.png"></span>
-                      </td>
-                      <td align=right style="width:90%">
-                        <span onclick="is.runBox.changeToPopout();" style="cursor: pointer;"><img src="images/new-window.gif" alt="Pop-out"></span>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-
-              </h2>
-            </div>
-
-            <div id="runbox"></div>
-          </div>
-        </td>
-      </tr>
+      <div id="runbox"></div>
+    </div>
+  </td>
+</tr>
 
 
 
-      <tr>
-        <td class="footer">
-          <div style="background-image: url(images/sprites.gif);background-position: -28px -28px;height:53px;margin:12px 0;width:143px;"></div>
-        </td>
-        <td class="footer" style="vertical-align: middle; font-size:80%; text-align: center">
-          ©2008 Google -
-          <a href="http://code.google.com/">Code Home</a> - <a href="http://www.google.com/accounts/TOS">Site Terms of Service</a> -
-          <a href="http://www.google.com/privacy.html">Privacy Policy</a> -
-          <a href="http://code.google.com/more/">Site Directory</a>
-        </td>
-      </tr>
-    </table>
-  </div>
+<tr>
+  <td class="footer">
+    <div style="background-image: url(images/sprites.gif);background-position: -28px -28px;height:53px;margin:12px 0;width:143px;"></div>
+  </td>
+  <td class="footer" style="vertical-align: middle; font-size:80%; text-align: center">
+    ©2008 Google -
+    <a href="http://code.google.com/">Code Home</a> - <a href="http://www.google.com/accounts/TOS">Site Terms of Service</a> -
+    <a href="http://www.google.com/privacy.html">Privacy Policy</a> -
+    <a href="http://code.google.com/more/">Site Directory</a>
+  </td>
+</tr>
+</table>
+</div>
 </div>
 
 <div id="HTMLforInlineJavascript" style="display:none;"></div>
 
 <!--
-  There's a bug in jQuery UI where if you drag over an iFrame
-  then you can't drag anymore.  Putting an invisible div over the
-  iFrame fixes it.
-  -->
+There's a bug in jQuery UI where if you drag over an iFrame
+then you can't drag anymore.  Putting an invisible div over the
+iFrame fixes it.
+-->
 <div id="dragsafe"></div>
 
+<div id="codeOutput">jQuery UI Dialog</div>
 
 <script src="js/pushup.js" type="text/javascript" charset="utf-8"></script>
 </body>
