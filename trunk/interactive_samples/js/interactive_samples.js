@@ -17,7 +17,7 @@ var codeArray = [
   {
     "category":"Search API-Video Search",
     "samples":[
-      {"files":["search/videosearch/youtube_channel.js"], "sampleName":"YouTube Channels"},
+      {"files":["search/videosearch/youtube_channel.js"], "sampleName":"YouTube Channels", "tags":"YouTube, Channel, Video"},
       {"files":["search/videosearch/youtube_feed.js"], "sampleName":"YouTube Feed"},
       {"files":["search/videosearch/youtube_setresultorder.js"], "sampleName":"Set Result Order"}
     ]

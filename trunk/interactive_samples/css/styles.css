@@ -83,6 +83,10 @@ div {
   display: block;
 }
 
+#acDiv > ul > li {
+  list-style-type: none;
+}
+
 .categoryItems {
   margin-top: 0;
   margin-bottom: 0;
@@ -454,7 +458,7 @@ li.ui-autocomplete-odd > a > strong, li.ui-autocomplete-even > a > strong {
 }
 
 /* ------ Drop Shadows ------- */
-#runShadowContainer {
+#runShadowContainer, #autocompleteShadowContainer {
   width: 500px;
   height: 500px;
   position: absolute;
