@@ -24,6 +24,9 @@
     return document.createElement(name);
   }
 
+
+
+
   function InteractiveSample(){
     this.categories = [];
     this.subCategories = [];
@@ -401,6 +404,9 @@
     });
   }
 
+
+
+
   /*
    * UIEffects sets up all of the jQuery UI stuff for draggable etc.
   */
@@ -427,16 +433,30 @@
     if (!this.is.ie6) {
       this.setOutputDivResizable();
       this.setOutputDivDraggable();
-      this.setOutputDivShadow();
+      this.setDivShadow('outputDiv', 'runShadowContainer');
+
+
+
       this.setWindowResize();
     }
     this.initShowSourceDiv();
   };
 
+  UIEffects.prototype.setDivShadow = function(divName, shadowDivName) {
+    var outputContainer = $("#" + divName);
+    var outputContainerWidth = $(outputContainer).width();
+    var outputContainerHeight = $(outputContainer).height();
+    var outputContainerPos = $(outputContainer).position();
+
+    this.setShadowDivSize(shadowDivName, outputContainerWidth, outputContainerHeight);
+    this.setShadowDivPosition(shadowDivName, outputContainerPos.top, outputContainerPos.left);
+    this.showShadowDiv(shadowDivName);
+  }
+
   UIEffects.prototype.setWindowResize = function() {
     var me = this;
     $(window).bind('resize', function() {
-      me.setOutputDivShadow();
+      me.setDivShadow('outputDiv', 'runShadowContainer');
     });
   };
 
@@ -471,17 +491,6 @@
         me.hideDragSafeDiv();
       }
     });
-  };
-
-  UIEffects.prototype.setOutputDivShadow = function() {
-    var outputContainer = $("#outputDiv");
-    var outputContainerWidth = $(outputContainer).width();
-    var outputContainerHeight = $(outputContainer).height();
-    var outputContainerPos = $(outputContainer).position();
-
-    this.setShadowDivSize('runShadowContainer', outputContainerWidth, outputContainerHeight);
-    this.setShadowDivPosition('runShadowContainer', outputContainerPos.top, outputContainerPos.left);
-    this.showShadowDiv('runShadowContainer');
   };
 
   UIEffects.prototype.updateDragSafeDiv = function() {
@@ -527,7 +536,6 @@
 
     var bShadows = $(containerName + " .bottomShadows");
     var bShadowsCurTop = $(bShadows[0]).position().top;
-  // alert(bShadowsCurTop);
     var newBShadowsTop = bShadowsCurTop + changeHeight;
     $(bShadows).css('top', newBShadowsTop + 'px');
 
@@ -553,6 +561,9 @@
   UIEffects.prototype.showSource = function(code) {
     $('#codeOutput').html('<textarea style="width: 100%;height: 100%;">' + code + '<\/textarea>').dialog('open');
   }
+
+
+
 
   function RunBox() {
     this.outputContainer;
