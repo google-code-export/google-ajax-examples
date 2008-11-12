@@ -31,15 +31,39 @@
   <!-- JavaScript -->
   <title>AJAX APIs Interactive Sampler</title>
   <script src="codemirror/js/codemirror.js" type="text/javascript" charset="utf-8"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/jquery-ui.js" type="text/javascript" charset="utf-8"></script>
   <script src="js/interactive_samples.js" type="text/javascript" charset="utf-8"></script>
   <script src="js/interactive_logic.js" type="text/javascript" charset="utf-8"></script>
   <script src="http://www.google.com/jsapi" type="text/javascript" charset="utf-8"></script>
   <script type="text/javascript" charset="utf-8">
-    google.load('jquery', '1');
-    google.load('jqueryui', '1');
+//    google.load('jquery', '1');
+//    google.load('jqueryui', '1');
 
     function init() {
       is.init(document.getElementById('editor'));
+      $("#search").autocomplete({
+        data: is.autoCompleteData,
+        matchContains: true,
+        width: '400px',
+        scroll: false,
+        scrollHeight: '200px',
+//        formatItem : function() {
+//          if (arguments.length > 3) {
+//            var sampleName = arguments[0][0];
+//            var hash = is.nameToHashName(sampleName);
+////            var span = $('<span></span>').bind('click', is.showSample(is, sampleName));
+////            return '<span onclick="window.is.showSample(window.is, \''+sampleName+'\')();" style="cursor: pointer">' + sampleName + '<\/span>';
+//            return sampleName;
+//          } else {
+//            return arguments[0][0];
+//          }
+//        }
+      });
+      $("#search").autocomplete('result', function(a, b, sampleName) {
+        window.is.showSample(window.is, sampleName)();
+      });
+
     }
     google.setOnLoadCallback(init);
   </script>
@@ -80,17 +104,22 @@
         This table is here because all other H2's have tables so they are
         different heights and I couldn't fix it with CSS.  This is a HACK.
       -->
-      <table>
+      <table width="100%">
         <tbody>
           <tr>
-            <td>
+            <td width="20%">
               Pick
+            </td>
+            <td width="80%" align="right">
+              <div id="searchInputContainer">
+                <input type="text" size="14" style="border: 0px none; height: 14px; margin: 2px 10px 1px 0;color:#999" value="search" onclick="this.value = '';this.style.color = 'black'" onblur="this.value = 'search';this.style.color = '#999'" id="search"/>
+              </div>
             </td>
           </tr>
         </tbody>
       </table>
     </h2>
-    <div id="selectCode"></div>
+    <div id="selectCode"/>
   </td>
 
 
@@ -106,17 +135,17 @@
               <tr>
                 <td>Edit</td>
                 <td align="right">
-                          <span id="outputSource" style="font-size: 80%;" onclick="is.outputSource();return false;">
-                            view src
-                            <img src="images/export.gif" alt="Show Source" />
-                          </span>
+                  <span id="outputSource" style="font-size: 80%;" onclick="is.outputSource();return false;">
+                    view src
+                    <img src="images/export.gif" alt="Show Source" />
+                  </span>
                 </td>
               </tr>
             </tbody>
           </table>
         </h2>
       </div>
-      <div id="edit"></div>
+      <div id="edit"/>
     </div>
     <script type="text/javascript" charset="utf-8">
       var jsEditor = new CodeMirror(document.getElementById('edit'), {
@@ -149,7 +178,7 @@
             <tbody>
               <tr>
                 <td style="width:10%">
-                  <span onclick="is.runCode();" style="cursor: pointer;">Run <img src="images/play10x10.png"></span>
+                  <span onclick="is.runCode();" style="cursor: pointer;">Run <img src="images/play10x10.png" alt="Run"></span>
                 </td>
                 <td align=right style="width:90%">
                   <span onclick="is.runBox.changeToPopout();" style="cursor: pointer;"><img src="images/new-window.gif" alt="Pop-out"></span>
@@ -160,7 +189,7 @@
         </h2>
       </div>
 
-      <div id="runbox"></div>
+      <div id="runbox" />
     </div>
   </td>
 </tr>
@@ -169,7 +198,7 @@
 
 <tr>
   <td class="footer">
-    <div style="background-image: url(images/sprites.gif);background-position: -28px -28px;height:53px;margin:12px 0;width:143px;"></div>
+    <div style="background-image: url(images/sprites.gif);background-position: -28px -28px;height:53px;margin:12px 0;width:143px;"/>
   </td>
   <td class="footer" style="vertical-align: middle; font-size:80%; text-align: center">
     ©2008 Google -
@@ -182,16 +211,16 @@
 </div>
 </div>
 
-<div id="HTMLforInlineJavascript" style="display:none;"></div>
+<div id="HTMLforInlineJavascript" style="display:none;"/>
 
 <!--
 There's a bug in jQuery UI where if you drag over an iFrame
 then you can't drag anymore.  Putting an invisible div over the
 iFrame fixes it.
 -->
-<div id="dragsafe"></div>
+<div id="dragsafe"/>
 
-<div id="codeOutput">jQuery UI Dialog</div>
+<div id="codeOutput"/>
 
 <script src="js/pushup.js" type="text/javascript" charset="utf-8"></script>
 </body>

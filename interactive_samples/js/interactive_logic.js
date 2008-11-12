@@ -28,39 +28,32 @@
     this.categories = [];
     this.subCategories = [];
     this.codeTitles = [];
-    this.selectCode;
-    this.codeDiv;
-    this.runBox;
+    this.selectCode = null;
+    this.codeDiv = null;
     this.codeLIs = [];
     this.currentCode = new Object();
     this.curI = '';
 
     this.uiEffects;
     this.runBox;
+    this.autoCompleteData = [];
   };
 
-  function sortByCategory(a, b) {
-    return a.category > b.category;
-  }
-
-  function sortByName(a, b) {
-    return a.sampleName > b.sampleName;
-  }
-
-  function nameToHashName(name) {
+  InteractiveSample.prototype.nameToHashName = function(name) {
     var hashName = name.toLowerCase();
     hashName = hashName.replace(/ /g, '_');
     return hashName;
   }
 
   InteractiveSample.prototype.init = function(codeDiv) {
+    this.ie6 = ($.browser.msie && $.browser.version < 7);
+    this.runBox = new RunBox();
+    this.runBox.init(this, !this.ie6);
     this.codeDiv = codeDiv;
     this.createCategories();
     this.addShowHideClicks();
     this.uiEffects = new UIEffects();
     this.uiEffects.init(this);
-    this.runBox = new RunBox();
-    this.runBox.init(this);
   };
 
   InteractiveSample.prototype.createCategories = function() {
@@ -125,20 +118,20 @@
         var li = _cel('li');
 
         li.innerHTML = item.sampleName;
-
-        this.codeTitles.push(li);
+        this.autoCompleteData.push(item.sampleName);
+        codeArray[i].samples[j]['li'] = li;
         var files = codeArray[i].samples[j].files;
-        $(li).bind('click', this.showSample(this, files, li));
+        $(li).bind('click', this.showSample(this, item.sampleName));
 
         if (i == 0 && j == 0) {
-          this.showSample(this, files, li, true)();
+          this.showSample(this, item.sampleName, true)();
           this.hideAllCategoriesExcept(categoryDiv);
         }
 
         if (window.location.hash.length > 0) {
-          var hashName = nameToHashName(item.sampleName);
+          var hashName = this.nameToHashName(item.sampleName);
           if (window.location.hash.substring(1) == hashName) {
-            this.showSample(this, files, li)();
+            this.showSample(this, item.sampleName)();
             this.hideAllCategoriesExcept(categoryDiv);
           }
         }
@@ -246,9 +239,26 @@
     }
   };
 
+  InteractiveSample.prototype.sampleNameToObject = function(sampleName) {
+    for (var i=0; i < codeArray.length; i++) {
+      for (var j=0; j < codeArray[i].samples.length; j++) {
+        var sampleObj = codeArray[i].samples[j];
+        if (sampleObj.sampleName == sampleName) {
+          sampleObj['category'] = codeArray[i].category;
+          return sampleObj;
+        }
+      }
+    }
+  }
+
 // TODO: can is_instance just be set as is_instance = this above return function()
-  InteractiveSample.prototype.showSample = function(is_instance, files, thisLI, def) {
+  InteractiveSample.prototype.showSample = function(is_instance, sampleName, def) {
     return function() {
+      var sampleObj = is_instance.sampleNameToObject(sampleName);
+      var files = sampleObj.files;
+      var thisLI = sampleObj.li;
+      var categoryName = sampleObj.category.split('-')[0];
+
       var codeDiv = is_instance.codeDiv;
       var codeLIs = is_instance.codeLIs;
       for (var i=0; i < codeLIs.length; i++) {
@@ -257,7 +267,7 @@
 
     // For linking purposes
       if (!def) {
-        window.location.hash = nameToHashName(thisLI.innerHTML);
+        window.location.hash = is_instance.nameToHashName(thisLI.innerHTML);
       }
 
     // Make code selected designate this as selected
@@ -298,6 +308,7 @@
       }
 
     // is_instance.loadCode(files[0], textArea);
+      is_instance.hideAllCategoriesExcept(document.getElementById(categoryName));
       is_instance.curI = files[0];
     };
   };
@@ -413,10 +424,12 @@
       me.mousePos.y = e.pageY;
     });
 
-    this.setOutputDivResizable();
-    this.setOutputDivDraggable();
-    this.setOutputDivShadow();
-    this.setWindowResize();
+    if (!this.is.ie6) {
+      this.setOutputDivResizable();
+      this.setOutputDivDraggable();
+      this.setOutputDivShadow();
+      this.setWindowResize();
+    }
     this.initShowSourceDiv();
   };
 
@@ -538,7 +551,7 @@
   }
 
   UIEffects.prototype.showSource = function(code) {
-    $('#codeOutput').html('<textarea style="width:100%; height: 100%;">' + code + '<\/textarea>').dialog('open');
+    $('#codeOutput').html('<textarea style="width: 100%;height: 100%;">' + code + '<\/textarea>').dialog('open');
   }
 
   function RunBox() {
@@ -549,9 +562,11 @@
     this.is;
     this.runBoxDiv;
     this.popoutRunBoxDiv;
+    this.resizable;
   }
 
-  RunBox.prototype.init = function(is) {
+  RunBox.prototype.init = function(is, resizable) {
+    this.resizable = resizable;
     this.runBoxDiv = document.getElementById('runbox');
     this.runBoxPoppedOut = false;
     this.outputContainer = $("#outputContainer");
@@ -569,7 +584,6 @@
     $(this.runBoxDiv).empty().append(iFrame);
   };
 
-
   RunBox.prototype.setNewCodeRunIframeWidthHeight = function(iFrame) {
     var fakeDiv = $('<div id="fakeCalcDiv"><\/div>');
     $(this.runBoxDiv).prepend(fakeDiv);
@@ -577,14 +591,14 @@
     var containerHeight = outputDiv.height();
     var containerCurPos = outputDiv.offset();
     var curDivPos = $(fakeDiv).offset();
-    var height = containerHeight - curDivPos.top + containerCurPos.top - 15;
-    var width = outputDiv.width();
+    var height = containerHeight - curDivPos.top + containerCurPos.top;
+    if (this.resizable) height -= 15;
 
     return $(iFrame).css('height', height + 'px');
   }
 
   RunBox.prototype.runCode = function() {
-    if (this.runBoxPoppedOut == false) {
+    if (!this.runBoxPoppedOut) {
       this.createIframe();
     } else {
       // Run code in the popout window
@@ -604,7 +618,6 @@
     $(this.outputContainer).hide();
     $(this.runShadowContainer).hide();
     this.popoutWindow = window.open('iframes/popout.html','popout', 'left=20,top=20,width=600,height=500,toolbar=1,resizable=1');
-    var me = this;
   }
 
   RunBox.prototype.changeToInline = function() {
@@ -615,7 +628,6 @@
   };
 
 
-// Create and export the interactive sample instance to the global.
-  var is = new InteractiveSample();
-  window.is = is;
+  // Create and export the interactive sample instance to the global.
+  window.is = new InteractiveSample();
 })();
