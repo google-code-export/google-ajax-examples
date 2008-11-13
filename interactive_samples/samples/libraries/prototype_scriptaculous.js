@@ -3,7 +3,7 @@
 */
 
 google.load("prototype", "1");
-google.load("scriptaculous", "1.");
+google.load("scriptaculous", "1");
 
 var up = false;
 function slideUpDown() {
@@ -14,7 +14,6 @@ function slideUpDown() {
     Effect.SlideUp('content', {'duration' : 0.2});
     up = true;
   }
-
 }
 
 function OnLoad(){

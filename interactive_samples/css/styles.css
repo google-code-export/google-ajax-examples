@@ -85,6 +85,7 @@ div {
 
 #acDiv > ul > li {
   list-style-type: none;
+  padding-right: 15px;
 }
 
 .categoryItems {
@@ -392,15 +393,7 @@ span.categoryClosed div, span.categoryClosed ul {
 }
 
 .ui-dialog-title {
-  border-style:none none solid;
-  color:#555555;
-  font-size:1.1em;
-  font-weight:normal;
-  line-height:1.3em;
-  list-style-image:none;
-  list-style-position:outside;
-  list-style-type:none;
-  text-decoration:none;
+  display:none;
 }
 
 .ui-dialog-titlebar-close {
