@@ -42,45 +42,6 @@
 
     function init() {
       is.init(document.getElementById('editor'));
-      $("#search").autocomplete({
-        data: is.autoCompleteData,
-        matchContains: true,
-        width: '400px',
-        scroll: false,
-        scrollHeight: '200px',
-        formatItem : function() {
-          if (arguments.length > 3) {
-            if (!$('.ui-autocomplete-results')[0].getAttribute('id')) {
-              $('.ui-autocomplete-results')[0].id = 'acDiv';
-            }
-          }
-          return arguments[0][0];
-        }
-      });
-      $("#search").autocomplete('result', function(a, b, sampleName) {
-        window.is.showSample(window.is, sampleName)();
-      });
-
-      $('#search').bind('keyup', function() {
-        var acDiv = $('#acDiv');
-        try {
-          console.log((acDiv.css('display') == 'none'));
-          if (acDiv.position() && acDiv.css('display') != 'none' && $('#acShadowDiv').length == 0) {
-            $(acDiv).append($('<div id="acShadowDiv" style="width:100%;background: url(images/drop_shadows/short_b1px.png) repeat;height:15px;position:absolute;" class="">&nbsp<\/div>'));
-//            is.uiEffects.setDivShadow('acDiv', 'autocompleteShadowContainer');
-//            var offset = $('#autocompleteShadowContainer').offset();
-//            var left = offset.left;
-//            var top = offset.top;
-//            $('#autocompleteShadowContainer').css('top', top + 0 + 'px').css('left', left - 7+'px');
-          } else {
-//            console.log('in');
-//            $('#autocompleteShadowContainer').css('left', '-1000px');
-          }
-        } catch(e) {
-//  $('#autocompleteShadowContainer').css('left', '-1000px');
-        }
-      });
-
     }
     google.setOnLoadCallback(init);
   </script>
@@ -129,7 +90,7 @@
             </td>
             <td width="80%" align="right">
               <div id="searchInputContainer">
-                <input type="text" size="14" style="border: 0px none; height: 14px; margin: 2px 10px 1px 0;color:#999" value="search" onclick="this.value = '';this.style.color = 'black'" onblur="this.value = 'search';this.style.color = '#999';" id="search"/>
+                <input tabindex="1" type="text" size="14" style="border: 0px none; height: 14px; margin: 2px 12px 1px 0;color:#999;outline:none;" value="search" onclick="this.value = '';this.style.color = 'black'" id="search"/>
               </div>
             </td>
           </tr>
@@ -151,9 +112,10 @@
             <tbody>
               <tr>
                 <td>Edit</td>
+                <td align="center" style="color:#4D4D4D" id="demoTitle">&nbsp;</td>
                 <td align="right">
-                  <span id="outputSource" style="font-size: 80%;" onclick="is.outputSource();return false;">
-                    view src
+                  <span id="outputSource" style="font-size: 80%;font-weight:normal;color:#4D4D4D" onclick="is.outputSource();return false;">
+                    src
                     <img src="images/export.gif" alt="Show Source" />
                   </span>
                 </td>

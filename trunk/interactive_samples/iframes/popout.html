@@ -14,10 +14,10 @@
           <table style="width: 100%;">
             <tbody>
               <tr>
-                <td style="width: 10%;">
+                <td style="width: 100px;">
                   <span style="cursor: pointer;" onclick="runCode();" id="run">Run <img src="../images/play10x10.png"/></span>
                 </td>
-                <td align="right" style="width: 90%;">
+                <td align="right">
                   <span style="cursor: pointer;" id="popin" onclick="closeMe();"><img src="../images/pop-in.gif" alt="Pop-in"/></span>
                 </td>
               </tr>
@@ -27,7 +27,7 @@
       </div>
       <div id="runbox"><!-- <iframe id="runFrame" src="../iframes/search.html"></iframe> --></div>
     </div>
-    
+
     <script type="text/javascript" charset="utf-8">
     var dad = window.opener;
     var runBox = $('#runbox');
@@ -36,31 +36,31 @@
       $('#runFrame').css('height', newHeight + 'px');
       console.log(window.parent);
     }
-    
+
     function runCode() {
       // This sets is.codeToRun
       dad.is.runCode();
     }
-    
+
     function addIframe() {
       // This iframe reads is.codeToRun
       var newFrame = $('<iframe src="../iframes/search.html" id="runFrame"></iframe>').get(0);
       $(runBox).html(newFrame);
     }
-    
-    
+
+
     function closeMe() {
       window.close();
     }
-    
+
     $(window).bind('unload', function() {
       dad.is.runBox.changeToInline();
     });
-    
+
     $(window).bind('resize', function() {
       window.resizeIframe();
     });
-    
+
     // onload function
     $(function () {
       runCode();

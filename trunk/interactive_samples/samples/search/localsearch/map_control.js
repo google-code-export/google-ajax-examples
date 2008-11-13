@@ -15,7 +15,7 @@ function init(){
   var searchControl = new LSstaticMapControl( 'content' , 'Mountain View, CA' );
 
  // Execute an initial search
- searchControl.execute('google');
+  searchControl.execute('google');
 
   // And we're done! Good job.
 }
@@ -68,7 +68,7 @@ function LSstaticMapControl( element , center ){
 
 // This method will handle the results
 LSstaticMapControl.prototype.searchComplete = function(){
- // First, we get the results div and results themselves
+  // First, we get the results div and results themselves
   var resultsDiv = this.resultsDiv;
   var results = this.localSearch.results;
 
@@ -78,7 +78,7 @@ LSstaticMapControl.prototype.searchComplete = function(){
 
     // We're going to use a table, but we'll build it from the inside out
     var infoCell = document.createElement( 'td' );
-  infoCell.style.width = '300px';
+    infoCell.style.width = '300px';
     infoCell.appendChild( result.html.cloneNode( true ) );
     var mapCell = document.createElement( 'td' );
     mapCell.style.width = '150px';
@@ -106,11 +106,11 @@ LSstaticMapControl.prototype.searchComplete = function(){
 // This method will execute the search
 LSstaticMapControl.prototype.execute = function( query ){
   // First, we clear the old results
- this.clear();
+  this.clear();
 
   // Now we have to figure out what the real query is
   if( query.input ){ // If it came from the search form, it will have an input property
-   query = query.input.value;
+    query = query.input.value;
   }
 
   // Just in case, we'd better coordinate the search form input with this
