@@ -19,7 +19,7 @@ function slideUpDown() {
 function OnLoad(){
   var content = $('content');
   content.innerHTML = '<div>The Content</div>';
-  window.setInterval('slideUpDown();', 300);
+  window.setInterval('slideUpDown();', 600);
 }
 
 google.setOnLoadCallback(OnLoad);
