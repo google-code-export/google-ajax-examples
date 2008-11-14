@@ -1,9 +1,12 @@
 .editbox {
-  margin: .4em;
+  margin: 0;
   padding: 0;
   font-family: monospace;
   font-size: 10pt;
   color: black;
+  background-color: #EBEBEB;
+  padding: 0;
+  border-top: 1px solid #ABABAB;
 }
 
 pre.code, .editbox {

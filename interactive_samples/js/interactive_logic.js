@@ -1,7 +1,6 @@
 // Anonymous function, keep the global namespace squeeky clean..
 (function() {
 
-  // For browserFun
   // TODO:
   // Make it so that you can make the code editing window wider...
   // Make it so that you can click links to the documentation of each object
@@ -86,7 +85,10 @@
 
         catName.appendChild(img);
         catName.innerHTML += category;
-
+        if (codeArray[i].docsUrl) {
+          var link = this.createDocsLink(codeArray[i].docsUrl);
+          catName.appendChild(link);
+        }
         categoryDiv.appendChild(catName);
         this.selectCode.appendChild(categoryDiv);
 
@@ -106,6 +108,12 @@
         subCatName.innerHTML += subCategory;
 
         subCategoryDiv.appendChild(subCatName);
+
+        if (codeArray[i].docsUrl) {
+          var link = this.createDocsLink(codeArray[i].docsUrl);
+          subCategoryDiv.appendChild(link);
+        }
+
         categoryDiv.appendChild(subCategoryDiv);
       }
 
@@ -140,6 +148,7 @@
           }
         }
 
+
         this.codeLIs.push(li);
         ul.appendChild(li);
       }
@@ -150,9 +159,29 @@
     }
   };
 
+  InteractiveSample.prototype.createDocsLink = function(docUrl) {
+    if (docUrl) {
+      var img = _cel('img');
+      img.src = 'images/docs.gif';
+      img.className = 'docsImg';
+      img.border = 0;
+
+      var link = _cel('a');
+      link.href = docUrl;
+      link.target = "_blank";
+      link.className = "docsLink";
+      link.appendChild(img);
+      link.style.display = 'inline';
+
+      return link;
+    }
+  }
+
   InteractiveSample.prototype.toggleShowHideLIs = function(category) {
     return function() {
       var ul = category.nextSibling;
+      // if the sibling is an anchor, that means it's the docsLink anchor, so grab the one after.
+      if (ul.nodeName.toLowerCase() == 'a') ul = ul.nextSibling;
       var el = category.childNodes[0];
       if (el.className == 'expand')
         el.className = 'collapse';
@@ -211,7 +240,7 @@
   InteractiveSample.prototype.loadRemotely = function(relativeUrl, filename, fileType, opt_changeCodeMirror) {
     is_instance = this;
     $.get(relativeUrl, function(data, status) {
-      if (opt_changeCodeMirror == true) {
+      if (opt_changeCodeMirror) {
         is_instance.changeCodeMirror(data, fileType);
       }
       is_instance.currentCode[filename] = {
@@ -364,7 +393,7 @@
     try {
       window.jsEditor.setCode(content);
     } catch (e) {
-      // hasn't loaded
+      alert('fail!');
     }
 
   };
@@ -441,8 +470,13 @@
       this.setOutputDivDraggable();
       this.setDivShadow('outputDiv', 'runShadowContainer');
       this.setWindowResize();
+    } else {
+      $('#outputDrag').css('cursor', 'default');
     }
-    this.initAutoComplete();
+    // IE has an extremely extremely weird bug with populating the editing window.
+    // For now I can't fix it.  maybe later add autocomplete for IE.
+    // TODO: Fix autocomplete for IE (HARD BUG)
+    if (!$.browser.msie) this.initAutoComplete();
     this.initShowSourceDiv();
   };
 
@@ -475,6 +509,8 @@
       resize: function(e, ui) {
         me.updateDragSafeDiv();
       },
+      minHeight: 115,
+      minWidth: 115,
       stop: function(e, ui) {
         me.hideDragSafeDiv();
         me.setShadowDivSize('runShadowContainer', ui.size.width, ui.size.height);
@@ -522,7 +558,6 @@
     var shadowContainer = $(containerName);
     var oldWidth = $(shadowContainer).width();
     var oldHeight = $(shadowContainer).height();
-
     var changeWidth = newWidth - oldWidth;
     var changeHeight = newHeight - oldHeight;
 
@@ -586,7 +621,8 @@
 
   UIEffects.prototype.setAutoCompleteClicks = function() {
     $("#search").autocomplete('result', function(a, b, sampleName) {
-      window.is.showSample(window.is, sampleName.split(' <sup>')[0])();
+      var sample = sampleName.split(' <sup>')[0];
+      window.is.showSample(window.is, sample)();
     });
   }
 
@@ -602,6 +638,7 @@
   }
 
   UIEffects.prototype.initAutoComplete = function() {
+    $('#searchInputContainer').show();
     this.createAutoComplete();
     this.setAutoCompleteClicks();
     this.createAutoCompleteDropShadow();

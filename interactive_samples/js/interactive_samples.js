@@ -12,7 +12,8 @@ var codeArray = [
       {"files":["search/expand_mode.js"], "sampleName":"Expand Mode", "tags": "Search, General, Search Control"},
       {"files":["search/raw_search.js"], "sampleName":"Raw Search", "tags": "Search, General, Custom Control, Custom Results"},
       {"files":["search/show_query.js"], "sampleName":"Show Search Query", "tags": "Search, General, Show User Query"}
-    ]
+    ],
+    "docsUrl": "http://code.google.com/apis/ajaxsearch/documentation/reference.html#_class_GSearch"
   },
   {
     "category":"Search API-Video Search",
@@ -20,14 +21,16 @@ var codeArray = [
       {"files":["search/videosearch/youtube_channel.js"], "sampleName":"YouTube Channels", "tags":"Search, YouTube, Channel, Video"},
       {"files":["search/videosearch/youtube_feed.js"], "sampleName":"YouTube Feed", "tags": "Search, Video"},
       {"files":["search/videosearch/youtube_setresultorder.js"], "sampleName":"Set Result Order", "tags": "Search, Video, Date"}
-    ]
+    ],
+    "docsUrl": "http://code.google.com/apis/ajaxsearch/documentation/reference.html#_class_GvideoSearch"
   },
   {
     "category":"Search API-Web Search",
     "samples":[
       {"files":["search/websearch/restrict_by_cse.js"], "sampleName":"Restrict by CSE", "tags": "Search, Web, setSiteRestriction, Custom Search Engine"},
       {"files":["search/websearch/set_lang_restrict.js"], "sampleName":"Set Language Restriction", "tags": "Search, Web, Language, setRestriction"}
-    ]
+    ],
+    "docsUrl": "http://code.google.com/apis/ajaxsearch/documentation/reference.html#_class_GwebSearch"
   },
   {
     "category":"Search API-Local Search",
@@ -36,7 +39,8 @@ var codeArray = [
       {"files":["search/localsearch/localsearch_markers.js"], "sampleName":"LocalSearch with Markers", "tags": "Search, Local, Markers, Viewport, Maps"},
       {"files":["search/localsearch/map_control.js"], "sampleName":"Static Map Control", "tags": "Search, Local, Static Maps, Prototypes, Custom Control, Maps"},
       {"files":["search/localsearch/restrict_results.js"], "sampleName":"Restrict Results", "tags": "Search, Local, KML, Business Listings"}
-    ]
+    ],
+    "docsUrl": "http://code.google.com/apis/ajaxsearch/documentation/reference.html#_class_GlocalSearch"
   },
   {
     "category":"Search API-News Search",
@@ -45,7 +49,8 @@ var codeArray = [
       {"files":["search/newssearch/topic_restrict.js"], "sampleName":"Topic Restriction", "tags": "Search, News, setRestriction, News Type"},
       {"files":["search/newssearch/news_edition_restrict.js"], "sampleName":"News Edition Restriction", "tags": "Search, News, setRestriction"},
       {"files":["search/newssearch/search_by_date.js"], "sampleName":"Search by Date", "tags": "Search, News, setRestriction"}
-    ]
+    ],
+    "docsUrl": "http://code.google.com/apis/ajaxsearch/documentation/reference.html#_class_GnewsSearch"
   },
   {
     "category":"Search API-Image Search",
@@ -54,13 +59,15 @@ var codeArray = [
       {"files":["search/imagesearch/color_restrict.js"], "sampleName":"Color Restriction", "tags": "Search, Images, Black and White, Grayscale"},
       {"files":["search/imagesearch/imagetype_restrict.js"], "sampleName":"Imagetype Restriction", "tags": "Search, Images, News, Photo, Images"},
       {"files":["search/imagesearch/filetype_restrict.js"], "sampleName":"Filetype Restriction", "tags": "Search, Images, GIF, PNG, JPG, JPEG"}
-    ]
+    ],
+    "docsUrl": "http://code.google.com/apis/ajaxsearch/documentation/reference.html#_class_GimageSearch"
   },
   {
     "category":"Search API-Patent Search",
     "samples":[
       {"files":["search/patentsearch/type_restrict.js"], "sampleName":"Type Restriction", "tags": "Search, Patents, Issued Patents"}
-    ]
+    ],
+    "docsUrl": "http://code.google.com/apis/ajaxsearch/documentation/reference.html#_class_GpatentSearch"
   },
   {
     "category":"Feeds API",
@@ -71,9 +78,8 @@ var codeArray = [
       {"files":["feeds/feed_control.js"], "sampleName":"Feed Control", "tags": "Feeds"},
       {"files":["feeds/lookup_feed.js"], "sampleName":"Lookup Feed", "tags": "Feeds, Lookup Website Associated Feed"},
       {"files":["feeds/find_feed.js"], "sampleName":"Find Feed", "tags": "Feeds, Query for Feeds"}
-
-//      {"files":["feeds/dynamic_feed.js"], "sampleName":"Dynamic Feed Control"}
-    ]
+    ],
+    "docsUrl": "http://code.google.com/apis/ajaxfeeds/documentation/reference.html"
   },
   {
     "category":"Language API-Translation",
@@ -81,13 +87,15 @@ var codeArray = [
       {"files":["language/translation/translate.js"], "sampleName":"Translate", "tags": "Language, Translation, Basic Translate"},
       {"files":["language/translation/batch_translate.js"], "sampleName":"Batch Translate", "tags": "Language, Translation, JSONP, Translate to All Languages"},
       {"files":["language/translation/detect_language.js"], "sampleName":"Language Detect", "tags": "Language, Translation, Detect, Languages Enum"}
-    ]
+    ],
+    "docsUrl": "http://code.google.com/apis/ajaxlanguage/documentation/reference.html"
   },
   {
     "category":"Language API-Transliteration",
     "samples":[
       {"files":["language/transliteration/transliterate.js"], "sampleName":"Transliterate", "tags": "Language, Transliteration, Textarea, Hindi"}
-    ]
+    ],
+    "docsUrl": "http://code.google.com/apis/ajaxlanguage/documentation/referenceTransliteration.html"
   },
   {
     "category":"Libraries API",
@@ -97,6 +105,7 @@ var codeArray = [
       {"files":["libraries/mootools.js"], "sampleName":"MooTools", "tags": "Libraries, Tween"},
       {"files":["libraries/dojo.js"], "sampleName":"Dojo", "tags": "Libraries, Fade In, Fade Out"},
       {"files":["libraries/prototype_scriptaculous.js"], "sampleName":"Prototype Scriptaculous", "tags": "Libraries, Slide Up, Slide Down"}
-    ]
+    ],
+    "docsUrl": "http://code.google.com/apis/ajaxlibs/documentation/"
   }
 ];
