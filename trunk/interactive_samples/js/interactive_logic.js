@@ -409,7 +409,7 @@
     var curWidth = container.style.maxWidth = '1800px';
   };
 
-  InteractiveSample.prototype.outputSource = function() {
+  InteractiveSample.prototype.getFullSrc = function(callbackFunc) {
     var url = 'iframes/search.html';
     var is_instance = this;
     $.get(url, function(data, success) {
@@ -424,23 +424,40 @@
           code = start.concat(end);
           newLine = code.indexOf('\n', newLine + 1);
         }
-
+        /* TODO: fix this hack.  there's gotta be a better way than
+         doing a find for the place where the code goes and replacing it */
         var data = data.replace(
                 '    try {\n' +
                 '      window.eval(window.parent.is.codeToRun);\n' +
                 '    } catch (e) {\n' +
                 '      alert("Error: " + e.message);\n' +
                 '    }', code);
-
-        is_instance.uiEffects.showSource(data);
+        callbackFunc(data);
       }
     });
+  }
+
+  InteractiveSample.prototype.outputSource = function() {
+    this.getFullSrc(this.uiEffects.showSource);
   }
 
   InteractiveSample.prototype.setDemoTitle = function(title) {
     $('#demoTitle').html(title);
   }
 
+  InteractiveSample.prototype.sendCodeToServer = function(code) {
+    $('#codeHolder').get(0).innerHTML = code;
+    $('#saveCodeForm').get(0).submit();
+
+//    var url = '';
+//    $.get(url, {'code': code}, function() {
+//      console.log(arguments);
+//    });
+  }
+
+  InteractiveSample.prototype.saveCode = function() {
+    this.getFullSrc(this.sendCodeToServer);
+  }
 
   /*
    * UIEffects sets up all of the jQuery UI stuff for draggable etc.
@@ -582,7 +599,8 @@
   }
 
   UIEffects.prototype.initShowSourceDiv = function() {
-    $("#codeOutput").dialog({
+    $("#codeOutput").dialog(
+    {
       modal: true,
       overlay: {
         opacity: 0.5,
@@ -598,7 +616,7 @@
   }
 
   UIEffects.prototype.showSource = function(code) {
-    $('#codeOutput').html('<textarea style="width: 100%;height: 100%;">' + code + '<\/textarea>').dialog('open');
+    $('#codeOutput').html('<textarea style="width: 100%;height: 100%;">' + code + '<\/textarea>').dialog('open').show();
   }
 
   UIEffects.prototype.createAutoComplete = function() {

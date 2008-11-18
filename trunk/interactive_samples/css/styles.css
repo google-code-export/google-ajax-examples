@@ -355,16 +355,19 @@ span.categoryClosed div, span.categoryClosed ul {
   z-index: 1000;
 }
 
-#outputSource {
-  color: blue;
+#outputSource, #saveCode {
+  color: #4D4D4D;
   font-size: 75%;
   cursor: pointer;
+  font-size: 80%;
+  font-weight:normal;
 }
 
 #codeOutput {
   background-color: white;
   width: 800px;
   height: 600px;
+  display:none;
   overflow: hidden;
 }
 
@@ -416,7 +419,7 @@ span.categoryClosed div, span.categoryClosed ul {
   z-index:100;
 }
 
-#demoTitle, #outputSource, #runBoxTitle {
+#demoTitle, #runBoxTitle {
   color: #4D4D4D;
 }
 
