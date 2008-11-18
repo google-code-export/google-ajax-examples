@@ -42,7 +42,7 @@ function OnLoad() {
 
   // Initialize a LocalSearch instance
   searcher = new google.search.LocalSearch(); // create the object
-  searcher.setCenterPoint = map; // bind the searcher to the map
+  searcher.setCenterPoint(map); // bind the searcher to the map
 
   // Create a SearcherOptions object to ensure we can see all results
   var options = new google.search.SearcherOptions(); // create the object
@@ -50,7 +50,7 @@ function OnLoad() {
 
   // Add the searcher to the SearchControl
   searchControl.addSearcher(searcher , options);
-  
+
  // And second, we need is a search complete callback!
   searchControl.setSearchCompleteCallback(searcher , function() {
     map.clearOverlays();

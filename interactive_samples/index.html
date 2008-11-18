@@ -31,6 +31,7 @@
   <!-- JavaScript -->
   <title>AJAX APIs Interactive Sampler</title>
   <script src="codemirror/js/codemirror.js" type="text/javascript" charset="utf-8"></script>
+  <!--<script type="text/javascript" src="js/jquery.js"></script>-->
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js" type="text/javascript" charset="utf-8"></script>
   <script src="js/jquery-ui.js" type="text/javascript" charset="utf-8"></script>
   <script src="js/interactive_samples.js" type="text/javascript" charset="utf-8"></script>
@@ -115,7 +116,15 @@
                 <td>Edit</td>
                 <td align="center" id="demoTitle">&nbsp;</td>
                 <td align="right">
-                  <span id="outputSource" style="font-size: 80%;font-weight:normal;" onclick="is.outputSource();return false;">
+                  <form action="http://savedbythegoog.appspot.com/add" id="saveCodeForm" method="post" target="_blank">
+                    <textarea rows="10" cols="10" name="code" style="display:none" id="codeHolder"></textarea>
+                  </form>
+                  <span id="saveCode" onclick="is.saveCode();return false;">
+                    save
+                    <img src="images/link.gif" alt="Save Code" height="10" />
+                  </span>
+
+                  <span id="outputSource" onclick="is.outputSource();return false;">
                     src
                     <img src="images/export.gif" alt="Show Source" />
                   </span>
@@ -202,7 +211,6 @@ iFrame fixes it.
 <div id="dragsafe">&nbsp;</div>
 
 <div id="codeOutput">&nbsp;</div>
-
 <script src="js/pushup.js" type="text/javascript" charset="utf-8"></script>
 </body>
 </html>
