@@ -115,19 +115,18 @@
               <tr>
                 <td>Edit</td>
                 <td align="center" id="demoTitle">&nbsp;</td>
-                <td align="right">
-                  <form action="http://savedbythegoog.appspot.com/add" id="saveCodeForm" method="post" target="_blank">
-                    <textarea rows="10" cols="10" name="code" style="display:none" id="codeHolder"></textarea>
-                  </form>
+                <td align="right" valign="bottom" class="greyLinks">
                   <span id="saveCode" onclick="is.saveCode();return false;">
-                    save
+                    link
                     <img src="images/link.gif" alt="Save Code" height="10" />
                   </span>
 
-                  <span id="outputSource" onclick="is.outputSource();return false;">
-                    &nbsp;|&nbsp;&nbsp;view
+                  &nbsp;|&nbsp;&nbsp;<span id="outputSource" onclick="is.outputSource();return false;">
+                    view
                     <img src="images/export.gif" alt="Show Source" />
                   </span>
+                  <!--&nbsp;|&nbsp;&nbsp;<a href="{{login_url}}" id="login">login</a>-->
+
                 </td>
               </tr>
             </tbody>
@@ -147,11 +146,7 @@
         onLoad: function() {is.runCode();}
       });
     </script>
-
   </td>
-
-
-
 </tr>
 <tr>
 
@@ -211,6 +206,9 @@ iFrame fixes it.
 <div id="dragsafe">&nbsp;</div>
 
 <div id="codeOutput">&nbsp;</div>
+<form action="http://savedbythegoog.appspot.com/add" id="saveCodeForm" method="post" target="_blank">
+  <textarea rows="10" cols="10" name="code" style="display:none" id="codeHolder"></textarea>
+</form>
 <script src="js/pushup.js" type="text/javascript" charset="utf-8"></script>
 </body>
 </html>

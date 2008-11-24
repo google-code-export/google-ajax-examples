@@ -45,7 +45,7 @@
     var hashName = name.toLowerCase();
     hashName = hashName.replace(/ /g, '_');
     return hashName;
-  }
+  };
 
   InteractiveSample.prototype.init = function(codeDiv) {
     this.ie6 = ($.browser.msie && $.browser.version < 7);
@@ -175,7 +175,7 @@
 
       return link;
     }
-  }
+  };
 
   InteractiveSample.prototype.toggleShowHideLIs = function(category) {
     return function() {
@@ -248,7 +248,7 @@
       };
       is_instance.runCode();
     });
-  }
+  };
 
   InteractiveSample.prototype.loadCode = function(filename, opt_changeCodeMirror) {
     // If the code is in the currentCode buffer, then grab it there
@@ -261,9 +261,9 @@
     var fileType = fileTypes[extension.toLowerCase()];
     var inBuffer = (this.currentCode[filename] && this.currentCode[filename].code) ? true : false;
     if (inBuffer && opt_changeCodeMirror == true) {
-      this.changeCodeMirror(this.currentCode[filename].code, fileType);
+      this.changeCodeMirror(this.currentCode[filename].code);
     } else {
-      var relativeUrl = 'samples/' + filename;
+      var relativeUrl = filename;
 
       is_instance = this;
 
@@ -282,7 +282,22 @@
         }
       }
     }
-  }
+  };
+
+  InteractiveSample.prototype.sampleFileNameToObject = function(sampleFileName) {
+    for (var i=0; i < codeArray.length; i++) {
+      for (var j=0; j < codeArray[i].samples.length; j++) {
+        var sampleObj = codeArray[i].samples[j];
+        for (var k=0; k < sampleObj.files.length; k++) {
+          var file = sampleObj.files[k];
+          if (sampleFileName == file) {
+            sampleObj['category'] = codeArray[i].category;
+            return sampleObj;
+          }
+        }
+      }
+    }
+  };
 
 // TODO: can is_instance just be set as is_instance = this above return function()
   InteractiveSample.prototype.showSample = function(is_instance, sampleName, def) {
@@ -380,8 +395,10 @@
 
   InteractiveSample.prototype.runCode = function() {
     try {
-      this.currentCode[this.curI].code = this.getCode();
-      is.codeToRun = this.getCode();
+      if (typeof this.currentCode[this.curI] == 'undefined') {
+        this.currentCode[this.curI] = new Object();
+      }
+      is.codeToRun = this.currentCode[this.curI].code = this.getCode();
       this.runBox.runCode();
     } catch (e) {
       // this will fail sometimes and that's OK.  It just means that CodeMirror
@@ -389,7 +406,7 @@
     }
   };
 
-  InteractiveSample.prototype.changeCodeMirror = function(content, lang) {
+  InteractiveSample.prototype.changeCodeMirror = function(content) {
     try {
       window.jsEditor.setCode(content);
     } catch (e) {
@@ -402,15 +419,14 @@
     return window.jsEditor.getCode();
   };
 
-// Todo have the window automatically size to the size of the window
-
-  InteractiveSample.prototype.increaseWidth = function() {
-    var container = document.getElementById('container');
-    var curWidth = container.style.maxWidth = '1800px';
+  InteractiveSample.prototype.getCurFilename = function() {
+    return this.curI;
   };
 
   InteractiveSample.prototype.getFullSrc = function(callbackFunc) {
-    var url = 'iframes/search.html';
+    var curFilename = this.getCurFilename();
+    var sampleObj = this.sampleFileNameToObject(curFilename);
+    var url = sampleObj.boilerplateLoc;
     var is_instance = this;
     $.get(url, function(data, success) {
       if (success) {
@@ -435,29 +451,26 @@
         callbackFunc(data);
       }
     });
-  }
+  };
 
   InteractiveSample.prototype.outputSource = function() {
     this.getFullSrc(this.uiEffects.showSource);
-  }
+  };
 
   InteractiveSample.prototype.setDemoTitle = function(title) {
     $('#demoTitle').html(title);
-  }
+  };
 
   InteractiveSample.prototype.sendCodeToServer = function(code) {
     $('#codeHolder').get(0).innerHTML = code;
     $('#saveCodeForm').get(0).submit();
-
-//    var url = '';
-//    $.get(url, {'code': code}, function() {
-//      console.log(arguments);
-//    });
-  }
+  };
 
   InteractiveSample.prototype.saveCode = function() {
     this.getFullSrc(this.sendCodeToServer);
-  }
+  };
+
+
 
   /*
    * UIEffects sets up all of the jQuery UI stuff for draggable etc.
@@ -473,7 +486,7 @@
     this.mousePos = {
       'x': 0,
       'y': 0
-    }
+    };
 
     var me = this;
   // So that we can track the mouse movement
@@ -506,7 +519,7 @@
     this.setShadowDivSize(shadowDivName, outputContainerWidth, outputContainerHeight);
     this.setShadowDivPosition(shadowDivName, outputContainerPos.top, outputContainerPos.left);
     this.showShadowDiv(shadowDivName);
-  }
+  };
 
   UIEffects.prototype.setWindowResize = function() {
     var me = this;
@@ -554,21 +567,21 @@
     var newTop = this.mousePos.y - 300;
     var newLeft = this.mousePos.x - 300;
     $('#dragsafe').css('top', newTop + 'px').css('left', newLeft + 'px');
-  }
+  };
 
   UIEffects.prototype.hideDragSafeDiv = function() {
     $('#dragsafe').css('top', '-600px').css('left', '-600px');
-  }
+  };
 
   UIEffects.prototype.showShadowDiv = function(containerName) {
     $('#' + containerName).show();
-  }
+  };
 
   UIEffects.prototype.setShadowDivPosition = function(containerName, top, left) {
     containerName = '#' + containerName;
     var shadowContainer = $(containerName);
     $(shadowContainer).css('top', top + 'px').css('left', left + 'px');
-  }
+  };
 
   UIEffects.prototype.setShadowDivSize = function(containerName, newWidth, newHeight) {
     containerName = '#' + containerName;
@@ -596,7 +609,7 @@
     $(bShadows).css('top', newBShadowsTop + 'px');
 
     $(shadowContainer).css('width', newWidth + 'px').css('height', newHeight + 'px');
-  }
+  };
 
   UIEffects.prototype.initShowSourceDiv = function() {
     $("#codeOutput").dialog(
@@ -613,11 +626,26 @@
       draggable: false
     });
     $("div.ui-dialog > div.ui-resizable-handle").css('display', 'none');
-  }
+  };
 
   UIEffects.prototype.showSource = function(code) {
+//    if (!this.htmlEditor) {
+//      this.htmlEditor = new CodeMirror(document.getElementById('edit'), {
+//        parserfile: "parsexml.js",
+//        stylesheet: "../codemirror/css/xmlcolors.css",
+//        autoMatchParens : true,
+//        path : '../codemirror/js/',
+//        height : '100%',
+//        width: '100%',
+//        content: code
+//      });
+//    } else {
+//      this.htmlEditor.setCode(code);
+//    }
+
+
     $('#codeOutput').html('<textarea style="width: 100%;height: 100%;">' + code + '<\/textarea>').dialog('open').show();
-  }
+  };
 
   UIEffects.prototype.createAutoComplete = function() {
     $("#search").autocomplete({
@@ -626,6 +654,10 @@
       width: 'auto',
       scroll: false,
       scrollHeight: '400px',
+      formatResult : function(result) {
+        result = result[0].split(' <sup')[0];
+        return result;
+      },
       formatItem : function() {
         if (arguments.length > 3) {
           if (!$('.ui-autocomplete-results')[0].getAttribute('id')) {
@@ -635,14 +667,15 @@
         return arguments[0][0];
       }
     });
-  }
+  };
 
   UIEffects.prototype.setAutoCompleteClicks = function() {
     $("#search").autocomplete('result', function(a, b, sampleName) {
       var sample = sampleName.split(' <sup>')[0];
       window.is.showSample(window.is, sample)();
+      return sample;
     });
-  }
+  };
 
   UIEffects.prototype.createAutoCompleteDropShadow = function() {
     $('#search').bind('keyup', function() {
@@ -653,14 +686,14 @@
         } else {}
       } catch(e) {}
     });
-  }
+  };
 
   UIEffects.prototype.initAutoComplete = function() {
     $('#searchInputContainer').show();
     this.createAutoComplete();
     this.setAutoCompleteClicks();
     this.createAutoCompleteDropShadow();
-  }
+  };
 
 
 
@@ -688,8 +721,8 @@
     // body...
   };
 
-  RunBox.prototype.createIframe = function() {
-    var iFrame = $('<iframe src="iframes/search.html" id="runFrame"><\/iframe>');
+  RunBox.prototype.createIframe = function(boilerplateLoc) {
+    var iFrame = $('<iframe src="'+boilerplateLoc+'" id="runFrame"><\/iframe>');
     iFrame = this.setNewCodeRunIframeWidthHeight(iFrame);
     $(this.runBoxDiv).empty().append(iFrame);
   };
@@ -705,11 +738,15 @@
     if (this.resizable) height -= 15;
 
     return $(iFrame).css('height', height + 'px');
-  }
+  };
 
   RunBox.prototype.runCode = function() {
+    var curFilename = this.is.getCurFilename();
+    var sampleObj = this.is.sampleFileNameToObject(curFilename);
+    var boilerplateLoc = sampleObj.boilerplateLoc;
+
     if (!this.runBoxPoppedOut) {
-      this.createIframe();
+      this.createIframe(boilerplateLoc);
     } else {
       // Run code in the popout window
       var runbox = this.popoutWindow.document.getElementById('runbox');
@@ -719,7 +756,7 @@
         'codeToRun': this.is.codeToRun
       };
 
-      this.popoutWindow.addIframe();
+      this.popoutWindow.addIframe(boilerplateLoc);
     }
   };
 
@@ -727,8 +764,8 @@
     this.runBoxPoppedOut = true;
     $(this.outputContainer).hide();
     $(this.runShadowContainer).hide();
-    this.popoutWindow = window.open('iframes/popout.html','popout', 'left=20,top=20,width=600,height=500,toolbar=1,resizable=1');
-  }
+    this.popoutWindow = window.open('popout.html','popout', 'left=20,top=20,width=600,height=500,toolbar=1,resizable=1');
+  };
 
   RunBox.prototype.changeToInline = function() {
     this.runBoxPoppedOut = false;
