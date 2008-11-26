@@ -65,7 +65,7 @@
         var redirect = '/delete?id=' + id;
         redirect += ((curAPITypes) ? '&type=' + curAPITypes : '');
         window.location = redirect;
-        
+
       }
     }
   };
@@ -78,12 +78,12 @@
     imgTD.style.paddingRight = '10px';
     deleteCodeImg.style.cursor = 'pointer';
     imgTD.appendChild(deleteCodeImg);
-    
+
     $(deleteCodeImg).bind('click', this.deleteCustomExample(id));
-    
+
     tr.appendChild(imgTD);
   };
-  
+
   InteractiveSample.prototype.createCategories = function() {
     // codeArray is from ajax_apis_samples.js
     this.selectCode = $('#selectCode').get(0);
@@ -176,14 +176,14 @@
             this.hideAllCategoriesExcept(categoryDiv);
           }
         }
-        
+
         newTable.appendChild(newTR);
         newTR.appendChild(textTD);
-        
+
         if (category == 'Saved Code') {
           this.addDeleteIcon(newTR, codeArray[i].samples[j].id);
         }
-        
+
         li.appendChild(newTable);
         this.codeLIs.push(li);
         ul.appendChild(li);
@@ -505,7 +505,7 @@
   InteractiveSample.prototype.linkCode = function() {
     this.getFullSrc(this.sendCodeToServer);
   };
-  
+
   InteractiveSample.prototype.saveCode = function() {
     var curFilename = this.getCurFilename();
     var sampleObj = this.sampleFileNameToObject(curFilename);
@@ -513,17 +513,28 @@
       var confirmOverwrite = confirm('Are you sure you want to overwrite this code?');
       if (confirmOverwrite) {
         // $('#boilerplateLoc').attr('value', sampleObj.boilerplateLoc);
-        $('#jscodeSaveForm').html(this.getCode());
+        $('#jscodeSaveForm').attr('value', this.getCode());
         // $('#saveSampleName').attr('value', sampleObj.sampleName);
         $('#idSaveForm').attr('value', sampleObj.id);
         // $('#tagsSaveForm').attr('value', sampleObj.tags);
         $('#saveForm').submit();
       }
     } else {
-     this.uiEffects.showSaveForm(); 
+     this.uiEffects.showSaveForm();
     }
   };
-  
+
+  InteractiveSample.prototype.confirmLogin = function(url, opt_mustLogin) {
+    var confirmLeave;
+    if (opt_mustLogin) {
+      confirmLeave = confirm('You must login to save.  Logging in will lose any edited code.');
+    } else {
+      confirmLeave = confirm('Logging in will lose any edited code.');
+    }
+
+    if (confirmLeave) window.location = url;
+  };
+
 
 
 
@@ -767,17 +778,25 @@
     });
     // $("div.ui-dialog > div.ui-resizable-handle").css('display', 'none');
   };
-  
+
   UIEffects.prototype.showSaveForm = function() {
     var curSmapleObj = this.is.sampleFileNameToObject(this.is.getCurFilename());
     var boilerplateLoc = curSmapleObj.boilerplateLoc;
     $('#boilerplateLoc').attr('value', boilerplateLoc);
-    
-    $('#jscodeSaveForm').html(this.is.getCode());
-    
+
+    $('#jscodeSaveForm').attr('value', this.is.getCode());
+
     $('#saveCodeForm').dialog('open').show();
   };
-  
+
+  UIEffects.prototype.toggleDropdown = function(el) {
+    if (el.hasClass('expanded')) {
+      el.removeClass('expanded');
+    } else {
+      el.addClass('expanded');
+    }
+  };
+
   // TODO: make sure that user input is checked so that they don't use an existing sample name!!!!
 
   function RunBox() {

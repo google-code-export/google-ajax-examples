@@ -27,7 +27,6 @@
         media="screen,projection" type="text/css">
   <link rel="stylesheet" href="codemirror/css/docs.css"
         media="screen,projection" type="text/css">
-
   <!-- JavaScript -->
   <title>AJAX APIs Interactive Sampler</title>
   <script src="codemirror/js/codemirror.js" type="text/javascript" charset="utf-8"></script>
@@ -39,7 +38,7 @@
   {% endfor %}
   <!-- <script src="js/ajax_apis_samples.js" type="text/javascript" charset="utf-8"></script> -->
 
-  <!-- 
+  <!--
     Undesirable to put inline script in between script includes
     but this is the best way to load saved examples
   -->
@@ -47,7 +46,7 @@
     <script type="text/javascript" charset="utf-8">
       var userJSON = {{ usersSamplesJSON }};
       var curAPITypes = '{{ curAPITypes }}';
-      
+
       if (typeof userJSON != 'undefined' && userJSON.length) {
         codeArray = userJSON.concat(codeArray);
       }
@@ -61,6 +60,7 @@
     function init() {
       is.init(document.getElementById('editor'));
     }
+
     google.setOnLoadCallback(init);
   </script>
 </head>
@@ -127,7 +127,7 @@
   <td id="codeContainer">
     <!-- todo check styles on here -->
     <div id="editor">
-      <div style="height:5%;">
+      <div style="height:30px;">
         <h2>
           <table style="width: 100%">
             <tbody>
@@ -135,7 +135,7 @@
                 <td>Edit</td>
                 <td align="center" id="demoTitle">&nbsp;</td>
                 <td align="right" valign="bottom" class="greyLinks">
-                  <span id="linkCode" onclick="is.linkCode();return false;">
+                  <!-- <span id="linkCode" onclick="is.linkCode();return false;">
                     export
                     <img src="images/link.gif" alt="Save Code" height="10" />
                   </span>
@@ -147,10 +147,48 @@
                   {% if loginUrl %}
                     |&nbsp;<a href="{{loginUrl}}" id="login">login</a>
                   {% endif %}
-                  {% if logoutUrl %}
+                  {% if logoutUrl %} -->
                   <!-- Save will popup a dialog box, which will be a form that hits Save on the server -->
-                    |&nbsp;<span id="login" onclick="is.saveCode()">save</span>
-                  {% endif %}
+                    <!-- |&nbsp;<span id="login" onclick="is.saveCode()">save</span>
+                  {% endif %} -->
+
+
+
+                  <span id="codeMenu" class="buttonDropdownContainer">
+                    <span onclick="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));" style="display:inline-block;">
+                      <span class="buttonText">Code Menu</span>
+                      <span class="dropdownButton"></span>
+                    </span>
+                    <span id="codeMenuDropdown" class="dropdown">
+                      <span class="first"><img src="images/link.gif" alt="Export Code" width="15" onclick="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.linkCode();return false;" />&nbsp;Export</span>
+                      <span><img src="images/export.gif" alt="Show Source" width="15" onclick="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.outputSource();return false;" />&nbsp;View Full Source</span>
+
+                      {% if loginUrl %}
+                      <span onclick="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.confirmLogin('{{ loginUrl }}', true);return false;">
+                        <img src="images/save.png" alt="Save" width="15" />&nbsp;Save
+                      </span>
+                      <span onclick="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.confirmLogin('{{ loginUrl }}');return false;">
+                        Login
+                      </span>
+                      {% endif %}
+                      {% if logoutUrl %}
+                      <span onclick="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.saveCode();return false;">
+                        <img src="images/save.png" alt="Save" width="15"/>&nbsp;Save
+                      </span>
+                      <span onclick="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));location.href='{{ logoutUrl }}';">
+                        Logout
+                      </span>
+                      {% endif %}
+
+                    </span>
+                  </span>
+
+                  <!-- <span style="color:#0033CC;cursor:pointer;display:inline-block;text-decoration:none;margin-top: -5px;">
+                    <span class="buttonText">aa</span>
+                    <span class="dropdownButton"></span>
+                  </span> -->
+
+
                 </td>
               </tr>
             </tbody>
@@ -236,7 +274,7 @@ iFrame fixes it.
 <div id="saveCodeForm">
 <form action="/save" method="post" accept-charset="utf-8" id="saveForm">
   <input type="hidden" name="boilerplateLoc" value="" id="boilerplateLoc">
-  <textarea name="jscode" id="jscodeSaveForm" style="display: none;"></textarea>
+  <input name="jscode" id="jscodeSaveForm" style="display: none;" />
   <input type="hidden" name="id" value="" id="idSaveForm">
   <input type="hidden" name="type" value="{{curAPITypes}}">
   <table>
@@ -250,8 +288,8 @@ iFrame fixes it.
           </div>
         </div>
       </td>
-    </tr>    
-    
+    </tr>
+
     <tr>
       <td style="vertical-align: top;" class="formLabel">Tags:</td>
       <td>

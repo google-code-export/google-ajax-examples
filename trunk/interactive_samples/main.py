@@ -130,9 +130,9 @@ class Main(webapp.RequestHandler):
         self.template_values['usersSamplesJSON'] = simplejson.dumps(savedCodeObj);
         
     apiTypes = self.request.get('type')
+    sample_srcs = self.getAPISampleSourceIncludes(apiTypes)
+    self.template_values['sample_srcs'] = sample_srcs
     if apiTypes:
-      sample_srcs = self.getAPISampleSourceIncludes(apiTypes)
-      self.template_values['sample_srcs'] = sample_srcs
       self.template_values['curAPITypes'] = apiTypes
 
     path = os.path.join(os.path.dirname(__file__), 'index.html')
@@ -152,6 +152,7 @@ class Delete(webapp.RequestHandler):
       db.delete(entry)
     
     apiTypes = self.request.get('type')
+    cgiArgs = ''
     if apiTypes:
       cgiArgs = '?type=' + apiTypes
     self.redirect('/' + cgiArgs)
@@ -204,6 +205,7 @@ class Save(webapp.RequestHandler):
       self.response.out.write('Not logged in')
       
     apiTypes = self.request.get('type')
+    cgiArgs = ''
     if apiTypes:
       cgiArgs = '?type=' + apiTypes
     self.redirect('/' + cgiArgs + hashLink)
