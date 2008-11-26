@@ -44,18 +44,18 @@ class SavedCode(db.Model):
   tags = db.StringProperty()
   date = db.DateTimeProperty(auto_now_add=True)
   # {'samplename': 'blah', 'tags': 'all my tags', 'boilerplateLoc': 'path/to/boiler', 'files': ['path/to/?id=id']}
-  
-def getTemplateValues(self):
+
+def getTemplateValues(self, cgiArgs):
   user = users.get_current_user()
   greeting = ''
   logoutUrl = ''
   loginUrl = ''
   if user:
     greeting = '%s' % (user.nickname())
-    logoutUrl = users.create_logout_url('/')
+    logoutUrl = users.create_logout_url('/' + cgiArgs)
   else:
-    loginUrl = users.create_login_url('/')
-  
+    loginUrl = users.create_login_url('/' + cgiArgs)
+
   template_values = {
     'loginUrl': loginUrl,
     'greeting': greeting,
@@ -72,11 +72,11 @@ def grabSavedCode(self):
     return codeEntries
   else:
     return None
-  
+
 def formatSavedCodeToJSONArr(self, savedCodeArr):
   # format the array into an array of JSON entries that conforms to the
   # ajax_apis_samples.js format
-  
+
   return simplejson.dumps(savedCodeArr)
 
 def retrieveCodeFromID(self, id):
@@ -100,12 +100,20 @@ class Main(webapp.RequestHandler):
     else:
       for i in apis:
         apiSampleSources.append(apis[i])
-    
+
     return apiSampleSources
-        
-  
+
+
   def get(self):
-    self.template_values = getTemplateValues(self);
+    apiTypes = self.request.get('type')
+    self.template_values = {}
+    if apiTypes:
+      self.template_values = getTemplateValues(self, '?type=' + apiTypes);
+      self.template_values['curAPITypes'] = apiTypes
+    else:
+      self.template_values = getTemplateValues(self, '');      
+    sample_srcs = self.getAPISampleSourceIncludes(apiTypes)
+    self.template_values['sample_srcs'] = sample_srcs
     # self.response.out.write(simplejson.dumps(a))
     if users.get_current_user():
       # savedCode is an array of code entries..
@@ -120,7 +128,7 @@ class Main(webapp.RequestHandler):
             'tags': i.tags,
             'id': str(i.key())
             })
-      
+
         savedCodeObj = [
           {
             'category': 'Saved Code',
@@ -128,12 +136,7 @@ class Main(webapp.RequestHandler):
           }
         ]
         self.template_values['usersSamplesJSON'] = simplejson.dumps(savedCodeObj);
-        
-    apiTypes = self.request.get('type')
-    sample_srcs = self.getAPISampleSourceIncludes(apiTypes)
-    self.template_values['sample_srcs'] = sample_srcs
-    if apiTypes:
-      self.template_values['curAPITypes'] = apiTypes
+
 
     path = os.path.join(os.path.dirname(__file__), 'index.html')
     self.response.out.write(template.render(path, self.template_values))
@@ -141,22 +144,20 @@ class Main(webapp.RequestHandler):
 
 class Delete(webapp.RequestHandler):
   def get(self):
-    self.template_values = getTemplateValues(self)
-    
+
     id = self.request.get('id')
     entry = db.get(db.Key(str(id)))
     user = users.get_current_user()
     if entry.user == user:
       # we can delete it then..
-      self.template_values['deleted'] = entry.sampleName
       db.delete(entry)
-    
+
     apiTypes = self.request.get('type')
     cgiArgs = ''
     if apiTypes:
       cgiArgs = '?type=' + apiTypes
     self.redirect('/' + cgiArgs)
-        # 
+        #
         # path = os.path.join(os.path.dirname(__file__), 'index.html')
         # self.response.out.write(template.render(path, self.template_values))
 
@@ -171,7 +172,7 @@ class Save(webapp.RequestHandler):
     key = saved_code.put()
     hashLink = '#' + sampleName.lower().replace(' ', '_')
     return hashLink
-    
+
   def updateCode(self, id, jscode):
     entry = db.get(db.Key(str(id)))
     user = users.get_current_user()
@@ -180,11 +181,10 @@ class Save(webapp.RequestHandler):
       entry.put()
       hashLink = '#' + entry.sampleName.lower().replace(' ', '_')
       return hashLink
-  
+
   def post(self):
     user = users.get_current_user()
     hashLink = ''
-    self.template_values = getTemplateValues(self)
     if user:
       id = self.request.get('id')
       jscode = self.request.get('jscode')
@@ -195,15 +195,15 @@ class Save(webapp.RequestHandler):
         hashLink = self.updateCode(id, jscode)
       elif jscode and sampleName and boilerplateLoc:
         hashLink = self.saveCode(user, jscode, sampleName, tags, boilerplateLoc)
-        
+
         # path = os.path.join(os.path.dirname(__file__), 'index.html')
         # self.response.out.write(template.render(path, self.template_values))
       else:
         self.response.out.write('Error.')
-      
+
     else:
       self.response.out.write('Not logged in')
-      
+
     apiTypes = self.request.get('type')
     cgiArgs = ''
     if apiTypes:
