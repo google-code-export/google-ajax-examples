@@ -62,12 +62,12 @@ div {
 }
 
 #editor {
-  height: 500px;
+  height: 505px;
   border: 1px solid #999;
 }
 
 #edit {
-  height: 95%;
+  height: 475px
 }
 
 #selectCode {
@@ -138,7 +138,7 @@ h2 {
   margin: 0;
   padding-left: 15px;
   font-family:Arial,Helvetica,sans-serif;
-  height: 20px;
+  height: 25px;
 }
 
 .bluediv {
@@ -463,6 +463,69 @@ li.ui-autocomplete-odd > a > strong, li.ui-autocomplete-even > a > strong {
   margin-bottom: 3px;
   font-size: 80%;
   font-family: Arial, sans-serif;
+}
+
+/* ------ Dropdown Menu------- */
+.buttonText {
+  background:transparent url(images/mm_buttons.gif) no-repeat scroll 0 -90px;
+  color:#003399;
+  display:block;
+  float:left;
+  font-size:13px;
+  font-weight:bold;
+  height:20px;
+  padding:5px 4px 0 7px;
+}
+.dropdownButton {
+  background:transparent url(images/mmimgs.gif) no-repeat scroll 0 -45px;
+  display:block;
+  float:left;
+  height:25px;
+  vertical-align:bottom;
+  width:26px;
+}
+.dropdown.expanded {
+  display: block;
+}
+
+.dropdown {
+  border:1px solid #ABB1BD;
+  display: none;
+  text-decoration: none;
+  background-color:#E5ECF9;
+  padding: 0;
+  margin-top: -2px;
+  position: absolute;
+  color:#0033CC;
+  border:1px solid #ABB1BD;
+  text-align: left;
+  cursor: pointer;
+}
+.dropdown span {
+  width: 150px;
+  display: block;
+  border-top:1px solid #ABB1BD;
+  color: #0033CC;
+  padding:2px 4px;
+  cursor: pointer;
+  font-family:Arial,sans-serif;
+  font-size:12px;
+}
+
+.dropdown span.first {
+  border-top: 0px none;
+}
+
+.dropdown span:hover {
+  background-color: white;
+}
+
+.buttonDropdownContainer {
+  color:#0033CC;
+  cursor:pointer;
+  display:inline-block;
+  text-decoration:none;
+  margin-top: -5px;
 }
 
 /* ------ Drop Shadows ------- */
