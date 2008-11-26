@@ -1,0 +1,27 @@
+application: interactiveajaxapis
+version: 1
+runtime: python
+api_version: 1
+
+handlers:
+- url: /js
+  static_dir: js
+- url: /popout.html
+  static_files: popout.html
+  upload: popout.html
+- url: /favicon.ico
+  static_files: favicon.ico
+  upload: favicon.ico
+- url: /images
+  static_dir: images
+- url: /css
+  static_dir: css
+- url: /codemirror
+  static_dir: codemirror
+- url: /(.*\.(gif|png|jpg))
+  static_files: static/\1
+  upload: static/(.*\.(gif|png|jpg))
+- url: /samples
+  static_dir: samples
+- url: .*
+  script: main.py
