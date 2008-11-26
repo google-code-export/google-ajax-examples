@@ -58,8 +58,34 @@
     this.uiEffects.init(this);
   };
 
+  InteractiveSample.prototype.deleteCustomExample = function(id) {
+    return function() {
+      var confirmDelete = confirm('Are you sure you want to delete this example?');
+      if (confirmDelete) {
+        var redirect = '/delete?id=' + id;
+        redirect += ((curAPITypes) ? '&type=' + curAPITypes : '');
+        window.location = redirect;
+        
+      }
+    }
+  };
+
+  InteractiveSample.prototype.addDeleteIcon = function(tr, id) {
+    var imgTD = _cel('td');
+    var deleteCodeImg = _cel('img');
+    deleteCodeImg.src = 'images/trash.gif';
+    imgTD.align = 'right';
+    imgTD.style.paddingRight = '10px';
+    deleteCodeImg.style.cursor = 'pointer';
+    imgTD.appendChild(deleteCodeImg);
+    
+    $(deleteCodeImg).bind('click', this.deleteCustomExample(id));
+    
+    tr.appendChild(imgTD);
+  };
+  
   InteractiveSample.prototype.createCategories = function() {
-    // codeArray is from interactive_samples.js
+    // codeArray is from ajax_apis_samples.js
     this.selectCode = $('#selectCode').get(0);
     for (var i=0; i < codeArray.length; i++) {
       var category = codeArray[i].category;
@@ -127,13 +153,16 @@
       for (var j=0; j < codeArray[i].samples.length; j++) {
         var item = codeArray[i].samples[j];
         var li = _cel('li');
-
-        li.innerHTML = item.sampleName;
+        var newTable = _cel('table');
+        var newTR = _cel('tr');
+        var textTD = _cel('td');
+        newTable.width = '100%';
+        textTD.innerHTML = item.sampleName;
         var tags = (item.tags) ? ' <sup>(' + item.tags + ')</sup>': '';
         this.autoCompleteData.push(item.sampleName + tags);
         codeArray[i].samples[j]['li'] = li;
         var files = codeArray[i].samples[j].files;
-        $(li).bind('click', this.showSample(this, item.sampleName));
+        $(textTD).bind('click', this.showSample(this, item.sampleName));
 
         if (i == 0 && j == 0) {
           this.showSample(this, item.sampleName, true)();
@@ -147,8 +176,15 @@
             this.hideAllCategoriesExcept(categoryDiv);
           }
         }
-
-
+        
+        newTable.appendChild(newTR);
+        newTR.appendChild(textTD);
+        
+        if (category == 'Saved Code') {
+          this.addDeleteIcon(newTR, codeArray[i].samples[j].id);
+        }
+        
+        li.appendChild(newTable);
         this.codeLIs.push(li);
         ul.appendChild(li);
       }
@@ -318,7 +354,7 @@
 
     // For linking purposes
       if (!def) {
-        window.location.hash = is_instance.nameToHashName(thisLI.innerHTML);
+        window.location.hash = is_instance.nameToHashName(sampleName);
       }
 
     // Make code selected designate this as selected
@@ -463,12 +499,31 @@
 
   InteractiveSample.prototype.sendCodeToServer = function(code) {
     $('#codeHolder').get(0).innerHTML = code;
-    $('#saveCodeForm').get(0).submit();
+    $('#linkCodeForm').get(0).submit();
   };
 
-  InteractiveSample.prototype.saveCode = function() {
+  InteractiveSample.prototype.linkCode = function() {
     this.getFullSrc(this.sendCodeToServer);
   };
+  
+  InteractiveSample.prototype.saveCode = function() {
+    var curFilename = this.getCurFilename();
+    var sampleObj = this.sampleFileNameToObject(curFilename);
+    if (sampleObj.category == 'Saved Code') {
+      var confirmOverwrite = confirm('Are you sure you want to overwrite this code?');
+      if (confirmOverwrite) {
+        // $('#boilerplateLoc').attr('value', sampleObj.boilerplateLoc);
+        $('#jscodeSaveForm').html(this.getCode());
+        // $('#saveSampleName').attr('value', sampleObj.sampleName);
+        $('#idSaveForm').attr('value', sampleObj.id);
+        // $('#tagsSaveForm').attr('value', sampleObj.tags);
+        $('#saveForm').submit();
+      }
+    } else {
+     this.uiEffects.showSaveForm(); 
+    }
+  };
+  
 
 
 
@@ -508,6 +563,7 @@
     // TODO: Fix autocomplete for IE (HARD BUG)
     if (!$.browser.msie) this.initAutoComplete();
     this.initShowSourceDiv();
+    this.initSaveCodeDiv();
   };
 
   UIEffects.prototype.setDivShadow = function(divName, shadowDivName) {
@@ -612,20 +668,20 @@
   };
 
   UIEffects.prototype.initShowSourceDiv = function() {
-    $("#codeOutput").dialog(
-    {
+    $("#codeOutput").dialog({
       modal: true,
       overlay: {
         opacity: 0.5,
         background: "black"
       },
+      title: 'Source Code',
       height: 600,
       width: 800,
       resizable: false,
       autoOpen: false,
       draggable: false
     });
-    $("div.ui-dialog > div.ui-resizable-handle").css('display', 'none');
+    // $("div.ui-dialog > div.ui-resizable-handle").css('display', 'none');
   };
 
   UIEffects.prototype.showSource = function(code) {
@@ -695,7 +751,34 @@
     this.createAutoCompleteDropShadow();
   };
 
-
+  UIEffects.prototype.initSaveCodeDiv = function(first_argument) {
+    $("#saveCodeForm").dialog({
+      modal: true,
+      overlay: {
+        opacity: 0.5,
+        background: "black"
+      },
+      title: 'Save Code',
+      height: 300,
+      width: 400,
+      resizable: false,
+      autoOpen: false,
+      draggable: false
+    });
+    // $("div.ui-dialog > div.ui-resizable-handle").css('display', 'none');
+  };
+  
+  UIEffects.prototype.showSaveForm = function() {
+    var curSmapleObj = this.is.sampleFileNameToObject(this.is.getCurFilename());
+    var boilerplateLoc = curSmapleObj.boilerplateLoc;
+    $('#boilerplateLoc').attr('value', boilerplateLoc);
+    
+    $('#jscodeSaveForm').html(this.is.getCode());
+    
+    $('#saveCodeForm').dialog('open').show();
+  };
+  
+  // TODO: make sure that user input is checked so that they don't use an existing sample name!!!!
 
   function RunBox() {
     this.outputContainer;

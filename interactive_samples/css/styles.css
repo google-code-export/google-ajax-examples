@@ -95,6 +95,7 @@ div {
   font-size: 80%;
   font-family: Arial, sans-serif;
   padding-left: 0;
+  line-height: 0.8em;
 }
 
 iframe {
@@ -358,7 +359,7 @@ span.categoryClosed div, span.categoryClosed ul {
   text-decoration: none;
 }
 
-#codeOutput {
+#codeOutput, #saveCodeForm {
   background-color: white;
   width: 800px;
   height: 600px;
@@ -386,13 +387,18 @@ span.categoryClosed div, span.categoryClosed ul {
   margin:0;
   outline-style:none;
   outline-width:0;
-  padding:0.5em 1.5em 1em 1em;
+  padding: 3px;
   position:relative;
   text-decoration:none;
 }
 
-.ui-dialog-title {
-  display:none;
+.explain {
+  color:#676767;
+  font-size: 80%;
+}
+
+.formLabel {
+  font-size: 90%;
 }
 
 .ui-dialog-titlebar-close {

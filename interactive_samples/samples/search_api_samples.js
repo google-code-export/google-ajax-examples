@@ -1,7 +1,5 @@
 // TODO: add in alt property so the hover on the links can describe them
-// TODO: add in ability to specify the html boilerplate
-// TODO: add in ability to specify whether you want to be able to click on the HTML tabs or not
-var codeArray = [
+var tempJSON = [
   {
     "category":"Search API-General Search",
     "samples":[
@@ -68,44 +66,13 @@ var codeArray = [
       {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/search/patentsearch/type_restrict.js"], "sampleName":"Type Restriction", "tags": "Search, Patents, Issued Patents"}
     ],
     "docsUrl": "http://code.google.com/apis/ajaxsearch/documentation/reference.html#_class_GpatentSearch"
-  },
-  {
-    "category":"Feeds API",
-    "samples":[
-      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/feeds/load_feed.js"], "sampleName":"Load Feed", "tags": "Feeds"},
-      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/feeds/historical_entries.js"], "sampleName":"Historical Entries", "tags": "Feeds, Set Number of Results"},
-      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/feeds/results_in_xml.js"], "sampleName":"Results in XML", "tags": "Feeds, XML"},
-      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/feeds/feed_control.js"], "sampleName":"Feed Control", "tags": "Feeds"},
-      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/feeds/lookup_feed.js"], "sampleName":"Lookup Feed", "tags": "Feeds, Lookup Website Associated Feed"},
-      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/feeds/find_feed.js"], "sampleName":"Find Feed", "tags": "Feeds, Query for Feeds"}
-    ],
-    "docsUrl": "http://code.google.com/apis/ajaxfeeds/documentation/reference.html"
-  },
-  {
-    "category":"Language API-Translation",
-    "samples":[
-      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/language/translation/translate.js"], "sampleName":"Translate", "tags": "Language, Translation, Basic Translate"},
-      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/language/translation/batch_translate.js"], "sampleName":"Batch Translate", "tags": "Language, Translation, JSONP, Translate to All Languages"},
-      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/language/translation/detect_language.js"], "sampleName":"Language Detect", "tags": "Language, Translation, Detect, Languages Enum"}
-    ],
-    "docsUrl": "http://code.google.com/apis/ajaxlanguage/documentation/reference.html"
-  },
-  {
-    "category":"Language API-Transliteration",
-    "samples":[
-      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/language/transliteration/transliterate.js"], "sampleName":"Transliterate", "tags": "Language, Transliteration, Textarea, Hindi"}
-    ],
-    "docsUrl": "http://code.google.com/apis/ajaxlanguage/documentation/referenceTransliteration.html"
-  },
-  {
-    "category":"Libraries API",
-    "samples":[
-      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/libraries/jquery.js"], "sampleName":"jQuery", "tags": "Libraries, jQuery JSONP, Search With JSONP"},
-      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/libraries/jqueryui.js"], "sampleName":"jQueryUI", "tags": "Libraries, Drag"},
-      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/libraries/mootools.js"], "sampleName":"MooTools", "tags": "Libraries, Tween"},
-      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/libraries/dojo.js"], "sampleName":"Dojo", "tags": "Libraries, Fade In, Fade Out"},
-      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/libraries/prototype_scriptaculous.js"], "sampleName":"Prototype Scriptaculous", "tags": "Libraries, Slide Up, Slide Down"}
-    ],
-    "docsUrl": "http://code.google.com/apis/ajaxlibs/documentation/"
   }
 ];
+
+if (typeof codeArray != 'undefined' && codeArray.length) {
+  codeArray = codeArray.concat(tempJSON);
+  delete tempJSON
+} else {
+  window.codeArray = tempJSON;
+  delete tempJSON;
+}
