@@ -352,7 +352,7 @@ span.categoryClosed div, span.categoryClosed ul {
   text-decoration: none;
 }
 
-#codeOutput, #saveCodeForm {
+.codeOutput, #saveCodeForm {
   background-color: white;
   width: 800px;
   height: 600px;

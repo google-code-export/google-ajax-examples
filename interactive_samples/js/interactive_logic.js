@@ -35,9 +35,10 @@
     this.codeLIs = [];
     this.currentCode = new Object();
     this.curI = '';
+    this.htmlEditor;
 
-    this.uiEffects;
-    this.runBox;
+    this.uiEffects = new Object();
+    this.runBox = new Object();
     this.autoCompleteData = [];
   };
 
@@ -67,7 +68,7 @@
         window.location = redirect;
 
       }
-    }
+    };
   };
 
   InteractiveSample.prototype.addDeleteIcon = function(tr, id) {
@@ -89,15 +90,17 @@
     this.selectCode = $('#selectCode').get(0);
     for (var i=0; i < codeArray.length; i++) {
       var category = codeArray[i].category;
-      var container = subCategory = categoryDiv = subCategoryDiv = null;
-
+      var container = null;
+      var subCategory = null;
+      var categoryDiv = null;
+      var subCategoryDiv = null;
+      var img, link;
       if (category.indexOf('-') != -1) {
         // that means that this category is a subcategory
         var categorySplit = category.split('-');
         category = categorySplit[0];
         subCategory = categorySplit[1];
       }
-
       categoryDiv = document.getElementById(category);
       if (categoryDiv == null) {
         categoryDiv = _cel('span');
@@ -105,14 +108,14 @@
         categoryDiv.id = category;
         var catName = _cel('span');
         catName.className = 'categoryTitle';
-        var img = _cel('img');
+        img = _cel('img');
         img.className = 'expand';
         img.src = 'images/cleardot.gif';
 
         catName.appendChild(img);
         catName.innerHTML += category;
         if (codeArray[i].docsUrl) {
-          var link = this.createDocsLink(codeArray[i].docsUrl);
+          link = this.createDocsLink(codeArray[i].docsUrl);
           catName.appendChild(link);
         }
         categoryDiv.appendChild(catName);
@@ -126,7 +129,7 @@
         var subCatName = _cel('span');
         subCatName.className = 'subCategoryTitle';
 
-        var img = _cel('img');
+        img = _cel('img');
         img.className = 'collapse';
         img.src = 'images/cleardot.gif';
 
@@ -136,7 +139,7 @@
         subCategoryDiv.appendChild(subCatName);
 
         if (codeArray[i].docsUrl) {
-          var link = this.createDocsLink(codeArray[i].docsUrl);
+          link = this.createDocsLink(codeArray[i].docsUrl);
           subCategoryDiv.appendChild(link);
         }
 
@@ -158,10 +161,10 @@
         var textTD = _cel('td');
         newTable.width = '100%';
         textTD.innerHTML = item.sampleName;
-        var tags = (item.tags) ? ' <sup>(' + item.tags + ')</sup>': '';
+        var tags = (item.tags) ? ' <sup>(' + item.tags + ')<\/sup>': '';
         this.autoCompleteData.push(item.sampleName + tags);
         codeArray[i].samples[j]['li'] = li;
-        var files = codeArray[i].samples[j].files;
+
         $(textTD).bind('click', this.showSample(this, item.sampleName));
 
         if (i == 0 && j == 0) {
@@ -261,21 +264,22 @@
   };
 
   InteractiveSample.prototype.addShowHideClicks = function() {
-    for (var i=0; i < this.categories.length; i++) {
+    var i;
+    for (i = 0; i < this.categories.length; i++) {
       var cat = this.categories[i];
       var catTitle = cat.childNodes[0];
       $(catTitle).bind('click', this.toggleShowHideSubCategories(cat));
     }
 
-    for (var i=0; i < this.subCategories.length; i++) {
+    for (i = 0; i < this.subCategories.length; i++) {
       var subCatTitle = this.subCategories[i].childNodes[0];
       $(subCatTitle).bind('click', this.toggleShowHideLIs(subCatTitle));
     };
   };
 
-  InteractiveSample.prototype.loadRemotely = function(relativeUrl, filename, fileType, opt_changeCodeMirror) {
-    is_instance = this;
-    $.get(relativeUrl, function(data, status) {
+  InteractiveSample.prototype.loadRemotely = function(filename, fileType, opt_changeCodeMirror) {
+    var is_instance = this;
+    $.get(filename, function(data) {
       if (opt_changeCodeMirror) {
         is_instance.changeCodeMirror(data, fileType);
       }
@@ -295,16 +299,11 @@
     var filenameSplit = filename.split('.');
     var extension = filenameSplit[filenameSplit.length - 1];
     var fileType = fileTypes[extension.toLowerCase()];
-    var inBuffer = (this.currentCode[filename] && this.currentCode[filename].code) ? true : false;
-    if (inBuffer && opt_changeCodeMirror == true) {
+    var inBuffer = (this.currentCode[filename] && this.currentCode[filename].code);
+    if (inBuffer && opt_changeCodeMirror) {
       this.changeCodeMirror(this.currentCode[filename].code);
     } else {
-      var relativeUrl = filename;
-
-      is_instance = this;
-
-
-      this.loadRemotely(relativeUrl, filename, fileType, opt_changeCodeMirror);
+      this.loadRemotely(filename, fileType, opt_changeCodeMirror);
     }
   };
 
@@ -344,35 +343,34 @@
       var catSplit = sampleObj.category.split('-');
       var categoryName = catSplit[0];
 
-      var codeDiv = is_instance.codeDiv;
       var codeLIs = is_instance.codeLIs;
 
       is_instance.setDemoTitle((catSplit[1] ? catSplit[1] : catSplit[0]) + ' > ' + sampleName);
-      for (var i=0; i < codeLIs.length; i++) {
+      var i;
+      for (i = 0; i < codeLIs.length; i++) {
         codeLIs[i].className = '';
       }
 
-    // For linking purposes
+      // For linking purposes
       if (!def) {
         window.location.hash = is_instance.nameToHashName(sampleName);
       }
 
-    // Make code selected designate this as selected
+      // Make code selected designate this as selected
       thisLI.className = 'selected';
 
       is_instance.currentCode = new Object();
 
 
-    // add file names at top
+      // add file names at top
       // var tab_bar = $('#tab_bar');
       // tab_bar.innerHTML = '';
 
-      for (var i=0; i < files.length; i++) {
+      for (i = 0; i < files.length; i++) {
         var file = files[i];
-        var index = i;
 
         var tabClass = 'lb';
-        if (index == 0) {
+        if (i == 0) {
           tabClass = 'db';
           is_instance.loadCode(file, true);
         } else {
@@ -419,14 +417,6 @@
       is_instance.loadCode(i, true);
       is_instance.curI = i;
     };
-  };
-
-  InteractiveSample.prototype.decreaseCodeBoxHeight = function() {
-    var curHeight = this.textArea.style.height;
-    curHeight = curHeight.substr(0, curHeight.indexOf('px'));
-    var newHeight = parseInt(curHeight) - this.adjustCodeBoxAmount;
-    newHeight += 'px';
-    this.textArea.style.height = newHeight;
   };
 
   InteractiveSample.prototype.runCode = function() {
@@ -478,7 +468,7 @@
         }
         /* TODO: fix this hack.  there's gotta be a better way than
          doing a find for the place where the code goes and replacing it */
-        var data = data.replace(
+        data = data.replace(
                 '    try {\n' +
                 '      window.eval(window.parent.is.codeToRun);\n' +
                 '    } catch (e) {\n' +
@@ -542,12 +532,14 @@
    * UIEffects sets up all of the jQuery UI stuff for draggable etc.
   */
   function UIEffects() {
-    this.is;
-    this.mousePos;
+    this.is = new Object();
+    this.mousePos = new Object();
+    this.numHTMLEditors;
   }
 
   UIEffects.prototype.init = function(is) {
     this.is = is;
+    this.numHTMLEditors = 0;
 
     this.mousePos = {
       'x': 0,
@@ -616,7 +608,7 @@
     });
   };
 
-  UIEffects.prototype.setOutputDivDraggable = function(first_argument) {
+  UIEffects.prototype.setOutputDivDraggable = function() {
     var me = this;
     $("#outputDiv").draggable({
       handle: "outputDrag",
@@ -679,7 +671,7 @@
   };
 
   UIEffects.prototype.initShowSourceDiv = function() {
-    $("#codeOutput").dialog({
+    $("#codeOutput0").dialog({
       modal: true,
       overlay: {
         opacity: 0.5,
@@ -692,26 +684,54 @@
       autoOpen: false,
       draggable: false
     });
-    // $("div.ui-dialog > div.ui-resizable-handle").css('display', 'none');
   };
 
   UIEffects.prototype.showSource = function(code) {
-//    if (!this.htmlEditor) {
-//      this.htmlEditor = new CodeMirror(document.getElementById('edit'), {
-//        parserfile: "parsexml.js",
-//        stylesheet: "../codemirror/css/xmlcolors.css",
-//        autoMatchParens : true,
-//        path : '../codemirror/js/',
-//        height : '100%',
-//        width: '100%',
-//        content: code
-//      });
-//    } else {
+    // TODO: Be on the lookout for another fix for this bug:
+    // .dialog('open') in jQuery clones whatever's in the div, erases it, then
+    // remakes the div and inserts it.  Problem is, cloning the HTMLEditor iFrame
+    // from CodeMirror doesn't work, because you can't clone an iFrame completely
+    // Thus, what I do, is create a new CodeMirror everytime...  but CodeMirror
+    // keeps track of all of the divs it has editors in by ID, so I have to
+    // make it think it's inserting in a new Div.  Whew, this sucks.
+    if (typeof this.htmlEditor == 'undefined') {
+      $('#codeOutput0').dialog('open').show();
+      this.htmlEditor = new CodeMirror(document.getElementById('codeOutput0'), {
+        parserfile: ["parsexml.js", "parsecss.js", "tokenizejavascript.js", "parsejavascript.js", "parsehtmlmixed.js"],
+        stylesheet: ["../codemirror/css/jscolors.css", "../codemirror/css/csscolors.css", "../codemirror/css/xmlcolors.css"],
+        autoMatchParens : true,
+        path : '../codemirror/js/',
+        height : '100%',
+        width: '100%',
+        content: code,
+        onLoad: function() {}
+      });
+      this.numHTMLEditors = 0;
+    } else {
+      delete this.htmlEditor;
+      // please god don't let anyone read this code..
+      $('#codeOutput' + this.numHTMLEditors).empty();
+      var newId = 'codeOutput' + (parseFloat(this.numHTMLEditors)+1);
+      $('#codeOutput' + this.numHTMLEditors).attr('id', newId);
+      this.numHTMLEditors++;
+
+      $('#codeOutput' + this.numHTMLEditors).dialog('open').show();
+      this.htmlEditor = new CodeMirror(document.getElementById('codeOutput' + this.numHTMLEditors), {
+        parserfile: ["parsexml.js", "parsecss.js", "tokenizejavascript.js", "parsejavascript.js", "parsehtmlmixed.js"],
+        stylesheet: ["../codemirror/css/jscolors.css", "../codemirror/css/csscolors.css", "../codemirror/css/xmlcolors.css"],
+        autoMatchParens : true,
+        path : '../codemirror/js/',
+        height : '100%',
+        width: '100%',
+        content: code,
+        onLoad: function() {}
+      });
 //      this.htmlEditor.setCode(code);
-//    }
+    }
 
 
-    $('#codeOutput').html('<textarea style="width: 100%;height: 100%;">' + code + '<\/textarea>').dialog('open').show();
+
+//    $('#codeOutput').html('<textarea style="width: 100%;height: 100%;">' + code + '<\/textarea>').dialog('open').show();
   };
 
   UIEffects.prototype.createAutoComplete = function() {
@@ -762,7 +782,7 @@
     this.createAutoCompleteDropShadow();
   };
 
-  UIEffects.prototype.initSaveCodeDiv = function(first_argument) {
+  UIEffects.prototype.initSaveCodeDiv = function() {
     $("#saveCodeForm").dialog({
       modal: true,
       overlay: {
