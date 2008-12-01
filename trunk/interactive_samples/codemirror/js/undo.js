@@ -31,7 +31,7 @@ function History(container, maxDepth, commitDelay, editor, onChange, onLoad) {
   this.maxDepth = maxDepth; this.commitDelay = commitDelay;
   this.editor = editor; this.parent = editor.parent;
   this.onChange = onChange;
-  this.onLoad = onLoad;
+  this.onLoad = onLoad || null;
   // This line object represents the initial, empty editor.
   var initial = {text: "", from: null, to: null};
   // As the borders between lines are represented by BR elements, the
@@ -94,14 +94,19 @@ History.prototype = {
       chain.push({from: from, to: end, text: lines[i]});
       from = end;
     }
-    this.pushChains([chain], from == null && to == null, newDoc);
+    if (newDoc) {
+      this.pushChains([chain], from == null && to == null, newDoc);
+    } else {
+      this.pushChains([chain], from == null && to == null);
+    }
+
   },
 
   pushChains: function(chains, doNotHighlight, newDoc) {
     this.commit(doNotHighlight);
     this.addUndoLevel(this.updateTo(chains, "applyChain"));
     this.redoHistory = [];
-    if (newDoc) this.onLoad();
+    if (newDoc && this.onLoad) this.onLoad();
   },
 
   // Clear the undo history, make the current document the start

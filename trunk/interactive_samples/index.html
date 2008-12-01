@@ -142,8 +142,8 @@
                       <span class="dropdownButton"></span>
                     </span>
                     <span id="codeMenuDropdown" class="dropdown">
-                      <span class="first"><img src="images/link.gif" alt="Export Code" width="15" onclick="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.linkCode();return false;" />&nbsp;Export</span>
-                      <span><img src="images/export.gif" alt="Show Source" width="15" onclick="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.outputSource();return false;" />&nbsp;View Full Source</span>
+                      <span class="first" onclick="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.linkCode();return false;"><img src="images/link.gif" alt="Export Code" width="15" />&nbsp;Export</span>
+                      <span onclick="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.outputSource();return false;"><img src="images/export.gif" alt="Show Source" width="15" />&nbsp;View Full Source</span>
 
                       {% if loginUrl %}
                       <span onclick="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.confirmLogin('{{ loginUrl }}', true);return false;">
@@ -242,7 +242,7 @@ iFrame fixes it.
 -->
 <div id="dragsafe">&nbsp;</div>
 
-<div id="codeOutput">&nbsp;</div>
+<div id="codeOutput0" class="codeOutput"></div>
 <form action="http://savedbythegoog.appspot.com/add" id="linkCodeForm" method="post" target="_blank">
   <textarea rows="10" cols="10" name="code" style="display:none" id="codeHolder"></textarea>
 </form>

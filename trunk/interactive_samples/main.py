@@ -33,7 +33,8 @@ apis = {
   'search': 'samples/search_api_samples.js',
   'lang': 'samples/lang_api_samples.js',
   'feeds': 'samples/feeds_api_samples.js',
-  'libs': 'samples/libs_api_samples.js'
+  'libs': 'samples/libs_api_samples.js',
+  'earth': 'samples/earth_api_samples.js'
 }
 
 class SavedCode(db.Model):
@@ -111,7 +112,7 @@ class Main(webapp.RequestHandler):
       self.template_values = getTemplateValues(self, '?type=' + apiTypes);
       self.template_values['curAPITypes'] = apiTypes
     else:
-      self.template_values = getTemplateValues(self, '');      
+      self.template_values = getTemplateValues(self, '');
     sample_srcs = self.getAPISampleSourceIncludes(apiTypes)
     self.template_values['sample_srcs'] = sample_srcs
     # self.response.out.write(simplejson.dumps(a))
