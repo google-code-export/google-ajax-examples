@@ -153,17 +153,22 @@
       for (var j=0; j < codeArray[i].samples.length; j++) {
         var item = codeArray[i].samples[j];
         var li = _cel('li');
-
-        li.appendChild(document.createTextNode(item.sampleName));
+        var textNode = document.createElement('span');
+        textNode.innerHTML = item.sampleName;
+        textNode.style.cursor = 'pointer';
+        $(textNode).bind('click', this.showSample(this, item.sampleName));
+        li.appendChild(textNode);
+        if (item.docsUrl) {
+          li.appendChild(this.createDocsLink(item.docsUrl));
+        }
         if (category == 'Saved Code') {
           this.addDeleteIcon(li, codeArray[i].samples[j].id);
         }
         var tags = ' <sup>(' + ((category) || '') + ((subCategory) ? ', ' + subCategory : '');
         tags += (item.tags) ? ', ' + item.tags : '';
-        tags += ')\/sup>';
+        tags += ')<\/sup>';
         this.autoCompleteData.push(item.sampleName + tags);
         codeArray[i].samples[j]['li'] = li;
-        $(li).bind('click', this.showSample(this, item.sampleName));
 
         if (i == 0 && j == 0) {
           this.showSample(this, item.sampleName, true)();
@@ -271,7 +276,7 @@
     var is_instance = this;
     $.get(filename, function(data) {
       if (opt_changeCodeMirror) {
-        is_instance.changeCodeMirror(data, fileType);
+        is_instance.changeCodeMirror(data);
       }
       is_instance.currentCode[filename] = {
         code : data
@@ -303,6 +308,7 @@
         var sampleObj = codeArray[i].samples[j];
         if (sampleObj.sampleName == sampleName) {
           sampleObj['category'] = codeArray[i].category;
+          sampleObj['categoryDocsUrl'] = codeArray[i].docsUrl || null;
           return sampleObj;
         }
       }
@@ -317,6 +323,7 @@
           var file = sampleObj.files[k];
           if (sampleFileName == file) {
             sampleObj['category'] = codeArray[i].category;
+            sampleObj['categoryDocsUrl'] = codeArray[i].docsUrl || null;
             return sampleObj;
           }
         }
@@ -334,8 +341,20 @@
       var categoryName = catSplit[0];
 
       var codeLIs = is_instance.codeLIs;
-
-      is_instance.setDemoTitle((catSplit[1] ? catSplit[1] : catSplit[0]) + ' > ' + sampleName);
+      var title = $('<span>' + (catSplit[1] ? catSplit[1] : catSplit[0]) + ' > ' + sampleName + '</span>');
+      if (sampleObj.docsUrl) {
+//        var docLink = $('<sup></sup>').append(is_instance.createDocsLink(sampleObj.docsUrl));
+        var docLink = $('<sup style="font-size:13px;"> (<a href="' +
+                        sampleObj.docsUrl +
+                        '" target="_blank">docs</a>)</sup>');
+        title.append(docLink);
+      } else if (sampleObj.categoryDocsUrl) {
+        var docLink = $('<sup style="font-size:13px;"> (<a href="' +
+                        sampleObj.categoryDocsUrl +
+                        '" target="_blank">docs</a>)</sup>');
+        title.append(docLink);
+      }
+      is_instance.setDemoTitle(title.get(0));
       var i;
       for (i = 0; i < codeLIs.length; i++) {
         codeLIs[i].className = '';
@@ -414,7 +433,7 @@
       if (typeof this.currentCode[this.curI] == 'undefined') {
         this.currentCode[this.curI] = new Object();
       }
-      is.codeToRun = this.currentCode[this.curI].code = this.getCode();
+      this.codeToRun = this.currentCode[this.curI].code = this.getCode();
       this.runBox.runCode();
     } catch (e) {
       // this will fail sometimes and that's OK.  It just means that CodeMirror
@@ -428,7 +447,6 @@
     } catch (e) {
       alert('fail!');
     }
-
   };
 
   InteractiveSample.prototype.getCode = function() {
@@ -562,7 +580,7 @@
     // IE has an extremely extremely weird bug with populating the editing window.
     // For now I can't fix it.  maybe later add autocomplete for IE.
     // TODO: Fix autocomplete for IE (HARD BUG)
-    if (!$.browser.msie) this.initAutoComplete();
+    this.initAutoComplete();
 
     if ($.browser.safari) $('.buttonText').css('padding-bottom', '5px');
     this.initShowSourceDiv();
@@ -759,6 +777,9 @@
   UIEffects.prototype.setAutoCompleteClicks = function() {
     $("#search").autocomplete('result', function(a, b, sampleName) {
       var sample = sampleName.split(' <sup>')[0];
+      // This fixes a CRAZY bug in CodeMirror where in IE, it breaks if you
+      // have the focus in another input element
+      document.getElementById('edit').focus();
       window.is.showSample(window.is, sample)();
       return sample;
     });
@@ -820,6 +841,34 @@
     } else {
       el.addClass('expanded');
     }
+  };
+
+  UIEffects.prototype.changeCodeSize = function(amount) {
+    var editor = $('#editor');
+    var edit = $('#edit');
+    var select = $('#selectCode');
+    var selContainer = $('#selectContainer');
+    var codeContainer = $('#codeContainer');
+    var curEditorHeight = editor.css('height');
+    var curEditHeight = edit.css('height');
+    var selectHeight = select.css('height');
+    var selContainerHeight = selContainer.css('height');
+    var codeContainerHeight = codeContainer.css('height');
+    var newEditorHeight = parseFloat(curEditorHeight) + amount;
+    var newEditHeight = parseFloat(curEditHeight) + amount;
+    var newSelectHeight = parseFloat(selectHeight) + amount;
+    var newSelContainerHeight = parseFloat(selContainerHeight) + amount;
+    var newCodeContainerHeight = parseFloat(codeContainerHeight) + amount;
+    editor.css('height', newEditorHeight + 'px');
+    edit.css('height', newEditHeight + 'px');
+    select.css('height', newSelectHeight + 'px');
+    if (!newSelContainerHeight) {
+      newSelContainerHeight = newCodeContainerHeight;
+    }
+    selContainer.css('height', newSelContainerHeight + 'px');
+
+    codeContainer.css('height', newCodeContainerHeight + 'px');
+    this.setDivShadow('outputDiv', 'runShadowContainer');
   };
 
   // TODO: make sure that user input is checked so that they don't use an existing sample name!!!!

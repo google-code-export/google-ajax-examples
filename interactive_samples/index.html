@@ -61,34 +61,6 @@
       is.init(document.getElementById('editor'));
     }
 
-    function changeCodeSize(amount) {
-      var editor = $('#editor');
-      var edit = $('#edit');
-      var select = $('#selectCode');
-      var selContainer = $('#selectContainer');
-      var codeContainer = $('#codeContainer');
-      var curEditorHeight = editor.css('height');
-      var curEditHeight = edit.css('height');
-      var selectHeight = select.css('height');
-      var selContainerHeight = selContainer.css('height');
-      var codeContainerHeight = codeContainer.css('height');
-      var newEditorHeight = parseFloat(curEditorHeight) + amount;
-      var newEditHeight = parseFloat(curEditHeight) + amount;
-      var newSelectHeight = parseFloat(selectHeight) + amount;
-      var newSelContainerHeight = parseFloat(selContainerHeight) + amount;
-      var newCodeContainerHeight = parseFloat(codeContainerHeight) + amount;
-      editor.css('height', newEditorHeight + 'px');
-      edit.css('height', newEditHeight + 'px');
-      select.css('height', newSelectHeight + 'px');
-      if (!newSelContainerHeight) {
-        newSelContainerHeight = newCodeContainerHeight;
-      }
-      selContainer.css('height', newSelContainerHeight + 'px');
-
-      codeContainer.css('height', newCodeContainerHeight + 'px');
-      is.uiEffects.setDivShadow('outputDiv', 'runShadowContainer');
-    }
-
     google.setOnLoadCallback(init);
   </script>
 </head>
@@ -166,12 +138,12 @@
                   <table class="biggerSmallerTable" cellpadding="0" cellspacing="0">
                     <tr>
                       <td>
-                        <a href="javascript:changeCodeSize(parseFloat('-8'));"><img border=0 width="12" src="images/smaller.gif" alt="Shrink Code Div" /></a>
+                        <a href="javascript:is.uiEffects.changeCodeSize(parseFloat('-8'));"><img border=0 width="12" src="images/smaller.gif" alt="Shrink Code Div" /></a>
                       </td>
                     </tr>
                     <tr>
                       <td>
-                        <a href="javascript:changeCodeSize(8);"><img border=0 width="12" src="images/larger.gif" alt="Enlarge Code Div" /></a>
+                        <a href="javascript:is.uiEffects.changeCodeSize(8);"><img border=0 width="12" src="images/larger.gif" alt="Enlarge Code Div" /></a>
                       </td>
                     </tr>
                   </table>
@@ -201,7 +173,6 @@
                         Logout
                       </span>
                       {% endif %}
-
                     </span>
                   </span>
 
