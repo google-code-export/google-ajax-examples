@@ -170,7 +170,6 @@ li.selected {
 
 li {
   padding-left: 15px;
-  cursor: pointer;
   color: blue;
 }
 
@@ -497,7 +496,6 @@ li.ui-autocomplete-odd > a > strong, li.ui-autocomplete-even > a > strong {
 }
 
 .dropdown {
-  border:1px solid #ABB1BD;
   display: none;
   text-decoration: none;
   background-color:#E5ECF9;
