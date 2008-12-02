@@ -61,7 +61,7 @@ div {
 }
 
 #edit {
-  height: 375px
+  height: 374px
 }
 
 #selectCode {
@@ -89,7 +89,7 @@ div {
   font-size: 80%;
   font-family: Arial, sans-serif;
   padding-left: 0;
-  line-height: 0.8em;
+  line-height: 1.2em;
 }
 
 iframe {
@@ -126,13 +126,20 @@ iframe {
 h2 {
   border-bottom:1px solid #CCCCCC;
   font-size:1.3em;
-  padding-top: 3px;
-  padding-bottom: 3px;
+
   background: #E5ECF9;
   margin: 0;
   padding-left: 15px;
   font-family:Arial,Helvetica,sans-serif;
-  height: 25px;
+  height: 30px;
+}
+
+.headerTable td{
+  vertical-align: bottom;
+}
+.headerTable {
+  width: 100%;
+  height: 100%;
 }
 
 .bluediv {
@@ -158,14 +165,12 @@ li.selected {
   list-style-type:none;
   margin:0;
   vertical-align:middle;
-  line-height:100%;
   cursor: default;
 }
 
 li {
   padding-left: 15px;
   cursor: pointer;
-  text-decoration: underline;
   color: blue;
 }
 
@@ -340,9 +345,10 @@ span.categoryClosed div, span.categoryClosed ul {
 
 .greyLinks {
   color: #4D4D4D;
-  cursor: pointer;
   font-size: 80%;
   font-weight:normal;
+  height: 0px;
+  width: 200px;
 }
 
 .greyLinks a {
@@ -466,9 +472,10 @@ li.ui-autocomplete-odd > a > strong, li.ui-autocomplete-even > a > strong {
   float:left;
   font-size:13px;
   font-weight:bold;
-  height:20px;
-  padding:5px 4px 0 7px;
+  font-family: Arial, sans-serif;
+  padding:5px 4px 4px 7px;
 }
+
 .dropdownButton {
   background:transparent url(../images/mmimgs.gif) no-repeat scroll 0 -45px;
   display:block;
@@ -477,8 +484,16 @@ li.ui-autocomplete-odd > a > strong, li.ui-autocomplete-even > a > strong {
   vertical-align:bottom;
   width:26px;
 }
-.dropdown.expanded {
-  display: block;
+
+.biggerSmallerTable {
+  display: inline-block;
+  display: expression("inline");
+  margin-right: expression("5px");
+  vertical-align: top;
+}
+
+.biggerSmallerTable a {
+   float: expression("right");
 }
 
 .dropdown {
@@ -487,13 +502,18 @@ li.ui-autocomplete-odd > a > strong, li.ui-autocomplete-even > a > strong {
   text-decoration: none;
   background-color:#E5ECF9;
   padding: 0;
-  margin-top: -2px;
+  margin-top: -4px;
   position: absolute;
   color:#0033CC;
   border:1px solid #ABB1BD;
   text-align: left;
   cursor: pointer;
 }
+
+.expanded {
+  display: block;
+}
+
 .dropdown span {
   width: 150px;
   display: block;
@@ -518,7 +538,6 @@ li.ui-autocomplete-odd > a > strong, li.ui-autocomplete-even > a > strong {
   cursor:pointer;
   display:inline-block;
   text-decoration:none;
-  margin-top: -5px;
 }
 
 /* ------ Drop Shadows ------- */
