@@ -71,18 +71,15 @@
     };
   };
 
-  InteractiveSample.prototype.addDeleteIcon = function(tr, id) {
-    var imgTD = _cel('td');
+  InteractiveSample.prototype.addDeleteIcon = function(li, id) {
+//    var imgTD = _cel('td');
     var deleteCodeImg = _cel('img');
     deleteCodeImg.src = 'images/trash.gif';
-    imgTD.align = 'right';
-    imgTD.style.paddingRight = '10px';
     deleteCodeImg.style.cursor = 'pointer';
-    imgTD.appendChild(deleteCodeImg);
-
+    deleteCodeImg.style.marginLeft = '6px';
     $(deleteCodeImg).bind('click', this.deleteCustomExample(id));
 
-    tr.appendChild(imgTD);
+    li.appendChild(deleteCodeImg);
   };
 
   InteractiveSample.prototype.createCategories = function() {
@@ -156,16 +153,17 @@
       for (var j=0; j < codeArray[i].samples.length; j++) {
         var item = codeArray[i].samples[j];
         var li = _cel('li');
-        var newTable = _cel('table');
-        var newTR = _cel('tr');
-        var textTD = _cel('td');
-        newTable.width = '100%';
-        textTD.innerHTML = item.sampleName;
-        var tags = (item.tags) ? ' <sup>(' + item.tags + ')<\/sup>': '';
+
+        li.appendChild(document.createTextNode(item.sampleName));
+        if (category == 'Saved Code') {
+          this.addDeleteIcon(li, codeArray[i].samples[j].id);
+        }
+        var tags = ' <sup>(' + ((category) || '') + ((subCategory) ? ', ' + subCategory : '');
+        tags += (item.tags) ? ', ' + item.tags : '';
+        tags += ')\/sup>';
         this.autoCompleteData.push(item.sampleName + tags);
         codeArray[i].samples[j]['li'] = li;
-
-        $(textTD).bind('click', this.showSample(this, item.sampleName));
+        $(li).bind('click', this.showSample(this, item.sampleName));
 
         if (i == 0 && j == 0) {
           this.showSample(this, item.sampleName, true)();
@@ -180,14 +178,6 @@
           }
         }
 
-        newTable.appendChild(newTR);
-        newTR.appendChild(textTD);
-
-        if (category == 'Saved Code') {
-          this.addDeleteIcon(newTR, codeArray[i].samples[j].id);
-        }
-
-        li.appendChild(newTable);
         this.codeLIs.push(li);
         ul.appendChild(li);
       }
@@ -470,7 +460,7 @@
          doing a find for the place where the code goes and replacing it */
         data = data.replace(
                 '    try {\n' +
-                '      window.eval(window.parent.is.codeToRun);\n' +
+                '      if (window.parent && window.parent.is && window.parent.is.codeToRun) window.eval(window.parent.is.codeToRun);\n' +
                 '    } catch (e) {\n' +
                 '      alert("Error: " + e.message);\n' +
                 '    }', code);
@@ -488,7 +478,9 @@
   };
 
   InteractiveSample.prototype.sendCodeToServer = function(code) {
-    $('#codeHolder').get(0).innerHTML = code;
+    code = code.replace(/\n/g, 'NEWLINE!!!');
+    $('#codeHolder').attr('value', code);
+
     $('#linkCodeForm').get(0).submit();
   };
 
@@ -502,8 +494,14 @@
     if (sampleObj.category == 'Saved Code') {
       var confirmOverwrite = confirm('Are you sure you want to overwrite this code?');
       if (confirmOverwrite) {
-        // $('#boilerplateLoc').attr('value', sampleObj.boilerplateLoc);
-        $('#jscodeSaveForm').attr('value', this.getCode());
+
+        // HUGE HACK.  In IE, an input element can't store a newline character,
+        // or at least I can't find out how.  So they all get lost during the send
+        // so on the server side i will parse out NEWLINE!!! and add in the correct
+        // code :)
+        var code = this.getCode();
+        code = code.replace(/\n/g, 'NEWLINE!!!');
+        $('#jscodeSaveForm').attr('value', code);
         // $('#saveSampleName').attr('value', sampleObj.sampleName);
         $('#idSaveForm').attr('value', sampleObj.id);
         // $('#tagsSaveForm').attr('value', sampleObj.tags);
@@ -565,6 +563,8 @@
     // For now I can't fix it.  maybe later add autocomplete for IE.
     // TODO: Fix autocomplete for IE (HARD BUG)
     if (!$.browser.msie) this.initAutoComplete();
+
+    if ($.browser.safari) $('.buttonText').css('padding-bottom', '5px');
     this.initShowSourceDiv();
     this.initSaveCodeDiv();
   };
@@ -803,8 +803,13 @@
     var curSmapleObj = this.is.sampleFileNameToObject(this.is.getCurFilename());
     var boilerplateLoc = curSmapleObj.boilerplateLoc;
     $('#boilerplateLoc').attr('value', boilerplateLoc);
-
-    $('#jscodeSaveForm').attr('value', this.is.getCode());
+    // HUGE HACK.  In IE, an input element can't store a newline character,
+    // or at least I can't find out how.  So they all get lost during the send
+    // so on the server side i will parse out NEWLINE!!! and add in the correct
+    // code :)
+    var code = this.is.getCode();
+    code = code.replace(/\n/g, 'NEWLINE!!!');
+    $('#jscodeSaveForm').attr('value', code);
 
     $('#saveCodeForm').dialog('open').show();
   };

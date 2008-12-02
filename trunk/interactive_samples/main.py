@@ -189,6 +189,9 @@ class Save(webapp.RequestHandler):
     if user:
       id = self.request.get('id')
       jscode = self.request.get('jscode')
+      #  This hack is because of IE not being able to POST the code with the
+      #  newline characters in it
+      jscode = jscode.replace('NEWLINE!!!', '\n');
       sampleName =  self.request.get('sampleName')
       tags = self.request.get('tags')
       boilerplateLoc = self.request.get('boilerplateLoc')

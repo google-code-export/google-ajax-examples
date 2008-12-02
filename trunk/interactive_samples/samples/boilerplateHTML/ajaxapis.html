@@ -14,7 +14,7 @@
 
     <script type="text/javascript">
     try {
-      window.eval(window.parent.is.codeToRun);
+      if (window.parent && window.parent.is && window.parent.is.codeToRun) window.eval(window.parent.is.codeToRun);
     } catch (e) {
       alert("Error: " + e.message);
     }

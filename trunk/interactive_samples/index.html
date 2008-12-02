@@ -61,6 +61,34 @@
       is.init(document.getElementById('editor'));
     }
 
+    function changeCodeSize(amount) {
+      var editor = $('#editor');
+      var edit = $('#edit');
+      var select = $('#selectCode');
+      var selContainer = $('#selectContainer');
+      var codeContainer = $('#codeContainer');
+      var curEditorHeight = editor.css('height');
+      var curEditHeight = edit.css('height');
+      var selectHeight = select.css('height');
+      var selContainerHeight = selContainer.css('height');
+      var codeContainerHeight = codeContainer.css('height');
+      var newEditorHeight = parseFloat(curEditorHeight) + amount;
+      var newEditHeight = parseFloat(curEditHeight) + amount;
+      var newSelectHeight = parseFloat(selectHeight) + amount;
+      var newSelContainerHeight = parseFloat(selContainerHeight) + amount;
+      var newCodeContainerHeight = parseFloat(codeContainerHeight) + amount;
+      editor.css('height', newEditorHeight + 'px');
+      edit.css('height', newEditHeight + 'px');
+      select.css('height', newSelectHeight + 'px');
+      if (!newSelContainerHeight) {
+        newSelContainerHeight = newCodeContainerHeight;
+      }
+      selContainer.css('height', newSelContainerHeight + 'px');
+
+      codeContainer.css('height', newCodeContainerHeight + 'px');
+      is.uiEffects.setDivShadow('outputDiv', 'runShadowContainer');
+    }
+
     google.setOnLoadCallback(init);
   </script>
 </head>
@@ -97,12 +125,12 @@
 <table class="contentTable">
 <tr>
   <td id="selectContainer">
-    <h2 style="padding-bottom: 2px;">
+    <h2>
       <!--
         This table is here because all other H2's have tables so they are
         different heights and I couldn't fix it with CSS.  This is a HACK.
       -->
-      <table width="100%">
+      <table class="headerTable">
         <tbody>
           <tr>
             <td>
@@ -127,20 +155,32 @@
   <td id="codeContainer">
     <!-- todo check styles on here -->
     <div id="editor">
-      <div style="height:30px;">
+      <div>
         <h2>
-          <table style="width: 100%">
+          <table class="headerTable">
             <tbody>
               <tr>
                 <td>Edit</td>
                 <td align="center" id="demoTitle">&nbsp;</td>
-                <td align="right" valign="bottom" class="greyLinks">
-
-                  <span id="codeMenu" class="buttonDropdownContainer">
+                <td align="right" class="greyLinks">
+                  <table class="biggerSmallerTable" cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td>
+                        <a href="javascript:changeCodeSize(parseFloat('-8'));"><img border=0 width="12" src="images/smaller.gif" alt="Shrink Code Div" /></a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <a href="javascript:changeCodeSize(8);"><img border=0 width="12" src="images/larger.gif" alt="Enlarge Code Div" /></a>
+                      </td>
+                    </tr>
+                  </table>
+                  <span id="codeMenu" class="buttonDropdownContainer" style="">
                     <span onclick="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));" style="display:inline-block;">
                       <span class="buttonText">Code Menu</span>
                       <span class="dropdownButton"></span>
                     </span>
+                    <br style="clear:both;">
                     <span id="codeMenuDropdown" class="dropdown">
                       <span class="first" onclick="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.linkCode();return false;"><img src="images/link.gif" alt="Export Code" width="15" />&nbsp;Export</span>
                       <span onclick="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.outputSource();return false;"><img src="images/export.gif" alt="Show Source" width="15" />&nbsp;View Full Source</span>
@@ -164,6 +204,8 @@
 
                     </span>
                   </span>
+
+
                 </td>
               </tr>
             </tbody>
@@ -195,7 +237,7 @@
     <div id="outputDiv" class="draggable resizable">
       <div id="outputDrag">
         <h2>
-          <table style="width:100%;">
+          <table  class="headerTable">
             <tbody>
               <tr>
                 <td>
@@ -244,7 +286,7 @@ iFrame fixes it.
 
 <div id="codeOutput0" class="codeOutput"></div>
 <form action="http://savedbythegoog.appspot.com/add" id="linkCodeForm" method="post" target="_blank">
-  <textarea rows="10" cols="10" name="code" style="display:none" id="codeHolder"></textarea>
+  <input type="hidden" id="codeHolder" name="code" />
 </form>
 <div id="saveCodeForm">
 <form action="/save" method="post" accept-charset="utf-8" id="saveForm">
