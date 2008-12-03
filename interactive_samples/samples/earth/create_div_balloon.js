@@ -25,7 +25,7 @@ function initCB(instance) {
   ge.getLayerRoot().enableLayerById(ge.LAYER_ROADS, true);
 
   // create the placemark
-  var placemark = ge.createPlacemark('');
+  placemark = ge.createPlacemark('');
 
   var point = ge.createPoint('');
   point.setLatitude(37);

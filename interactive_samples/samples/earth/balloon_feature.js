@@ -25,7 +25,7 @@ function initCB(instance) {
   ge.getLayerRoot().enableLayerById(ge.LAYER_ROADS, true);
 
   // create the placemark
-  var placemark = ge.createPlacemark('');
+  placemark = ge.createPlacemark('');
 
   var point = ge.createPoint('');
   point.setLatitude(37);
@@ -46,9 +46,14 @@ function initCB(instance) {
           );
   ge.getView().setAbstractView(la);
 
+  // give the placemark a name and a description (a balloon will
+  // automatically show on click)
+  placemark.setName('Placemark 1');
+  placemark.setDescription('This is the coolest placemark ever.');
+
   var pluginVersion = ge.getPluginVersion().toString();
   document.getElementById('installed-plugin-version').innerHTML = 'Version: ' +
-                                                                   pluginVersion;
+                                                                  pluginVersion;
 }
 
 function failureCB(errorCode) {

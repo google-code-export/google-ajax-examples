@@ -4,9 +4,10 @@ var placemark;
 google.load("earth", "1");
 
 function init() {
-  // Create two buttons that will create and delete the balloon.
+  // Create two buttons that will toggle sky/earth.
   var content = document.getElementById('content');
-  var inputHTML = '<input type="button" value="Show a String Balloon!" onclick="createStringBalloon();" />';
+  var inputHTML = '<input type="button" value="Show Sky" onclick="showSky()" />' +
+                  '<input type="button" value="Show Earth" onclick="showEarth()" />';
   content.innerHTML = inputHTML;
 
   google.earth.createInstance('content', initCB, failureCB);
@@ -15,7 +16,6 @@ function init() {
 function initCB(instance) {
   ge = instance;
   ge.getWindow().setVisibility(true);
-
 
   // add a navigation control
   ge.getNavigationControl().setVisibility(ge.VISIBILITY_AUTO);
@@ -43,31 +43,36 @@ function initCB(instance) {
           0, // heading
           0, // straight-down tilt
           5000 // range (inverse of zoom)
-          );
+  );
   ge.getView().setAbstractView(la);
 
-  var pluginVersion = ge.getPluginVersion().toString();
-  document.getElementById('installed-plugin-version').innerHTML = 'Version: ' +
-                                                                   pluginVersion;
+  document.getElementById('installed-plugin-version').innerHTML =
+      ge.getPluginVersion().toString();
 }
 
 function failureCB(errorCode) {
-  alert(errorCode);
 }
 
-function createStringBalloon() {
-  var balloon = ge.createHtmlStringBalloon('');
-  balloon.setFeature(placemark); // optional
-  balloon.setMaxWidth(300);
+function showSky() {
+  ge.getOptions().setMapType(ge.MAP_TYPE_SKY);
 
-  // Google logo.
-  balloon.setContentString(
-      '<img src="http://www.google.com/intl/en_ALL/images/logo.gif"><br>'
-      + '<font size=20>Earth Plugin</font><br><font size=-2>sample info '
-      + 'window</font>');
-
-  ge.setBalloon(balloon);
+  setTimeout(function() {
+    // Zoom in on a nebula.
+    var oldFlyToSpeed = ge.getOptions().getFlyToSpeed();
+    ge.getOptions().setFlyToSpeed(.2);  // Slow down the camera flyTo speed.
+    var lookAt = ge.getView().copyAsLookAt(ge.ALTITUDE_RELATIVE_TO_GROUND);
+    lookAt.set(41.28509187215, -169.2448684551622, 0,
+            ge.ALTITUDE_RELATIVE_TO_GROUND, 262.87, 0, 162401);
+    // Also try:
+    //   lookAt.set(-59.65189337195337, -18.799770300376053, 0,
+    //              ge.ALTITUDE_RELATIVE_TO_GROUND, 0, 0, 36817);
+    ge.getView().setAbstractView(lookAt);
+    ge.getOptions().setFlyToSpeed(oldFlyToSpeed);
+  }, 1000);  // Start the zoom-in after one second.
 }
 
+function showEarth() {
+  ge.getOptions().setMapType(ge.MAP_TYPE_EARTH);
+}
 
 google.setOnLoadCallback(init);

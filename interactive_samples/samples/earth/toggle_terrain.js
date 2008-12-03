@@ -4,9 +4,10 @@ var placemark;
 google.load("earth", "1");
 
 function init() {
-  // Create two buttons that will create and delete the balloon.
+  // Create two buttons that will toggle terrain.
   var content = document.getElementById('content');
-  var inputHTML = '<input type="button" value="Show a String Balloon!" onclick="createStringBalloon();" />';
+  var inputHTML = '<input type="button" value="Hide Terrain" onclick="hideTerrain()" />' +
+                  '<input type="button" value="Show Terrain" onclick="showTerrain()" />';
   content.innerHTML = inputHTML;
 
   google.earth.createInstance('content', initCB, failureCB);
@@ -43,30 +44,37 @@ function initCB(instance) {
           0, // heading
           0, // straight-down tilt
           5000 // range (inverse of zoom)
-          );
+  );
+  ge.getView().setAbstractView(la);
+  // Fly to the Grand Canyon
+  var la = ge.createLookAt('');
+  la.set(36.291068, -112.4981896, 0, ge.ALTITUDE_RELATIVE_TO_GROUND,
+          0, 80, 20000);
   ge.getView().setAbstractView(la);
 
-  var pluginVersion = ge.getPluginVersion().toString();
-  document.getElementById('installed-plugin-version').innerHTML = 'Version: ' +
-                                                                   pluginVersion;
+  document.getElementById('installed-plugin-version').innerHTML =
+      ge.getPluginVersion().toString();
 }
 
 function failureCB(errorCode) {
-  alert(errorCode);
 }
 
-function createStringBalloon() {
-  var balloon = ge.createHtmlStringBalloon('');
-  balloon.setFeature(placemark); // optional
-  balloon.setMaxWidth(300);
+function showTerrain() {
+  var layerRoot = ge.getLayerRoot();
+  var terrainLayer = layerRoot.getLayerById(ge.LAYER_TERRAIN);
+  terrainLayer.setVisibility(true);
 
-  // Google logo.
-  balloon.setContentString(
-      '<img src="http://www.google.com/intl/en_ALL/images/logo.gif"><br>'
-      + '<font size=20>Earth Plugin</font><br><font size=-2>sample info '
-      + 'window</font>');
+  // shortcut:
+  // layerRoot.enableLayerById(ge.LAYER_TERRAIN, true);
+}
 
-  ge.setBalloon(balloon);
+function hideTerrain() {
+  var layerRoot = ge.getLayerRoot();
+  var terrainLayer = layerRoot.getLayerById(ge.LAYER_TERRAIN);
+  terrainLayer.setVisibility(false);
+
+  // shortcut:
+  // layerRoot.enableLayerById(ge.LAYER_TERRAIN, false);
 }
 
 
