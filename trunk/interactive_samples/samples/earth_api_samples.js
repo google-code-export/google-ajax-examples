@@ -1,12 +1,18 @@
 var tempJSON = [
   {
+    "category": "Earth API",
+    "samples": [],
+    "docsUrl": "http://code.google.com/apis/earth/documentation/reference/index.html"
+  },
+  {
     "category": "Earth API-Map Controls",
     "samples":[
       {"boilerplateLoc":"samples/boilerplateHTML/earthapis.html", "files":["samples/earth/sky_mode.js"], "sampleName":"Show Sky", "tags": "", "docsUrl": "http://code.google.com/apis/earth/documentation/reference/interface_g_e_options.html"},
       {"boilerplateLoc":"samples/boilerplateHTML/earthapis.html", "files":["samples/earth/toggle_sun.js"], "sampleName":"Show Sun", "tags": "", "docsUrl": "http://code.google.com/apis/earth/documentation/reference/interface_g_e_sun.html"},
       {"boilerplateLoc":"samples/boilerplateHTML/earthapis.html", "files":["samples/earth/toggle_terrain.js"], "sampleName":"Show Terrain", "tags": "", "docsUrl": "http://code.google.com/apis/earth/documentation/reference/interface_kml_layer_root.html"},
       {"boilerplateLoc":"samples/boilerplateHTML/earthapis.html", "files":["samples/earth/toggle_nav_controls.js"], "sampleName":"Toggle Nav Controls", "tags": "", "docsUrl": "http://code.google.com/apis/earth/documentation/reference/interface_g_e_navigation_control.html"}
-    ]
+    ],
+    "docsUrl": ""
   },
   {
     "category":"Earth API-Balloons!",
