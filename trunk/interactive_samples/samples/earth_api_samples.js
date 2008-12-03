@@ -21,7 +21,7 @@ var tempJSON = [
       {"boilerplateLoc":"samples/boilerplateHTML/earthapis.html", "files":["samples/earth/show_hide_buildings.js"], "sampleName":"Show/Hide Buildings", "tags": "", "docsUrl": ""},
       {"boilerplateLoc":"samples/boilerplateHTML/earthapis.html", "files":["samples/earth/tilt_camera.js"], "sampleName":"Tilt Camera", "tags": "", "docsUrl": "http://code.google.com/apis/earth/documentation/reference/interface_kml_look_at.html"},
       {"boilerplateLoc":"samples/boilerplateHTML/earthapis.html", "files":["samples/earth/move_camera.js"], "sampleName":"Move Camera", "tags": "", "docsUrl": "http://code.google.com/apis/earth/documentation/reference/interface_kml_look_at.html"},
-      {"boilerplateLoc":"samples/boilerplateHTML/earthapis.html", "files":["samples/earth/tilt_with_timeouts.js"], "sampleName":"Tilt with Timeouts", "tags": "", "docsUrl": "http://code.google.com/apis/earth/documentation/reference/interface_kml_look_at.html"},
+      {"boilerplateLoc":"samples/boilerplateHTML/earthapis.html", "files":["samples/earth/tilt_with_timeouts.js"], "sampleName":"Tilt with Timeouts", "tags": "", "docsUrl": "http://code.google.com/apis/earth/documentation/reference/interface_kml_look_at.html"}
     ],
     "docsUrl": "http://code.google.com/apis/earth/documentation/reference/index.html"
   },
