@@ -34,7 +34,8 @@ apis = {
   'lang': 'samples/lang_api_samples.js',
   'feeds': 'samples/feeds_api_samples.js',
   'libs': 'samples/libs_api_samples.js',
-  'earth': 'samples/earth_api_samples.js'
+  'earth': 'samples/earth_api_samples.js',
+  'maps': 'samples/maps_api_samples.js'
 }
 
 class SavedCode(db.Model):
