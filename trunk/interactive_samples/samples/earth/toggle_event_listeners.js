@@ -4,9 +4,10 @@ var placemark;
 google.load("earth", "1");
 
 function init() {
-  // Create two buttons that will create and delete the balloon.
+  // Create two buttons that will enable/disable listener.
   var content = document.getElementById('content');
-  var inputHTML = '<input type="button" value="Show a String Balloon!" onclick="createStringBalloon();" />';
+  var inputHTML = '<input type="button" value="Enable Click Listener" onclick="enableListener()" />';
+  inputHTML += '<input type="button" value="Disable Click Listener" onclick="disableListener()" />';
   content.innerHTML = inputHTML;
 
   google.earth.createInstance('content', initCB, failureCB);
@@ -43,31 +44,35 @@ function initCB(instance) {
           0, // heading
           0, // straight-down tilt
           5000 // range (inverse of zoom)
-          );
+  );
   ge.getView().setAbstractView(la);
 
-  var pluginVersion = ge.getPluginVersion().toString();
-  document.getElementById('installed-plugin-version').innerHTML = 'Version: ' +
-                                                                   pluginVersion;
+  document.getElementById('installed-plugin-version').innerHTML =
+      ge.getPluginVersion().toString();
 }
 
 function failureCB(errorCode) {
-  alert(errorCode);
 }
 
-function createStringBalloon() {
-  var balloon = ge.createHtmlStringBalloon('');
-  balloon.setFeature(placemark); // optional
-  balloon.setMaxWidth(300);
+// global state
+var eventListenerActive;
 
-  // Google logo.
-  balloon.setContentString(
-      '<img src="http://www.google.com/intl/en_ALL/images/logo.gif"><br>'
-      + '<font size=20>Earth Plugin</font><br><font size=-2>sample info '
-      + 'window</font>');
-
-  ge.setBalloon(balloon);
+function enableListener() {
+  if (!eventListenerActive) {
+    google.earth.addEventListener(placemark, 'click', myEventHandler);
+    eventListenerActive = true;
+  }
 }
 
+function disableListener() {
+  if (eventListenerActive) {
+    google.earth.removeEventListener(placemark, 'click', myEventHandler);
+    eventListenerActive = false;
+  }
+}
+
+function myEventHandler(event) {
+  alert('You clicked the placemark!');
+}
 
 google.setOnLoadCallback(init);

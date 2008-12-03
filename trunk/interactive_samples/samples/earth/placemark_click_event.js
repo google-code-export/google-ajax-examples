@@ -4,9 +4,8 @@ var placemark;
 google.load("earth", "1");
 
 function init() {
-  // Create two buttons that will create and delete the balloon.
   var content = document.getElementById('content');
-  content.innerHTML = '<i>Click the placemark</i>';
+  content.innerHTML = '';
 
   google.earth.createInstance('content', initCB, failureCB);
 }
@@ -42,32 +41,44 @@ function initCB(instance) {
           0, // heading
           0, // straight-down tilt
           5000 // range (inverse of zoom)
-          );
+  );
   ge.getView().setAbstractView(la);
-
-  var pluginVersion = ge.getPluginVersion().toString();
-  document.getElementById('installed-plugin-version').innerHTML = 'Version: ' +
-                                                                   pluginVersion;
-
-
+  // listen to the click event
   google.earth.addEventListener(placemark, 'click', function(event) {
-    // prevent the default balloon from popping up
+    var text = 'Click:';
+
+    function addToMessage(append1, append2) {
+      text += ' ' + append1 + ': ' + append2 + '\n' ;
+    }
+
+    addToMessage('target type', event.getTarget().getType());
+    addToMessage('currentTarget type',
+            event.getCurrentTarget().getType());
+    addToMessage('button', event.getButton());
+    addToMessage('clientX', event.getClientX());
+    addToMessage('clientY', event.getClientY());
+    addToMessage('screenX', event.getScreenX());
+    addToMessage('screenY', event.getScreenY());
+    addToMessage('latitude', event.getLatitude());
+    addToMessage('longitude', event.getLongitude());
+    addToMessage('altitude', event.getAltitude());
+    addToMessage('didHitGlobe', event.getDidHitGlobe());
+    addToMessage('altKey', event.getAltKey());
+    addToMessage('ctrlKey', event.getCtrlKey());
+    addToMessage('shiftKey', event.getShiftKey());
+    addToMessage('timeStamp', event.getTimeStamp());
+
+    // Prevent default balloon from popping up for marker placemarks
     event.preventDefault();
 
-    var balloon = ge.createHtmlStringBalloon('');
-    balloon.setFeature(event.getTarget());
-    balloon.setMaxWidth(300);
-
-    // Google logo.
-    balloon.setContentString(
-            '<a href="#" onclick="alert(\'Running some JavaScript!\');">Alert!</a>');
-
-    ge.setBalloon(balloon);
+    alert(text);
   });
+
+  document.getElementById('installed-plugin-version').innerHTML =
+      ge.getPluginVersion().toString();
 }
 
 function failureCB(errorCode) {
-  alert(errorCode);
 }
 
 google.setOnLoadCallback(init);

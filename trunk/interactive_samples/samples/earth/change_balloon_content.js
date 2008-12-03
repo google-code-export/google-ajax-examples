@@ -31,7 +31,7 @@ function initCB(instance) {
   ge.getLayerRoot().enableLayerById(ge.LAYER_ROADS, true);
 
   // create the placemark
-  var placemark = ge.createPlacemark('');
+  placemark = ge.createPlacemark('');
 
   var point = ge.createPoint('');
   point.setLatitude(37);
@@ -70,7 +70,7 @@ function createBalloon() {
   ge.setBalloon(balloon);
 }
 
-function changeBaloon() {
+function changeBalloon() {
   // Change the context of the current balloon.
   var balloon = ge.getBalloon();
   if (balloon) {

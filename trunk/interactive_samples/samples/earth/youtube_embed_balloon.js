@@ -4,10 +4,8 @@ var placemark;
 google.load("earth", "1");
 
 function init() {
-  // Create two buttons that will create and delete the balloon.
   var content = document.getElementById('content');
-  var inputHTML = '<input type="button" value="Show a String Balloon!" onclick="createStringBalloon();" />';
-  content.innerHTML = inputHTML;
+  content.innerHTML = '<i>Click the placemark</i>';
 
   google.earth.createInstance('content', initCB, failureCB);
 }
@@ -43,31 +41,35 @@ function initCB(instance) {
           0, // heading
           0, // straight-down tilt
           5000 // range (inverse of zoom)
-          );
+  );
   ge.getView().setAbstractView(la);
+  placemark.setName('Click for a YouTube video!');
 
-  var pluginVersion = ge.getPluginVersion().toString();
-  document.getElementById('installed-plugin-version').innerHTML = 'Version: ' +
-                                                                   pluginVersion;
+  google.earth.addEventListener(placemark, 'click', function(event) {
+    // prevent the default balloon from popping up
+    event.preventDefault();
+
+    var balloon = ge.createHtmlStringBalloon('');
+    balloon.setFeature(placemark); // optional
+    balloon.setMaxWidth(400);
+
+    // YouTube video embed... the &nbsp; in the beginning is a fix for IE6
+    balloon.setContentString(
+            '&nbsp;<object width="400" height="300"><param name="movie" '+
+            'value="http://www.youtube.com/v/6mrG_bsqC6k&hl=en&fs=1"/>' +
+            '<param name="allowFullScreen" value="true"/>' +
+            '<embed src="http://www.youtube.com/v/6mrG_bsqC6k&hl=en&fs=1" ' +
+            'type="application/x-shockwave-flash" allowfullscreen="true" ' +
+            'width="400" height="300"></embed></object>');
+
+    ge.setBalloon(balloon);
+  });
+
+  document.getElementById('installed-plugin-version').innerHTML =
+      ge.getPluginVersion().toString();
 }
 
 function failureCB(errorCode) {
-  alert(errorCode);
 }
-
-function createStringBalloon() {
-  var balloon = ge.createHtmlStringBalloon('');
-  balloon.setFeature(placemark); // optional
-  balloon.setMaxWidth(300);
-
-  // Google logo.
-  balloon.setContentString(
-      '<img src="http://www.google.com/intl/en_ALL/images/logo.gif"><br>'
-      + '<font size=20>Earth Plugin</font><br><font size=-2>sample info '
-      + 'window</font>');
-
-  ge.setBalloon(balloon);
-}
-
 
 google.setOnLoadCallback(init);
