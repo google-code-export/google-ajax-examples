@@ -12,6 +12,6 @@ function handleQueryResponse(response) {
   }
 
   var data = response.getDataTable();
-  visualization = new google.visualization.IntensityMap(document.getElementById('chart_1'));
+  visualization = new google.visualization.IntensityMap(document.getElementById('big_chart_1'));
   visualization.draw(data, null);
 }
