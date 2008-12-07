@@ -1,0 +1,71 @@
+<!--
+  Copyright (c) 2008 Google Inc.
+
+  You are free to copy and use this sample.
+  License can be found here: http://code.google.com/apis/ajaxsearch/faq/#license
+-->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>Google Visualization API Sample</title>
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+<script type="text/javascript">
+      google.load('visualization', '1');
+      google.setOnLoadCallback(createDataTable);
+
+      function createDataTable() {   
+        var data = new google.visualization.DataTable();
+        data.addColumn('number', 'Number 1');
+        data.addColumn('number', 'Number 2');
+        data.addRows(3);
+        data.setCell(0, 0, 3);
+        data.setCell(1, 0, 7);
+        data.setCell(2, 0, 4);
+        data.setCell(0, 1, 13);
+        data.setCell(1, 1, 2);
+        data.setCell(2, 1, 11);
+
+        try {
+            if (window.parent && window.parent.is && window.parent.is.codeToRun) window.eval(window.parent.is.codeToRun);
+          } catch (e) {
+            alert("Error: " + e.message);
+          }
+      }
+    </script>
+</head>
+<body style="font-family: Arial;">
+<table>
+	<tr>
+		<td>
+		<div id="areachart" style="width: 300px; height: 300px;"></div>
+		</td>
+		<td>
+		<div id="imageareachart" style="width: 300px; height: 300px;"></div>
+		</td>
+		<td>
+		<div id="columnchart" style="width: 300px; height: 300px;"></div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<div id="linechart" style="width: 300px; height: 300px;"></div>
+		</td>
+		<td>
+		<div id="imagelinechart" style="width: 300px; height: 300px;"></div>
+		</td>
+		<td>
+		<div id="piechart" style="width: 300px; height: 300px;"></div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<div id="imagepiechart" style="width: 300px; height: 300px;"></div>
+		</td>
+		<td>
+		<div id="scatterchart" style="width: 300px; height: 300px;"></div>
+		</td>
+	</tr>
+</body>
+</html>
