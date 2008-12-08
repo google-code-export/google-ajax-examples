@@ -684,7 +684,7 @@ var Editor = (function(){
       // Temporarily give the relevant nodes a colour.
       function blink(node, ok) {
         node.style.fontWeight = "bold";
-        node.style.color = ok ? "#8F8" : "#F88";
+        node.style.color = ok ? "#008800" : "#880000";
         self.parent.setTimeout(function() {node.style.fontWeight = ""; node.style.color = "";}, 500);
       }
 

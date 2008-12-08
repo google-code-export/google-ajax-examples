@@ -38,13 +38,13 @@ var tempJSON = [
       {"boilerplateLoc":"samples/boilerplateHTML/visualization/simple_query.html", "files":["samples/visualization/query_language.js"], "sampleName":"Using The Query Language", "tags": ""}
     ],
     "docsUrl": "http://code.google.com/apis/visualization/documentation/index.html"
-  },
+  }
 ];
 
 
 if (typeof codeArray != 'undefined' && codeArray.length) {
   codeArray = codeArray.concat(tempJSON);
-  delete tempJSON
+  delete tempJSON;
 } else {
   window.codeArray = tempJSON;
   delete tempJSON;
