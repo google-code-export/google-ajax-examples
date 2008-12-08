@@ -3,7 +3,7 @@ var tempJSON = [
     "category":"Visualization API-Basics",
     "samples":[
       {"boilerplateLoc":"samples/boilerplateHTML/visualization/visualizationapi.html", "files":["samples/visualization/simple_table.js"], "sampleName":"Simple Table", "tags": ""},
-      {"boilerplateLoc":"samples/boilerplateHTML/visualization/more_charts.html", "files":["samples/visualization/simple_charts.js"], "sampleName":"Simple Charts", "tags": ""},
+      {"boilerplateLoc":"samples/boilerplateHTML/visualization/simple_charts.html", "files":["samples/visualization/simple_charts.js"], "sampleName":"Simple Charts", "tags": ""},
       {"boilerplateLoc":"samples/boilerplateHTML/visualization/more_visualizations.html", "files":["samples/visualization/more_visualizations.js"], "sampleName":"More Visualizations", "tags": ""}
     ],
     "docsUrl": "http://code.google.com/apis/visualization/documentation/index.html"
@@ -11,7 +11,7 @@ var tempJSON = [
   {
 	"category":"Visualization API-Data View",
 	"samples":[
-	  {"boilerplateLoc":"samples/boilerplateHTML/visualization/visualizationapi.html", "files":["samples/visualization/data_view.js"], "sampleName":"Simple Data View", "tags": ""},
+	  {"boilerplateLoc":"samples/boilerplateHTML/visualization/data_view.html", "files":["samples/visualization/data_view.js"], "sampleName":"Simple Data View", "tags": ""},
 	],
 	"docsUrl": "http://code.google.com/apis/visualization/documentation/index.html"
   },  
@@ -34,7 +34,7 @@ var tempJSON = [
   {
     "category":"Visualization API-Data Source Requests",
 	"samples":[
-	  {"boilerplateLoc":"samples/boilerplateHTML/visualization/visualizationapi.html", "files":["samples/visualization/simple_query.js"], "sampleName":"Data Source Request", "tags": ""},
+	  {"boilerplateLoc":"samples/boilerplateHTML/visualization/simple_query.html", "files":["samples/visualization/simple_query.js"], "sampleName":"Data Source Request", "tags": ""},
 	  {"boilerplateLoc":"samples/boilerplateHTML/visualization/simple_query.html", "files":["samples/visualization/query_language.js"], "sampleName":"Using The Query Language", "tags": ""}
 	],
 	"docsUrl": "http://code.google.com/apis/visualization/documentation/index.html"
