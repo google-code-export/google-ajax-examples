@@ -26,7 +26,7 @@ var tempJSON = [
 	"category":"Visualization API-Events",
 	"samples":[
 	  {"boilerplateLoc":"samples/boilerplateHTML/visualization/visualizationapi.html", "files":["samples/visualization/select_event.js"], "sampleName":"Select Event", "tags": ""},
-	  {"boilerplateLoc":"samples/boilerplateHTML/visualization/visualizationapiorgchartandtableselectevent.html", "files":["samples/visualization/orgchart_and_table_select_event.js"], "sampleName":"OrgChart & Table", "tags": ""},
+	  {"boilerplateLoc":"samples/boilerplateHTML/visualization/visualizationapiorgchartandtableselectevent.html", "files":["samples/visualization/orgchart_and_table_select_event.js"], "sampleName":"Interaction Using Events", "tags": ""},
 	  {"boilerplateLoc":"samples/boilerplateHTML/visualization/sort_event.html", "files":["samples/visualization/sort_event.js"], "sampleName":"Sort Event", "tags": ""}
 	],
     "docsUrl": "http://code.google.com/apis/visualization/documentation/index.html"
