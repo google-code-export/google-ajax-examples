@@ -33,7 +33,7 @@
       data.setCell(0, 2, true);
       data.setCell(1, 2, false);
       data.setCell(2, 2, true);
-      
+
       var sortData = new google.visualization.DataTable();
       sortData.addColumn('string', 'name');
       sortData.addColumn('number', 'age');
@@ -68,11 +68,11 @@
       dataTable.setCell(2, 3, 'Green');
       dataTable.setCell(3, 3, 'White');
 
-      try {
-        if (window.parent && window.parent.is && window.parent.is.codeToRun) window.eval(window.parent.is.codeToRun);
-      } catch (e) {
-        alert("Error: " + e.message);
-      }
+    try {
+      if (window.parent && window.parent.is && window.parent.is.codeToRun) window.eval(window.parent.is.codeToRun);
+    } catch (e) {
+      alert("Error: " + e.message);
+    }
       
       google.setOnLoadCallback(drawVisualization);
     </script>

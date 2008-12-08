@@ -17,7 +17,7 @@
       google.load('visualization', '1');
       google.setOnLoadCallback(createDataTable);
 
-      function createDataTable() {   
+      function createDataTable() {
         var data = new google.visualization.DataTable();
         data.addColumn('number', 'Number 1');
         data.addColumn('number', 'Number 2');
@@ -29,11 +29,11 @@
         data.setCell(1, 1, 2);
         data.setCell(2, 1, 11);
 
-        try {
-            if (window.parent && window.parent.is && window.parent.is.codeToRun) window.eval(window.parent.is.codeToRun);
-          } catch (e) {
-            alert("Error: " + e.message);
-          }
+    try {
+      if (window.parent && window.parent.is && window.parent.is.codeToRun) window.eval(window.parent.is.codeToRun);
+    } catch (e) {
+      alert("Error: " + e.message);
+    }
       }
     </script>
   </head>
