@@ -341,7 +341,7 @@
       var categoryName = catSplit[0];
 
       var codeLIs = is_instance.codeLIs;
-      var title = $('<span>' + (catSplit[1] ? catSplit[1] : catSplit[0]) + ' > ' + sampleName + '</span>');
+      var title = $('<div>' + (catSplit[1] ? catSplit[1] : catSplit[0]) + ' > ' + sampleName + '</div>');
       if (sampleObj.docsUrl) {
 //        var docLink = $('<sup></sup>').append(is_instance.createDocsLink(sampleObj.docsUrl));
         var docLink = $('<sup style="font-size:13px;"> (<a href="' +
@@ -585,7 +585,24 @@
     if ($.browser.safari) $('.buttonText').css('padding-bottom', '5px');
     this.initShowSourceDiv();
     this.initSaveCodeDiv();
+    this.setCodeMenuButtonClicks();
   };
+  
+  UIEffects.prototype.setCodeMenuButtonClicks = function() {
+    var me = this;
+    
+    $('#codeMenuButtonContainer').bind('click', function() {
+      me.toggleDropdown('codeMenuDropdown');
+      return false;
+    });
+    
+    
+    $(window).bind('click', function() {
+      me.toggleDropdown('codeMenuDropdown', true);
+      return false;
+    });
+    
+  }
 
   UIEffects.prototype.setDivShadow = function(divName, shadowDivName) {
     var outputContainer = $("#" + divName);
@@ -835,7 +852,13 @@
     $('#saveCodeForm').dialog('open').show();
   };
 
-  UIEffects.prototype.toggleDropdown = function(el) {
+  UIEffects.prototype.toggleDropdown = function(elID, opt_close) {
+    var el = $('#' + elID);
+    if (opt_close) {
+      el.removeClass('expanded');
+      return;
+    }
+    
     if (el.hasClass('expanded')) {
       el.removeClass('expanded');
     } else {

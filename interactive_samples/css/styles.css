@@ -140,6 +140,7 @@ h2 {
 .headerTable {
   width: 100%;
   height: 100%;
+  table-layout: fixed;
 }
 
 .bluediv {
@@ -342,12 +343,11 @@ span.categoryClosed div, span.categoryClosed ul {
   z-index: 1000;
 }
 
-.greyLinks {
+.codeMenuTD {
   color: #4D4D4D;
   font-size: 80%;
   font-weight:normal;
-  height: 0px;
-  width: 200px;
+  width: 130px;
 }
 
 .greyLinks a {
@@ -422,6 +422,13 @@ span.categoryClosed div, span.categoryClosed ul {
   color: #4D4D4D;
 }
 
+#demoTitle {
+  overflow: hidden;
+  text-overflow:ellipsis;
+  -o-text-overflow : ellipsis;
+  white-space: nowrap;
+}
+
 /* ------ Autocomplete ------- */
 .ui-autocomplete-results {
   border: 1px solid #999;
@@ -472,7 +479,7 @@ li.ui-autocomplete-odd > a > strong, li.ui-autocomplete-even > a > strong {
   font-size:13px;
   font-weight:bold;
   font-family: Arial, sans-serif;
-  padding:5px 4px 4px 7px;
+  padding:5px 4px 5px 7px;
 }
 
 .dropdownButton {
@@ -485,10 +492,12 @@ li.ui-autocomplete-odd > a > strong, li.ui-autocomplete-even > a > strong {
 }
 
 .biggerSmallerTable {
-  display: inline-block;
-  display: expression("inline");
-  margin-right: expression("5px");
+  padding-right: 5px;
   vertical-align: top;
+}
+
+#codeMenu {
+  float: right;
 }
 
 .biggerSmallerTable a {
