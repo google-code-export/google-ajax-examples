@@ -28,7 +28,7 @@
   <link rel="stylesheet" href="codemirror/css/docs.css"
         media="screen,projection" type="text/css">
   <!-- JavaScript -->
-  <title>AJAX APIs Interactive Sampler</title>
+  <title>AJAX APIs Playground</title>
   <script src="codemirror/js/codemirror.js" type="text/javascript" charset="utf-8"></script>
   <!--<script type="text/javascript" src="js/jquery.js"></script>-->
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js" type="text/javascript" charset="utf-8"></script>
@@ -36,7 +36,6 @@
   {% for i in sample_srcs %}
     <script src="{{ i }}" type="text/javascript" charset="utf-8"></script>
   {% endfor %}
-  <!-- <script src="js/ajax_apis_samples.js" type="text/javascript" charset="utf-8"></script> -->
 
   <!--
     Undesirable to put inline script in between script includes
@@ -64,7 +63,7 @@
     google.setOnLoadCallback(init);
   </script>
 </head>
-<body style="padding: 15px 10px;">
+<body style="padding: 15px 30px;">
 {% if deleted %}
   Deleted {{deleted}}
 {% endif %}
@@ -82,10 +81,10 @@
   <table style="width:100%;">
     <tr>
       <td>
-        <h1 id="header">AJAX APIs Interactive Samples</h1>
+        <h1 id="header">AJAX APIs Playground</h1>
       </td>
       <td id="googleLogoTD">
-        <img src="images/google-small.png" alt="Google Logo">
+        <img src="images/googlecode.png" alt="Google Logo">
       </td>
     </tr>
   </table>
@@ -167,12 +166,12 @@
                   <table class="biggerSmallerTable" cellpadding="0" cellspacing="0">
                     <tr>
                       <td>
-                        <a href="javascript:is.uiEffects.changeCodeSize(parseFloat('-8'));"><img border=0 width="12" src="images/smaller.gif" alt="Shrink Code Div" /></a>
+                        <a href="javascript:is.uiEffects.changeCodeSize(parseFloat('-8'));" onclick="is.uiEffects.changeCodeSize(parseFloat('-8'));"><img border=0 width="12" src="images/smaller.gif" alt="Shrink Code Div" /></a>
                       </td>
                     </tr>
                     <tr>
                       <td style="padding-top: 1px;">
-                        <a href="javascript:is.uiEffects.changeCodeSize(8);"><img border=0 width="12" src="images/larger.gif" alt="Enlarge Code Div" /></a>
+                        <a href="javascript:is.uiEffects.changeCodeSize(8);" onclick="javascript:is.uiEffects.changeCodeSize(8);"><img border=0 width="12" src="images/larger.gif" alt="Enlarge Code Div" /></a>
                       </td>
                     </tr>
                   </table>

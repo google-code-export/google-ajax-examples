@@ -602,6 +602,10 @@
       return false;
     });
     
+    
+    $('#edit iframe').bind('mouseover', function() {
+      me.toggleDropdown('codeMenuDropdown', true);
+    });
   }
 
   UIEffects.prototype.setDivShadow = function(divName, shadowDivName) {
