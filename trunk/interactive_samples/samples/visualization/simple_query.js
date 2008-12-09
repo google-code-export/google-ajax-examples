@@ -1,5 +1,6 @@
 function drawVisualization() {
-  var query = new google.visualization.Query('http://spreadsheets.google.com/tq?key=pCQbetd-CptGXxxQIG7VFIQ&range=B1:D11');
+  var query = new google.visualization.Query(
+      'http://spreadsheets.google.com/tq?key=pCQbetd-CptGXxxQIG7VFIQ&range=B1:D11');
   
   // Send the query with a callback function.
   query.send(handleQueryResponse);
