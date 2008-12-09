@@ -1,6 +1,5 @@
 body {
   font-family: Arial, sans-serif;
-  padding: 15px 0;
 }
 
 td {
@@ -523,7 +522,7 @@ li.ui-autocomplete-odd > a > strong, li.ui-autocomplete-even > a > strong {
 }
 
 .dropdown span {
-  width: 150px;
+  width: 120px;
   display: block;
   border-top:1px solid #ABB1BD;
   color: #0033CC;
