@@ -60,7 +60,7 @@ var CodeMirror = (function(){
     // always add it, redundant as it sounds.
     frame.style.display = "block";
     frame.onmouseover = function() {
-      window.top.is.uiEffects.toggleDropdown('codeMenuDropdown', true);
+      window.parent.is.uiEffects.toggleDropdown('codeMenuDropdown', true);
     }
     if (place.appendChild)
       place.appendChild(frame);
