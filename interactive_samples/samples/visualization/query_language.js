@@ -1,5 +1,6 @@
 function drawVisualization() {
-  var query = new google.visualization.Query('http://spreadsheets.google.com/tq?key=pCQbetd-CptHq_AmlwWr2Tg');
+  var query = new google.visualization.Query(
+      'http://spreadsheets.google.com/tq?key=pCQbetd-CptHq_AmlwWr2Tg');
   
   // Apply query language.
   query.setQuery('SELECT A,C WHERE C < 10 ORDER BY C');
