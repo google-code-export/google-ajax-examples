@@ -118,7 +118,7 @@ def verify_xsrf_token(method):
       return method(self, *args, **kwargs)
     else:
       self.error(500)
-      self.response.out.write(cookieVal + ' -- ' + self.request.get('safetyCookie'));
+      self.response.out.write("Unauthorized.");
       return
   return wrapper
 
