@@ -1,12 +1,6 @@
 // Anonymous function, keep the global namespace squeeky clean..
 (function() {
 
-  // TODO:
-  // Make it so that you can make the code editing window wider...
-  // Make it so that you can click links to the documentation of each object
-
-  // TODO: make css rules for minimizing stuff easily
-
   if (typeof console == 'undefined') {
     var console = {
       log : function() {}
@@ -22,9 +16,6 @@
   function _cel(name) {
     return document.createElement(name);
   }
-
-
-
 
   function InteractiveSample(){
     this.categories = [];
@@ -57,16 +48,43 @@
     this.addShowHideClicks();
     this.uiEffects = new UIEffects();
     this.uiEffects.init(this);
+    if (window.logoutUrl) {
+      this.putSafetyCookieInForms();
+    }
+  };
+
+  InteractiveSample.prototype.getCookie = function(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for(var i = 0; i < ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0)==' ') c = c.substring(1,c.length);
+      if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    }
+    return null;
+  };
+
+  InteractiveSample.prototype.putSafetyCookieInForms = function() {
+    var cookie = this.getCookie('dev_appserver_login');
+    cookie = (cookie) ? cookie.replace(/\"/g, '') : this.getCookie('ACSID');
+    cookie = (cookie) ? cookie.substring(0, 6) : null;
+    if (cookie) {
+      $('#safetyCookie').attr('value', 'safe' + cookie);
+    }
   };
 
   InteractiveSample.prototype.deleteCustomExample = function(id) {
+    var me = this;
     return function() {
       var confirmDelete = confirm('Are you sure you want to delete this example?');
       if (confirmDelete) {
         var redirect = '/delete?id=' + id;
+        var cookie = me.getCookie('dev_appserver_login');
+        cookie = (cookie) ? cookie.replace(/\"/g, '') : me.getCookie('ACSID');
+        cookie = (cookie) ? cookie.substring(0, 6) : null;
         redirect += ((curAPITypes) ? '&type=' + curAPITypes : '');
+        redirect += (cookie) ? '&safetyCookie=' + 'safe' + cookie : '';
         window.location = redirect;
-
       }
     };
   };
@@ -156,7 +174,7 @@
         var textNode = document.createElement('span');
         textNode.innerHTML = item.sampleName;
         textNode.style.cursor = 'pointer';
-        $(textNode).bind('click', this.showSample(this, item.sampleName));
+        $(textNode).bind('click', this.showSample(item.sampleName));
         li.appendChild(textNode);
         if (item.docsUrl) {
           li.appendChild(this.createDocsLink(item.docsUrl));
@@ -171,14 +189,14 @@
         codeArray[i].samples[j]['li'] = li;
 
         if (i == 0 && j == 0) {
-          this.showSample(this, item.sampleName, true)();
+          this.showSample(item.sampleName, true)();
           this.hideAllCategoriesExcept(categoryDiv);
         }
 
         if (window.location.hash.length > 0) {
           var hashName = this.nameToHashName(item.sampleName);
           if (window.location.hash.substring(1) == hashName) {
-            this.showSample(this, item.sampleName)();
+            this.showSample(item.sampleName)();
             this.hideAllCategoriesExcept(categoryDiv);
           }
         }
@@ -273,15 +291,15 @@
   };
 
   InteractiveSample.prototype.loadRemotely = function(filename, fileType, opt_changeCodeMirror) {
-    var is_instance = this;
+    var me = this;
     $.get(filename, function(data) {
       if (opt_changeCodeMirror) {
-        is_instance.changeCodeMirror(data);
+        me.changeCodeMirror(data);
       }
-      is_instance.currentCode[filename] = {
+      me.currentCode[filename] = {
         code : data
       };
-      is_instance.runCode();
+      me.runCode();
     });
   };
 
@@ -331,19 +349,19 @@
     }
   };
 
-// TODO: can is_instance just be set as is_instance = this above return function()
-  InteractiveSample.prototype.showSample = function(is_instance, sampleName, def) {
+  InteractiveSample.prototype.showSample = function(sampleName, def) {
+    me = this;
     return function() {
-      var sampleObj = is_instance.sampleNameToObject(sampleName);
+      var sampleObj = me.sampleNameToObject(sampleName);
       var files = sampleObj.files;
       var thisLI = sampleObj.li;
       var catSplit = sampleObj.category.split('-');
       var categoryName = catSplit[0];
 
-      var codeLIs = is_instance.codeLIs;
+      var codeLIs = me.codeLIs;
       var title = $('<div>' + (catSplit[1] ? catSplit[1] : catSplit[0]) + ' > ' + sampleName + '</div>');
       if (sampleObj.docsUrl) {
-//        var docLink = $('<sup></sup>').append(is_instance.createDocsLink(sampleObj.docsUrl));
+//        var docLink = $('<sup></sup>').append(me.createDocsLink(sampleObj.docsUrl));
         var docLink = $('<sup style="font-size:13px;"> (<a href="' +
                         sampleObj.docsUrl +
                         '" target="_blank">docs</a>)</sup>');
@@ -354,7 +372,7 @@
                         '" target="_blank">docs</a>)</sup>');
         title.append(docLink);
       }
-      is_instance.setDemoTitle(title.get(0));
+      me.setDemoTitle(title.get(0));
       var i;
       for (i = 0; i < codeLIs.length; i++) {
         codeLIs[i].className = '';
@@ -362,13 +380,13 @@
 
       // For linking purposes
       if (!def) {
-        window.location.hash = is_instance.nameToHashName(sampleName);
+        window.location.hash = me.nameToHashName(sampleName);
       }
 
       // Make code selected designate this as selected
       thisLI.className = 'selected';
 
-      is_instance.currentCode = new Object();
+      me.currentCode = new Object();
 
 
       // add file names at top
@@ -381,15 +399,15 @@
         var tabClass = 'lb';
         if (i == 0) {
           tabClass = 'db';
-          is_instance.loadCode(file, true);
+          me.loadCode(file, true);
         } else {
-          is_instance.loadCode(file, false);
+          me.loadCode(file, false);
         }
 
 
         var containerDiv = _cel('div');
         containerDiv.className = 'roundedcornr_box';
-        $(containerDiv).bind('click', is_instance.changeTab(file, is_instance));
+        $(containerDiv).bind('click', me.changeTab(file));
 
         var html = '<div class="' + tabClass + '_top" ><div><\/div><\/div>';
         html += '<div class="' + tabClass + '_roundedcornr_content" >';
@@ -401,16 +419,17 @@
       // tab_bar.appendChild(containerDiv);
       }
 
-    // is_instance.loadCode(files[0], textArea);
-      is_instance.hideAllCategoriesExcept(document.getElementById(categoryName));
-      is_instance.curI = files[0];
+    // me.loadCode(files[0], textArea);
+      me.hideAllCategoriesExcept(document.getElementById(categoryName));
+      me.curI = files[0];
     };
   };
 
-  InteractiveSample.prototype.changeTab = function(i, is_instance) {
+  InteractiveSample.prototype.changeTab = function(i) {
+    var me = this;
     return function() {
       var siblings = this.parentNode.childNodes;
-      is_instance.currentCode[is_instance.curI].code = is_instance.getCode();
+      me.currentCode[me.curI].code = me.getCode();
 
     // Swap the colors of the tabs
       for (var z=0; z < siblings.length; z++) {
@@ -423,8 +442,8 @@
         }
       }
 
-      is_instance.loadCode(i, true);
-      is_instance.curI = i;
+      me.loadCode(i, true);
+      me.curI = i;
     };
   };
 
@@ -461,10 +480,10 @@
     var curFilename = this.getCurFilename();
     var sampleObj = this.sampleFileNameToObject(curFilename);
     var url = sampleObj.boilerplateLoc;
-    var is_instance = this;
+    var me = this;
     $.get(url, function(data, success) {
       if (success) {
-        var code = is_instance.getCode();
+        var code = me.getCode();
         code = '    '.concat(code);
         var newLine = code.indexOf('\n');
         while (newLine != -1) {
@@ -577,9 +596,6 @@
     } else {
       $('#outputDrag').css('cursor', 'default');
     }
-    // IE has an extremely extremely weird bug with populating the editing window.
-    // For now I can't fix it.  maybe later add autocomplete for IE.
-    // TODO: Fix autocomplete for IE (HARD BUG)
     this.initAutoComplete();
 
     if ($.browser.safari) $('.buttonText').css('padding-bottom', '5px');
@@ -587,22 +603,22 @@
     this.initSaveCodeDiv();
     this.setCodeMenuButtonClicks();
   };
-  
+
   UIEffects.prototype.setCodeMenuButtonClicks = function() {
     var me = this;
-    
+
     $('#codeMenuButtonContainer').bind('click', function() {
       me.toggleDropdown('codeMenuDropdown');
       return false;
     });
-    
-    
+
+
     $(window).bind('click', function() {
       me.toggleDropdown('codeMenuDropdown', true);
       return false;
     });
-    
-    
+
+
     $('#edit iframe').bind('mouseover', function() {
       me.toggleDropdown('codeMenuDropdown', true);
     });
@@ -801,7 +817,7 @@
       // This fixes a CRAZY bug in CodeMirror where in IE, it breaks if you
       // have the focus in another input element
       document.getElementById('edit').focus();
-      window.is.showSample(window.is, sample)();
+      window.is.showSample(sample)();
       return sample;
     });
   };
@@ -862,7 +878,7 @@
       el.removeClass('expanded');
       return;
     }
-    
+
     if (el.hasClass('expanded')) {
       el.removeClass('expanded');
     } else {
@@ -897,8 +913,6 @@
     codeContainer.css('height', newCodeContainerHeight + 'px');
     this.setDivShadow('outputDiv', 'runShadowContainer');
   };
-
-  // TODO: make sure that user input is checked so that they don't use an existing sample name!!!!
 
   function RunBox() {
     this.outputContainer;

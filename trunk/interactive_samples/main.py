@@ -22,7 +22,8 @@ import cgi
 import wsgiref.handlers
 from google.appengine.ext.webapp import template
 import simplejson
-
+import functools
+import Cookie
 
 from google.appengine.ext import webapp
 from google.appengine.api import users
@@ -86,6 +87,40 @@ def retrieveCodeFromID(self, id):
   # get code from the ID and return it
   return code
 
+def verify_xsrf_token(method):
+  """Written and stolen from Doug Coker.  Thanks Doug :)
+  Asserts that the request is acceptable per XSRF tests.  If the token is
+  not valid, we send a 500.  If it is valid, the wrapped method can assume the
+  request is legitimate.
+
+  Why: Proper web practice dictates that mutation only occur via POST requests.
+  However, I'm lazy, and dealing with POST requires more lines of code and more
+  complex javascript than using GETs.
+
+  How: The XSRF token allows us to permit mutation via GET requests because the
+  presence of the token indicates a request from a trusted source.  We know the
+  source is trusted because the token is derived from a cookie which is only
+  known to pages on our domain.  This prevents third party pages from creating
+  links to actions on our site that mutate data.
+
+  For more information, see
+  http://en.wikipedia.org/wiki/Cross-site_request_forgery
+  """
+  @functools.wraps(method)
+  def wrapper(self, *args, **kwargs):
+    c = Cookie.Cookie()
+    c.load(self.request.headers['Cookie'])
+    if c.has_key("ACSID"):
+      cookieVal = "safe" + c["ACSID"].value[0:6]
+    if c.has_key("dev_appserver_login"):
+      cookieVal = "safe" + c["dev_appserver_login"].value[0:6]
+    if cookieVal and cookieVal == self.request.get('safetyCookie'):
+      return method(self, *args, **kwargs)
+    else:
+      self.error(500)
+      self.response.out.write(cookieVal + ' -- ' + self.request.get('safetyCookie'));
+      return
+  return wrapper
 
 class GetCode(webapp.RequestHandler):
   def get(self):
@@ -146,8 +181,8 @@ class Main(webapp.RequestHandler):
 
 
 class Delete(webapp.RequestHandler):
+  @verify_xsrf_token
   def get(self):
-
     id = self.request.get('id')
     entry = db.get(db.Key(str(id)))
     user = users.get_current_user()
@@ -185,6 +220,7 @@ class Save(webapp.RequestHandler):
       hashLink = '#' + entry.sampleName.lower().replace(' ', '_')
       return hashLink
 
+  @verify_xsrf_token
   def post(self):
     user = users.get_current_user()
     hashLink = ''

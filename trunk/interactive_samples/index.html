@@ -12,7 +12,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Author: Ben Lisbakken 
+ * Author: Ben Lisbakken
 -->
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -36,7 +36,6 @@
   {% for i in sample_srcs %}
     <script src="{{ i }}" type="text/javascript" charset="utf-8"></script>
   {% endfor %}
-
   <!--
     Undesirable to put inline script in between script includes
     but this is the best way to load saved examples
@@ -55,7 +54,8 @@
   <script src="js/interactive_logic.js" type="text/javascript" charset="utf-8"></script>
   <script src="http://www.google.com/jsapi" type="text/javascript" charset="utf-8"></script>
   <script type="text/javascript" charset="utf-8">
-
+    var loginUrl = '{{ loginUrl }}';
+    var logoutUrl = '{{ logoutUrl }}';
     function init() {
       is.init(document.getElementById('editor'));
     }
@@ -110,7 +110,7 @@
             <td align="right">
               <div id="searchInputContainer">
                 <input tabindex="1" type="text" size="14" value="search"
-                       onclick="this.value = '';this.style.color = 'black'" id="search"/>
+                       onclick="this.value = '';this.style.color = 'black';" id="search"/>
               </div>
             </td>
           </tr>
@@ -124,7 +124,6 @@
 
 
   <td id="codeContainer">
-    <!-- todo check styles on here -->
     <div id="editor">
       <div>
         <h2>
@@ -171,7 +170,7 @@
                     </tr>
                     <tr>
                       <td style="padding-top: 1px;">
-                        <a href="javascript:is.uiEffects.changeCodeSize(8);" onclick="javascript:is.uiEffects.changeCodeSize(8);"><img border=0 width="12" src="images/larger.gif" alt="Enlarge Code Div" /></a>
+                        <a href="javascript:is.uiEffects.changeCodeSize(8);" onclick="is.uiEffects.changeCodeSize(8);"><img border=0 width="12" src="images/larger.gif" alt="Enlarge Code Div" /></a>
                       </td>
                     </tr>
                   </table>
@@ -263,6 +262,7 @@ iFrame fixes it.
   <input name="jscode" id="jscodeSaveForm" style="display: none;" />
   <input type="hidden" name="id" value="" id="idSaveForm">
   <input type="hidden" name="type" value="{{curAPITypes}}">
+  <input type="hidden" name="safetyCookie" id="safetyCookie">
   <table>
     <tr>
       <td style="vertical-align: top;" class="formLabel">Sample Name:</td>
@@ -289,7 +289,7 @@ iFrame fixes it.
     </tr>
     <tr>
       <td align='left'colspan='2'>
-        <input type="submit" value="Save &rarr;">
+        <input type="button" value="Save &rarr;" onclick="$('#saveForm').get(0).submit();">
       </td>
     </tr>
   </table>
