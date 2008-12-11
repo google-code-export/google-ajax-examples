@@ -175,7 +175,6 @@ class Main(webapp.RequestHandler):
         ]
         self.template_values['usersSamplesJSON'] = simplejson.dumps(savedCodeObj);
 
-
     path = os.path.join(os.path.dirname(__file__), 'index.html')
     self.response.out.write(template.render(path, self.template_values))
 
@@ -257,7 +256,7 @@ def main():
                                         ('/save', Save),
                                         ('/delete', Delete),
                                         ('/get', GetCode)],
-                                       debug=True)
+                                       debug=False)
   wsgiref.handlers.CGIHandler().run(application)
 
 
