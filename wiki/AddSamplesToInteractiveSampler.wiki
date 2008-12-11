@@ -1,0 +1,13 @@
+#summary How to add samples to the interactive sampler project.
+
+= Introduction =
+
+This wiki will show you how to default samples to the interactive sampler found here:
+http://interactivesampler.appspot.com/
+
+Samples are stored in the samples/ directory in the codebase.  There are three parts to a sample.
+  # The boilerplate HTML.  This is an HTML file that has generic HTML or Javascript code that your samples use.  The point of this is to avoid repetition while writing demos as well as promote consistency among your sample code.  Please try to minimize the number of boilerplate HTML files per Javascript files.  Here's what a boilerplate HTML file looks like: 
+  # The Javascript sample code.  This is the code that the developers will actually see and edit.
+
+
+= Details =
