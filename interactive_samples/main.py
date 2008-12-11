@@ -24,6 +24,8 @@ from google.appengine.ext.webapp import template
 import simplejson
 import functools
 import Cookie
+import datetime
+import time
 
 from google.appengine.ext import webapp
 from google.appengine.api import users
@@ -174,6 +176,13 @@ class Main(webapp.RequestHandler):
           }
         ]
         self.template_values['usersSamplesJSON'] = simplejson.dumps(savedCodeObj);
+
+    t = datetime.datetime.now()
+    todayInSeconds = time.mktime(t.timetuple())
+    tomorrowInSeconds =  todayInSeconds + 86400
+    tomorrowFormatted = datetime.datetime.fromtimestamp(tomorrowInSeconds)
+    tomorrowFormatted = tomorrowFormatted.strftime("%a, %d %b %Y %I:%M:%S")
+    self.response.headers['Expires'] = tomorrowFormatted + ' GMT'
 
     path = os.path.join(os.path.dirname(__file__), 'index.html')
     self.response.out.write(template.render(path, self.template_values))
