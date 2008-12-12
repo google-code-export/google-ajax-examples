@@ -179,10 +179,13 @@ class Main(webapp.RequestHandler):
 
     t = datetime.datetime.now()
     todayInSeconds = time.mktime(t.timetuple())
-    tomorrowInSeconds =  todayInSeconds + 86400
-    tomorrowFormatted = datetime.datetime.fromtimestamp(tomorrowInSeconds)
-    tomorrowFormatted = tomorrowFormatted.strftime("%a, %d %b %Y %I:%M:%S")
-    self.response.headers['Expires'] = tomorrowFormatted + ' GMT'
+#    tomorrowInSeconds =  todayInSeconds + 86400
+#    tomorrowFormatted = datetime.datetime.fromtimestamp(tomorrowInSeconds)
+    todayFormatted = datetime.datetime.fromtimestamp(todayInSeconds)
+#    tomorrowFormatted = tomorrowFormatted.strftime("%a, %d %b %Y %I:%M:%S")
+    todayFormatted = todayFormatted.strftime("%a, %d %b %Y %I:%M:%S")
+
+    self.response.headers['Expires'] = todayFormatted + ' GMT'
 
     path = os.path.join(os.path.dirname(__file__), 'index.html')
     self.response.out.write(template.render(path, self.template_values))

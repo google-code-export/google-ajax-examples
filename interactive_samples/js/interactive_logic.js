@@ -613,10 +613,10 @@
     });
 
 
-    $(window).bind('click', function() {
-      me.toggleDropdown('codeMenuDropdown', true);
-      return false;
-    });
+    // $(window).bind('click', function() {
+    //   me.toggleDropdown('codeMenuDropdown', true);
+    //   return false;
+    // });
 
 
     $('#edit iframe').bind('mouseover', function() {
