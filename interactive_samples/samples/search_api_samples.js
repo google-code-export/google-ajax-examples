@@ -9,7 +9,8 @@ var tempJSON = [
       {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/search/large_result_set.js"], "sampleName":"Large Result Set", "tags": " Result Size, Number of Results"},
       {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/search/expand_mode.js"], "sampleName":"Expand Mode", "tags": "Search Control"},
       {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/search/raw_search.js"], "sampleName":"Raw Search", "tags": "Custom Control, Custom Results"},
-      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/search/show_query.js"], "sampleName":"Show Search Query", "tags": "Show User Query"}
+      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/search/show_query.js"], "sampleName":"Show Search Query", "tags": "Show User Query"},
+      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/search/auto_search.js"], "sampleName":"Search as user Types", "tags": "Custom form, automatic search"}
     ],
     "docsUrl": "http://code.google.com/apis/ajaxsearch/documentation/reference.html#_class_GSearch"
   },
