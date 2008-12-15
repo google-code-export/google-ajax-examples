@@ -109,9 +109,9 @@ def verify_xsrf_token(method):
     c = Cookie.Cookie()
     c.load(self.request.headers['Cookie'])
     if c.has_key("ACSID"):
-      cookieVal = "safe" + c["ACSID"].value[0:6]
+      cookieVal = "safe" + c["ACSID"].value[6:12]
     if c.has_key("dev_appserver_login"):
-      cookieVal = "safe" + c["dev_appserver_login"].value[0:6]
+      cookieVal = "safe" + c["dev_appserver_login"].value[6:12]
     if cookieVal and cookieVal == self.request.get('safetyCookie'):
       return method(self, *args, **kwargs)
     else:
