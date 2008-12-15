@@ -67,7 +67,7 @@
   InteractiveSample.prototype.putSafetyCookieInForms = function() {
     var cookie = this.getCookie('dev_appserver_login');
     cookie = (cookie) ? cookie.replace(/\"/g, '') : this.getCookie('ACSID');
-    cookie = (cookie) ? cookie.substring(0, 6) : null;
+    cookie = (cookie) ? cookie.substring(6, 12) : null;
     if (cookie) {
       $('#safetyCookie').attr('value', 'safe' + cookie);
     }
@@ -81,7 +81,7 @@
         var redirect = '/delete?id=' + id;
         var cookie = me.getCookie('dev_appserver_login');
         cookie = (cookie) ? cookie.replace(/\"/g, '') : me.getCookie('ACSID');
-        cookie = (cookie) ? cookie.substring(0, 6) : null;
+        cookie = (cookie) ? cookie.substring(6, 12) : null;
         redirect += ((curAPITypes) ? '&type=' + curAPITypes : '');
         redirect += (cookie) ? '&safetyCookie=' + 'safe' + cookie : '';
         window.location = redirect;
