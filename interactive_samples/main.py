@@ -85,10 +85,6 @@ def formatSavedCodeToJSONArr(self, savedCodeArr):
 
   return simplejson.dumps(savedCodeArr)
 
-def retrieveCodeFromID(self, id):
-  # get code from the ID and return it
-  return code
-
 def verify_xsrf_token(method):
   """Written and stolen from Doug Coker.  Thanks Doug :)
   Asserts that the request is acceptable per XSRF tests.  If the token is
@@ -130,6 +126,14 @@ class GetCode(webapp.RequestHandler):
     entry = db.get(db.Key(str(id)))
     self.response.out.write(entry.jscode);
 
+def getTypes(self):
+  types = self.request.get('type')
+  splitTypes = types.split('|')
+  for i in splitTypes:
+    if not apis.has_key(i):
+      return False
+  return types
+
 class Main(webapp.RequestHandler):
   def getAPISampleSourceIncludes(self, types):
     apiSampleSources = []
@@ -145,7 +149,7 @@ class Main(webapp.RequestHandler):
 
 
   def get(self):
-    apiTypes = self.request.get('type')
+    apiTypes = getTypes(self)
     self.template_values = {}
     if apiTypes:
       self.template_values = getTemplateValues(self, '?type=' + apiTypes);
@@ -201,7 +205,7 @@ class Delete(webapp.RequestHandler):
       # we can delete it then..
       db.delete(entry)
 
-    apiTypes = self.request.get('type')
+    apiTypes = getTypes(self)
     cgiArgs = ''
     if apiTypes:
       cgiArgs = '?type=' + apiTypes
@@ -257,7 +261,7 @@ class Save(webapp.RequestHandler):
     else:
       self.response.out.write('Not logged in')
 
-    apiTypes = self.request.get('type')
+    apiTypes = getTypes(self)
     cgiArgs = ''
     if apiTypes:
       cgiArgs = '?type=' + apiTypes
