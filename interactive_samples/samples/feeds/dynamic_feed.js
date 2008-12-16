@@ -1,15 +1,10 @@
 /*
 *  How to use the Dynamic Feed Control, which has pretty UI already made for you!
-*  Don't forget to add the Dynamic Feed Control script/CSS into your HTML:
-*  <script src="http://www.google.com/uds/solutions/dynamicfeed/gfdynamicfeedcontrol.js"
-*          type="text/javascript"></script>
-*  <link rel="stylesheet" href="http://www.google.com/uds/solutions/dynamicfeed/gfdynamicfeedcontrol.css"
-*        type="text/css" charset="utf-8">
 */
 
 google.load('feeds', '1');
 
-function LoadDynamicFeedControl() {
+function OnLoad() {
   var feeds = [
     {
       title: 'People',
@@ -29,9 +24,9 @@ function LoadDynamicFeedControl() {
     stacked : true,
     horizontal : false,
     title : "Hollywood News"
-  }
+  };
 
-  new GFdynamicFeedControl(feeds, 'feed-control', options);
+  new GFdynamicFeedControl(feeds, 'content', options);
 }
 
 google.setOnLoadCallback(OnLoad);
