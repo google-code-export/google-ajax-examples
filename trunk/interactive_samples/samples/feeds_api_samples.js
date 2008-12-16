@@ -7,7 +7,9 @@ var tempJSON = [
       {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/feeds/results_in_xml.js"], "sampleName":"Results in XML", "tags": "XML"},
       {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/feeds/feed_control.js"], "sampleName":"Feed Control", "tags": ""},
       {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/feeds/lookup_feed.js"], "sampleName":"Lookup Feed", "tags": "Lookup Website Associated Feed"},
-      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/feeds/find_feed.js"], "sampleName":"Find Feed", "tags": "Query for Feeds"}
+      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/feeds/find_feed.js"], "sampleName":"Find Feed", "tags": "Query for Feeds"},
+      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis/dynamicFeedControl.html", "files":["samples/feeds/dynamic_feed.js"], "sampleName":"Dynamic Feed Control", "tags": "Wizard", "docsUrl": "http://www.google.com/uds/solutions/wizards/dynamicfeed.html"},
+      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis/slideshow.html", "files":["samples/feeds/slideshow.js"], "sampleName":"Slideshow of Photo Feed", "tags": "", "docsUrl": "http://www.google.com/uds/solutions/slideshow/reference.html"}
     ],
     "docsUrl": "http://code.google.com/apis/ajaxfeeds/documentation/reference.html"
   }
