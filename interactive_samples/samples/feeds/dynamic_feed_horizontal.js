@@ -1,5 +1,7 @@
 /*
 *  How to use the Dynamic Feed Control, which has pretty UI already made for you!
+*  Don't forget to check out the options:
+*  http://www.google.com/uds/solutions/dynamicfeed/reference.html
 */
 
 google.load('feeds', '1');
@@ -21,8 +23,7 @@ function OnLoad() {
   ];
 
   var options = {
-    stacked : true,
-    horizontal : false,
+    horizontal : true,
     title : "Hollywood News"
   };
 
