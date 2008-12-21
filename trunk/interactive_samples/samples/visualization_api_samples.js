@@ -2,9 +2,16 @@ var tempJSON = [
   {
     "category":"Visualization API-Basics",
     "samples":[
-      {"boilerplateLoc":"samples/boilerplateHTML/visualization/visualizationapi.html", "files":["samples/visualization/simple_table.js"], "sampleName":"Simple Table", "tags": ""},
-      {"boilerplateLoc":"samples/boilerplateHTML/visualization/simple_charts.html", "files":["samples/visualization/simple_charts.js"], "sampleName":"Simple Charts", "tags": ""},
-      {"boilerplateLoc":"samples/boilerplateHTML/visualization/more_visualizations.html", "files":["samples/visualization/more_visualizations.js"], "sampleName":"More Visualizations", "tags": ""}
+      {"boilerplateLoc":"samples/boilerplateHTML/visualization/visualizationapi.html", "files":["samples/visualization/simple_table.js"], "sampleName":"Table", "tags": ""},
+      {"boilerplateLoc":"samples/boilerplateHTML/visualization/onevisualization.html", "files":["samples/visualization/areachart.js"], "sampleName":"Area Chart", "tags": ""},
+      {"boilerplateLoc":"samples/boilerplateHTML/visualization/onevisualization.html", "files":["samples/visualization/imageareachart.js"], "sampleName":"Image Area Chart", "tags": ""},
+      {"boilerplateLoc":"samples/boilerplateHTML/visualization/onevisualization.html", "files":["samples/visualization/columnchart.js"], "sampleName":"Column Chart", "tags": ""},
+      {"boilerplateLoc":"samples/boilerplateHTML/visualization/onevisualization.html", "files":["samples/visualization/linechart.js"], "sampleName":"Line Chart", "tags": ""},
+      {"boilerplateLoc":"samples/boilerplateHTML/visualization/onevisualization.html", "files":["samples/visualization/imagelinechart.js"], "sampleName":"Image Line Chart", "tags": ""},
+      {"boilerplateLoc":"samples/boilerplateHTML/visualization/onevisualization.html", "files":["samples/visualization/scatterchart.js"], "sampleName":"Scatter Chart", "tags": ""},
+      {"boilerplateLoc":"samples/boilerplateHTML/visualization/oneflashvisualization.html", "files":["samples/visualization/motionchart.js"], "sampleName":"Motion Chart", "tags": ""},
+      {"boilerplateLoc":"samples/boilerplateHTML/visualization/oneflashvisualization.html", "files":["samples/visualization/annotatedtimeline2.js"], "sampleName":"Annotated Time Line", "tags": ""},
+      {"boilerplateLoc":"samples/boilerplateHTML/visualization/oneflashvisualization.html", "files":["samples/visualization/geomap.js"], "sampleName":"Geo Map", "tags": ""}
     ],
     "docsUrl": "http://code.google.com/apis/visualization/documentation/index.html"
   },
