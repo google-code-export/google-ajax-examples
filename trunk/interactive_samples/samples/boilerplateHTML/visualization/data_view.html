@@ -69,11 +69,11 @@
       dataTable.setCell(3, 3, 'White');
 
     try {
-      if (window.parent && window.parent.is && window.parent.is.codeToRun) window.eval(window.parent.is.codeToRun);
+      if (window.parent && window.parent.is && window.parent.is.codeToRun) {window.eval(window.parent.is.codeToRun);window.onclick = function() {window.parent.is.uiEffects.bringRunBoxToFront();};}
     } catch (e) {
       alert("Error: " + e.message);
     }
-      
+
       google.setOnLoadCallback(drawVisualization);
     </script>
   </head>

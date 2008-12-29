@@ -10,7 +10,7 @@ var tempJSON = [
       {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/feeds/find_feed.js"], "sampleName":"Find Feed", "tags": "Query for Feeds"},
       {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis/dynamicFeedControl.html", "files":["samples/feeds/dynamic_feed_vertical.js"], "sampleName":"Dynamic Feed Control - Vertical", "tags": "Wizard", "docsUrl": "http://www.google.com/uds/solutions/dynamicfeed/reference.html"},
       {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis/dynamicFeedControl.html", "files":["samples/feeds/dynamic_feed_horizontal.js"], "sampleName":"Dynamic Feed Control - Horizontal", "tags": "Wizard", "docsUrl": "http://www.google.com/uds/solutions/dynamicfeed/reference.html"},
-      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis/slideshow.html", "files":["samples/feeds/slideshow.js"], "sampleName":"Slideshow of Photo Feed", "tags": "", "docsUrl": "http://www.google.com/uds/solutions/slideshow/reference.html"}
+      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis/slideshow.html", "files":["samples/feeds/slideshow.js"], "sampleName":"Slideshow of Photo Feed", "tags": "Wizard", "docsUrl": "http://www.google.com/uds/solutions/slideshow/reference.html"}
     ],
     "docsUrl": "http://code.google.com/apis/ajaxfeeds/documentation/reference.html"
   }
