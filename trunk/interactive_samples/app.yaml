@@ -23,11 +23,11 @@ handlers:
 - url: /(.*\.(gif|png|jpg))
   static_files: static/\1
   upload: static/(.*\.(gif|png|jpg))
-- url: /(.*\.html)
+- url: /samples/boilerplateHTML/(.*\.html)
   script: boilerplateProxy.py
 - url: /index.html
   script: main.py
-- url: /samples
-  static_dir: samples
+- url: /samples/js
+  static_dir: samples/js
 - url: .*
   script: main.py
