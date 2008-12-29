@@ -17,6 +17,8 @@
     return document.createElement(name);
   }
 
+  var savedByTheGoogAPIKey = "ABQIAAAA1XbMiDxx_BTCY2_FkPh06RRaGTYH6UMl8mADNa0YKuWNNa8VNxQEerTAUcfkyrr6OwBovxn7TDAH5Q";
+
   function InteractiveSample(){
     this.categories = [];
     this.subCategories = [];
@@ -58,8 +60,8 @@
     var ca = document.cookie.split(';');
     for(var i = 0; i < ca.length; i++) {
       var c = ca[i];
-      while (c.charAt(0)==' ') c = c.substring(1,c.length);
-      if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+      while (c.charAt(0)==' ') c = c.substring(1, c.length);
+      if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
     }
     return null;
   };
@@ -476,7 +478,7 @@
     return this.curI;
   };
 
-  InteractiveSample.prototype.getFullSrc = function(callbackFunc) {
+  InteractiveSample.prototype.getFullSrc = function(callbackFunc, opt_APIKey) {
     var curFilename = this.getCurFilename();
     var sampleObj = this.sampleFileNameToObject(curFilename);
     var url = sampleObj.boilerplateLoc;
@@ -497,10 +499,13 @@
          doing a find for the place where the code goes and replacing it */
         data = data.replace(
                 '    try {\n' +
-                '      if (window.parent && window.parent.is && window.parent.is.codeToRun) window.eval(window.parent.is.codeToRun);\n' +
+                '      if (window.parent && window.parent.is && window.parent.is.codeToRun) {window.eval(window.parent.is.codeToRun);window.onclick = function() {window.parent.is.uiEffects.bringRunBoxToFront();};}\n' +
                 '    } catch (e) {\n' +
                 '      alert("Error: " + e.message);\n' +
                 '    }', code);
+
+        var key = opt_APIKey || "<<INSERT KEY>>";
+        data = data.replace(/key=.*"/, "key=" + key + "\"");
         callbackFunc(data);
       }
     });
@@ -522,7 +527,8 @@
   };
 
   InteractiveSample.prototype.linkCode = function() {
-    this.getFullSrc(this.sendCodeToServer);
+    var apiKey = savedByTheGoogAPIKey;
+    this.getFullSrc(this.sendCodeToServer, apiKey);
   };
 
   InteractiveSample.prototype.saveCode = function() {
@@ -563,6 +569,13 @@
 
 
 
+
+
+
+
+
+
+
   /*
    * UIEffects sets up all of the jQuery UI stuff for draggable etc.
   */
@@ -570,11 +583,22 @@
     this.is = new Object();
     this.mousePos = new Object();
     this.numHTMLEditors;
+    this.uiEls;
+    this.dropdownTimer;
   }
 
   UIEffects.prototype.init = function(is) {
     this.is = is;
     this.numHTMLEditors = 0;
+    this.uiEls = {
+      'editor': $('#editor'),
+      'editShadowContainer': $('#editShadowContainer'),
+      'selectContainer': $('#selectContainer'),
+      'pickShadowContainer': $('#pickShadowContainer'),
+      'outputDrag': $('outputDrag'),
+      'outputDiv': $('#outputDiv'),
+      'runShadowContainer': $('#runShadowContainer')
+    };
 
     this.mousePos = {
       'x': 0,
@@ -589,9 +613,15 @@
     });
 
     if (!this.is.ie6) {
-      this.setOutputDivResizable();
-      this.setOutputDivDraggable();
+      this.setResizables();
+      this.setDraggables();
       this.setDivShadow('outputDiv', 'runShadowContainer');
+      var left = $("#outputDiv").css('left');
+      var top = $("#outputDiv").css('top');
+      this.setDivShadow('selectContainer', 'pickShadowContainer');
+      this.setDivShadow('editor', 'editShadowContainer');
+      $("#outputDiv").css('left', left);
+      $("#outputDiv").css('top', top);
       this.setWindowResize();
     } else {
       $('#outputDrag').css('cursor', 'default');
@@ -602,56 +632,162 @@
     this.initShowSourceDiv();
     this.initSaveCodeDiv();
     this.setCodeMenuButtonClicks();
+    this.setBringWindowFrontClicks();
+  };
+
+  UIEffects.prototype.setBringWindowFrontClicks = function() {
+    var me = this;
+    this.uiEls.editor.bind('click', function() {
+      me.bringEditorToFront();
+    });
+    this.uiEls.outputDiv.bind('click', function() {
+      me.bringRunBoxToFront();
+    });
+    this.uiEls.selectContainer.bind('click', function() {
+      me.bringSelectToFront();
+    });
+  };
+
+  UIEffects.prototype.decreaseZButRetainExistingHeirarchy = function(els, maxZ) {
+    function sortByZs(a, b){
+      var aZ = a.css('z-index');
+      var bZ = b.css('z-index');
+      if (aZ < bZ) {
+        return -1;
+      }
+      if (aZ > bZ) {
+        return 1;
+      }
+      return 0;
+    }
+    els = els.sort(sortByZs);
+    var curZ = maxZ;
+    for (var i = els.length - 1; i >= 0; i--) {
+      els[i].css('z-index', curZ--);
+    }
+  };
+
+  UIEffects.prototype.bringSelectToFront = function() {
+    this.uiEls.selectContainer.css('z-index', '502');
+    this.uiEls.pickShadowContainer.css('z-index', '501');
+    var elsToChange = [
+      this.uiEls.editor,
+      this.uiEls.editShadowContainer,
+      this.uiEls.outputDiv,
+      this.uiEls.runShadowContainer
+    ];
+    this.decreaseZButRetainExistingHeirarchy(elsToChange, 500);
+  };
+
+  UIEffects.prototype.bringEditorToFront = function() {
+    this.uiEls.editor.css('z-index', '502');
+    this.uiEls.editShadowContainer.css('z-index', '501');
+    var elsToChange = [
+      this.uiEls.selectContainer,
+      this.uiEls.pickShadowContainer,
+      this.uiEls.outputDiv,
+      this.uiEls.runShadowContainer
+    ];
+    this.decreaseZButRetainExistingHeirarchy(elsToChange, 500);
+  };
+
+  UIEffects.prototype.bringRunBoxToFront = function() {
+    this.uiEls.outputDiv.css('z-index', '502');
+    this.uiEls.runShadowContainer.css('z-index', '501');
+    var elsToChange = [
+      this.uiEls.selectContainer,
+      this.uiEls.pickShadowContainer,
+      this.uiEls.editor,
+      this.uiEls.editShadowContainer
+    ];
+    this.decreaseZButRetainExistingHeirarchy(elsToChange, 500);
   };
 
   UIEffects.prototype.setCodeMenuButtonClicks = function() {
     var me = this;
+    var codeMenuButtonContainer = $('#codeMenuButtonContainer');
+    var codeMenuDropdown = $('#codeMenuDropdown');
 
-    $('#codeMenuButtonContainer').bind('click', function() {
+    codeMenuButtonContainer.bind('click', function() {
       me.toggleDropdown('codeMenuDropdown');
       return false;
     });
 
-
-    // $(window).bind('click', function() {
-    //   me.toggleDropdown('codeMenuDropdown', true);
-    //   return false;
-    // });
-
-
-    $('#edit iframe').bind('mouseover', function() {
-      me.toggleDropdown('codeMenuDropdown', true);
+    codeMenuButtonContainer.bind('mouseout', function() {
+      me.dropdownTimer = window.setTimeout("window.is.uiEffects.toggleDropdown('codeMenuDropdown', true);", 100);
     });
-  }
+
+    codeMenuButtonContainer.bind('mouseover', function() {
+      if (me.dropdownTimer) {
+        window.clearTimeout(me.dropdownTimer);
+      }
+    });
+
+    codeMenuDropdown.bind('mouseout', function() {
+      me.dropdownTimer = window.setTimeout("window.is.uiEffects.toggleDropdown('codeMenuDropdown', true);", 100);
+    });
+
+    codeMenuDropdown.bind('mouseover', function() {
+      if (me.dropdownTimer) {
+        window.clearTimeout(me.dropdownTimer);
+      }
+    });
+  };
 
   UIEffects.prototype.setDivShadow = function(divName, shadowDivName) {
     var outputContainer = $("#" + divName);
-    var outputContainerWidth = $(outputContainer).width();
-    var outputContainerHeight = $(outputContainer).height();
-    var outputContainerPos = $(outputContainer).position();
+    var width = $(outputContainer).width();
+    var height = $(outputContainer).height();
+    var pos = $(outputContainer).position();
+    outputContainer.css('position', 'absolute')
+            .css('width', width)
+            .css('height', height)
+            .css('top', pos.top)
+            .css('left', pos.left);
 
-    this.setShadowDivSize(shadowDivName, outputContainerWidth, outputContainerHeight);
-    this.setShadowDivPosition(shadowDivName, outputContainerPos.top, outputContainerPos.left);
+    this.setShadowDivSize(shadowDivName, width, height);
+    this.setShadowDivPosition(shadowDivName, pos.top, pos.left);
     this.showShadowDiv(shadowDivName);
   };
 
   UIEffects.prototype.setWindowResize = function() {
     var me = this;
-    $(window).bind('resize', function() {
+    $(window).bind('resize', function(e) {
       me.setDivShadow('outputDiv', 'runShadowContainer');
+      me.resizeEdit();
+      me.resizeOutput();
     });
   };
 
-  UIEffects.prototype.setOutputDivResizable = function() {
+  UIEffects.prototype.resizeEdit = function() {
+    var containerWidth = $('#container').width();
+    var editor = this.uiEls.editor;
+    var editorLeft = editor.position().left;
+    var newWidth = containerWidth - editorLeft + 26;
+    if (newWidth > 100) {
+      editor.css('width', newWidth + 'px');
+      this.setDivShadow('editor', 'editShadowContainer');
+    }
+  };
+
+  UIEffects.prototype.resizeOutput = function() {
+    var containerWidth = $('#container').width();
+    var newWidth = containerWidth - 6;
+    if (newWidth > 100) {
+      $('#outputDiv').css('width', newWidth + 'px');
+      this.setDivShadow('outputDiv', 'runShadowContainer');
+    }
+  };
+
+  UIEffects.prototype.setResizables = function() {
     var me = this;
-    var width = $("#outputDiv").width();
-    var height = $("#outputDiv").height();
-    $("#outputDiv").css('position', 'absolute').css('width', width).css('height', height);
+
     $("#outputDiv").resizable({
       handles: "se",
       helper: 'proxy',
       resize: function(e, ui) {
         me.updateDragSafeDiv();
+        me.bringRunBoxToFront();
       },
       minHeight: 115,
       minWidth: 115,
@@ -661,15 +797,80 @@
         me.is.runBox.setNewCodeRunIframeWidthHeight($('#runFrame'));
       }
     });
+
+
+    $("#editor").resizable({
+      handles: "se",
+      helper: 'proxy',
+      minHeight: 115,
+      minWidth: 115,
+      resize: function(e, ui) {
+        me.updateDragSafeDiv();
+        me.bringEditorToFront();
+      },
+      stop: function(e, ui) {
+        me.hideDragSafeDiv();
+        var editor = me.uiEls.editor;
+        var editorHeight = editor.height();
+        var newEditHeight = editorHeight - 46;
+        $("#edit").css('height', newEditHeight + 'px');
+        me.setDivShadow('editor', 'editShadowContainer');
+      }
+    });
+
+
+    $("#selectContainer").resizable({
+      handles: "se",
+      helper: 'proxy',
+      minHeight: 115,
+      minWidth: 115,
+      resize: function(e, ui) {
+        me.updateDragSafeDiv();
+        me.bringSelectToFront();
+      },
+      stop: function(e, ui) {
+        me.hideDragSafeDiv();
+        var selectContainer = me.uiEls.selectContainer;
+        var selectHeight = selectContainer.height();
+        var newEditHeight = selectHeight - 46;
+        $("#selectCode").css('height', newEditHeight + 'px');
+        me.setDivShadow('selectContainer', 'pickShadowContainer');
+      }
+    });
   };
 
-  UIEffects.prototype.setOutputDivDraggable = function() {
+  UIEffects.prototype.setDraggables = function() {
     var me = this;
     $("#outputDiv").draggable({
       handle: "outputDrag",
       drag: function(e, ui) {
         me.updateDragSafeDiv();
         me.setShadowDivPosition('runShadowContainer', ui.position.top, ui.position.left);
+        me.bringRunBoxToFront();
+      },
+      stop: function(e, ui) {
+        me.hideDragSafeDiv();
+      }
+    });
+
+    $("#editor").draggable({
+      handle: "editDrag",
+      drag: function(e, ui) {
+        me.updateDragSafeDiv();
+        me.setShadowDivPosition('editShadowContainer', ui.position.top, ui.position.left);
+        me.bringEditorToFront();
+      },
+      stop: function(e, ui) {
+        me.hideDragSafeDiv();
+      }
+    });
+
+    $("#selectContainer").draggable({
+      handle: "selectDrag",
+      drag: function(e, ui) {
+        me.updateDragSafeDiv();
+        me.setShadowDivPosition('pickShadowContainer', ui.position.top, ui.position.left);
+        me.bringSelectToFront();
       },
       stop: function(e, ui) {
         me.hideDragSafeDiv();
@@ -887,10 +1088,10 @@
   };
 
   UIEffects.prototype.changeCodeSize = function(amount) {
-    var editor = $('#editor');
+    var editor = this.uiEls.editor;
     var edit = $('#edit');
     var select = $('#selectCode');
-    var selContainer = $('#selectContainer');
+    var selContainer = this.uiEls.selectContainer;
     var codeContainer = $('#codeContainer');
     var curEditorHeight = editor.css('height');
     var curEditHeight = edit.css('height');
@@ -909,10 +1110,21 @@
       newSelContainerHeight = newCodeContainerHeight;
     }
     selContainer.css('height', newSelContainerHeight + 'px');
-
     codeContainer.css('height', newCodeContainerHeight + 'px');
+
     this.setDivShadow('outputDiv', 'runShadowContainer');
+    this.setDivShadow('editor', 'editShadowContainer');
+    this.setDivShadow('selectContainer', 'pickShadowContainer');
   };
+
+
+
+
+
+
+
+
+
 
   function RunBox() {
     this.outputContainer;

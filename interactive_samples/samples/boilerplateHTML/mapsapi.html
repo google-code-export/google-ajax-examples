@@ -10,14 +10,14 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
     <title>Google Maps API Sample</title>
-    <script src="http://www.google.com/jsapi?key=ABQIAAAApfWVg6qaIHQdkCxe56e57hQHF42S0NdyoEzlm7Prh6jpDX8u1BQl13u7vqoYPQtANG3eKKgIWoeVOw" type="text/javascript"></script>
+    <script src="http://www.google.com/jsapi?key={{ key }}" type="text/javascript"></script>
     <script type="text/javascript">
     google.load("maps", "2");
     </script>
     <script type="text/javascript">
     var map;
     try {
-      if (window.parent && window.parent.is && window.parent.is.codeToRun) window.eval(window.parent.is.codeToRun);
+      if (window.parent && window.parent.is && window.parent.is.codeToRun) {window.eval(window.parent.is.codeToRun);window.onclick = function() {window.parent.is.uiEffects.bringRunBoxToFront();};}
     } catch (e) {
       alert("Error: " + e.message);
     }

@@ -74,6 +74,20 @@
   <div class="rShadow rightShadows">&nbsp;</div>
   <div class="trShadow rightShadows">&nbsp;</div>
 </div>
+<div id="editShadowContainer">
+  <div class="blShadow bottomShadows">&nbsp;</div>
+  <div class="bShadow bottomShadows">&nbsp;</div>
+  <div class="brShadow bottomShadows rightShadows">&nbsp;</div>
+  <div class="rShadow rightShadows">&nbsp;</div>
+  <div class="trShadow rightShadows">&nbsp;</div>
+</div>
+<div id="pickShadowContainer">
+  <div class="blShadow bottomShadows">&nbsp;</div>
+  <div class="bShadow bottomShadows">&nbsp;</div>
+  <div class="brShadow bottomShadows rightShadows">&nbsp;</div>
+  <div class="rShadow rightShadows">&nbsp;</div>
+  <div class="trShadow rightShadows">&nbsp;</div>
+</div>
 
 
 <div id="container">
@@ -96,13 +110,14 @@
 <table class="contentTable">
 <tr>
   <td id="selectContainer">
-    <h2>
-      <!--
-        This table is here because all other H2's have tables so they are
-        different heights and I couldn't fix it with CSS.  This is a HACK.
-      -->
-      <table class="headerTable">
-        <tbody>
+    <div id="selectDrag">
+      <h2>
+        <!--
+          This table is here because all other H2's have tables so they are
+          different heights and I couldn't fix it with CSS.  This is a HACK.
+        -->
+        <table class="headerTable">
+          <tbody>
           <tr>
             <td style="width: 40px">
               Pick
@@ -114,9 +129,10 @@
               </div>
             </td>
           </tr>
-        </tbody>
-      </table>
-    </h2>
+          </tbody>
+        </table>
+      </h2>
+    </div>
     <div id="selectCode"></div>
   </td>
 
@@ -125,8 +141,8 @@
 
   <td id="codeContainer">
     <div id="editor">
-      <div>
-        <h2>
+        <div id="editDrag">
+          <h2>
           <table class="headerTable">
             <tbody>
               <tr>
@@ -162,18 +178,6 @@
                       {% endif %}
                     </span>
                   </span>
-                  <table class="biggerSmallerTable" cellpadding="0" cellspacing="0">
-                    <tr>
-                      <td>
-                        <a href="javascript:is.uiEffects.changeCodeSize(parseFloat('-8'));" onclick="is.uiEffects.changeCodeSize(parseFloat('-8'));"><img border=0 width="12" src="images/smaller.gif" alt="Shrink Code Div" /></a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td style="padding-top: 1px;">
-                        <a href="javascript:is.uiEffects.changeCodeSize(8);" onclick="is.uiEffects.changeCodeSize(8);"><img border=0 width="12" src="images/larger.gif" alt="Enlarge Code Div" /></a>
-                      </td>
-                    </tr>
-                  </table>
                 </td>
               </tr>
             </tbody>
@@ -190,7 +194,8 @@
         path : 'codemirror/js/',
         height : '100%',
         content: '',
-        onLoad: function() {is.runCode();}
+        onLoad: function() {is.runCode();},
+        onclickFunc: function() {is.uiEffects.bringEditorToFront();}
       });
     </script>
   </td>

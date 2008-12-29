@@ -362,8 +362,14 @@ var Editor = (function(){
       addEventHandler(document, "keyup", method(this, "keyUp"));
       addEventHandler(document.body, "paste", method(this, "markCursorDirty"));
       addEventHandler(document.body, "cut", method(this, "markCursorDirty"));
-      if (this.options.autoMatchParens)
+      if (this.options.autoMatchParens) {
         addEventHandler(document.body, "click", method(this, "scheduleParenBlink"));
+      }
+
+      if (this.options.onclickFunc) {
+        var me = this;
+        addEventHandler(document.body, "click", me.signalTopWindow(this.options.onclickFunc));
+      }
     }
   }
 
@@ -465,6 +471,12 @@ var Editor = (function(){
     reindent: function() {
       if (this.container.firstChild)
         this.indentRegion(null, this.container.lastChild);
+    },
+
+    signalTopWindow: function(onclickFunc) {
+      return function() {
+        onclickFunc();
+      };
     },
 
     // Intercept enter and tab, and assign their new functions.

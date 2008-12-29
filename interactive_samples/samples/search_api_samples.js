@@ -35,9 +35,12 @@ var tempJSON = [
     "category":"Search API-Local Search",
     "samples":[
       {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/search/localsearch/center_search.js"], "sampleName":"Center LocalSearch", "tags": "Maps, setCenter"},
-      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/search/localsearch/localsearch_markers.js"], "sampleName":"LocalSearch with Markers", "tags": "Markers, Viewport, Maps"},
+//      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/search/localsearch/localsearch_markers.js"], "sampleName":"LocalSearch with Markers", "tags": "Markers, Viewport, Maps"},
       {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/search/localsearch/map_control.js"], "sampleName":"Static Map Control", "tags": "Static Maps, Prototypes, Custom Control, Maps"},
-      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/search/localsearch/restrict_results.js"], "sampleName":"Restrict Results", "tags": "KML, Business Listings"}
+      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/search/localsearch/restrict_results.js"], "sampleName":"Restrict Results", "tags": "KML, Business Listings"},
+      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/search/localsearch/localsearch_control.js"], "sampleName":"Local Search Control", "tags": "Maps"},
+      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/search/localsearch/localsearch_control_small.js"], "sampleName":"Local Search Control Small", "tags": "Maps"},
+      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/search/localsearch/localsearch_control_custom_pins.js"], "sampleName":"Local Search Control Custom Pins", "tags": "Maps, Custom, Icon"}
     ],
     "docsUrl": "http://code.google.com/apis/ajaxsearch/documentation/reference.html#_class_GlocalSearch"
   },
