@@ -33,13 +33,13 @@ from google.appengine.ext import db
 
 # GLOBAL ARRAY OF APIS & THEIR CONFIGURED JSON FILES.  DON'T EDIT UNLESS YOU'RE SURE
 apis = {
-  'search': 'samples/search_api_samples.js',
-  'lang': 'samples/lang_api_samples.js',
-  'feeds': 'samples/feeds_api_samples.js',
-  'libs': 'samples/libs_api_samples.js',
-  'earth': 'samples/earth_api_samples.js',
-  'maps': 'samples/maps_api_samples.js',
-  'viz': 'samples/visualization_api_samples.js'
+  'search': 'samples/js/search_api_samples.js',
+  'lang': 'samples/js/lang_api_samples.js',
+  'feeds': 'samples/js/feeds_api_samples.js',
+  'libs': 'samples/js/libs_api_samples.js',
+  'earth': 'samples/js/earth_api_samples.js',
+  'maps': 'samples/js/maps_api_samples.js',
+  'viz': 'samples/js/visualization_api_samples.js'
 }
 
 class SavedCode(db.Model):
