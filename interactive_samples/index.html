@@ -159,15 +159,19 @@
                     <span id="codeMenuDropdown" class="dropdown" >
                       <span class="first" onclick="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.linkCode();return false;"><img src="images/link.gif" alt="Export Code" width="15" />&nbsp;Export</span>
                       <span onclick="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.outputSource();return false;"><img src="images/export.gif" alt="Show Source" width="15" />&nbsp;View Full Source</span>
-                      <span onclick="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.saveCode();return false;">
-                        <img src="images/save.png" alt="Save" width="15"/>&nbsp;Save
-                      </span>
+
                       {% if loginUrl %}
+                      <span onclick="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.confirmLogin('{{ loginUrl }}', true);return false;">
+                        <img src="images/save.png" alt="Save" width="15" />&nbsp;Save
+                      </span>
                       <span onclick="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.confirmLogin('{{ loginUrl }}');return false;">
                         Login
                       </span>
                       {% endif %}
                       {% if logoutUrl %}
+                      <span onclick="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.saveCode();return false;">
+                        <img src="images/save.png" alt="Save" width="15"/>&nbsp;Save
+                      </span>
                       <span onclick="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));location.href='{{ logoutUrl }}';">
                         Logout
                       </span>
@@ -290,12 +294,7 @@ iFrame fixes it.
     </tr>
     <tr>
       <td align='left'colspan='2'>
-        {% if loginUrl %}
-          <input type="button" value="Save &rarr;" onclick="is.confirmLogin('{{ loginUrl }}', true);">
-        {% endif %}
-        {% if logoutUrl %}
-          <input type="button" value="Save &rarr;" onclick="$('#saveForm').get(0).submit();">
-        {% endif %}
+        <input type="button" value="Save &rarr;" onclick="$('#saveForm').get(0).submit();">
       </td>
     </tr>
   </table>
