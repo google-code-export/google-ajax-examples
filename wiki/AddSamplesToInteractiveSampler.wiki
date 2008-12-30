@@ -26,3 +26,8 @@ Samples are stored in the samples/ directory in the codebase.  There are four pa
   At the end of the JSON file, there always must be the section of code like this:  if (typeof codeArray != 'undefined' && codeArray.length) { ... etc.  This is how multiple API JSON files can work together.
 
 4. Specify your JSON in the App Engine script, main.py.  There is an array at the top of the file which has paths to the JSON file, and the name of the API.  Only change this if you are adding an API.  http://code.google.com/p/google-ajax-examples/source/browse/trunk/interactive_samples/main.py
+
+= Examples =
+Here is a sample commit that added map samples:
+http://code.google.com/p/google-ajax-examples/source/detail?r=228
+*NOTE*: Since this commit, paths have changed.  Javascript files used to be in samples/maps, now they are in samples/*js*/maps.
