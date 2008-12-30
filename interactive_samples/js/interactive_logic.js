@@ -361,20 +361,7 @@
       var categoryName = catSplit[0];
 
       var codeLIs = me.codeLIs;
-      var title = $('<div>' + (catSplit[1] ? catSplit[1] : catSplit[0]) + ' > ' + sampleName + '</div>');
-      if (sampleObj.docsUrl) {
-//        var docLink = $('<sup></sup>').append(me.createDocsLink(sampleObj.docsUrl));
-        var docLink = $('<sup style="font-size:13px;"> (<a href="' +
-                        sampleObj.docsUrl +
-                        '" target="_blank">docs</a>)</sup>');
-        title.append(docLink);
-      } else if (sampleObj.categoryDocsUrl) {
-        var docLink = $('<sup style="font-size:13px;"> (<a href="' +
-                        sampleObj.categoryDocsUrl +
-                        '" target="_blank">docs</a>)</sup>');
-        title.append(docLink);
-      }
-      me.setDemoTitle(title.get(0));
+      me.setDemoTitle(sampleObj);
       var i;
       for (i = 0; i < codeLIs.length; i++) {
         codeLIs[i].className = '';
@@ -515,8 +502,24 @@
     this.getFullSrc(this.uiEffects.showSource);
   };
 
-  InteractiveSample.prototype.setDemoTitle = function(title) {
+  InteractiveSample.prototype.setDemoTitle = function(sampleObj) {
+    var sampleName = sampleObj.sampleName;
+    var catSplit = sampleObj.category.split('-');
+    var title = $('<div>' + (catSplit[1] ? catSplit[1] : catSplit[0]) + ' > ' + sampleName + '</div>');
+    if (sampleObj.docsUrl) {
+      var docLink = $('<sup style="font-size:13px;"> (<a href="' +
+                      sampleObj.docsUrl +
+                      '" target="_blank">docs</a>)</sup>');
+      title.append(docLink);
+    } else if (sampleObj.categoryDocsUrl) {
+      var docLink = $('<sup style="font-size:13px;"> (<a href="' +
+                      sampleObj.categoryDocsUrl +
+                      '" target="_blank">docs</a>)</sup>');
+      title.append(docLink);
+    }
+
     $('#demoTitle').html(title);
+    $('#saveSampleName').attr('value', 'Custom ' + sampleName);
   };
 
   InteractiveSample.prototype.sendCodeToServer = function(code) {

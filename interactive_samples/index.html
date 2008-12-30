@@ -159,19 +159,15 @@
                     <span id="codeMenuDropdown" class="dropdown" >
                       <span class="first" onclick="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.linkCode();return false;"><img src="images/link.gif" alt="Export Code" width="15" />&nbsp;Export</span>
                       <span onclick="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.outputSource();return false;"><img src="images/export.gif" alt="Show Source" width="15" />&nbsp;View Full Source</span>
-
-                      {% if loginUrl %}
-                      <span onclick="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.confirmLogin('{{ loginUrl }}', true);return false;">
-                        <img src="images/save.png" alt="Save" width="15" />&nbsp;Save
+                      <span onclick="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.saveCode();return false;">
+                        <img src="images/save.png" alt="Save" width="15"/>&nbsp;Save
                       </span>
+                      {% if loginUrl %}
                       <span onclick="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.confirmLogin('{{ loginUrl }}');return false;">
                         Login
                       </span>
                       {% endif %}
                       {% if logoutUrl %}
-                      <span onclick="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.saveCode();return false;">
-                        <img src="images/save.png" alt="Save" width="15"/>&nbsp;Save
-                      </span>
                       <span onclick="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));location.href='{{ logoutUrl }}';">
                         Logout
                       </span>
@@ -275,7 +271,7 @@ iFrame fixes it.
         <div>
           <input type="text" id="saveSampleName" name="sampleName" value="My Sample" onclick="this.value = '';" />
           <div class="explain">
-            Note: This is the display name of the sample.  It must have a unique name.
+            This is the display name of the sample.  It must have a unique name.
           </div>
         </div>
       </td>
@@ -287,14 +283,19 @@ iFrame fixes it.
         <div>
           <input type="text" id="tagsSaveForm" name="tags" value="tag1, tag2, tag3" onclick="this.value = '';" />
           <div class="explain">
-            Note: Tags associated with this sample.  They will be used for the search bar.
+            Tags associated with this sample.  They will be used for the search bar.
           </div>
         </div>
       </td>
     </tr>
     <tr>
       <td align='left'colspan='2'>
-        <input type="button" value="Save &rarr;" onclick="$('#saveForm').get(0).submit();">
+        {% if loginUrl %}
+          <input type="button" value="Save &rarr;" onclick="is.confirmLogin('{{ loginUrl }}', true);">
+        {% endif %}
+        {% if logoutUrl %}
+          <input type="button" value="Save &rarr;" onclick="$('#saveForm').get(0).submit();">
+        {% endif %}
       </td>
     </tr>
   </table>
