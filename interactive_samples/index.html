@@ -52,15 +52,15 @@
   {% endif %}
 
   <script src="js/interactive_logic.js" type="text/javascript" charset="utf-8"></script>
-  <script src="http://www.google.com/jsapi" type="text/javascript" charset="utf-8"></script>
   <script type="text/javascript" charset="utf-8">
     var loginUrl = '{{ loginUrl }}';
     var logoutUrl = '{{ logoutUrl }}';
     function init() {
       is.init(document.getElementById('editor'));
     }
-
-    google.setOnLoadCallback(init);
+    $(window).bind('load', function() {
+      init();
+    });
   </script>
 </head>
 <body style="padding: 15px 30px;">
