@@ -1,0 +1,6 @@
+mkdir ../interactive_copy
+cp -R * ../interactive_copy
+find ../interactive_copy -name '*.svn' | xargs -t rm -rf
+find ./codemirror -name '*.js' | xargs -L1 -IMYFILES -t java -jar yuicompressor-2.4.1.jar MYFILES -o ../interactive_copy/MYFILES
+find ./js -name '*.js' | xargs -L1 -IMYFILES -t java -jar yuicompressor-2.4.1.jar MYFILES -o ../interactive_copy/MYFILES
+find . -name '*.css' | xargs -L1 -IMYFILES -t java -jar yuicompressor-2.4.1.jar --type css MYFILES -o ../interactive_copy/MYFILES
