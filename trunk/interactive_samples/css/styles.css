@@ -500,17 +500,8 @@ li.ui-autocomplete-odd > a > strong, li.ui-autocomplete-even > a > strong {
   width:26px;
 }
 
-.biggerSmallerTable {
-  padding-right: 5px;
-  vertical-align: top;
-}
-
 #codeMenu {
   float: right;
-}
-
-.biggerSmallerTable a {
-   float: expression("right");
 }
 
 .dropdown {
