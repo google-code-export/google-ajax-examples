@@ -127,7 +127,7 @@
         catName.className = 'categoryTitle';
         img = _cel('img');
         img.className = 'expand';
-        img.src = 'images/cleardot.gif';
+        img.src = 'images/cleardot.png';
 
         catName.appendChild(img);
         catName.innerHTML += category;
@@ -148,7 +148,7 @@
 
         img = _cel('img');
         img.className = 'collapse';
-        img.src = 'images/cleardot.gif';
+        img.src = 'images/cleardot.png';
 
         subCatName.appendChild(img);
         subCatName.innerHTML += subCategory;
@@ -216,7 +216,7 @@
   InteractiveSample.prototype.createDocsLink = function(docUrl) {
     if (docUrl) {
       var img = _cel('img');
-      img.src = 'images/docs.gif';
+      img.src = 'images/docs.png';
       img.className = 'docsImg';
       img.border = 0;
 
