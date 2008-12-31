@@ -481,7 +481,7 @@ li.ui-autocomplete-odd > a > strong, li.ui-autocomplete-even > a > strong {
 
 /* ------ Dropdown Menu------- */
 .buttonText {
-  background:transparent url(../images/mm_buttons.gif) no-repeat scroll 0 -90px;
+  background:transparent url(../images/mm_buttons.gif) no-repeat scroll;
   color:#003399;
   display:block;
   float:left;
@@ -492,7 +492,7 @@ li.ui-autocomplete-odd > a > strong, li.ui-autocomplete-even > a > strong {
 }
 
 .dropdownButton {
-  background:transparent url(../images/mmimgs.gif) no-repeat scroll 0 -45px;
+  background:transparent url(../images/mmimgs.gif) no-repeat scroll;
   display:block;
   float:left;
   height:25px;
