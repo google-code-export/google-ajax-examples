@@ -190,7 +190,7 @@ img.expand, img.collapse {
   padding: 0;
   position: relative;
   width: 9px;
-  background-image: url(../images/sprites.gif);
+  background-image: url(../images/sprites.png);
   vertical-align: middle;
   cursor: pointer;
 }
@@ -211,7 +211,7 @@ img.expand:hover {
   background-position:-28px -444px; /* The filled Plus */
 }
 #gc-footer-img {
-  background-image:url(../images/sprites.gif);
+  background-image:url(../images/sprites.png);
   background-position:-28px -28px;
   display:inline;
   float:left;
@@ -327,7 +327,7 @@ span.categoryClosed div, span.categoryClosed ul {
   height: 13px;
   right: 0;
   bottom: 0;
-  background: url(../images/resize.gif) no-repeat 0 0;
+  background: url(../images/resize.png) no-repeat 0 0;
 }
 #outputDrag, #editDrag, #selectDrag {
   cursor: move;
@@ -481,7 +481,7 @@ li.ui-autocomplete-odd > a > strong, li.ui-autocomplete-even > a > strong {
 
 /* ------ Dropdown Menu------- */
 .buttonText {
-  background:transparent url(../images/mm_buttons.gif) no-repeat scroll;
+  background:transparent url(../images/mm_buttons.png) no-repeat scroll;
   color:#003399;
   display:block;
   float:left;
@@ -492,7 +492,7 @@ li.ui-autocomplete-odd > a > strong, li.ui-autocomplete-even > a > strong {
 }
 
 .dropdownButton {
-  background:transparent url(../images/mmimgs.gif) no-repeat scroll;
+  background:transparent url(../images/mmimgs.png) no-repeat scroll;
   display:block;
   float:left;
   height:25px;

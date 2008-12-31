@@ -7,6 +7,7 @@ from google.appengine.ext.webapp.util import run_wsgi_app
 
 APIKeys = {
   "http://localhost:8082": "ABQIAAAA1XbMiDxx_BTCY2_FkPh06RSx5CqyNL2x2CpPAnLRjeOsKF3h9RS8MrYqU81Z7hEvk8hNGYDQPuHDIw",
+  "http://localhost:8083": "ABQIAAAA1XbMiDxx_BTCY2_FkPh06RS4uSxNcZeiHmsInBcucCK4dMkMwRQvc88mil886PJxc7uBPrZFDeHEzw",
   "http://savedbythegoog.appspot.com": "ABQIAAAA1XbMiDxx_BTCY2_FkPh06RRaGTYH6UMl8mADNa0YKuWNNa8VNxQEerTAUcfkyrr6OwBovxn7TDAH5Q",
   "http://interactivesampler.appspot.com": "ABQIAAAA1XbMiDxx_BTCY2_FkPh06RQHF42S0NdyoEzlm7Prh6jpDX8u1BRWbrvF_ETKtOKL_Fpp8DKNik-umA",
   "http://code.google.com": "ABQIAAAA1XbMiDxx_BTCY2_FkPh06RSosDVG8KKPE1-m51RBrvYughuyMxQb4QY32wd-bGTUz44F9R1FRoxuMQ",
