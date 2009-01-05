@@ -14,7 +14,7 @@
     </title>
     <script type="text/javascript" src="http://www.google.com/jsapi"></script>
     <script type="text/javascript">
-      google.load("visualization", "1", {packages: ['barchart', 'columnchart', 'linechart', 'table', 'intensitymap']});
+      google.load('visualization', '1', {packages: ['table']});
     </script>
     <script type="text/javascript">
     var visualization;
@@ -34,40 +34,6 @@
     data.setCell(1, 2, false);
     data.setCell(2, 2, true);
 
-    var sortData = new google.visualization.DataTable();
-    sortData.addColumn('string', 'name');
-    sortData.addColumn('number', 'age');
-    sortData.addRows(3);
-    sortData.setCell(0, 0, 'Hzano');
-    sortData.setCell(1, 0, 'Hiro');
-    sortData.setCell(2, 0, 'Hatorri');
-    sortData.setCell(0, 1, 3);
-    sortData.setCell(1, 1, 8);
-    sortData.setCell(2, 1, 5);
-
-    var dataTable = new google.visualization.DataTable();
-    dataTable.addColumn('string', 'Name');
-    dataTable.addColumn('string', 'Age');
-    dataTable.addColumn('string', 'Instrument');
-    dataTable.addColumn('string', 'Color');
-    dataTable.addRows(4);
-    dataTable.setCell(0, 0, 'John');
-    dataTable.setCell(1, 0, 'Paul');
-    dataTable.setCell(2, 0, 'George');
-    dataTable.setCell(3, 0, 'Ringo');
-    dataTable.setCell(0, 1, '24');
-    dataTable.setCell(1, 1, '52');
-    dataTable.setCell(2, 1, '16');
-    dataTable.setCell(3, 1, '72');
-    dataTable.setCell(0, 2, 'Guitar');
-    dataTable.setCell(1, 2, 'Sitar');
-    dataTable.setCell(2, 2, 'Huitar');
-    dataTable.setCell(3, 2, 'Beitar');
-    dataTable.setCell(0, 3, 'Blue');
-    dataTable.setCell(1, 3, 'Red');
-    dataTable.setCell(2, 3, 'Green');
-    dataTable.setCell(3, 3, 'White');
-
     try {
       if (window.parent && window.parent.is && window.parent.is.codeToRun) {window.eval(window.parent.is.codeToRun);window.onclick = function() {window.parent.is.uiEffects.bringRunBoxToFront();};}
     } catch (e) {
@@ -79,7 +45,5 @@
   </head>
   <body style="font-family: Arial;">
     <div id="table"></div>
-    <div id="table2"></div>
-    <div id="table3"></div>
   </body>
 </html>

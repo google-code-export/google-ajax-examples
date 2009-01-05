@@ -16,6 +16,6 @@ function handleQueryResponse(response) {
   }
 
   var data = response.getDataTable();
-  visualization = new google.visualization.LineChart(document.getElementById('big_chart_1'));
+  visualization = new google.visualization.LineChart(document.getElementById('visualization'));
   visualization.draw(data, {legend: 'bottom'});
 }
