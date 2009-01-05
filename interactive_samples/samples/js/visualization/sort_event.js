@@ -2,7 +2,7 @@ function drawVisualization() {
   var table = new google.visualization.Table(document.getElementById('table'));
   table.draw(sortData, null);
   
-  var chart = new google.visualization.BarChart(document.getElementById('big_chart_1'));
+  var chart = new google.visualization.BarChart(document.getElementById('chart'));
   chart.draw(sortData, null);
 
   google.visualization.events.addListener(table, 'sort',

@@ -12,7 +12,7 @@
   <title>Google Visualization API Sample</title>
   <script type="text/javascript" src="http://www.google.com/jsapi"></script>
   <script type="text/javascript">
-    google.load("visualization", "1", {packages: ['motionchart', 'annotatedtimeline', 'geomap']});
+    google.load('visualization', '1', {packages: ['motionchart']});
 
     try {
       if (window.parent && window.parent.is && window.parent.is.codeToRun) {window.eval(window.parent.is.codeToRun);window.onclick = function() {window.parent.is.uiEffects.bringRunBoxToFront();};}
@@ -20,14 +20,10 @@
       alert("Error: " + e.message);
     }
 
-    google.setOnLoadCallback(drawVisualizations);
+    google.setOnLoadCallback(drawVisualization);
   </script>
 </head>
 <body style="font-family: Arial;">
-<div id="motionchart" style="width: 800px; height: 400px;"></div>
-<br />
-<div id="annotatedtimeline" style="width: 800px; height: 300px;"></div>
-<br />
-<div id="geomap" style="width: 800px; height: 300px;"></div>
+<div id="visualization" style="width: 800px; height: 400px;"></div>
 </body>
 </html>
