@@ -61,7 +61,6 @@ div {
 #editor {
   height: 400px;
   border: 1px solid #999;
-  z-index: 999;
   background-color: #EBEBEB;
   z-index: 500;
 }
@@ -88,6 +87,14 @@ div {
 #acDiv > ul > li {
   list-style-type: none;
   padding-right: 15px;
+}
+
+.supDocs {
+  font-size: 12px;
+}
+
+.supDocs a {
+  text-decoration: none;
 }
 
 .categoryItems {

@@ -506,15 +506,10 @@
     var sampleName = sampleObj.sampleName;
     var catSplit = sampleObj.category.split('-');
     var title = $('<div>' + (catSplit[1] ? catSplit[1] : catSplit[0]) + ' > ' + sampleName + '</div>');
-    if (sampleObj.docsUrl) {
-      var docLink = $('<sup style="font-size:13px;"> (<a href="' +
-                      sampleObj.docsUrl +
-                      '" target="_blank">docs</a>)</sup>');
-      title.append(docLink);
-    } else if (sampleObj.categoryDocsUrl) {
-      var docLink = $('<sup style="font-size:13px;"> (<a href="' +
-                      sampleObj.categoryDocsUrl +
-                      '" target="_blank">docs</a>)</sup>');
+    if (sampleObj.docsUrl || sampleObj.categoryDocsUrl) {
+      var docLink = $('<sup class="supDocs"> <a href="' +
+                      (sampleObj.docsUrl || sampleObj.categoryDocsUrl) +
+                      '" target="_blank">docs</a></sup>');
       title.append(docLink);
     }
 
@@ -845,7 +840,7 @@
   UIEffects.prototype.setDraggables = function() {
     var me = this;
     $("#outputDiv").draggable({
-      handle: "outputDrag",
+      "handle": "h2",
       drag: function(e, ui) {
         me.updateDragSafeDiv();
         me.setShadowDivPosition('runShadowContainer', ui.position.top, ui.position.left);
@@ -857,7 +852,7 @@
     });
 
     $("#editor").draggable({
-      handle: "editDrag",
+      "handle": "h2",
       drag: function(e, ui) {
         me.updateDragSafeDiv();
         me.setShadowDivPosition('editShadowContainer', ui.position.top, ui.position.left);
@@ -869,7 +864,7 @@
     });
 
     $("#selectContainer").draggable({
-      handle: "selectDrag",
+      "handle": "h2",
       drag: function(e, ui) {
         me.updateDragSafeDiv();
         me.setShadowDivPosition('pickShadowContainer', ui.position.top, ui.position.left);
