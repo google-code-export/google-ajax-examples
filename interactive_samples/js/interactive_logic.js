@@ -465,6 +465,30 @@
     return this.curI;
   };
 
+  InteractiveSample.prototype.findNumSpacesToIndentCode = function(data) {
+    var tryString = /[ ]*try {if \(window.parent && window\.parent\.is && window\.parent\.is\.codeToRun\) {window\.eval\(window\.parent\.is\.codeToRun\);window\.onclick = function\(\) {window\.parent\.is\.uiEffects\.bringRunBoxToFront\(\);};}} catch \(e\) {alert\("Error: " \+ e\.message\);}/.exec(data)[0];
+    var i = '';
+    while(tryString.indexOf(' ') == 0) {
+      i += ' ';
+      tryString = tryString.substring(1);
+    }
+
+    return i;
+  };
+
+  InteractiveSample.prototype.indentCodeWithTheseSpaces = function(code, indentSpaces) {
+    var newLine = code.indexOf('\n');
+    while (newLine != -1) {
+      var start = code.slice(0, newLine);
+      var end = code.slice(newLine+1);
+      end = ('\n' + indentSpaces).concat(end);
+      code = start.concat(end);
+      newLine = code.indexOf('\n', newLine + 1);
+    }
+
+    return code;
+  };
+
   InteractiveSample.prototype.getFullSrc = function(callbackFunc, opt_APIKey) {
     var curFilename = this.getCurFilename();
     var sampleObj = this.sampleFileNameToObject(curFilename);
@@ -473,23 +497,16 @@
     $.get(url, function(data, success) {
       if (success) {
         var code = me.getCode();
-        code = '    '.concat(code);
-        var newLine = code.indexOf('\n');
-        while (newLine != -1) {
-          var start = code.slice(0, newLine);
-          var end = code.slice(newLine+1);
-          end = '\n    '.concat(end);
-          code = start.concat(end);
-          newLine = code.indexOf('\n', newLine + 1);
-        }
-        /* TODO: fix this hack.  there's gotta be a better way than
-         doing a find for the place where the code goes and replacing it */
-        data = data.replace(
-                '    try {\n' +
-                '      if (window.parent && window.parent.is && window.parent.is.codeToRun) {window.eval(window.parent.is.codeToRun);window.onclick = function() {window.parent.is.uiEffects.bringRunBoxToFront();};}\n' +
-                '    } catch (e) {\n' +
-                '      alert("Error: " + e.message);\n' +
-                '    }', code);
+        var indentSpaces = me.findNumSpacesToIndentCode(data);
+        code = me.indentCodeWithTheseSpaces(code, indentSpaces);
+
+        data = data.replace('try {if (window.parent && window.parent.is && ' +
+                            'window.parent.is.codeToRun) {' +
+                            'window.eval(window.parent.is.codeToRun);' +
+                            'window.onclick = function() {' +
+                            'window.parent.is.uiEffects.bringRunBoxToFront();};}' +
+                            '} catch (e) {alert("Error: " + e.message);}',
+                code);
 
         var key = opt_APIKey || "<<INSERT KEY>>";
         data = data.replace(/key=.*"/, "key=" + key + "\"");
