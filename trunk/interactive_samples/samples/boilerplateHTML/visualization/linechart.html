@@ -30,11 +30,7 @@
       data.setCell(1, 1, 523);
       data.setCell(2, 1, 86);
 
-    try {
-      if (window.parent && window.parent.is && window.parent.is.codeToRun) {window.eval(window.parent.is.codeToRun);window.onclick = function() {window.parent.is.uiEffects.bringRunBoxToFront();};}
-    } catch (e) {
-      alert("Error: " + e.message);
-    }
+      {{ INSERT_JAVASCRIPT_HERE }}
 
       google.setOnLoadCallback(drawVisualization);
     </script>

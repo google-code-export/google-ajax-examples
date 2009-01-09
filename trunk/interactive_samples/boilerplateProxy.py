@@ -25,8 +25,10 @@ class Main(webapp.RequestHandler):
         key = APIKeys[i]
 
     self.template_values = {
-      "key": key
+      "key": key,
+      "INSERT_JAVASCRIPT_HERE": 'try {if (window.parent && window.parent.is && window.parent.is.codeToRun) {window.eval(window.parent.is.codeToRun);window.onclick = function() {window.parent.is.uiEffects.bringRunBoxToFront();};}} catch (e) {alert("Error: " + e.message);}'
     }
+
     path = os.path.join(os.path.dirname(__file__), path)
     self.response.out.write(template.render(path, self.template_values))
 

@@ -13,7 +13,7 @@ function drawVisualization() {
   data.setCell(0, 2, true);
   data.setCell(1, 2, false);
   data.setCell(2, 2, true);
-	
+
   visualization = new google.visualization.Table(document.getElementById('table'));
   visualization.draw(data, null);
 }
