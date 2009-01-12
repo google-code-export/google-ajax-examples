@@ -627,10 +627,11 @@
       me.mousePos.x = e.pageX;
       me.mousePos.y = e.pageY;
     });
+    this.setResizables();
+    this.setDraggables();
 
     if (!this.is.ie6) {
-      this.setResizables();
-      this.setDraggables();
+
       this.setDivShadow('outputDiv', 'runShadowContainer');
       var left = $("#outputDiv").css('left');
       var top = $("#outputDiv").css('top');
@@ -638,10 +639,12 @@
       this.setDivShadow('editor', 'editShadowContainer');
       $("#outputDiv").css('left', left);
       $("#outputDiv").css('top', top);
-      this.setWindowResize();
+
     } else {
-      $('#outputDrag').css('cursor', 'default');
+      $('.bottomShadows').css('background', 'none');
+      $('.rightShadows').css('background', 'none');
     }
+    this.setWindowResize();
     this.initAutoComplete();
 
     if ($.browser.safari) $('.buttonText').css('padding-bottom', '5px');
