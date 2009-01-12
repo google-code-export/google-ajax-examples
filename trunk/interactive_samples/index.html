@@ -252,11 +252,11 @@ iFrame fixes it.
 <div id="dragsafe">&nbsp;</div>
 
 <div id="codeOutput0" class="codeOutput"></div>
-<form action="http://savedbythegoog.appspot.com/add" id="linkCodeForm" method="post" target="_blank">
+<form action="http://savedbythegoog.appspot.com/add" id="linkCodeForm" method="POST" target="_blank">
   <input type="hidden" id="codeHolder" name="code" />
 </form>
 <div id="saveCodeForm">
-<form action="/save" method="post" accept-charset="utf-8" id="saveForm">
+<form action="/save" method="POST" id="saveForm">
   <input type="hidden" name="boilerplateLoc" value="" id="boilerplateLoc">
   <input name="jscode" id="jscodeSaveForm" style="display: none;" />
   <input type="hidden" name="id" value="" id="idSaveForm">
@@ -288,7 +288,7 @@ iFrame fixes it.
     </tr>
     <tr>
       <td align='left'colspan='2'>
-        <input type="button" value="Save &rarr;" onclick="$('#saveForm').get(0).submit();">
+        <input type="submit" value="Save &rarr;">
       </td>
     </tr>
   </table>

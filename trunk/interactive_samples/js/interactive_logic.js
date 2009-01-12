@@ -524,7 +524,7 @@
     var catSplit = sampleObj.category.split('-');
     var title = $('<div>' + (catSplit[1] ? catSplit[1] : catSplit[0]) + ' > ' + sampleName + '</div>');
     if (sampleObj.docsUrl || sampleObj.categoryDocsUrl) {
-      var docLink = $('<sup class="supDocs"> <a href="' +
+      var docLink = $('<sup class="supDocs">&nbsp;<a href="' +
                       (sampleObj.docsUrl || sampleObj.categoryDocsUrl) +
                       '" target="_blank">docs</a></sup>');
       title.append(docLink);
@@ -539,6 +539,11 @@
     code = code.replace(/\n/g, 'NEWLINE!!!');
     $('#codeHolder').attr('value', code);
 
+    // ie doesn't respect POSTing to a target blank, so we'll let IE
+    // user hang to dry on this.
+    if ($.browser.msie) {
+      $('#linkCodeForm').attr('target', '_self');
+    }
     $('#linkCodeForm').get(0).submit();
   };
 
@@ -983,7 +988,6 @@
       });
       this.numHTMLEditors = 0;
     } else {
-      delete this.htmlEditor;
       // please god don't let anyone read this code..
       $('#codeOutput' + this.numHTMLEditors).empty();
       var newId = 'codeOutput' + (parseFloat(this.numHTMLEditors)+1);
