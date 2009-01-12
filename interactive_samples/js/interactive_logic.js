@@ -532,6 +532,7 @@
 
     $('#demoTitle').html(title);
     $('#saveSampleName').attr('value', 'Custom ' + sampleName);
+    $('#tagsSaveForm').attr('value', sampleObj.tags);
   };
 
   InteractiveSample.prototype.sendCodeToServer = function(code) {
@@ -577,7 +578,7 @@
     } else {
       confirmLeave = confirm('Logging in will lose any edited code.');
     }
-
+    url += "%23" + window.location.hash.substring(1);
     if (confirmLeave) window.location = url;
   };
 
