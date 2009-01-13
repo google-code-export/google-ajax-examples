@@ -66,12 +66,12 @@ div {
 }
 
 #edit {
-  height: 354px
+  height: 350px
 }
 
 #selectCode {
   width:100%;
-  height: 353px;
+  height: 350px;
   overflow: auto;
   background-color: white;
   z-index: 999;

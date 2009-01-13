@@ -82,7 +82,7 @@ var CodeMirror = (function(){
     forEach(options.basefiles.concat(options.parserfile), function(file) {
       html.push("<script type=\"text/javascript\" src=\"" + options.path + file + "\"></script>");
     });
-    html.push("</head><body class=\"editbox\" spellcheck=\"" +
+    html.push("</head><body class=\"editbox\" style=\"border: 0px none;\" spellcheck=\"" +
               (options.disableSpellcheck ? "false" : "true") + "\"></body></html>");
 
     var doc = this.win.document;
