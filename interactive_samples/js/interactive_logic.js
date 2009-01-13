@@ -113,7 +113,7 @@
       var subCategoryDiv = null;
       var img, link;
       if (category.indexOf('-') != -1) {
-        // that means that this category is a subcategory
+        // that means that this category is a subcategorys
         var categorySplit = category.split('-');
         category = categorySplit[0];
         subCategory = categorySplit[1];
@@ -466,7 +466,7 @@
   };
 
   InteractiveSample.prototype.findNumSpacesToIndentCode = function(data) {
-    var tryString = /[ ]*try {if \(window.parent && window\.parent\.is && window\.parent\.is\.codeToRun\) {window\.eval\(window\.parent\.is\.codeToRun\);window\.onclick = function\(\) {window\.parent\.is\.uiEffects\.bringRunBoxToFront\(\);};}} catch \(e\) {alert\("Error: " \+ e\.message\);}/.exec(data)[0];
+    var tryString = /[ ]*try {if \(window\.parent && window\.parent\.is && window\.parent\.is\.codeToRun\) {window\.eval\(window\.parent\.is\.codeToRun\);window\.onload = function\(\) {window\.document\.body\.onclick = function\(\) {window\.parent\.is\.uiEffects\.bringRunBoxToFront\(\);};};}} catch \(e\) {alert\("Error: " \+ e\.message\);}/.exec(data)[0];
     var i = '';
     while(tryString.indexOf(' ') == 0) {
       i += ' ';
@@ -640,8 +640,8 @@
       this.setDivShadow('outputDiv', 'runShadowContainer');
       var left = $("#outputDiv").css('left');
       var top = $("#outputDiv").css('top');
-      this.setDivShadow('selectContainer', 'pickShadowContainer');
       this.setDivShadow('editor', 'editShadowContainer');
+      this.setDivShadow('selectContainer', 'pickShadowContainer');
       $("#outputDiv").css('left', left);
       $("#outputDiv").css('top', top);
 
