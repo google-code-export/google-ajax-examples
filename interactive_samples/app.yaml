@@ -26,6 +26,12 @@ handlers:
   script: main.py
 - url: /samples/js
   static_dir: samples/js
+- url: /save
+  script: main.py
+- url: /delete
+  script: main.py
+- url: /get
+  script: main.py
 - url: /
   script: main.py
 - url: /apis/ajax/playground/js
@@ -48,5 +54,13 @@ handlers:
   script: main.py
 - url: /apis/ajax/playground/samples/js
   static_dir: samples/js
+- url: /apis/ajax/playground/save
+  script: main.py
+- url: /apis/ajax/playground/delete
+  script: main.py
+- url: /apis/ajax/playground/get
+  script: main.py
 - url: /apis/ajax/playground/
+  script: main.py
+- url: /apis/ajax/playground
   script: main.py

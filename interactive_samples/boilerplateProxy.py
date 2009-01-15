@@ -16,9 +16,13 @@ APIKeys = {
 
 class Main(webapp.RequestHandler):
   def get(self):
+    # we do this because we need to find the path to the template.
+    # it's relative to the path of this file, so if the url has apis/ajax/playground
+    # we need to take it out
     path = self.request.path
     path = path[1:]
     path = path.replace('apis/ajax/playground/', '')
+
     url = self.request.url
     key = ''
     for i in APIKeys:
