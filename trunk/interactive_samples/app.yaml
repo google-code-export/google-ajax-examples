@@ -20,14 +20,33 @@ handlers:
   static_dir: css
 - url: /codemirror
   static_dir: codemirror
-- url: /(.*\.(gif|png|jpg))
-  static_files: static/\1
-  upload: static/(.*\.(gif|png|jpg))
 - url: /samples/boilerplateHTML/(.*\.html)
   script: boilerplateProxy.py
 - url: /index.html
   script: main.py
 - url: /samples/js
   static_dir: samples/js
-- url: .*
+- url: /
+  script: main.py
+- url: /apis/ajax/playground/js
+  static_dir: js
+- url: /apis/ajax/playground/popout.html
+  static_files: popout.html
+  upload: popout.html
+- url: /apis/ajax/playground/favicon.ico
+  static_files: favicon.ico
+  upload: favicon.ico
+- url: /apis/ajax/playground/images
+  static_dir: images
+- url: /apis/ajax/playground/css
+  static_dir: css
+- url: /apis/ajax/playground/codemirror
+  static_dir: codemirror
+- url: /apis/ajax/playground/samples/boilerplateHTML/(.*\.html)
+  script: boilerplateProxy.py
+- url: /apis/ajax/playground/index.html
+  script: main.py
+- url: /apis/ajax/playground/samples/js
+  static_dir: samples/js
+- url: /apis/ajax/playground/
   script: main.py

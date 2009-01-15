@@ -228,14 +228,17 @@
 
 
 <tr>
-  <td class="footer">
+  <td class="footer" id="footerImg">
     <div style="background-image: url(images/sprites.png);background-position: -28px -28px;height:53px;margin:12px 0;width:143px;">&nbsp;</div>
   </td>
   <td class="footer" style="vertical-align: middle; font-size:80%; text-align: center">
-    ©2008 Google -
-    <a href="http://code.google.com/">Code Home</a> - <a href="http://www.google.com/accounts/TOS">Site Terms of Service</a> -
-    <a href="http://www.google.com/privacy.html">Privacy Policy</a> -
-    <a href="http://code.google.com/more/">Site Directory</a>
+    <div id="footerLinks">
+      ©2008 Google -
+      <a href="http://code.google.com/">Code Home</a> - <a href="http://www.google.com/accounts/TOS">Site Terms of Service</a> -
+      <a href="http://www.google.com/privacy.html">Privacy Policy</a> -
+      <a href="http://code.google.com/more/">Site Directory</a> -
+      <a href="http://code.google.com/p/google-ajax-examples/issues/list">Report Bug</a>
+    </div>
   </td>
 </tr>
 </table>
@@ -292,9 +295,16 @@ iFrame fixes it.
       </td>
     </tr>
   </table>
-
 </form>
 </div>
 <script src="js/pushup.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-18071-1");
+pageTracker._trackPageview();
+</script>
 </body>
 </html>
