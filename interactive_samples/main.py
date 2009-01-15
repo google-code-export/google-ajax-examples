@@ -271,8 +271,13 @@ def main():
   application = webapp.WSGIApplication([('/', Main),
                                         ('/save', Save),
                                         ('/delete', Delete),
-                                        ('/get', GetCode)],
-                                       debug=False)
+                                        ('/get', GetCode),
+                                        ('/apis/ajax/playground/', Main),
+                                        ('/apis/ajax/playground', Main),
+                                        ('/apis/ajax/playground/save', Save),
+                                        ('/apis/ajax/playground/delete', Delete),
+                                        ('/apis/ajax/playground/get', GetCode)],
+                                       debug=True)
   wsgiref.handlers.CGIHandler().run(application)
 
 

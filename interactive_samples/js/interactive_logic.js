@@ -33,6 +33,7 @@
     this.uiEffects = new Object();
     this.runBox = new Object();
     this.autoCompleteData = [];
+    this.tryCatchRegex;
   };
 
   InteractiveSample.prototype.nameToHashName = function(name) {
@@ -44,7 +45,7 @@
   InteractiveSample.prototype.init = function(codeDiv) {
     this.ie6 = ($.browser.msie && $.browser.version < 7);
     this.runBox = new RunBox();
-    this.runBox.init(this, !this.ie6);
+    this.runBox.init(this, !$.browser.msie);
     this.codeDiv = codeDiv;
     this.createCategories();
     this.addShowHideClicks();
@@ -53,6 +54,8 @@
     if (window.logoutUrl) {
       this.putSafetyCookieInForms();
     }
+
+    this.tryCatchRegex = /[ ]*try {if \(window\.parent && window\.parent\.is && window\.parent\.is\.codeToRun\) {window\.eval\(window\.parent\.is\.codeToRun\);window\.onload = function\(\) {window\.document\.body\.onclick = function\(\) {window\.parent\.is\.uiEffects\.bringRunBoxToFront\(\);};};}} catch \(e\) {alert\("Error: " \+ e\.message\);}/;
   };
 
   InteractiveSample.prototype.getCookie = function(name) {
@@ -465,8 +468,13 @@
     return this.curI;
   };
 
+  InteractiveSample.prototype.replaceTryCatchCode = function(data, code) {
+    data = data.replace(this.tryCatchRegex, code);
+    return data;
+  };
+
   InteractiveSample.prototype.findNumSpacesToIndentCode = function(data) {
-    var tryString = /[ ]*try {if \(window\.parent && window\.parent\.is && window\.parent\.is\.codeToRun\) {window\.eval\(window\.parent\.is\.codeToRun\);window\.onload = function\(\) {window\.document\.body\.onclick = function\(\) {window\.parent\.is\.uiEffects\.bringRunBoxToFront\(\);};};}} catch \(e\) {alert\("Error: " \+ e\.message\);}/.exec(data)[0];
+    var tryString = this.tryCatchRegex.exec(data)[0];
     var i = '';
     while(tryString.indexOf(' ') == 0) {
       i += ' ';
@@ -494,19 +502,15 @@
     var sampleObj = this.sampleFileNameToObject(curFilename);
     var url = sampleObj.boilerplateLoc;
     var me = this;
+
     $.get(url, function(data, success) {
       if (success) {
         var code = me.getCode();
         var indentSpaces = me.findNumSpacesToIndentCode(data);
+
         code = me.indentCodeWithTheseSpaces(code, indentSpaces);
 
-        data = data.replace('try {if (window.parent && window.parent.is && ' +
-                            'window.parent.is.codeToRun) {' +
-                            'window.eval(window.parent.is.codeToRun);' +
-                            'window.onclick = function() {' +
-                            'window.parent.is.uiEffects.bringRunBoxToFront();};}' +
-                            '} catch (e) {alert("Error: " + e.message);}',
-                code);
+        data = me.replaceTryCatchCode(data, code);
 
         var key = opt_APIKey || "<<INSERT KEY>>";
         data = data.replace(/key=.*"/, "key=" + key + "\"");
@@ -538,12 +542,6 @@
   InteractiveSample.prototype.sendCodeToServer = function(code) {
     code = code.replace(/\n/g, 'NEWLINE!!!');
     $('#codeHolder').attr('value', code);
-
-    // ie doesn't respect POSTing to a target blank, so we'll let IE
-    // user hang to dry on this.
-    if ($.browser.msie) {
-      $('#linkCodeForm').attr('target', '_self');
-    }
     $('#linkCodeForm').get(0).submit();
   };
 
@@ -606,6 +604,7 @@
     this.numHTMLEditors;
     this.uiEls;
     this.dropdownTimer;
+    this.movedFlags;
   }
 
   UIEffects.prototype.init = function(is) {
@@ -621,6 +620,13 @@
       'runShadowContainer': $('#runShadowContainer')
     };
 
+    // so we can not resize the divs on a window resize if the user has them
+    // moved on their own
+    this.movedFlags = {
+      'edit' : false,
+      'output' : false
+    };
+
     this.mousePos = {
       'x': 0,
       'y': 0
@@ -632,11 +638,22 @@
       me.mousePos.x = e.pageX;
       me.mousePos.y = e.pageY;
     });
-    this.setResizables();
-    this.setDraggables();
+    // Resizable/draggable is broken in jquery UI for IE... it doesn't like
+    // calculating correctly if you are scrolled down on the page at all..
+    if (!$.browser.msie) {
+      this.setResizables();
+      this.setDraggables();
+    }
 
+    this.setAbsolutePosition('footerLinks');
+    this.setAbsolutePosition('footerImg');
+    this.setAbsolutePosition('outputDiv');
+    this.setAbsolutePosition('editor');
+    this.setAbsolutePosition('selectContainer');
+
+    // Don't do shadows if we're in IE6... because it doesn't like transparency
+    // in PNGs
     if (!this.is.ie6) {
-
       this.setDivShadow('outputDiv', 'runShadowContainer');
       var left = $("#outputDiv").css('left');
       var top = $("#outputDiv").css('top');
@@ -657,6 +674,18 @@
     this.initSaveCodeDiv();
     this.setCodeMenuButtonClicks();
     this.setBringWindowFrontClicks();
+  };
+
+  UIEffects.prototype.setAbsolutePosition = function(divID) {
+    var outputContainer = $("#" + divID);
+    var width = $(outputContainer).width();
+    var height = $(outputContainer).height();
+    var pos = $(outputContainer).position();
+    outputContainer.css('position', 'absolute')
+            .css('width', width)
+            .css('height', height)
+            .css('top', pos.top + 'px')
+            .css('left', pos.left + 'px');
   };
 
   UIEffects.prototype.setBringWindowFrontClicks = function() {
@@ -763,11 +792,6 @@
     var width = $(outputContainer).width();
     var height = $(outputContainer).height();
     var pos = $(outputContainer).position();
-    outputContainer.css('position', 'absolute')
-            .css('width', width)
-            .css('height', height)
-            .css('top', pos.top)
-            .css('left', pos.left);
 
     this.setShadowDivSize(shadowDivName, width, height);
     this.setShadowDivPosition(shadowDivName, pos.top, pos.left);
@@ -777,17 +801,23 @@
   UIEffects.prototype.setWindowResize = function() {
     var me = this;
     $(window).bind('resize', function(e) {
-      me.setDivShadow('outputDiv', 'runShadowContainer');
-      me.resizeEdit();
-      me.resizeOutput();
+      if (!me.movedFlags.edit) {
+        me.resizeEdit();
+      }
+      if (!me.movedFlags.output) {
+        me.resizeOutput();
+      }
     });
   };
 
   UIEffects.prototype.resizeEdit = function() {
-    var containerWidth = $('#container').width();
+    var container = $('#container');
+    var containerWidth = container.width();
+    var containerLeft = container.position().left;
+    var containerRight = containerWidth + containerLeft;
     var editor = this.uiEls.editor;
     var editorLeft = editor.position().left;
-    var newWidth = containerWidth - editorLeft + 26;
+    var newWidth = containerRight - editorLeft - 4;
     if (newWidth > 100) {
       editor.css('width', newWidth + 'px');
       this.setDivShadow('editor', 'editShadowContainer');
@@ -817,11 +847,12 @@
       minWidth: 115,
       stop: function(e, ui) {
         me.hideDragSafeDiv();
-        me.setShadowDivSize('runShadowContainer', ui.size.width, ui.size.height);
+        me.setDivShadow('outputDiv', 'runShadowContainer');
+//        me.setShadowDivSize('runShadowContainer', ui.size.width, ui.size.height);
         me.is.runBox.setNewCodeRunIframeWidthHeight($('#runFrame'));
+        me.movedFlags.output = true;
       }
     });
-
 
     $("#editor").resizable({
       handles: "se",
@@ -839,6 +870,7 @@
         var newEditHeight = editorHeight - 46;
         $("#edit").css('height', newEditHeight + 'px');
         me.setDivShadow('editor', 'editShadowContainer');
+        me.movedFlags.edit = true;
       }
     });
 
@@ -874,6 +906,7 @@
       },
       stop: function(e, ui) {
         me.hideDragSafeDiv();
+        me.movedFlags.output = true;
       }
     });
 
@@ -886,6 +919,7 @@
       },
       stop: function(e, ui) {
         me.hideDragSafeDiv();
+        me.movedFlags.edit = true;
       }
     });
 
@@ -978,9 +1012,9 @@
       $('#codeOutput0').dialog('open').show();
       this.htmlEditor = new CodeMirror(document.getElementById('codeOutput0'), {
         parserfile: ["parsexml.js", "parsecss.js", "tokenizejavascript.js", "parsejavascript.js", "parsehtmlmixed.js"],
-        stylesheet: ["../codemirror/css/jscolors.css", "../codemirror/css/csscolors.css", "../codemirror/css/xmlcolors.css"],
+        stylesheet: ["codemirror/css/jscolors.css", "codemirror/css/csscolors.css", "codemirror/css/xmlcolors.css"],
         autoMatchParens : true,
-        path : '../codemirror/js/',
+        path : 'codemirror/js/',
         height : '100%',
         width: '100%',
         content: code,
@@ -997,9 +1031,9 @@
       $('#codeOutput' + this.numHTMLEditors).dialog('open').show();
       this.htmlEditor = new CodeMirror(document.getElementById('codeOutput' + this.numHTMLEditors), {
         parserfile: ["parsexml.js", "parsecss.js", "tokenizejavascript.js", "parsejavascript.js", "parsehtmlmixed.js"],
-        stylesheet: ["../codemirror/css/jscolors.css", "../codemirror/css/csscolors.css", "../codemirror/css/xmlcolors.css"],
+        stylesheet: ["codemirror/css/jscolors.css", "codemirror/css/csscolors.css", "codemirror/css/xmlcolors.css"],
         autoMatchParens : true,
-        path : '../codemirror/js/',
+        path : 'codemirror/js/',
         height : '100%',
         width: '100%',
         content: code,
@@ -1061,7 +1095,9 @@
     $('#searchInputContainer').show();
     this.createAutoComplete();
     this.setAutoCompleteClicks();
-    this.createAutoCompleteDropShadow();
+    if (!this.is.ie6) {
+      this.createAutoCompleteDropShadow();
+    }
   };
 
   UIEffects.prototype.initSaveCodeDiv = function() {

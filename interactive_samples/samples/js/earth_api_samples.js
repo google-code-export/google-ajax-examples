@@ -1,7 +1,11 @@
 var tempJSON = [
   {
     "category": "Earth API",
-    "samples": [],
+    "samples":[
+      {"boilerplateLoc":"samples/boilerplateHTML/earthapis.html", "files":["samples/js/earth/geocoding.js"], "sampleName":"Geocoding via Maps API", "tags": "", "docsUrl": "http://code.google.com/apis/maps/documentation/reference.html#GClientGeocoder"},
+      {"boilerplateLoc":"samples/boilerplateHTML/earthapis.html", "files":["samples/js/earth/create_3d_models.js"], "sampleName":"Create 3D Model", "tags": "", "docsUrl": "http://code.google.com/apis/earth/documentation/reference/interface_kml_model.html"},
+      {"boilerplateLoc":"samples/boilerplateHTML/earthapis.html", "files":["samples/js/earth/create_network_link.js"], "sampleName":"Create NetworkLink", "tags": "", "docsUrl": "http://code.google.com/apis/earth/documentation/reference/interface_kml_network_link.html"}
+    ],
     "docsUrl": "http://code.google.com/apis/earth/documentation/reference/index.html"
   },
   {
@@ -80,15 +84,6 @@ var tempJSON = [
       {"boilerplateLoc":"samples/boilerplateHTML/earthapis.html", "files":["samples/js/earth/parse_string_kml.js"], "sampleName":"Parse String KML", "tags": "", "docsUrl": ""},
       {"boilerplateLoc":"samples/boilerplateHTML/earthapis.html", "files":["samples/js/earth/linestring_styling.js"], "sampleName":"LineString Styling", "tags": "", "docsUrl": "http://code.google.com/apis/earth/documentation/reference/interface_kml_line_style.html"},
       {"boilerplateLoc":"samples/boilerplateHTML/earthapis.html", "files":["samples/js/earth/protect_from_bad_kml.js"], "sampleName":"Protect from Bad KML", "tags": "", "docsUrl": ""}
-    ],
-    "docsUrl": "http://code.google.com/apis/earth/documentation/reference/google_earth_namespace.html"
-  },
-  {
-    "category": "Earth API-Other",
-    "samples":[
-      {"boilerplateLoc":"samples/boilerplateHTML/earthapis.html", "files":["samples/js/earth/geocoding.js"], "sampleName":"Geocoding via Maps API", "tags": "", "docsUrl": "http://code.google.com/apis/maps/documentation/reference.html#GClientGeocoder"},
-      {"boilerplateLoc":"samples/boilerplateHTML/earthapis.html", "files":["samples/js/earth/create_3d_models.js"], "sampleName":"Create 3D Model", "tags": "", "docsUrl": "http://code.google.com/apis/earth/documentation/reference/interface_kml_model.html"},
-      {"boilerplateLoc":"samples/boilerplateHTML/earthapis.html", "files":["samples/js/earth/create_network_link.js"], "sampleName":"Create NetworkLink", "tags": "", "docsUrl": "http://code.google.com/apis/earth/documentation/reference/interface_kml_network_link.html"}
     ],
     "docsUrl": "http://code.google.com/apis/earth/documentation/reference/google_earth_namespace.html"
   }

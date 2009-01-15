@@ -11,13 +11,14 @@ APIKeys = {
   "http://savedbythegoog.appspot.com": "ABQIAAAA1XbMiDxx_BTCY2_FkPh06RRaGTYH6UMl8mADNa0YKuWNNa8VNxQEerTAUcfkyrr6OwBovxn7TDAH5Q",
   "http://interactivesampler.appspot.com": "ABQIAAAA1XbMiDxx_BTCY2_FkPh06RQHF42S0NdyoEzlm7Prh6jpDX8u1BRWbrvF_ETKtOKL_Fpp8DKNik-umA",
   "http://code.google.com": "ABQIAAAA1XbMiDxx_BTCY2_FkPh06RSosDVG8KKPE1-m51RBrvYughuyMxQb4QY32wd-bGTUz44F9R1FRoxuMQ",
-  "http://172.31.80.237:8082": "ABQIAAAA1XbMiDxx_BTCY2_FkPh06RSwFVzLkUibt4lYwTz0h9czjdYvyhTud0J2sKU0pvLgHpwEB7DN56BczQ"
+  "http://172.31.155.89:8082": "ABQIAAAApfWVg6qaIHQdkCxe56e57hTjpPIn9SDiNRzoec4tqssl2kJszBTEk7bhC42qvPfkfUqZw2ht8CyQzg"
 }
 
 class Main(webapp.RequestHandler):
   def get(self):
     path = self.request.path
     path = path[1:]
+    path = path.replace('apis/ajax/playground/', '')
     url = self.request.url
     key = ''
     for i in APIKeys:
@@ -32,9 +33,10 @@ class Main(webapp.RequestHandler):
     path = os.path.join(os.path.dirname(__file__), path)
     self.response.out.write(template.render(path, self.template_values))
 
-application = webapp.WSGIApplication([(r'/samples/boilerplateHTML/.*', Main)
+application = webapp.WSGIApplication([(r'/samples/boilerplateHTML/.*', Main),
+                                      (r'/apis/ajax/playground/samples/boilerplateHTML/.*', Main)
                                      ],
-                                     debug=False)
+                                     debug=True)
 
 def main():
   run_wsgi_app(application)
