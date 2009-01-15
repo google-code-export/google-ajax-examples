@@ -209,10 +209,19 @@ class Delete(webapp.RequestHandler):
     cgiArgs = ''
     if apiTypes:
       cgiArgs = '?type=' + apiTypes
-    self.redirect('/' + cgiArgs)
+
+    isOnGoogleCode = self.request.path.find('apis/ajax/playground')
+    if isOnGoogleCode != -1:
+      self.redirect('/apis/ajax/playground/' + cgiArgs)
+    else:
+      self.redirect('/' + cgiArgs)
         #
         # path = os.path.join(os.path.dirname(__file__), 'index.html')
         # self.response.out.write(template.render(path, self.template_values))
+
+class RedirectToMain(webapp.RequestHandler):
+  def get(self):
+    self.redirect('/apis/ajax/playground/')
 
 class Save(webapp.RequestHandler):
   def saveCode(self, user, jscode, sampleName, tags, boilerplateLoc):
@@ -265,7 +274,13 @@ class Save(webapp.RequestHandler):
     cgiArgs = ''
     if apiTypes:
       cgiArgs = '?type=' + apiTypes
-    self.redirect('/' + cgiArgs + hashLink)
+
+
+    isOnGoogleCode = self.request.path.find('apis/ajax/playground')
+    if isOnGoogleCode != -1:
+      self.redirect('/apis/ajax/playground/' + cgiArgs + hashLink)
+    else:
+      self.redirect('/' + cgiArgs + hashLink)
 
 def main():
   application = webapp.WSGIApplication([('/', Main),
@@ -273,7 +288,7 @@ def main():
                                         ('/delete', Delete),
                                         ('/get', GetCode),
                                         ('/apis/ajax/playground/', Main),
-                                        ('/apis/ajax/playground', Main),
+                                        ('/apis/ajax/playground', RedirectToMain),
                                         ('/apis/ajax/playground/save', Save),
                                         ('/apis/ajax/playground/delete', Delete),
                                         ('/apis/ajax/playground/get', GetCode)],

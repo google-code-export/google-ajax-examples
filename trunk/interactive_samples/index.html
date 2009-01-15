@@ -151,8 +151,8 @@
                     <br style="clear:both;">
                     <!-- onmouseout="is.uiEffects.toggleDropdown($('#codeMenuDropdown'), true);" -->
                     <span id="codeMenuDropdown" class="dropdown" >
-                      <span class="first" onclick="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.linkCode();return false;"><img src="images/link.png" alt="Export Code" width="15" />&nbsp;Export</span>
-                      <span onclick="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.outputSource();return false;"><img src="images/export.png" alt="Show Source" width="15" />&nbsp;View Full Source</span>
+                      <span class="first" onclick="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.linkCode();return false;"><img src="images/export.png" alt="Export Code" width="17" />&nbsp;Export</span>
+                      <span onclick="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.outputSource();return false;"><img src="images/docs.png" alt="Show Source" width="13" />&nbsp;View Full Source</span>
 
                       {% if loginUrl %}
                       <span onclick="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.confirmLogin('{{ loginUrl }}', true);return false;">
@@ -259,7 +259,7 @@ iFrame fixes it.
   <input type="hidden" id="codeHolder" name="code" />
 </form>
 <div id="saveCodeForm">
-<form action="/save" method="POST" id="saveForm">
+<form action="save" method="POST" id="saveForm">
   <input type="hidden" name="boilerplateLoc" value="" id="boilerplateLoc">
   <input name="jscode" id="jscodeSaveForm" style="display: none;" />
   <input type="hidden" name="id" value="" id="idSaveForm">

@@ -135,8 +135,8 @@
         catName.appendChild(img);
         catName.innerHTML += category;
         if (codeArray[i].docsUrl) {
-          link = this.createDocsLink(codeArray[i].docsUrl);
-          catName.appendChild(link);
+//          link = this.createDocsLink(codeArray[i].docsUrl);
+//          catName.appendChild(link);
         }
         categoryDiv.appendChild(catName);
         this.selectCode.appendChild(categoryDiv);
@@ -159,8 +159,8 @@
         subCategoryDiv.appendChild(subCatName);
 
         if (codeArray[i].docsUrl) {
-          link = this.createDocsLink(codeArray[i].docsUrl);
-          subCategoryDiv.appendChild(link);
+//          link = this.createDocsLink(codeArray[i].docsUrl);
+//          subCategoryDiv.appendChild(link);
         }
 
         categoryDiv.appendChild(subCategoryDiv);
@@ -182,7 +182,7 @@
         $(textNode).bind('click', this.showSample(item.sampleName));
         li.appendChild(textNode);
         if (item.docsUrl) {
-          li.appendChild(this.createDocsLink(item.docsUrl));
+//          li.appendChild(this.createDocsLink(item.docsUrl));
         }
         if (category == 'Saved Code') {
           this.addDeleteIcon(li, codeArray[i].samples[j].id);
