@@ -26,6 +26,7 @@ import functools
 import Cookie
 import datetime
 import time
+import urllib
 
 from google.appengine.ext import webapp
 from google.appengine.api import users
@@ -34,12 +35,12 @@ from google.appengine.ext import db
 # GLOBAL ARRAY OF APIS & THEIR CONFIGURED JSON FILES.  DON'T EDIT UNLESS YOU'RE SURE
 apis = {
   'search': 'samples/js/search_api_samples.js',
-  'lang': 'samples/js/lang_api_samples.js',
+  'language': 'samples/js/lang_api_samples.js',
   'feeds': 'samples/js/feeds_api_samples.js',
-  'libs': 'samples/js/libs_api_samples.js',
+  'libraries': 'samples/js/libs_api_samples.js',
   'earth': 'samples/js/earth_api_samples.js',
   'maps': 'samples/js/maps_api_samples.js',
-  'viz': 'samples/js/visualization_api_samples.js'
+  'visualization': 'samples/js/visualization_api_samples.js'
 }
 
 class SavedCode(db.Model):
@@ -57,6 +58,8 @@ def getTemplateValues(self, cgiArgs):
   logoutUrl = ''
   loginUrl = ''
   isOnGoogleCode = self.request.path.find('apis/ajax/playground')
+  if cgiArgs != '':
+    cgiArgs = '?' + cgiArgs
   if user:
     greeting = '%s' % (user.nickname())
     if isOnGoogleCode != -1:
@@ -141,6 +144,12 @@ def getTypes(self):
       return False
   return types
 
+def getExpanded(self):
+  expanded = self.request.get('exp')
+  if not apis.has_key(expanded):
+    return False
+  return expanded
+
 class Main(webapp.RequestHandler):
   def getAPISampleSourceIncludes(self, types):
     apiSampleSources = []
@@ -157,12 +166,22 @@ class Main(webapp.RequestHandler):
 
   def get(self):
     apiTypes = getTypes(self)
+    expanded = getExpanded(self)
+    cgiArgsDict = {}
     self.template_values = {}
+
+    # these next couple lines of code are stupid because of laziness.
     if apiTypes:
-      self.template_values = getTemplateValues(self, '?type=' + apiTypes);
+      cgiArgsDict["type"] = apiTypes
+    if expanded:
+      cgiArgsDict["exp"] = expanded
+    cgiArgs = urllib.urlencode(cgiArgsDict)
+    self.template_values = getTemplateValues(self, cgiArgs);
+    if apiTypes:
       self.template_values['curAPITypes'] = apiTypes
-    else:
-      self.template_values = getTemplateValues(self, '');
+    if expanded:
+      self.template_values['expandedCategory'] = expanded
+
     sample_srcs = self.getAPISampleSourceIncludes(apiTypes)
     self.template_values['sample_srcs'] = sample_srcs
     # self.response.out.write(simplejson.dumps(a))

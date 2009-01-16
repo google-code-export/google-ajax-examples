@@ -38,16 +38,17 @@
     Undesirable to put inline script in between script includes
     but this is the best way to load saved examples
   -->
-  {% if usersSamplesJSON %}
-    <script type="text/javascript" charset="utf-8">
-      var userJSON = {{ usersSamplesJSON }};
-      var curAPITypes = '{{ curAPITypes }}';
+  <script type="text/javascript" charset="utf-8">
+    {% if usersSamplesJSON %}
 
-      if (typeof userJSON != 'undefined' && userJSON.length) {
-        codeArray = userJSON.concat(codeArray);
-      }
-    </script>
-  {% endif %}
+      var userJSON = {{ usersSamplesJSON }};
+    if (typeof userJSON != 'undefined' && userJSON.length) {
+      codeArray = userJSON.concat(codeArray);
+    }
+    {% endif %}
+    var curAPITypes = '{{ curAPITypes }}';
+    var expandedCategory = '{{ expandedCategory }}';
+  </script>
 
   <script src="js/interactive_logic.js" type="text/javascript" charset="utf-8"></script>
   <script type="text/javascript" charset="utf-8">
