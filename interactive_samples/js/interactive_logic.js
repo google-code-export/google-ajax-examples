@@ -485,6 +485,7 @@
   };
 
   InteractiveSample.prototype.indentCodeWithTheseSpaces = function(code, indentSpaces) {
+    code = indentSpaces.concat(code);
     var newLine = code.indexOf('\n');
     while (newLine != -1) {
       var start = code.slice(0, newLine);
