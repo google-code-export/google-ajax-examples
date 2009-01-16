@@ -10,7 +10,9 @@ var tempJSON = [
       {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/search/expand_mode.js"], "sampleName":"Expand Mode", "tags": "Search Control"},
       {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/search/raw_search.js"], "sampleName":"Raw Search", "tags": "Custom Control, Custom Results"},
       {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/search/show_query.js"], "sampleName":"Show Search Query", "tags": "Show User Query"},
-      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/search/auto_search.js"], "sampleName":"Search as user Types", "tags": "Custom form, automatic search"}
+      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/search/auto_search.js"], "sampleName":"Search as user Types", "tags": "Custom form, automatic search"},
+      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis/searchFormRoot.html", "files":["samples/js/search/search_form_root.js"], "sampleName":"Search Form Placement", "tags": "", "docsUrl": "http://code.google.com/apis/ajaxsearch/documentation/reference.html#_class_GsearcherOptions"},
+      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis/searchResultPlacement.html", "files":["samples/js/search/search_result_placement.js"], "sampleName":"Search Result Placement", "tags": "", "docsUrl": "http://code.google.com/apis/ajaxsearch/documentation/reference.html#_class_GsearcherOptions"}
     ],
     "docsUrl": "http://code.google.com/apis/ajaxsearch/documentation/reference.html#_class_GSearch"
   },
@@ -35,12 +37,13 @@ var tempJSON = [
     "category":"Search API-Local Search",
     "samples":[
       {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/search/localsearch/center_search.js"], "sampleName":"Center LocalSearch", "tags": "Maps, setCenter"},
-//      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/search/localsearch/localsearch_markers.js"], "sampleName":"LocalSearch with Markers", "tags": "Markers, Viewport, Maps"},
+      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/search/localsearch/localsearch_markers.js"], "sampleName":"LocalSearch with Markers", "tags": "Markers, Viewport, Maps"},
       {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/search/localsearch/map_control.js"], "sampleName":"Static Map Control", "tags": "Static Maps, Prototypes, Custom Control, Maps"},
       {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/search/localsearch/restrict_results.js"], "sampleName":"Restrict Results", "tags": "KML, Business Listings"},
       {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/search/localsearch/localsearch_control.js"], "sampleName":"Local Search Control", "tags": "Maps"},
       {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/search/localsearch/localsearch_control_small.js"], "sampleName":"Local Search Control Small", "tags": "Maps"},
-      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/search/localsearch/localsearch_control_custom_pins.js"], "sampleName":"Local Search Control Custom Pins", "tags": "Maps, Custom, Icon"}
+      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/search/localsearch/localsearch_control_custom_pins.js"], "sampleName":"Local Search Control Custom Pins", "tags": "Maps, Custom, Icon"},
+      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis/drivingDirections.html", "files":["samples/js/search/localsearch/driving_directions.js"], "sampleName":"Show Driving Directions", "tags": ""}
     ],
     "docsUrl": "http://code.google.com/apis/ajaxsearch/documentation/reference.html#_class_GlocalSearch"
   },

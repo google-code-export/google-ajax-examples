@@ -56,11 +56,18 @@ def getTemplateValues(self, cgiArgs):
   greeting = ''
   logoutUrl = ''
   loginUrl = ''
+  isOnGoogleCode = self.request.path.find('apis/ajax/playground')
   if user:
     greeting = '%s' % (user.nickname())
-    logoutUrl = users.create_logout_url('/' + cgiArgs)
+    if isOnGoogleCode != -1:
+      logoutUrl = users.create_logout_url('/apis/ajax/playground/' + cgiArgs)
+    else:
+      logoutUrl = users.create_logout_url('/' + cgiArgs)
   else:
-    loginUrl = users.create_login_url('/' + cgiArgs)
+    if isOnGoogleCode != -1:
+      loginUrl = users.create_login_url('/apis/ajax/playground/' + cgiArgs)
+    else:
+      loginUrl = users.create_login_url('/' + cgiArgs)
 
   template_values = {
     'loginUrl': loginUrl,

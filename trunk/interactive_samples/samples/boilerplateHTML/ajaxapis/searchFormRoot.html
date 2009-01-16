@@ -1,0 +1,134 @@
+<!--
+  Copyright (c) 2008 Google Inc.
+
+  You are free to copy and use this sample.
+  License can be found here: http://code.google.com/apis/ajaxsearch/faq/#license
+-->
+
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>.setSearchFormRoot() - Google AJAX Search API Sample</title>
+    <style type="text/css">
+
+      body *, table *,
+      body {
+        font-family: verdana, sans-serif;
+        font-size: 13px;
+      }
+
+      td { vertical-align : top; padding : 0px; }
+
+      table {
+        border-spacing : 0px 0px;
+        border : none;
+      }
+
+      td.content {
+        width : 70%;
+        padding-left : 20px;
+        border-right : 2px solid rgb(204, 204, 204);
+        }
+
+      #content {
+        padding : 10px;
+        height : 1000px;
+        background-color : #f9f9f9;
+      }
+
+      #sidebar {
+        padding : 10px;
+        height : 1000px;
+        background-color : #e8e8e8;
+      }
+
+      #sidebar h2 {
+        margin-top : 8px;
+        margin-bottom : 8px;
+        font-size : 11px;
+        border-bottom : 1px solid rgb(204, 204, 204);
+        color : rgb(51, 51, 51);
+      }
+
+      #sidebar a {
+        line-height : 20px;
+        border-bottom : 1px solid rgb(221, 204, 204);
+        color : rgb(204, 0, 0);
+        text-decoration : none;
+      }
+
+      #sidebar a:hover {
+        border-bottom : 2px solid rgb(204, 0, 0);
+      }
+
+      #searchForm input.gsc-input {
+        padding : 2px;
+        color : rgb(51, 51, 51);
+        border : 1px solid rgb(204, 204, 204);
+      }
+
+      h1 {
+        font-family: arial, sans-serif;
+        font-size : 16px;
+        font-weight : bold;
+        border-top : 1px solid #e0e0e0;
+        text-align : center;
+        margin-bottom : 10px;
+        padding-bottom : 4px;
+        color : rgb(204, 0, 0);
+      }
+
+      h1 .tagline,
+      h1 a,
+      h1 a .tagline {
+        font-size : 13px;
+        font-weight : normal;
+        color : rgb(204, 0, 0);
+        cursor : pointer;
+        text-decoration : none;
+      }
+
+      h1 a span.tagline {
+        padding : 2px;
+        border-bottom : 1px solid rgb(221, 204, 204);
+      }
+
+      a span.tagline:hover {
+        color : rgb(204, 0, 0);
+        border-bottom : 2px solid rgb(204, 0, 0);
+      }
+
+    </style>
+    <script src="http://www.google.com/jsapi" type="text/javascript"></script>
+
+    <script language="Javascript" type="text/javascript">//<![CDATA[
+    {{ INSERT_JAVASCRIPT_HERE }}
+    //]]>
+    </script>
+  </head>
+
+  <body>
+    <h1>Using google.search.DrawOptions.setSearchFormRoot() - <a href="http://code.google.com/apis/ajaxsearch/index.html"><span class="tagline">powered by The Google AJAX Search API</span></a></h1>
+    <table width="100%">
+      <tr>
+        <td class="content" valign="top" width="60%">
+          <div id="content">
+            <div id="searchResults">Loading...</div>
+          </div>
+        </td>
+        <td class="sidebar" width="40%">
+          <div id="sidebar">
+            <h2>Search</h2>
+            <div id="searchForm">Loading...</div>
+            <h2>Other Resources</h2>
+            <div id="links">
+              <a href="http://code.google.com/apis/ajaxsearch/index.html">Ajax Search API</a><br/>
+              <a href="http://www.google.com/uds/solutions/videosearch/index.html">Video Search Control</a><br/>
+              <a href="http://www.google.com/uds/solutions/mapsearch/index.html">Map Search Control</a><br/>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

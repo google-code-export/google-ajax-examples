@@ -48,13 +48,13 @@ function searchComplete() {
       var result = results[i];
       var imgContainer = document.createElement('div');
 
-      var title = document.createElement('h1');
+      var title = document.createElement('div');
       // We use titleNoFormatting so that no HTML tags are left in the title
       title.innerHTML = result.titleNoFormatting;
 
       var newImg = document.createElement('img');
       // There is also a result.url property which has the escaped version
-      newImg.src = result.unescapedUrl;
+      newImg.src = result.tbUrl;
 
       imgContainer.appendChild(title);
       imgContainer.appendChild(newImg);
