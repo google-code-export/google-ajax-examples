@@ -205,9 +205,12 @@
             this.hideAllCategoriesExcept(categoryDiv);
           }
         }
-        
+
         if (window.expandedCategory && category.toLowerCase().indexOf(window.expandedCategory) != -1 && window.location.hash.length <= 1) {
           this.hideAllCategoriesExcept(categoryDiv);
+          if (j == 0) {
+            this.showSample(item.sampleName)();
+          }
         }
 
         this.codeLIs.push(li);
