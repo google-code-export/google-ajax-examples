@@ -1,4 +1,5 @@
 function drawVisualization() {
+  // Create and populate the data table.
   var data = new google.visualization.DataTable();
   data.addColumn('string', 'Name');
   data.addColumn('number', 'Height');
@@ -14,6 +15,7 @@ function drawVisualization() {
   data.setCell(1, 2, false);
   data.setCell(2, 2, true);
 
+  // Create and draw the visualization.
   visualization = new google.visualization.Table(document.getElementById('table'));
   visualization.draw(data, null);
 }

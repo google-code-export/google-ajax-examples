@@ -4,6 +4,6 @@ function drawVisualization() {
       function(response) {
         new google.visualization.AnnotatedTimeLine(
             document.getElementById('visualization')).
-            draw(response.getDataTable(), null);
+            draw(response.getDataTable(), {'displayAnnotations': true});
       });
 }
