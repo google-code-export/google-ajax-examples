@@ -2,6 +2,9 @@
 * Retrieve all events
 */
 
+// Obtain a reference to the 'content' div
+var content = document.getElementById('content');
+
 // Create the calendar service object
 var calendarService =
     new google.gdata.calendar.CalendarService('com.appspot.interactivesampler');
