@@ -1,6 +1,6 @@
 /*
 * Retrieve events with a date query
-*/ 
+*/
 
 // Obtain a reference to the 'content' div
 var content = document.getElementById('content');
@@ -13,7 +13,7 @@ var calendarService =
 // calendar with full projection.
 var feedUri = 'http://www.google.com/calendar/feeds/developer-calendar%40google.com/public/full';
 
-// Create a CalendarEventQuery, and specify that this query is 
+// Create a CalendarEventQuery, and specify that this query is
 // applied toward the "private/full" feed
 var query = new google.gdata.calendar.CalendarEventQuery(feedUri);
 
@@ -49,16 +49,16 @@ var callback = function(root) {
     // No match is found for the date query
     html += '<p>No events are matched from the query!</p>';
   }
-  
+
   // Output HTML and clear 'Loading...' text
   content.innerHTML = html;
-}
+};
 
 // Error handler to be invoked when getEventsFeed() produces an error
 var handleError = function(error) {
   content.innerHTML = '<pre>' + error + '</pre>';
-}
+};
 
-// Submit the request using the calendar service object. Notice the CalendarEventQuery 
+// Submit the request using the calendar service object. Notice the CalendarEventQuery
 // object is passed in place of the feed URI
 calendarService.getEventsFeed(query, callback, handleError);

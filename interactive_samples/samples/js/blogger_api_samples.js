@@ -21,14 +21,13 @@ var tempJSON = [
     {"boilerplateLoc":"samples/boilerplateHTML/bloggerapis.html", "files":["samples/js/blogger/list_comments.js"], "sampleName":"List Comments", "tags": ""}
     ],
     "docsUrl": "http://code.google.com/apis/blogger/docs/2.0/developers_guide_protocol.html"
-  },
-  
+  }
 ];
 
 
 if (typeof codeArray != 'undefined' && codeArray.length) {
   codeArray = codeArray.concat(tempJSON);
-  delete tempJSON
+  delete tempJSON;
 } else {
   window.codeArray = tempJSON;
   delete tempJSON;
