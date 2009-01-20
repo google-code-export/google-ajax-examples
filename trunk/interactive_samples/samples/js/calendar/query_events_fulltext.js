@@ -1,6 +1,6 @@
 /*
 * Retrieve events with full text query
-*/ 
+*/
 
 // Obtain a reference to the 'content' div
 var content = document.getElementById('content');
@@ -16,7 +16,7 @@ var feedUri = 'http://www.google.com/calendar/feeds/developer-calendar%40google.
 // Full text query for this string
 var searchText = 'Hackathon';
 
-// Create a CalendarEventQuery, and specify that this query is 
+// Create a CalendarEventQuery, and specify that this query is
 // applied toward the "private/full" feed
 var query = new google.gdata.calendar.CalendarEventQuery(feedUri);
 
@@ -28,10 +28,10 @@ var callback = function(root) {
 
   // Obtain the array of mateched CalendarEventEntry
   var eventEntries = root.feed.getEntries();
-  
+
   // Output the query we're using
   var html  = '<p><strong>Full text query for:</strong> ' + searchText + '</p>';
-  
+
   // If there is matches for the full text query
   if (eventEntries.length > 0) {
     html += '<ul>';
@@ -46,16 +46,16 @@ var callback = function(root) {
     // No match is found for the full text query
     html += '<p>No events are matched from the query!</p>';
   }
-  
+
   // Output HTML and clear 'Loading...' message
   content.innerHTML = html;
-}
+};
 
 // Error handler to be invoked when getEventsFeed() produces an error
 var handleError = function(error) {
   content.innerHTML = '<pre>' + error + '</pre>';
-}
+};
 
-// Submit the request using the calendar service object.  Notice the 
+// Submit the request using the calendar service object.  Notice the
 // CalendarEventQuery object is passed in place of the feed URI
 calendarService.getEventsFeed(query, callback, handleError);

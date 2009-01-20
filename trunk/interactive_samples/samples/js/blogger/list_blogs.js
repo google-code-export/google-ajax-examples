@@ -1,5 +1,5 @@
-/* 
-* Retrieve a list of blogs 
+/*
+* Retrieve a list of blogs
 */
 
 // Obtain a reference to the 'content' div
@@ -9,7 +9,7 @@ var content = document.getElementById('content');
 var bloggerService =
     new google.gdata.blogger.BloggerService('com.appspot.interactivesampler');
 
-// The default "metafeed" feed is used to retrieve a list of blogs for a 
+// The default "metafeed" feed is used to retrieve a list of blogs for a
 // particular logged-in user.
 //
 // The ID included in this URI can be retrieved from the <link rel="me">
@@ -34,7 +34,7 @@ var handleBlogFeed = function(blogFeedRoot) {
        + '<dd><a href="' + authorUri + '">' + authorUri + '</a></dd>';
 
   // Fetch blogs associated with this Blogger Profile
-  html += '<h2>Blog List</h2>'
+  html += '<h2>Blog List</h2>';
   var blogEntries = blogFeedRoot.feed.getEntries();
 
   // Has the user created any blogs?

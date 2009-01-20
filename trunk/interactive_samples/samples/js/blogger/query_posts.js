@@ -1,4 +1,4 @@
-/* 
+/*
 * Retrieve a specific blog post
 */
 
@@ -31,12 +31,12 @@ var handleQueryResults = function(resultsFeedRoot) {
   // Buffer output until all tags are closed
   var html = '<ul>';
   var postEntries = blogFeed.getEntries();
-  for (var i = 0, posts; postEntry = postEntries[i]; i++) {
+  for (var i = 0; postEntry = postEntries[i]; i++) {
     var postTitle = postEntry.getTitle().getText();
     var pubDate = google.gdata.DateTime.toIso8601(postEntry.getPublished().getValue());
-    
-    html += '<li><strong>Post Title:</strong> ' + postTitle + '<br />';
-          + 'Published: ' + pubDate + '</li>';
+
+    html += '<li><strong>Post Title:</strong> ' + postTitle + '<br />' +
+            'Published: ' + pubDate + '</li>';
   }
   html += '</ul>';
   content.innerHTML += html;
@@ -50,8 +50,8 @@ var handleError = function(error) {
 var startDate = new Date('January 01, 2008 14:00:00');
 var endDate = new Date('December 31, 2008 15:42:00');
 
-// Make query global to use in queryResultsCallback() 
-query = new google.gdata.blogger.BlogPostQuery(feedUri);
+// Make query global to use in queryResultsCallback()
+var query = new google.gdata.blogger.BlogPostQuery(feedUri);
 query.setPublishedMin(new google.gdata.DateTime(startDate));
 query.setPublishedMax(new google.gdata.DateTime(endDate));
 

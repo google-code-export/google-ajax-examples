@@ -7,13 +7,13 @@ var tempJSON = [
       {"boilerplateLoc":"samples/boilerplateHTML/calendarapis.html", "files":["samples/js/calendar/query_events_date.js"], "sampleName":"Date Queries", "tags": ""}
     ],
     "docsUrl": "http://code.google.com/apis/calendar/docs/2.0/developers_guide_protocol.html"
-  },
+  }
 ];
 
 
 if (typeof codeArray != 'undefined' && codeArray.length) {
   codeArray = codeArray.concat(tempJSON);
-  delete tempJSON
+  delete tempJSON;
 } else {
   window.codeArray = tempJSON;
   delete tempJSON;

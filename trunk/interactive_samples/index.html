@@ -152,22 +152,22 @@
                     <br style="clear:both;">
                     <!-- onmouseout="is.uiEffects.toggleDropdown($('#codeMenuDropdown'), true);" -->
                     <span id="codeMenuDropdown" class="dropdown" >
-                      <span class="first" onclick="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.linkCode();return false;"><img src="images/export.png" alt="Export Code" width="17" />&nbsp;Export</span>
-                      <span onclick="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.outputSource();return false;"><img src="images/docs.png" alt="Show Source" width="13" />&nbsp;View Full Source</span>
+                      <span class="first" onmousedown="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.linkCode();return false;"><img src="images/export.png" alt="Export Code" width="17" />&nbsp;Export</span>
+                      <span onmousedown="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.outputSource();return false;"><img src="images/docs.png" alt="Show Source" width="13" />&nbsp;View Full Source</span>
 
                       {% if loginUrl %}
-                      <span onclick="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.confirmLogin('{{ loginUrl }}', true);return false;">
+                      <span onmousedown="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.confirmLogin('{{ loginUrl }}', true);return false;">
                         <img src="images/save.png" alt="Save" width="15" />&nbsp;Save
                       </span>
-                      <span onclick="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.confirmLogin('{{ loginUrl }}');return false;">
+                      <span onmousedown="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.confirmLogin('{{ loginUrl }}');return false;">
                         Login
                       </span>
                       {% endif %}
                       {% if logoutUrl %}
-                      <span onclick="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.saveCode();return false;">
+                      <span onmousedown="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.saveCode();return false;">
                         <img src="images/save.png" alt="Save" width="15"/>&nbsp;Save
                       </span>
-                      <span onclick="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));location.href='{{ logoutUrl }}';">
+                      <span onmousedown="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));location.href='{{ logoutUrl }}';return false;">
                         Logout
                       </span>
                       {% endif %}
@@ -209,11 +209,11 @@
             <tbody>
               <tr>
                 <td>
-                  <span onclick="is.runCode();" style="cursor: pointer;">Run <img src="images/play10x10.png" alt="Run"></span>
+                  <span onmousedown="is.runCode();return false;" style="cursor: pointer;">Run <img src="images/play10x10.png" alt="Run"></span>
                 </td>
                 <td id="runBoxTitle">Output</td>
                 <td align="right">
-                  <span onclick="is.runBox.changeToPopout();" style="cursor: pointer;"><img src="images/new-window.png" alt="Pop-out"></span>
+                  <span onmousedown="is.runBox.changeToPopout();return false;" style="cursor: pointer;"><img src="images/new-window.png" alt="Pop-out"></span>
                 </td>
               </tr>
             </tbody>

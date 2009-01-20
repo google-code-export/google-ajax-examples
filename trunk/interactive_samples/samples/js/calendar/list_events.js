@@ -14,11 +14,11 @@ var calendarService =
 var feedUri = 'http://www.google.com/calendar/feeds/developer-calendar%40google.com/public/full';
 
 // The callback method that will be called when getEventsFeed() returns feed data
-var callback = function(result) {       
-  
+var callback = function(result) {
+
   // Obtain the array of CalendarEventEntry
-  var entries = result.feed.entry;    
-  
+  var entries = result.feed.entry;
+
   // Print the total number of events
   var html = '<p>Total of ' + entries.length + ' event(s)</p>';
 
@@ -29,15 +29,15 @@ var callback = function(result) {
     html += '<li><strong>Event title:</strong> ' + eventTitle + '</li>';
   }
   html += '</ul>';
-  
+
   // Output HTML and clear 'Loading...' screen
   content.innerHTML = html;
-}
+};
 
 // Error handler to be invoked when getEventsFeed() produces an error
 var handleError = function(error) {
   content.innerHTML = '<pre>' + error + '</pre>';
-}
+};
 
 // Submit the request using the calendar service object
 calendarService.getEventsFeed(feedUri, callback, handleError);

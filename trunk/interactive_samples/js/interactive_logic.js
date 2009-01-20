@@ -55,7 +55,7 @@
       this.putSafetyCookieInForms();
     }
 
-    this.tryCatchRegex = /[ ]*try {if \(window\.parent && window\.parent\.is && window\.parent\.is\.codeToRun\) {window\.eval\(window\.parent\.is\.codeToRun\);window\.onload = function\(\) {window\.document\.body\.onclick = function\(\) {window\.parent\.is\.uiEffects\.bringRunBoxToFront\(\);};};}} catch \(e\) {alert\("Error: " \+ e\.message\);}/;
+    this.tryCatchRegex = /[ ]*try {if \(window\.parent && window\.parent\.is && window\.parent\.is\.codeToRun\) {eval\(window\.parent\.is\.codeToRun\);window\.onload = function\(\) {window\.document\.body\.onclick = function\(\) {window\.parent\.is\.uiEffects\.bringRunBoxToFront\(\);};};}} catch \(e\) {alert\("Error: " \+ e\.message\);}/;
   };
 
   InteractiveSample.prototype.getCookie = function(name) {
@@ -663,12 +663,11 @@
     // in PNGs
     if (!this.is.ie6) {
       this.setDivShadow('outputDiv', 'runShadowContainer');
-      var left = $("#outputDiv").css('left');
-      var top = $("#outputDiv").css('top');
+      var height = $("#editor").height();
+      // one-off hack because firefox makes the editor div 2 pixels to tall
+      if($.browser.mozilla) $("#editor").css('height', height - 2);
       this.setDivShadow('editor', 'editShadowContainer');
       this.setDivShadow('selectContainer', 'pickShadowContainer');
-      $("#outputDiv").css('left', left);
-      $("#outputDiv").css('top', top);
 
     } else {
       $('.bottomShadows').css('background', 'none');
@@ -769,7 +768,7 @@
     var codeMenuButtonContainer = $('#codeMenuButtonContainer');
     var codeMenuDropdown = $('#codeMenuDropdown');
 
-    codeMenuButtonContainer.bind('click', function() {
+    codeMenuButtonContainer.bind('mousedown', function() {
       me.toggleDropdown('codeMenuDropdown');
       return false;
     });
