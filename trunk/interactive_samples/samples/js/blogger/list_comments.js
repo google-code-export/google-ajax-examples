@@ -2,6 +2,9 @@
 * Retrieve a list of blog post comments
 */
 
+// Obtain a reference to the 'content' div
+var content = document.getElementById('content');
+
 // Create the blogger service object
 var bloggerService =
     new google.gdata.blogger.BloggerService('com.appspot.interactivesampler');
