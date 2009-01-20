@@ -446,6 +446,11 @@ span.categoryClosed div, span.categoryClosed ul {
   color: #4D4D4D;
 }
 
+#runBoxTitle {
+  width: 80%;
+  text-align: center;
+}
+
 #demoTitle {
   overflow: hidden;
   text-overflow:ellipsis;
