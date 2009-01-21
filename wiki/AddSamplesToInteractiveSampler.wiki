@@ -3,7 +3,7 @@
 = Introduction =
 
 This wiki will show you how to default samples to the interactive sampler found here:
-http://interactivesampler.appspot.com/
+http://code.google.com/apis/ajax/playground/
 
 = Details =
 
