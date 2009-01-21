@@ -83,7 +83,7 @@
     return function() {
       var confirmDelete = confirm('Are you sure you want to delete this example?');
       if (confirmDelete) {
-        var redirect = '/delete?id=' + id;
+        var redirect = 'delete?id=' + id;
         var cookie = me.getCookie('dev_appserver_login');
         cookie = (cookie) ? cookie.replace(/\"/g, '') : me.getCookie('ACSID');
         cookie = (cookie) ? cookie.substring(6, 12) : null;
