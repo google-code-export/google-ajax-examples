@@ -2,7 +2,7 @@
 
 = Introduction =
 
-This wiki will show you how to default samples to the interactive sampler found here:
+This wiki will show you how to add default samples to the interactive sampler found here:
 http://code.google.com/apis/ajax/playground/
 
 = Details =
