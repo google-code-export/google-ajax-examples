@@ -2,6 +2,7 @@ var tempJSON = [
   {
     "category":"Maps API-Basics",
     "samples":[
+      {"boilerplateLoc":"samples/boilerplateHTML/mapsapi.html", "files":["samples/js/maps/mapsimple.js"], "sampleName":"Simple Map", "tags": ""},
       {"boilerplateLoc":"samples/boilerplateHTML/mapsapi.html", "files":["samples/js/maps/maptype.js"], "sampleName":"Map Attributes", "tags": ""},
       {"boilerplateLoc":"samples/boilerplateHTML/mapsapi.html", "files":["samples/js/maps/panto.js"], "sampleName":"Map Movement", "tags": ""},
       {"boilerplateLoc":"samples/boilerplateHTML/mapsapi.html", "files":["samples/js/maps/infowindow.js"], "sampleName":"Info Windows", "tags": ""}
@@ -13,6 +14,9 @@ var tempJSON = [
     "samples":[
       {"boilerplateLoc":"samples/boilerplateHTML/mapsapi.html", "files":["samples/js/maps/clickhandling.js"], "sampleName":"Map Click", "tags": ""},
       {"boilerplateLoc":"samples/boilerplateHTML/mapsapi.html", "files":["samples/js/maps/event_moveend.js"], "sampleName":"Map Move", "tags": ""},
+      {"boilerplateLoc":"samples/boilerplateHTML/mapsapi.html", "files":["samples/js/maps/eventarguments.js"], "sampleName":"Event Arguments", "tags": ""},
+      {"boilerplateLoc":"samples/boilerplateHTML/mapsapi.html", "files":["samples/js/maps/eventbind.js"], "sampleName":"Event Bind", "tags": ""},
+      {"boilerplateLoc":"samples/boilerplateHTML/mapsapi.html", "files":["samples/js/maps/eventremoval.js"], "sampleName":"Event Removal", "tags": ""},
       {"boilerplateLoc":"samples/boilerplateHTML/mapsapi.html", "files":["samples/js/maps/infomarker.js"], "sampleName":"Function Closure", "tags": ""}
     ],
     "docsUrl": "http://code.google.com/apis/maps/documentation/reference.html"
@@ -20,7 +24,9 @@ var tempJSON = [
   {
     "category":"Maps API-Controls",
     "samples":[
-      {"boilerplateLoc":"samples/boilerplateHTML/mapsapi.html", "files":["samples/js/maps/controls.js"], "sampleName":"Controls", "tags": ""},
+      {"boilerplateLoc":"samples/boilerplateHTML/mapsapi.html", "files":["samples/js/maps/controls.js"], "sampleName":"Simple Controls", "tags": ""},
+      {"boilerplateLoc":"samples/boilerplateHTML/mapsapi.html", "files":["samples/js/maps/controlsposition.js"], "sampleName":"Control Position", "tags": ""},
+      {"boilerplateLoc":"samples/boilerplateHTML/mapsapi.html", "files":["samples/js/maps/controlinitialization.js"], "sampleName":"Control Initialization", "tags": ""},
       {"boilerplateLoc":"samples/boilerplateHTML/mapsapi.html", "files":["samples/js/maps/customcontrol.js"], "sampleName":"Custom Control", "tags": ""}
     ],
     "docsUrl": "http://code.google.com/apis/maps/documentation/reference.html"
@@ -29,12 +35,16 @@ var tempJSON = [
     "category":"Maps API-Overlays",
     "samples":[
       {"boilerplateLoc":"samples/boilerplateHTML/mapsapi.html", "files":["samples/js/maps/marker.js"], "sampleName":"Marker", "tags": ""},
+      {"boilerplateLoc":"samples/boilerplateHTML/mapsapi.html", "files":["samples/js/maps/movingmarker.js"], "sampleName":"Moving Marker", "tags": ""},
       {"boilerplateLoc":"samples/boilerplateHTML/mapsapi.html", "files":["samples/js/maps/marker_setpoint.js"], "sampleName":"Marker Point", "tags": ""},
       {"boilerplateLoc":"samples/boilerplateHTML/mapsapi.html", "files":["samples/js/maps/icons.js"], "sampleName":"Custom Icons", "tags": ""},
       {"boilerplateLoc":"samples/boilerplateHTML/mapsapi.html", "files":["samples/js/maps/iconclass.js"], "sampleName":"Icon Class", "tags": ""},
       {"boilerplateLoc":"samples/boilerplateHTML/mapsapi.html", "files":["samples/js/maps/marker_setimage.js"], "sampleName":"Marker Image", "tags": ""},
+      {"boilerplateLoc":"samples/boilerplateHTML/mapsapi.html", "files":["samples/js/maps/weather_map.js"], "sampleName":"Marker Manager Weather Map", "tags": ""},
       {"boilerplateLoc":"samples/boilerplateHTML/mapsapi.html", "files":["samples/js/maps/markermanager.js"], "sampleName":"Marker Manager", "tags": ""},
       {"boilerplateLoc":"samples/boilerplateHTML/mapsapi.html", "files":["samples/js/maps/polyline.js"], "sampleName":"Polyline", "tags": ""},
+      {"boilerplateLoc":"samples/boilerplateHTML/mapsapi.html", "files":["samples/js/maps/polyline_geodesic.js"], "sampleName":"Geodesic Polyline", "tags": ""},
+      {"boilerplateLoc":"samples/boilerplateHTML/mapsapi.html", "files":["samples/js/maps/polyline_encoding.js"], "sampleName":"Polyline Encoding", "tags": ""},
       {"boilerplateLoc":"samples/boilerplateHTML/mapsapi.html", "files":["samples/js/maps/groundoverlay.js"], "sampleName":"Ground Overlay", "tags": ""},
       {"boilerplateLoc":"samples/boilerplateHTML/mapsapi.html", "files":["samples/js/maps/tilelayeroverlay.js"], "sampleName":"Tile Layer Overlay", "tags": ""}
     ],

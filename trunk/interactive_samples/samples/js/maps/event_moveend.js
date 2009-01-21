@@ -1,6 +1,6 @@
 function loadMap() {
   map = new GMap2(document.getElementById("content"));
-  map.setCenter(new GLatLng(37, -122));
+  map.setCenter(new GLatLng(37, -122), 10);
   var listener = GEvent.addListener(
     map, "moveend", function() {
       alert(map.getCenter().toString());
