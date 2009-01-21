@@ -10,7 +10,7 @@ http://interactivesampler.appspot.com/
 Samples are stored in the samples/ directory in the codebase.  There are four parts to adding samples.
 
 
-1. The boilerplate HTML.  This is an HTML file that has generic HTML or Javascript code that your samples use.  The point of this is to avoid repetition while writing demos as well as promote consistency among your sample code.  Please try to minimize the number of boilerplate HTML files per Javascript files.  Here's what a boilerplate HTML file looks like: http://code.google.com/p/google-ajax-examples/source/browse/trunk/interactive_samples/samples/boilerplateHTML/ajaxapis.html The try catch block on this file MUST be replicated in your boilerplate.  It is how samples are run.  Also, unfortunately, spacing on this block is important (this needs to be changed).  So make sure you copy/paste the block with its original spacing.
+1. The boilerplate HTML.  This is an HTML file that has generic HTML or Javascript code that your samples use.  The point of this is to avoid repetition while writing demos as well as promote consistency among your sample code.  Please try to minimize the number of boilerplate HTML files per Javascript files.  Here's what a boilerplate HTML file looks like: http://code.google.com/p/google-ajax-examples/source/browse/trunk/interactive_samples/samples/boilerplateHTML/ajaxapis.html
 
 2. The Javascript sample code.  This is the code that the developers will actually see and edit.  Here is an example of a file http://code.google.com/p/google-ajax-examples/source/browse/trunk/interactive_samples/samples/js/search/imagesearch/color_restrict.js and what it looks like live http://interactivesampler.appspot.com/#color_restriction
 
