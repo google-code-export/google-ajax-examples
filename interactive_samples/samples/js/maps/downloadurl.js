@@ -2,7 +2,7 @@ function loadMap() {
   map = new GMap2(document.getElementById("content"));
   map.setCenter(new GLatLng(37, -122));
   map.setCenter(new GLatLng(37.43, -122.14), 13);
-  GDownloadUrl("data.xml", function(data, status) {
+  GDownloadUrl("http://code.google.com/apis/maps/documentation/examples/include/data.xml", function(data, status) {
     var markers = GXml.parse(data).documentElement.getElementsByTagName("marker");
     for (var i in markers) {
       var m = markers[i];
