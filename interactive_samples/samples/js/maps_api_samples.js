@@ -46,7 +46,10 @@ var tempJSON = [
       {"boilerplateLoc":"samples/boilerplateHTML/mapsapi.html", "files":["samples/js/maps/polyline_geodesic.js"], "sampleName":"Geodesic Polyline", "tags": ""},
       {"boilerplateLoc":"samples/boilerplateHTML/mapsapi.html", "files":["samples/js/maps/polyline_encoding.js"], "sampleName":"Polyline Encoding", "tags": ""},
       {"boilerplateLoc":"samples/boilerplateHTML/mapsapi.html", "files":["samples/js/maps/groundoverlay.js"], "sampleName":"Ground Overlay", "tags": ""},
-      {"boilerplateLoc":"samples/boilerplateHTML/mapsapi.html", "files":["samples/js/maps/tilelayeroverlay.js"], "sampleName":"Tile Layer Overlay", "tags": ""}
+      {"boilerplateLoc":"samples/boilerplateHTML/mapsapi.html", "files":["samples/js/maps/layer_simple.js"], "sampleName":"Simple Layer", "tags": ""},
+      {"boilerplateLoc":"samples/boilerplateHTML/mapsapi.html", "files":["samples/js/maps/tile_layer_detector.js"], "sampleName":"Tile Layer Detector", "tags": ""},
+      {"boilerplateLoc":"samples/boilerplateHTML/mapsapi.html", "files":["samples/js/maps/tilelayeroverlay.js"], "sampleName":"Tile Layer Overlay", "tags": ""},
+      {"boilerplateLoc":"samples/boilerplateHTML/mapsapi.html", "files":["samples/js/maps/custom_tile_overlay.js"], "sampleName":"Custom Tile Overlay", "tags": ""}
     ],
     "docsUrl": "http://code.google.com/apis/maps/documentation/reference.html"
   },
@@ -55,11 +58,19 @@ var tempJSON = [
     "samples":[
       {"boilerplateLoc":"samples/boilerplateHTML/mapsapi.html", "files":["samples/js/maps/downloadurl.js"], "sampleName":"XMLHttpRequest", "tags": ""},
       {"boilerplateLoc":"samples/boilerplateHTML/mapsapi.html", "files":["samples/js/maps/geocoder.js"], "sampleName":"Geocoder", "tags": ""},
+      {"boilerplateLoc":"samples/boilerplateHTML/maps/geocoding-extraction.html", "files":["samples/js/maps/geocoding-extraction.js"], "sampleName":"Geocoding Extraction", "tags": ""},
+      {"boilerplateLoc":"samples/boilerplateHTML/mapsapi.html", "files":["samples/js/maps/reverse_geocoder.js"], "sampleName":"Reverse Geocoder", "tags": ""},
+      {"boilerplateLoc":"samples/boilerplateHTML/maps/geocoding_cache.html", "files":["samples/js/maps/geocoding_cache.js"], "sampleName":"Geocoding Cache", "tags": ""},
+      {"boilerplateLoc":"samples/boilerplateHTML/maps/geo_xml_rss.html", "files":["samples/js/maps/geo_xml_rss.js"], "sampleName":"Geo XML RSS Overlay", "tags": ""},
       {"boilerplateLoc":"samples/boilerplateHTML/mapsapi.html", "files":["samples/js/maps/geoxml_kml.js"], "sampleName":"KML Overlay", "tags": ""},
+      {"boilerplateLoc":"samples/boilerplateHTML/mapsapi.html", "files":["samples/js/maps/geo_kml_overlay.js"], "sampleName":"KML Overlay 2", "tags": ""},
       {"boilerplateLoc":"samples/boilerplateHTML/mapsapi.html", "files":["samples/js/maps/trafficoverlay.js"], "sampleName":"Traffic Overlay", "tags": ""},
       {"boilerplateLoc":"samples/boilerplateHTML/mapsapi.html", "files":["samples/js/maps/directions.js"], "sampleName":"Directions", "tags": ""},
       {"boilerplateLoc":"samples/boilerplateHTML/mapsapi.html", "files":["samples/js/maps/directionswp.js"], "sampleName":"Directions Waypoints", "tags": ""},
-      {"boilerplateLoc":"samples/boilerplateHTML/mapsapi.html", "files":["samples/js/maps/directions_advanced.js"], "sampleName":"Directions (Advanced)", "tags": ""}
+      {"boilerplateLoc":"samples/boilerplateHTML/maps/directions_advanced.html", "files":["samples/js/maps/directions_advanced.js"], "sampleName":"Directions (Advanced)", "tags": ""},
+      {"boilerplateLoc":"samples/boilerplateHTML/mapsapi.html", "files":["samples/js/maps/simple_streetview.js"], "sampleName":"Simple Streetview", "tags": ""},
+      {"boilerplateLoc":"samples/boilerplateHTML/mapsapi.html", "files":["samples/js/maps/streetview_object.js"], "sampleName":"Streetview Object", "tags": ""}, 
+      {"boilerplateLoc":"samples/boilerplateHTML/mapsapi.html", "files":["samples/js/maps/streetview_layer.js"], "sampleName":"Streetview Layer", "tags": ""}
     ],
     "docsUrl": "http://code.google.com/apis/maps/documentation/reference.html"
   }

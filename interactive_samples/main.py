@@ -194,7 +194,7 @@ class Main(webapp.RequestHandler):
       if savedCode:
         for i in savedCode:
           savedCodeArr.append({
-            'files': ['/get?id=' + str(i.key())],
+            'files': ['get?id=' + str(i.key())],
             'sampleName': i.sampleName,
             'boilerplateLoc': i.boilerplateLoc,
             'tags': i.tags,
