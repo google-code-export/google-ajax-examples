@@ -136,7 +136,10 @@ class GetCode(webapp.RequestHandler):
   def get(self):
     id = self.request.get('id')
     entry = db.get(db.Key(str(id)))
-    self.response.out.write(entry.jscode);
+    if (entry.user == users.get_current_user()):
+      self.response.out.write(entry.jscode)
+    else:
+      self.response.out.write('')
 
 def getTypes(self):
   types = self.request.get('type')
