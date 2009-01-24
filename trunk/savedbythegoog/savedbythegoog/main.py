@@ -73,10 +73,13 @@ class RetrieveCache(webapp.RequestHandler):
   def get(self):
     unique_id = self.request.get('unique_id')
     codeObj = db.get(db.Key(str(unique_id)))
-    code = codeObj.code
-    code = code.replace('NEWLINE!!!', '\n');
-    db.delete(codeObj)
-    self.response.out.write(code)
+    if codeObj is None:
+      self.response.out.write('Deleted.')
+    else:
+      code = codeObj.code
+      code = code.replace('NEWLINE!!!', '\n');
+      db.delete(codeObj)
+      self.response.out.write(code)
 
 class ShowCode(webapp.RequestHandler):
   def get(self):
