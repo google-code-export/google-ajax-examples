@@ -193,7 +193,7 @@
         this.autoCompleteData.push(item.sampleName + tags);
         codeArray[i].samples[j]['li'] = li;
 
-        if (i == 0 && j == 0) {
+        if (i == 0 && j == 0 && window.location.hash.length <= 1) {
           this.showSample(item.sampleName, true)();
           this.hideAllCategoriesExcept(categoryDiv);
         }
@@ -311,7 +311,6 @@
       me.currentCode[filename] = {
         code : data
       };
-      me.runCode();
     });
   };
 
@@ -319,7 +318,6 @@
     // If the code is in the currentCode buffer, then grab it there
     // otherwise, load it via XHR
     // If opt_changeCodeMirror is specified, load it into the window
-
     // Get filetype
     var filenameSplit = filename.split('.');
     var extension = filenameSplit[filenameSplit.length - 1];
@@ -391,7 +389,6 @@
       // add file names at top
       // var tab_bar = $('#tab_bar');
       // tab_bar.innerHTML = '';
-
       for (i = 0; i < files.length; i++) {
         var file = files[i];
 
@@ -404,16 +401,16 @@
         }
 
 
-        var containerDiv = _cel('div');
-        containerDiv.className = 'roundedcornr_box';
-        $(containerDiv).bind('click', me.changeTab(file));
-
-        var html = '<div class="' + tabClass + '_top" ><div><\/div><\/div>';
-        html += '<div class="' + tabClass + '_roundedcornr_content" >';
-        html += file;
-        html += '<\/div>';
-
-        containerDiv.innerHTML = html;
+        // var containerDiv = _cel('div');
+        // containerDiv.className = 'roundedcornr_box';
+        // $(containerDiv).bind('click', me.changeTab(file));
+        // 
+        // var html = '<div class="' + tabClass + '_top" ><div><\/div><\/div>';
+        // html += '<div class="' + tabClass + '_roundedcornr_content" >';
+        // html += file;
+        // html += '<\/div>';
+        // 
+        // containerDiv.innerHTML = html;
 
       // tab_bar.appendChild(containerDiv);
       }
@@ -1235,24 +1232,27 @@
     return $(iFrame).css('height', height + 'px');
   };
 
-  RunBox.prototype.runCode = function() {
-    var curFilename = this.is.getCurFilename();
-    var sampleObj = this.is.sampleFileNameToObject(curFilename);
-    var boilerplateLoc = sampleObj.boilerplateLoc;
-
-    if (!this.runBoxPoppedOut) {
-      this.createIframe(boilerplateLoc);
+  RunBox.prototype.createIframeOrPopout = function(response) {
+    var url = 'http://2.latest.savedbythegoog.appspot.com/retrieve_cache?unique_id=' + response;
+    if (!is.runBox.runBoxPoppedOut) {
+      window.is.runBox.createIframe(url);
     } else {
       // Run code in the popout window
-      var runbox = this.popoutWindow.document.getElementById('runbox');
+      var runbox = window.is.runBox.popoutWindow.document.getElementById('runbox');
       runbox.innerHTML = '';
-
-      this.popoutWindow.is = {
-        'codeToRun': this.is.codeToRun
-      };
-
-      this.popoutWindow.addIframe(boilerplateLoc);
+      window.is.runBox.popoutWindow.addIframe(url);
     }
+  };
+
+  RunBox.prototype.sendCodeToSavedByTheGoog = function(code) {
+    var self = this;
+    var cacheCodeLoc = location.protocol + '//' + location.host + '/apis/ajax/playground/cacheCode';
+    $.post(cacheCodeLoc, {'code': code}, window.is.runBox.createIframeOrPopout);
+  }
+
+  RunBox.prototype.runCode = function() {
+    var apiKey = savedByTheGoogAPIKey;
+    this.is.getFullSrc(this.sendCodeToSavedByTheGoog, apiKey);
   };
 
   RunBox.prototype.changeToPopout = function() {

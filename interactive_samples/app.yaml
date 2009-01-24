@@ -32,6 +32,8 @@ handlers:
   script: main.py
 - url: /get
   script: main.py
+- url: /cacheCode
+  script: main.py
 - url: /
   script: main.py
 - url: /apis/ajax/playground/js
@@ -59,6 +61,8 @@ handlers:
 - url: /apis/ajax/playground/delete
   script: main.py
 - url: /apis/ajax/playground/get
+  script: main.py
+- url: /apis/ajax/playground/cacheCode
   script: main.py
 - url: /apis/ajax/playground/
   script: main.py
