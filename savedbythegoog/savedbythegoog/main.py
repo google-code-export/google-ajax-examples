@@ -57,9 +57,26 @@ class AddCode(webapp.RequestHandler):
       code = code.replace('NEWLINE!!!', '\n');
       if (code):
         key = self.saveCode(code)
-        self.response.out.write('<script>window.location = "http://savedbythegoog.appspot.com/?id=' + str(key) + '";</script>')
+        self.redirect('/?id=' + str(key))
       else:
         self.response.out.write('Must submit code.')
+
+class CacheCode(webapp.RequestHandler):
+  def post(self):
+    code = self.request.get('code')
+    saved_code = SavedCode()
+    saved_code.code = code
+    key = saved_code.put()
+    self.response.out.write(str(key))
+
+class RetrieveCache(webapp.RequestHandler):
+  def get(self):
+    unique_id = self.request.get('unique_id')
+    codeObj = db.get(db.Key(str(unique_id)))
+    code = codeObj.code
+    code = code.replace('NEWLINE!!!', '\n');
+    db.delete(codeObj)
+    self.response.out.write(code)
 
 class ShowCode(webapp.RequestHandler):
   def get(self):
@@ -74,6 +91,8 @@ def main():
   application = webapp.WSGIApplication([
     ('/add', AddCode),
     ('/', ShowCode),
+    ('/cache_code', CacheCode),
+    ('/retrieve_cache', RetrieveCache),
     ('/show', ShowCode)
   ],debug=False)                        
   wsgiref.handlers.CGIHandler().run(application)
