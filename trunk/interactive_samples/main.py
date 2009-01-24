@@ -31,6 +31,7 @@ import urllib
 from google.appengine.ext import webapp
 from google.appengine.api import users
 from google.appengine.ext import db
+from google.appengine.api import urlfetch
 
 # GLOBAL ARRAY OF APIS & THEIR CONFIGURED JSON FILES.  DON'T EDIT UNLESS YOU'RE SURE
 apis = {
@@ -312,18 +313,28 @@ class Save(webapp.RequestHandler):
       self.redirect('/apis/ajax/playground/' + cgiArgs + hashLink)
     else:
       self.redirect('/' + cgiArgs + hashLink)
+      
+class CacheCode(webapp.RequestHandler):
+  def post(self):
+    code = self.request.get('code')
+    unique_id = self.request.get('unique_id')
+    query = urllib.urlencode({'code' : code, 'unique_id' : unique_id})
+    data = urlfetch.fetch('http://2.latest.savedbythegoog.appspot.com/cache_code', query, "POST")
+    self.response.out.write(data.content)
 
 def main():
   application = webapp.WSGIApplication([('/', Main),
                                         ('/save', Save),
                                         ('/delete', Delete),
                                         ('/get', GetCode),
+                                        ('/cacheCode', CacheCode),
                                         ('/apis/ajax/playground/', Main),
                                         ('/apis/ajax/playground', RedirectToMain),
                                         ('/apis/ajax/playground/save', Save),
                                         ('/apis/ajax/playground/delete', Delete),
-                                        ('/apis/ajax/playground/get', GetCode)],
-                                       debug=True)
+                                        ('/apis/ajax/playground/get', GetCode),
+                                        ('/apis/ajax/playground/cacheCode', CacheCode)],
+                                       debug=False)
   wsgiref.handlers.CGIHandler().run(application)
 
 
