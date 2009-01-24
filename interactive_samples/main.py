@@ -319,7 +319,7 @@ class CacheCode(webapp.RequestHandler):
     code = self.request.get('code')
     unique_id = self.request.get('unique_id')
     query = urllib.urlencode({'code' : code, 'unique_id' : unique_id})
-    data = urlfetch.fetch('http://2.latest.savedbythegoog.appspot.com/cache_code', query, "POST")
+    data = urlfetch.fetch('http://savedbythegoog.appspot.com/cache_code', query, "POST")
     self.response.out.write(data.content)
 
 def main():

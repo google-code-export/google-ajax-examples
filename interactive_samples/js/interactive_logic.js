@@ -1233,7 +1233,7 @@
   };
 
   RunBox.prototype.createIframeOrPopout = function(response) {
-    var url = 'http://2.latest.savedbythegoog.appspot.com/retrieve_cache?unique_id=' + response;
+    var url = 'http://savedbythegoog.appspot.com/retrieve_cache?unique_id=' + response;
     if (!is.runBox.runBoxPoppedOut) {
       window.is.runBox.createIframe(url);
     } else {
