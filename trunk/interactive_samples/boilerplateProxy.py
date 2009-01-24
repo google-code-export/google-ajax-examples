@@ -11,8 +11,7 @@ APIKeys = {
   "http://savedbythegoog.appspot.com": "ABQIAAAA1XbMiDxx_BTCY2_FkPh06RRaGTYH6UMl8mADNa0YKuWNNa8VNxQEerTAUcfkyrr6OwBovxn7TDAH5Q",
   "http://interactivesampler.appspot.com": "ABQIAAAA1XbMiDxx_BTCY2_FkPh06RQHF42S0NdyoEzlm7Prh6jpDX8u1BRWbrvF_ETKtOKL_Fpp8DKNik-umA",
   "http://code.google.com": "ABQIAAAA1XbMiDxx_BTCY2_FkPh06RSosDVG8KKPE1-m51RBrvYughuyMxQb4QY32wd-bGTUz44F9R1FRoxuMQ",
-  "http://172.31.155.89:8082": "ABQIAAAApfWVg6qaIHQdkCxe56e57hTjpPIn9SDiNRzoec4tqssl2kJszBTEk7bhC42qvPfkfUqZw2ht8CyQzg",
-  "http://2.latest.savedbythegoog.appspot.com/": "ABQIAAAA1XbMiDxx_BTCY2_FkPh06RTqEdYDhnKQ_4cSMVmbXB5ZyvSW-hTtCM1SG2vMjbACkklsOrpCE_NAzw"
+  "http://172.31.155.89:8082": "ABQIAAAApfWVg6qaIHQdkCxe56e57hTjpPIn9SDiNRzoec4tqssl2kJszBTEk7bhC42qvPfkfUqZw2ht8CyQzg"
 }
 
 class Main(webapp.RequestHandler):
