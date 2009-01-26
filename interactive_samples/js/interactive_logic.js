@@ -69,12 +69,17 @@
     return null;
   };
 
-  InteractiveSample.prototype.putSafetyCookieInForms = function() {
+  InteractiveSample.prototype.getSafetyToken = function() {
     var cookie = this.getCookie('dev_appserver_login');
     cookie = (cookie) ? cookie.replace(/\"/g, '') : this.getCookie('ACSID');
-    cookie = (cookie) ? cookie.substring(6, 12) : null;
-    if (cookie) {
-      $('#safetyCookie').attr('value', 'safe' + cookie);
+    cookie = (cookie) ? cookie.substring(6, 20) : null;
+    return 'safe' + cookie;
+  }
+
+  InteractiveSample.prototype.putSafetyCookieInForms = function() {
+    var safetyToken = this.getSafetyToken();
+    if (safetyToken) {
+      $('#safetyCookie').attr('value', safetyToken);
     }
   };
 
@@ -304,6 +309,9 @@
 
   InteractiveSample.prototype.loadRemotely = function(filename, fileType, opt_changeCodeMirror) {
     var me = this;
+    if (filename.indexOf('?id=') != -1) {
+      filename += '&safetyCookie=' + this.getSafetyToken();
+    }
     $.get(filename, function(data) {
       if (opt_changeCodeMirror) {
         me.changeCodeMirror(data);

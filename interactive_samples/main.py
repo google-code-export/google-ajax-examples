@@ -122,9 +122,9 @@ def verify_xsrf_token(method):
     c = Cookie.Cookie()
     c.load(self.request.headers['Cookie'])
     if c.has_key("ACSID"):
-      cookieVal = "safe" + c["ACSID"].value[6:12]
+      cookieVal = "safe" + c["ACSID"].value[6:20]
     if c.has_key("dev_appserver_login"):
-      cookieVal = "safe" + c["dev_appserver_login"].value[6:12]
+      cookieVal = "safe" + c["dev_appserver_login"].value[6:20]
     if cookieVal and cookieVal == self.request.get('safetyCookie'):
       return method(self, *args, **kwargs)
     else:
@@ -134,6 +134,7 @@ def verify_xsrf_token(method):
   return wrapper
 
 class GetCode(webapp.RequestHandler):
+  @verify_xsrf_token
   def get(self):
     id = self.request.get('id')
     entry = db.get(db.Key(str(id)))
