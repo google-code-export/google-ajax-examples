@@ -91,9 +91,9 @@
         var redirect = 'delete?id=' + id;
         var cookie = me.getCookie('dev_appserver_login');
         cookie = (cookie) ? cookie.replace(/\"/g, '') : me.getCookie('ACSID');
-        cookie = (cookie) ? cookie.substring(6, 12) : null;
+        cookie = (cookie) ? cookie.substring(6, 20) : null;
         redirect += ((curAPITypes) ? '&type=' + curAPITypes : '');
-        redirect += (cookie) ? '&safetyCookie=' + 'safe' + cookie : '';
+        redirect += (cookie) ? '&sc=' + 'safe' + cookie : '';
         window.location = redirect;
       }
     };
@@ -310,7 +310,7 @@
   InteractiveSample.prototype.loadRemotely = function(filename, fileType, opt_changeCodeMirror) {
     var me = this;
     if (filename.indexOf('?id=') != -1) {
-      filename += '&safetyCookie=' + this.getSafetyToken();
+      filename += '&sc=' + this.getSafetyToken();
     }
     $.get(filename, function(data) {
       if (opt_changeCodeMirror) {
