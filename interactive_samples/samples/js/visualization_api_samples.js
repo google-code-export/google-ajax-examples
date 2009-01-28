@@ -46,7 +46,7 @@ var tempJSON = [
       {"boilerplateLoc":"samples/boilerplateHTML/visualization/formatters.html", "files":["samples/js/visualization/bar_format.js"], "sampleName":"Bar Formatter", "tags": ""},
       {"boilerplateLoc":"samples/boilerplateHTML/visualization/formatters.html", "files":["samples/js/visualization/color_format.js"], "sampleName":"Color Formatter", "tags": ""},
       {"boilerplateLoc":"samples/boilerplateHTML/visualization/formatters.html", "files":["samples/js/visualization/number_format.js"], "sampleName":"Number Formatter", "tags": ""},
-      {"boilerplateLoc":"samples/boilerplateHTML/visualization/formatters.html", "files":["samples/js/visualization/pattern_format.js"], "sampleName":"Pattern Formatter", "tags": ""},
+      {"boilerplateLoc":"samples/boilerplateHTML/visualization/formatters.html", "files":["samples/js/visualization/pattern_format.js"], "sampleName":"Pattern Formatter", "tags": ""}
     ],
     "docsUrl": "http://code.google.com/apis/visualization/documentation/gallery/table.html#Formatters"
   },  
