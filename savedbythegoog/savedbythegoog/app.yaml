@@ -4,5 +4,11 @@ runtime: python
 api_version: 1
 
 handlers:
+- url: /rpc_relay.html
+  static_files: static/rpc_relay.html
+  upload: static/rpc_relay.html
+- url: /canvas.html
+  static_files: static/canvas.html
+  upload: static/canvas.html
 - url: .*
   script: main.py
