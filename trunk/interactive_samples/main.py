@@ -125,7 +125,7 @@ def verify_xsrf_token(method):
       cookieVal = "safe" + c["ACSID"].value[6:20]
     if c.has_key("dev_appserver_login"):
       cookieVal = "safe" + c["dev_appserver_login"].value[6:20]
-    if cookieVal and cookieVal == self.request.get('safetyCookie'):
+    if cookieVal and cookieVal == self.request.get('sc'):
       return method(self, *args, **kwargs)
     else:
       self.error(500)
@@ -138,6 +138,9 @@ class GetCode(webapp.RequestHandler):
   def get(self):
     id = self.request.get('id')
     entry = db.get(db.Key(str(id)))
+    self.response.headers['Content-Disposition'] = "attachment header"
+    self.response.headers['Content-Type'] = "application/json; charset=utf-8"
+    self.response.headers['X-Content-Type-Options'] = 'nosniff'
     if (entry.user == users.get_current_user()):
       self.response.out.write(entry.jscode)
     else:
