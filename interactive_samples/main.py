@@ -203,9 +203,9 @@ class Main(webapp.RequestHandler):
         for i in savedCode:
           savedCodeArr.append({
             'files': ['get?id=' + str(i.key())],
-            'sampleName': i.sampleName,
+            'sampleName': cgi.escape(i.sampleName),
             'boilerplateLoc': i.boilerplateLoc,
-            'tags': i.tags,
+            'tags': cgi.escape(i.tags),
             'id': str(i.key())
             })
 
