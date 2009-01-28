@@ -119,7 +119,7 @@ def verify_xsrf_token(method):
   """
   @functools.wraps(method)
   def wrapper(self, *args, **kwargs):
-    c = Cookie.Cookie()
+    c = Cookie.SimpleCookie()
     c.load(self.request.headers['Cookie'])
     if c.has_key("ACSID"):
       cookieVal = "safe" + c["ACSID"].value[6:20]
@@ -322,6 +322,7 @@ class CacheCode(webapp.RequestHandler):
   def post(self):
     code = self.request.get('code')
     unique_id = self.request.get('unique_id')
+    code = code.encode('utf-8')
     query = urllib.urlencode({'code' : code, 'unique_id' : unique_id})
     data = urlfetch.fetch('http://savedbythegoog.appspot.com/cache_code', query, "POST")
     self.response.out.write(data.content)
