@@ -225,7 +225,8 @@ class Main(webapp.RequestHandler):
 #    tomorrowFormatted = tomorrowFormatted.strftime("%a, %d %b %Y %I:%M:%S")
     todayFormatted = todayFormatted.strftime("%a, %d %b %Y %I:%M:%S")
 
-    self.response.headers['Expires'] = todayFormatted + ' GMT'
+    # self.response.headers['Expires'] = todayFormatted + ' GMT'
+    self.response.headers['Expires'] = "Fri, 01 Jan 1990 00:00:00 GMT"
 
     path = os.path.join(os.path.dirname(__file__), 'index.html')
     self.response.out.write(template.render(path, self.template_values))
