@@ -1222,9 +1222,23 @@
   };
 
   RunBox.prototype.createIframe = function(boilerplateLoc) {
-    var iFrame = $('<iframe src="'+boilerplateLoc+'" id="runFrame"><\/iframe>');
-    iFrame = this.setNewCodeRunIframeWidthHeight(iFrame);
-    $(this.runBoxDiv).empty().append(iFrame);
+    // Because safari is CRAZY.  There is a bug in safari.  Without this statement
+    // if you refresh the browser and look at a sample, it won't work.  Upon refresh
+    // safari will use the EXACT SAME URL for the iFrame as before the refresh,
+    // ignoring that i'm passing in a NEW URL for boilerplateLoc.
+    // If you load the iFrame first, THEN set the src, Safari likes it.
+    // Lame.
+    if ($.browser.safari) {
+      var iFrame = $('<iframe id="runFrame"><\/iframe>');
+      iFrame = this.setNewCodeRunIframeWidthHeight(iFrame);
+      $(this.runBoxDiv).empty().append(iFrame);
+      iFrame = iFrame.get(0);
+      iFrame.src = boilerplateLoc;
+    } else {
+      var iFrame = $('<iframe src="'+boilerplateLoc+'" id="runFrame"><\/iframe>');
+      iFrame = this.setNewCodeRunIframeWidthHeight(iFrame);
+      $(this.runBoxDiv).empty().append(iFrame);
+    }
   };
 
   RunBox.prototype.setNewCodeRunIframeWidthHeight = function(iFrame) {
