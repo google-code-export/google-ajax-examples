@@ -39,7 +39,12 @@ class AddCode(webapp.RequestHandler):
     # Max in database must be found, then my ID is that +1
     saved_code = SavedCode()
     saved_code.code = code
-    key = saved_code.put()
+    key = ''
+    try:
+      key = saved_code.put()
+    except:
+      key = saved_code.put()
+
     return key
   
   def post(self):
@@ -66,7 +71,11 @@ class CacheCode(webapp.RequestHandler):
     code = self.request.get('code')
     saved_code = SavedCode()
     saved_code.code = code
-    key = saved_code.put()
+    key = ''
+    try:
+      key = saved_code.put()
+    except:
+      key = saved_code.put()
     self.response.out.write(str(key))
 
 class RetrieveCache(webapp.RequestHandler):
