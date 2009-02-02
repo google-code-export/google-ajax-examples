@@ -1,9 +1,9 @@
 function drawVisualization() {
   var query = new google.visualization.Query(
-      'http://spreadsheets.google.com/tq?key=pCQbetd-CptHq_AmlwWr2Tg');
+      'http://spreadsheets.google.com/tq?key=pCQbetd-CptGXxxQIG7VFIQ&pub=1');
   
   // Apply query language.
-  query.setQuery('SELECT A,C WHERE C < 10 ORDER BY C');
+  query.setQuery('SELECT A,D WHERE D > 100 ORDER BY D');
   
   // Send the query with a callback function.
   query.send(handleQueryResponse);
