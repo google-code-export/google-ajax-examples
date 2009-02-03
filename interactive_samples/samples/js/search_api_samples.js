@@ -58,6 +58,23 @@ var tempJSON = [
     "docsUrl": "http://code.google.com/apis/ajaxsearch/documentation/reference.html#_class_GnewsSearch"
   },
   {
+    "category":"Search API-News Show",
+    "samples":[
+      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis/newsShow.html", "files":["samples/js/search/NewsShow/newsShow.js"], "sampleName":"News Show", "tags":""},
+      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis/newsShowIFrame.html", "files":["samples/js/search/NewsShow/newsShowIframe.js"], "sampleName":"News Show via iFrame", "tags":""},
+      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis/newsShow.html", "files":["samples/js/search/NewsShow/newsShowFormat.js"], "sampleName":"News Show Format", "tags":""},
+      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis/newsShow.html", "files":["samples/js/search/NewsShow/newsShowQueries.js"], "sampleName":"News Show Queries", "tags":""},
+      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis/newsShow.html", "files":["samples/js/search/NewsShow/newsShowTopics.js"], "sampleName":"News Show Topics", "tags":""},
+      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis/newsShow.html", "files":["samples/js/search/NewsShow/newsShowEditionType.js"], "sampleName":"News Show Edition Type", "tags":""},
+      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis/newsShow.html", "files":["samples/js/search/NewsShow/newsShowGeo.js"], "sampleName":"News Show Geo Location", "tags":""},
+      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis/newsShow.html", "files":["samples/js/search/NewsShow/newsShowResultSize.js"], "sampleName":"News Show Results Size", "tags":""},
+      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis/newsShow.html", "files":["samples/js/search/NewsShow/newsShowTimers.js"], "sampleName":"News Show Timer Options"},
+      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis/newsShow.html", "files":["samples/js/search/NewsShow/newsShowSetLinkTarget.js"], "sampleName":"News Show Set Link Target"},
+      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis/newsShow.html", "files":["samples/js/search/NewsShow/newsShowScoringSort.js"], "sampleName":"News Show Scoring Sort"}
+    ],
+    "docsUrl":"http://code.google.com/apis/ajaxsearch/documentation/newsshow.html"
+  },
+  {
     "category":"Search API-Image Search",
     "samples":[
       {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/search/imagesearch/size_restrict.js"], "sampleName":"Size Restriction", "tags": "Small, Medium, Large, Pagination, Cursor"},
