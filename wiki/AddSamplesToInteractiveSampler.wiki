@@ -29,5 +29,5 @@ Samples are stored in the samples/ directory in the codebase.  There are four pa
 
 = Examples =
 Here is a sample commit that added map samples:
-http://code.google.com/p/google-ajax-examples/source/detail?r=228
+http://code.google.com/p/google-ajax-examples/source/detail?r=320
 *NOTE*: Since this commit, paths have changed.  Javascript files used to be in samples/maps, now they are in samples/*js*/maps.
