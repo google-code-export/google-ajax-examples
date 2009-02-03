@@ -28,6 +28,5 @@ Samples are stored in the samples/ directory in the codebase.  There are four pa
 4. Specify your JSON in the App Engine script, main.py.  There is an array at the top of the file which has paths to the JSON file, and the name of the API.  Only change this if you are adding an API.  http://code.google.com/p/google-ajax-examples/source/browse/trunk/interactive_samples/main.py
 
 = Examples =
-Here is a sample commit that added map samples:
+Here is a sample commit that added samples:
 http://code.google.com/p/google-ajax-examples/source/detail?r=320
-*NOTE*: Since this commit, paths have changed.  Javascript files used to be in samples/maps, now they are in samples/*js*/maps.
