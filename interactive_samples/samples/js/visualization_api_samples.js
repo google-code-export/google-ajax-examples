@@ -49,7 +49,7 @@ var tempJSON = [
       {"boilerplateLoc":"samples/boilerplateHTML/visualization/formatters.html", "files":["samples/js/visualization/pattern_format.js"], "sampleName":"Pattern Formatter", "tags": ""}
     ],
     "docsUrl": "http://code.google.com/apis/visualization/documentation/gallery/table.html#Formatters"
-  },  
+  },
   {
     "category":"Visualization API-Data Source Requests",
     "samples":[
@@ -57,6 +57,13 @@ var tempJSON = [
       {"boilerplateLoc":"samples/boilerplateHTML/visualization/query_language.html", "files":["samples/js/visualization/query_language.js"], "sampleName":"Using The Query Language", "tags": ""}
     ],
     "docsUrl": "http://code.google.com/apis/visualization/documentation/queries.html"
+  },
+  {
+    "category":"Visualization API-JSON Data Table",
+    "samples":[
+      {"boilerplateLoc":"samples/boilerplateHTML/visualization/json_data_table.html", "files":["samples/js/visualization/json_data_table.js"], "sampleName":"JSON Data Table", "tags": ""}
+    ],
+    "docsUrl": "http://code.google.com/apis/visualization/documentation/reference.html#dataparam"
   }
 ];
 
