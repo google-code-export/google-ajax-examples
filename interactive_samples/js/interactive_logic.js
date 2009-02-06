@@ -426,6 +426,12 @@
     // me.loadCode(files[0], textArea);
       me.hideAllCategoriesExcept(document.getElementById(categoryName));
       me.curI = files[0];
+      
+      try {
+        if (window.pageTracker) {
+          window.pageTracker._trackPageview();
+        }
+      } catch(e) {}
     };
   };
 
