@@ -88,7 +88,8 @@
       // Find the full list here http://code.google.com/apis/ajaxsearch/documentation/reference.html#_class_GpatentResult
       var results = document.getElementById('results');
       var table = document.createElement('table');
-            
+      var tbody = document.createElement('tbody');
+
       results.innerHTML = '';
       for (var i=0; i < searcher.results.length; i++) {
         var tr = document.createElement('tr');
@@ -129,7 +130,7 @@
         var month = date.match(/[a-zA-Z]{3}[ ]{1}/g);
         var year = date.match(/[\d]{4}/);
 
-        date.toLocaleString().match(/[a-zA-Z]* [\d]* [\d]{4}/)
+        date.toLocaleString().match(/[a-zA-Z]* [\d]* [\d]{4}/);
         info.innerHTML += searcher.results[i].patentNumber;
         info.innerHTML += ' - ' + month + day + ', ' + year;
 
@@ -148,8 +149,9 @@
         tr.appendChild(td1);
         tr.appendChild(td2);
         
-        table.appendChild(tr);
+        tbody.appendChild(tr);
       }
+      table.appendChild(tbody);
       results.appendChild(table);
       initialize();
     }
