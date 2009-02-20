@@ -1,6 +1,6 @@
 var tempJSON = [
   {
-    "category":"Calendar Data API-Basics",
+    "category":"Calendar API-Basics",
     "samples":[
       {"boilerplateLoc":"samples/boilerplateHTML/calendarapis.html", "files":["samples/js/calendar/list_events.js"], "sampleName":"Retrieve Events", "tags": ""},
       {"boilerplateLoc":"samples/boilerplateHTML/calendarapis.html", "files":["samples/js/calendar/query_events_fulltext.js"], "sampleName":"Full Text Queries", "tags": ""},
