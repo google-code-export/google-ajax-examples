@@ -1301,3 +1301,12 @@
   // Create and export the interactive sample instance to the global.
   window.is = new InteractiveSample();
 })();
+
+
+function setBgColorWhite() {
+  this.style.backgroundColor = 'white';
+}
+
+function setBgColorBlue() {
+  this.style.backgroundColor = '#E5ECF9';
+}
