@@ -377,6 +377,7 @@
       var categoryName = catSplit[0];
 
       var codeLIs = me.codeLIs;
+      me.runBox.iFrameLoaded = false;
       me.setDemoTitle(sampleObj);
       var i;
       for (i = 0; i < codeLIs.length; i++) {
@@ -1212,6 +1213,7 @@
     this.runBoxDiv;
     this.popoutRunBoxDiv;
     this.resizable;
+    this.iFrameLoaded;
   }
 
   RunBox.prototype.init = function(is, resizable) {
@@ -1235,13 +1237,13 @@
     // If you load the iFrame first, THEN set the src, Safari likes it.
     // Lame.
     if ($.browser.safari) {
-      var iFrame = $('<iframe id="runFrame"><\/iframe>');
+      var iFrame = $('<iframe id="runFrame" onload="is.runBox.iFrameLoaded = true;"><\/iframe>');
       iFrame = this.setNewCodeRunIframeWidthHeight(iFrame);
       $(this.runBoxDiv).empty().append(iFrame);
       iFrame = iFrame.get(0);
       iFrame.src = boilerplateLoc;
     } else {
-      var iFrame = $('<iframe src="'+boilerplateLoc+'" id="runFrame"><\/iframe>');
+      var iFrame = $('<iframe src="'+boilerplateLoc+'" onload="is.runBox.iFrameLoaded = true;" id="runFrame"><\/iframe>');
       iFrame = this.setNewCodeRunIframeWidthHeight(iFrame);
       $(this.runBoxDiv).empty().append(iFrame);
     }
