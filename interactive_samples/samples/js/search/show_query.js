@@ -6,7 +6,8 @@ google.load('search', '1');
 
 // Whenever a search starts, alert the query.
 function searchStart(searchControl, searcher, query) {
-  alert('Searching for: ' + query);
+  var content = document.getElementById('content');
+  content.innerHTML = "User searched for: " + query + "<br/>" + content.innerHTML;
 }
 
 function OnLoad() {
