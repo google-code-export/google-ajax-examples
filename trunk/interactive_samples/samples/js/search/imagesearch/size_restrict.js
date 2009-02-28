@@ -28,7 +28,6 @@ function searchComplete(searcher) {
       var newImg = document.createElement('img');
       // There is also a result.url property which has the escaped version
       newImg.src = result.unescapedUrl;
-      newImg.href = result.unescapedUrl;
 
       imgContainer.appendChild(title);
       imgContainer.appendChild(newImg);
