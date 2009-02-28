@@ -21,4 +21,4 @@ function OnLoad() {
   searchControl.execute("ytchannel:IBitePrettyHard");
 }
 
-google.setOnLoadCallback(OnLoad, true);
+google.setOnLoadCallback(OnLoad);

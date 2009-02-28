@@ -29,4 +29,4 @@ function OnLoad() {
   map2.addControl(lsc2, new GControlPosition(G_ANCHOR_BOTTOM_LEFT, new GSize(-1,-30)));
 }
 
-google.setOnLoadCallback(OnLoad, true);
+google.setOnLoadCallback(OnLoad);

@@ -25,4 +25,4 @@ function OnLoad() {
   searchControl.execute('Dancing');
 }
 
-google.setOnLoadCallback(OnLoad, true);
+google.setOnLoadCallback(OnLoad);

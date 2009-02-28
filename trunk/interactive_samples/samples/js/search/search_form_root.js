@@ -17,4 +17,4 @@ function OnLoad() {
   searchControl.draw(document.getElementById("searchResults"), options);
   searchControl.execute("Ferrari Enzo");
 }
-google.setOnLoadCallback(OnLoad, true);
+google.setOnLoadCallback(OnLoad);

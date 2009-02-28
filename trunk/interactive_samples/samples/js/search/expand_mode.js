@@ -30,4 +30,4 @@ function OnLoad() {
   // execute an inital search
   searchControl.execute("Macbook Pro");
 }
-google.setOnLoadCallback(OnLoad, true);
+google.setOnLoadCallback(OnLoad);

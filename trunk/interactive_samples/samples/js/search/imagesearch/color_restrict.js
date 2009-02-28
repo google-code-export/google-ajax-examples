@@ -24,4 +24,4 @@ function OnLoad() {
   searchControl.execute('Carriage');
 }
 
-google.setOnLoadCallback(OnLoad, true);
+google.setOnLoadCallback(OnLoad);

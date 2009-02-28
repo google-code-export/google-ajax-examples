@@ -26,4 +26,4 @@ function OnLoad() {
   // Search!
   searchControl.execute("Subaru STI");
 }
-google.setOnLoadCallback(OnLoad, true);
+google.setOnLoadCallback(OnLoad);

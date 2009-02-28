@@ -28,4 +28,4 @@ function OnLoad() {
   searchControl.execute("Ice cream");
 }
 
-google.setOnLoadCallback(OnLoad, true);
+google.setOnLoadCallback(OnLoad);

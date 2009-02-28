@@ -24,4 +24,4 @@ function OnLoad() {
   searchControl.execute('scooby doo');
 }
 
-google.setOnLoadCallback(OnLoad, true);
+google.setOnLoadCallback(OnLoad);

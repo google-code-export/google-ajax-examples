@@ -22,4 +22,4 @@ function OnLoad() {
   searchControl.execute("ytfeed:recently_featured");
 }
 
-google.setOnLoadCallback(OnLoad, true);
+google.setOnLoadCallback(OnLoad);

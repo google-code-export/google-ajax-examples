@@ -25,4 +25,4 @@ function OnLoad() {
   searchControl.execute('Fosters');
 }
 
-google.setOnLoadCallback(OnLoad, true);
+google.setOnLoadCallback(OnLoad);

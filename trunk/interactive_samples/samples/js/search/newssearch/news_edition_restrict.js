@@ -27,4 +27,4 @@ function OnLoad() {
   searchControl.execute('Football');
 }
 
-google.setOnLoadCallback(OnLoad, true);
+google.setOnLoadCallback(OnLoad);

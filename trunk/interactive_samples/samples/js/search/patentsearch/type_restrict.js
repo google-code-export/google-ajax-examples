@@ -27,4 +27,4 @@ function OnLoad() {
   searchControl.execute('Boeing');
 }
 
-google.setOnLoadCallback(OnLoad, true);
+google.setOnLoadCallback(OnLoad);
