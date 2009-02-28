@@ -19,4 +19,4 @@ function OnLoad() {
   // execute an inital search
   searchControl.execute("Starbucks");
 }
-google.setOnLoadCallback(OnLoad, true);
+google.setOnLoadCallback(OnLoad);

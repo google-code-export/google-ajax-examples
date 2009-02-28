@@ -29,4 +29,4 @@ function OnLoad() {
   searchControl.execute("VW GTI");
 }
 
-google.setOnLoadCallback(OnLoad, true);
+google.setOnLoadCallback(OnLoad);

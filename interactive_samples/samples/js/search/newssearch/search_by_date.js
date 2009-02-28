@@ -25,4 +25,4 @@ function OnLoad() {
   searchControl.execute('President');
 }
 
-google.setOnLoadCallback(OnLoad, true);
+google.setOnLoadCallback(OnLoad);

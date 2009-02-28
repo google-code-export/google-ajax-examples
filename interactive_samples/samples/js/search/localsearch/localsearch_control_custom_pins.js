@@ -94,4 +94,4 @@ var greenPin = {
   urlSuffix : ".png"
 };
 
-google.setOnLoadCallback(OnLoad, true);
+google.setOnLoadCallback(OnLoad);

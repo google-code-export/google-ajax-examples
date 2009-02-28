@@ -20,4 +20,4 @@ function OnLoad() {
   // execute an inital search
   searchControl.execute("Ferrari Enzo");
 }
-google.setOnLoadCallback(OnLoad, true);
+google.setOnLoadCallback(OnLoad);

@@ -27,4 +27,4 @@ function OnLoad() {
   searchControl.execute("funny");
 }
 
-google.setOnLoadCallback(OnLoad, true);
+google.setOnLoadCallback(OnLoad);

@@ -25,4 +25,4 @@ function OnLoad() {
   searchControl.execute('design');
 }
 
-google.setOnLoadCallback(OnLoad, true);
+google.setOnLoadCallback(OnLoad);

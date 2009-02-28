@@ -22,4 +22,4 @@ function OnLoad() {
   searchControl.execute("Museum");
 }
 
-google.setOnLoadCallback(OnLoad, true);
+google.setOnLoadCallback(OnLoad);

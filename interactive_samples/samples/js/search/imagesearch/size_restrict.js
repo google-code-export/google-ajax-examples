@@ -56,4 +56,4 @@ function OnLoad() {
   // Find me a beautiful car.
   imageSearch.execute("Subaru STI");
 }
-google.setOnLoadCallback(OnLoad, true);
+google.setOnLoadCallback(OnLoad);

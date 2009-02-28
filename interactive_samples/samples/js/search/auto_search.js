@@ -61,4 +61,4 @@ function OnLoad() {
   };
 }
 
-google.setOnLoadCallback(OnLoad, true);
+google.setOnLoadCallback(OnLoad);
