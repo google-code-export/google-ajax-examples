@@ -52,14 +52,14 @@ function setupDb() {
 
   if (db) {
     db.execute('create table if not exists Feeds (title varchar(255), link varchar(255), numUnRead int)');
-    db.execute('create table if not exists Entries (feedLink varchar(255), title varchar(255), link varchar(255), content text, isRead int, entryNum int)');
+    db.execute('create table if not exists Entries (feedLink varchar(255), title varchar(255), link varchar(255), content text, lat real, lng real, isRead int, entryNum int)');
   }
 }
 
 function loadFeed() {
   var feedUrl = document.getElementById('submitValue').value;
   var feed = new google.feeds.Feed(feedUrl);
-  //feed.setResultFormat(google.feeds.Feed.XML_FORMAT);
+  feed.setResultFormat(google.feeds.Feed.MIXED_FORMAT);
   feed.setNumEntries(8);
   feed.load(function(result) {
     addFeed(result.feed);
@@ -74,7 +74,8 @@ function addFeed(feed) {
   db.execute('insert into Feeds (title, link, numUnRead) values (?, ?, ?)', [ feed.title, feed.link, feed.entries.length ]);
   for (var i = 0; i < feed.entries.length; i++) {
     var entry = feed.entries[i];
-    db.execute('insert into Entries (feedLink, title, link, content, isRead, entryNum) values (?, ?, ?, ?, ?, ?)', [ feed.link, entry.title, entry.link, entry.content, 0, i]);
+    var latlng = getLatLng(entry.xmlNode);
+    db.execute('insert into Entries (feedLink, title, link, content, lat, lng, isRead, entryNum) values (?, ?, ?, ?, ?, ?, ?, ?)', [ feed.link, entry.title, entry.link, entry.content, latlng.lat, latlng.lng, 0, i]);
   }
   addFeedLinkToSidebar(feed.link);
   rs.close();
@@ -112,9 +113,14 @@ function displayFeed(feedLink) {
     var content = rs.fieldByName('content');
     var isRead = rs.fieldByName('isRead');
     var entryNum = rs.fieldByName('entryNum');
+    var lat = rs.fieldByName('lat');
+    var lng = rs.fieldByName('lng');
     var className = (isRead == 1) ? 'item-read' : 'item-unread';
     html.push('<div class="' + className + '" id="feedItem' + entryNum + '">');
     html.push('<h3><a href="', link, '" target="_blank">', title, '</a></h3>', content, '<br>');
+    if (lat) {
+      html.push(getLinkedMap(lat, lng) + '<br>');
+    }
     if (isRead == 0) {
       html.push('<input id="markAsRead' + entryNum + '" type="button" value="Mark this entry as read" onclick="markAsRead(\'' + feedLink + '\',\'' + entryNum + '\')"/>');
     }
@@ -123,6 +129,38 @@ function displayFeed(feedLink) {
   }
   rs.close();
   document.getElementById("itemresults").innerHTML = html.join("");
+}
+
+function getLinkedMap(lat, lng) {
+  var url = "http://maps.google.com/staticmap?center=" + lat + "," + lng + "&zoom=13&size=200x200&key=ABQIAAAAjU0EJWnWPMv7oQ-jjS7dYxSPW5CJgpdgO_s4yyMovOaVh_KvvhSfpvagV18eOyDWu7VytS6Bi1CWxw";
+  var mapsUrl = "http://maps.google.com/?ll=" + lat + "," + lng + "&z=13";
+  var html = '<a target="_blank" href="' + mapsUrl + '"><img src="' + url + '"></a>';
+  return html;
+}
+
+function getLatLng(xmlNode) {
+  var latlng = {};
+  var georssNS = "http://www.georss.org/georss";
+  var gmlNS = "http://www.opengis.net/gml";
+  var pointnode = google.feeds.getElementsByTagNameNS(xmlNode, georssNS, "point");
+  if (pointnode.length > 0) {
+    latlng.lat = pointnode[0].firstChild.nodeValue.split(" ")[0];
+    latlng.lng = pointnode[0].firstChild.nodeValue.split(" ")[1];
+  } 
+  var wherenode = google.feeds.getElementsByTagNameNS(xmlNode, georssNS, "where");
+  if (wherenode.length > 0) {
+    var pointnode = google.feeds.getElementsByTagNameNS(xmlNode, gmlNS, "Point");
+    if (pointnode.length > 0) {
+      var posnode = google.feeds.getElementsByTagNameNS(pointnode[0], gmlNS, "pos");
+      latlng.lat = posnode[0].firstChild.nodeValue.split(" ")[0];
+      latlng.lng = posnode[0].firstChild.nodeValue.split(" ")[1]; 
+    } 
+  }
+  if (!latlng.lat) {
+    latlng.lat = null;
+    latlng.lng = null;
+  }
+  return latlng;
 }
 
 function markAsRead(feedLink, entryNum) {
