@@ -1,6 +1,7 @@
 var feeds = {};
 var storeName = 'offlinereader';
 var db;
+var currentFeedLink;
 
 if (google && google.load) {
   google.load('feeds', '1');
@@ -12,6 +13,18 @@ function load() {
   var rs = db.execute('select * from Feeds');
   while (rs.isValidRow()) {
     addFeedLinkToSidebar(rs.fieldByName('link'));
+    rs.next();
+  }
+  rs.close();
+  update();
+  window.setInterval(update, 10*60*1000);
+  window.setInterval(checkScroll, 1000);
+}
+
+function update() {
+  var rs = db.execute('select * from Feeds');
+  while (rs.isValidRow()) {
+    loadUpdatedFeed(rs.fieldByName('link'));
     rs.next();
   }
   rs.close();
@@ -51,7 +64,7 @@ function setupDb() {
   db.open('offlinereader');
 
   if (db) {
-    db.execute('create table if not exists Feeds (title varchar(255), link varchar(255), numUnRead int)');
+    db.execute('create table if not exists Feeds (title varchar(255), link varchar(255))');
     db.execute('create table if not exists Entries (feedLink varchar(255), title varchar(255), link varchar(255), content text, lat real, lng real, isRead int, entryNum int)');
   }
 }
@@ -71,7 +84,7 @@ function addFeed(feed) {
   var rs = db.execute('select * from Feeds where link = "' + feed.link + '"');
   if (rs.isValidRow()) return;
 
-  db.execute('insert into Feeds (title, link, numUnRead) values (?, ?, ?)', [ feed.title, feed.link, feed.entries.length ]);
+  db.execute('insert into Feeds (title, link) values (?, ?)', [ feed.title, feed.link]);
   for (var i = 0; i < feed.entries.length; i++) {
     var entry = feed.entries[i];
     var latlng = getLatLng(entry.xmlNode);
@@ -81,13 +94,36 @@ function addFeed(feed) {
   rs.close();
 }
 
+function loadUpdatedFeed(feedUrl) {
+  var feed = new google.feeds.Feed(feedUrl);
+  feed.setResultFormat(google.feeds.Feed.MIXED_FORMAT);
+  feed.setNumEntries(8);
+  feed.load(function(result) {
+    updateFeed(result.feed);
+  });
+}
+
+function updateFeed(feed) {
+  for (var i = 0; i < feed.entries.length; i++) {
+    var entry = feed.entries[i];
+    var rs = db.execute('select * from Entries where link = "' + entry.link + '"');
+    if (rs.isValidRow()) { 
+      rs.close();
+      continue;
+    }
+    rs.close();
+    var latlng = getLatLng(entry.xmlNode);
+    db.execute('insert into Entries (feedLink, title, link, content, lat, lng, isRead, entryNum) values (?, ?, ?, ?, ?, ?, ?, ?)', [ feed.link, entry.title, entry.link, entry.content, latlng.lat, latlng.lng, 0, i]);
+  }
+}
+
 function addFeedLinkToSidebar(feedLink) {
   var rs = db.execute('select * from Feeds where link = "' + feedLink + '"');
   if (!rs.isValidRow()) return;
   var searchLink = document.createElement('a');
   searchLink.id = 'feedLink' + rs.fieldByName('link');
   searchLink.setAttribute("href", "javascript:displayFeed('" + rs.fieldByName('link') + "')");
-  searchLink.appendChild(document.createTextNode(rs.fieldByName('title') + ' (' + rs.fieldByName('numUnRead') + ')'));
+  searchLink.innerHTML = rs.fieldByName('title') + ' (<span id="urC' + rs.fieldByName('link') + '">' + getNumUnRead(feedLink) + '</span>)';
   var status = document.getElementById('status');
   status.appendChild(searchLink);
   status.appendChild(document.createElement('br'));
@@ -96,6 +132,7 @@ function addFeedLinkToSidebar(feedLink) {
 }
 
 function displayFeed(feedLink) {
+  currentFeedLink = feedLink;
   var rs = db.execute('select * from Feeds where link = "' + feedLink + '"');
   if (!rs.isValidRow()) return;
   var html = ['<h2>', rs.fieldByName('title'),'</h2>'];
@@ -166,14 +203,33 @@ function getLatLng(xmlNode) {
 function markAsRead(feedLink, entryNum) {
   var rs = db.execute('update Entries set isRead = 1 where feedLink = "' + feedLink + '" and entryNum = ' + entryNum);
   rs.close(); 
-  var rs = db.execute('select * from Feeds where link = "' + feedLink + '"');
-  var title = rs.fieldByName('title');
-  var numUnRead = rs.fieldByName('numUnRead') - 1;
-  rs.close();
-  var rs = db.execute('update Feeds set numUnRead = ' + numUnRead + ' where link = "' + feedLink + '"');
-  rs.close();
-  document.getElementById('feedLink' + feedLink).innerHTML = title + ' ( ' + numUnRead + ')';
+  var numUnRead = getNumUnRead(feedLink);
+  document.getElementById('urC' + feedLink).innerHTML = numUnRead;
   document.getElementById('feedItem' + entryNum).className = 'item-read';
   document.getElementById('markAsRead' + entryNum).style.display = 'none';
 }
 
+function getNumUnRead(feedLink) {
+  var rs = db.execute('select * from Entries where feedLink = "' + feedLink + '" and isRead = 0');
+  var numUnRead = 0;
+  while (rs.isValidRow()) {
+    numUnRead++;
+    rs.next();
+  }
+  rs.close();
+  return numUnRead;
+}
+
+function checkScroll() {
+  var container = document.getElementById("itemresults");
+  var containerBottom = container.scrollTop;
+  var i = 0;
+  while (el = document.getElementById("feedItem" + i)) {
+    var elementBottom = el.offsetTop + el.clientHeight;
+    if (containerBottom > elementBottom) {
+      // todo: dont mark as read if its already read
+      markAsRead(currentFeedLink, i);
+    }
+     i++;
+  }
+}
