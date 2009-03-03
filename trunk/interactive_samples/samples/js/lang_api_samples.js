@@ -11,7 +11,8 @@ var tempJSON = [
   {
     "category":"Language API-Transliteration",
     "samples":[
-      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/language/transliteration/transliterate.js"], "sampleName":"Transliterate", "tags": "Textarea, Hindi"}
+      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/language/transliteration/transliterate.js"], "sampleName":"Transliterate Hindi", "tags": "Textarea, Hindi"},
+      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/language/transliteration/transliterateArabic.js"], "sampleName":"Transliterate Arabic", "tags": "Textarea, Hindi"}
     ],
     "docsUrl": "http://code.google.com/apis/ajaxlanguage/documentation/referenceTransliteration.html"
   }
