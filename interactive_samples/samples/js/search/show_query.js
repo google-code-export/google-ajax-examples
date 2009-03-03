@@ -7,7 +7,13 @@ google.load('search', '1');
 // Whenever a search starts, alert the query.
 function searchStart(searchControl, searcher, query) {
   var content = document.getElementById('content');
-  content.innerHTML = "User searched for: " + query + "<br/>" + content.innerHTML;
+  var queryDiv = document.getElementById('query');
+  if (! queryDiv) {
+    var queryDiv = document.createElement('div');
+    queryDiv.id = 'query';
+    document.body.appendChild(queryDiv);
+  }
+  queryDiv.innerHTML = "User searched for: " + query;
 }
 
 function OnLoad() {
