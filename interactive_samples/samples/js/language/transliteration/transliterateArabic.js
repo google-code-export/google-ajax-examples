@@ -27,7 +27,7 @@ function OnLoad() {
                       'Click on a word to see more options.</div>' +
                       '<textarea cols="100" rows="5" id="ta3reebTextarea"></textarea>' +
                       '<div>Type in (do not copy/paste): ' +
-                      '<b>Google btetkalem 3arabee!</b></div>';
+                      '<b>mar7aban bekom fee ta3reeb</b></div>';
 
   // Show the transliteration control which can be used to switch between
   // English and Arabic.
