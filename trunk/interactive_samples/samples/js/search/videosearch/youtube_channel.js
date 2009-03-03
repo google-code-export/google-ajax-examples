@@ -18,7 +18,7 @@ function OnLoad() {
   searchControl.draw(document.getElementById("content"));
 
   // Search for a YouTube channel
-  searchControl.execute("ytchannel:IBitePrettyHard");
+  searchControl.execute("ytchannel:NBA");
 }
 
 google.setOnLoadCallback(OnLoad);
