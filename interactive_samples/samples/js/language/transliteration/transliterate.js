@@ -7,7 +7,9 @@ google.load("elements", "1", {packages: "transliteration"});
 function OnLoad() {
   var content = document.getElementById('content');
   // Create the HTML for our text area
-  content.innerHTML = '<textarea cols="100" rows="5" id="transliterateTextarea"></textarea>' +
+  content.innerHTML = '<div>Type a word and hit space to get it in Hindi. ' +
+                      'Click on a word to see more options.</div>' +
+                      '<textarea cols="100" rows="5" id="transliterateTextarea"></textarea>' +
                       '<div>Type in (do not copy/paste): ' +
                       '<b>namaste main yahan apke madad karane ke liye hun</b></div>';
 
@@ -15,7 +17,7 @@ function OnLoad() {
       sourceLanguage:
           google.elements.transliteration.LanguageCode.ENGLISH,
       destinationLanguage:
-          google.elements.transliteration.LanguageCode.HINDI,
+          [google.elements.transliteration.LanguageCode.HINDI],
       shortcutKey: 'ctrl+g',
       transliterationEnabled: true
   };
