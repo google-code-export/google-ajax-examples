@@ -30,9 +30,21 @@
   <script src="codemirror/js/codemirror.js" type="text/javascript" charset="utf-8"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js" type="text/javascript" charset="utf-8"></script>
   <script src="js/jquery-ui.js" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript" charset="utf-8">
+  var head = document.getElementsByTagName('head')[0];
   {% for i in sample_srcs %}
-    <script src="{{ i }}" type="text/javascript" charset="utf-8"></script>
+    var s = document.createElement('script');
+    s.src = '{{ i }}';
+    s.type = 'text/javascript';
+    s.charset = 'utf-8';
+    head.appendChild(s);
   {% endfor %}
+  var s = document.createElement('script');
+  s.src = 'js/interactive_logic.js';
+  s.type = 'text/javascript';
+  s.charset = 'utf-8';
+  head.appendChild(s);
+  </script>
   <!--
     Undesirable to put inline script in between script includes
     but this is the best way to load saved examples
@@ -48,8 +60,6 @@
     var curAPITypes = '{{ curAPITypes }}';
     var expandedCategory = '{{ expandedCategory }}';
   </script>
-
-  <script src="js/interactive_logic.js" type="text/javascript" charset="utf-8"></script>
   <script type="text/javascript" charset="utf-8">
     var loginUrl = '{{ loginUrl }}';
     var logoutUrl = '{{ logoutUrl }}';
