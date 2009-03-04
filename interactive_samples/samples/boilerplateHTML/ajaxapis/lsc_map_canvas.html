@@ -1,0 +1,94 @@
+<!--
+  copyright (c) 2009 google inc.
+
+  You are free to copy and use this sample.
+  License can be found here: http://code.google.com/apis/ajaxsearch/faq/#license
+-->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>Google AJAX Search API Sample</title>
+    <style type="text/css" media="screen">
+      body {
+        font-family : arial, sans-serif;
+      }
+      #spacer { width : 10px; }
+      #mapWrapperCanvas {
+        width : 100%;
+        height : 380px;
+      }
+      #mapCanvas {
+        border : 1px solid #979797;
+        height : 380px;
+        width : 100%;
+      }
+      #resultsCanvas {
+        position : relative;
+        top : 15px;
+        left : 0px;
+        height : 348px;
+        width : 280px;
+      }
+      #mapSearch {
+        position: relative;
+        top : 0px;
+        left : 0px;
+      }
+      .mapcanvastable td {
+        padding : 0px;
+      }
+      .mapcanvastable {
+        border-width : 0px;
+        border-spacing : 0px;
+        border-collapse : collapse;
+        border : none;
+        padding : 0px;
+      }
+
+      /* canvas view css over-rides */
+      #mapCanvas .gels {
+        width : 280px;
+        background-color: #ddeeff;
+      }
+      #mapCanvas .gels-form {
+        background-color: #ddeeff;
+      }
+
+      #mapWrapperCanvas .gels-controls {
+        position : absolute;
+        bottom : -2px;
+        left : 0px;
+      }
+      #mapWrapperCanvas .gels-app,
+      #mapWrapperCanvas .gels-extresults-active {
+        border : none;
+      }
+      #mapWrapperCanvas .gels-list-item {
+        margin-bottom : 2px;
+      }
+      #mapWrapperCanvas .gels-list-wrapper {
+        padding-left : 0px;
+      }
+    </style>
+    <script src="http://www.google.com/jsapi?key={{ key }}" type="text/javascript"></script>
+    <script type="text/javascript">
+    {{ INSERT_JAVASCRIPT_HERE }}
+    </script>
+  </head>
+  <body style="font-family: Arial;border: 0 none;">
+    <div id="mapWrapperCanvas">
+      <table class="mapcanvastable" style="width:100%;">
+        <td style="width:280px">
+          <div id="mapSearch"></div>
+          <div id="resultsCanvas"></div>
+        </td>
+        <td>
+          <div id="mapCanvas"></div>
+
+        </td>
+      </table>
+    </div>
+  </body>
+</html>

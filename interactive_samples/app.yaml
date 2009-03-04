@@ -29,6 +29,7 @@ handlers:
   script: main.py
 - url: /samples/js
   static_dir: samples/js
+  expiration: "10s"
 - url: /save
   script: main.py
 - url: /delete
@@ -64,6 +65,7 @@ handlers:
   script: main.py
 - url: /apis/ajax/playground/samples/js
   static_dir: samples/js
+  expiration: "10s"
 - url: /apis/ajax/playground/save
   script: main.py
 - url: /apis/ajax/playground/delete

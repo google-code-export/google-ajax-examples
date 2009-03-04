@@ -41,7 +41,8 @@ var tempJSON = [
       {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/search/localsearch/map_control.js"], "sampleName":"Static Map Control", "tags": "Static Maps, Prototypes, Custom Control, Maps"},
       {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/search/localsearch/restrict_results.js"], "sampleName":"Restrict Results", "tags": "KML, Business Listings"},
       // {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/search/localsearch/localsearch_control.js"], "sampleName":"Local Search Control", "tags": "Maps"},
-      // {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/search/localsearch/localsearch_control_small.js"], "sampleName":"Local Search Control Small", "tags": "Maps"},
+      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/search/localsearch/localsearch_control_small.js"], "sampleName":"Local Search Control Small", "tags": "Maps"},
+      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis/lsc_map_canvas.html", "files":["samples/js/search/localsearch/localsearch_control_canvas.js"], "sampleName":"Local Search Control Canvas", "tags": "Maps"},
       // {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/search/localsearch/localsearch_control_custom_pins.js"], "sampleName":"Local Search Control Custom Pins", "tags": "Maps, Custom, Icon"},
       {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis/drivingDirections.html", "files":["samples/js/search/localsearch/driving_directions.js"], "sampleName":"Show Driving Directions", "tags": ""}
     ],
