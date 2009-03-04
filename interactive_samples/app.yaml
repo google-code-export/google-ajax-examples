@@ -3,23 +3,26 @@ version: 2
 runtime: python
 api_version: 1
 
-default_expiration: "4d 5h"
-
 handlers:
 - url: /js
   static_dir: js
+  expires: "10d"
 - url: /popout.html
   static_files: popout.html
   upload: popout.html
 - url: /favicon.ico
   static_files: favicon.ico
   upload: favicon.ico
+  expires: "10d"
 - url: /images
   static_dir: images
+  expires: "10d"
 - url: /css
   static_dir: css
+  expires: "10d"
 - url: /codemirror
   static_dir: codemirror
+  expires: "10d"
 - url: /samples/boilerplateHTML/(.*\.html)
   script: boilerplateProxy.py
 - url: /index.html
@@ -38,18 +41,23 @@ handlers:
   script: main.py
 - url: /apis/ajax/playground/js
   static_dir: js
+  expires: "10d"
 - url: /apis/ajax/playground/popout.html
   static_files: popout.html
   upload: popout.html
 - url: /apis/ajax/playground/favicon.ico
   static_files: favicon.ico
   upload: favicon.ico
+  expires: "10d"
 - url: /apis/ajax/playground/images
   static_dir: images
+  expires: "10d"
 - url: /apis/ajax/playground/css
   static_dir: css
+  expires: "10d"
 - url: /apis/ajax/playground/codemirror
   static_dir: codemirror
+  expires: "10d"
 - url: /apis/ajax/playground/samples/boilerplateHTML/(.*\.html)
   script: boilerplateProxy.py
 - url: /apis/ajax/playground/index.html
