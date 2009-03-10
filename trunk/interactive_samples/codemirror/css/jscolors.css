@@ -6,7 +6,6 @@
   color: black;
   background-color: #EBEBEB;
   padding: 0;
-  /*border-top: 1px solid #ABABAB;*/
 }
 
 pre.code, .editbox {
@@ -15,6 +14,14 @@ pre.code, .editbox {
 
 .editbox p {
   margin: 0;
+}
+
+span.js-punctuation {
+  color: #666666;
+}
+
+span.js-operator {
+  color: #666666;
 }
 
 span.js-keyword {
@@ -34,7 +41,6 @@ span.js-variabledef {
 }
 
 span.js-localvariable {
-/*  color: #004499;*/
   color: black;
 }
 

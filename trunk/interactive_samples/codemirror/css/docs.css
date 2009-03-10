@@ -1,12 +1,16 @@
 body {
   margin: 0;
-  font-family: tahoma, arial, sans-serif;
   padding: 3em 6em;
   color: black;
+  /*Wasn't here*/
 }
 
 h1 {
   font-size: 22pt;
+}
+/*Wasn't here*/
+.underline {
+  border-bottom: 3px solid #C44;
 }
 
 h2 {
@@ -35,4 +39,9 @@ pre.code {
   color: black;
   padding: .4em;
   font-family: courier, monospace;
+}
+
+/*Wasn't here*/
+.warn {
+  color: #C00;
 }
