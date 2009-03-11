@@ -118,7 +118,6 @@ var CodeMirror = (function(){
     // display: block occasionally suppresses some Firefox bugs, so we
     // always add it, redundant as it sounds.
     frame.style.display = "block";
-    frame.style.marginLeft = '-5px';
     if (place.appendChild) {
       var node = place;
       place = function(n){node.appendChild(n);};
@@ -155,7 +154,9 @@ var CodeMirror = (function(){
   CodeMirror.prototype = {
     init: function() {
       if (this.options.initCallback) this.options.initCallback(this);
-      if (this.options.lineNumbers) applyLineNumbers(this.frame);
+      if (this.options.lineNumbers) {
+        applyLineNumbers(this.frame);
+      }
     },
 
     getCode: function() {return this.editor.getCode();},

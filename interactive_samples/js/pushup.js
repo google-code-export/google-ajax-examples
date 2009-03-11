@@ -97,18 +97,6 @@ Extend(Pushup, {
     this.message.className = 'pushup_message';
     this.message.innerHTML = this.options.message;
 
-    // reminder message if cookies are enabled
-    var hours = this.options.reminder.hours;
-    if (hours && Pushup.cookiesEnabled) {
-      this.pushup.appendChild(this.reminder = document.createElement('a'));
-      this.reminder.href = '#';
-      this.reminder.className = 'pushup_reminder';
-      this.pushup.className = 'withReminder';
-      var H = hours + ' hour' + (hours > 1 ? 's' : ''),
-       message = this.options.reminder.message.replace('#{hours}', H);
-      this.reminder.innerHTML = message;
-    }
-
     // Older Opera doesn't handle float correctly
     if (Pushup.Browser.Opera &&
        (!window.opera.version || parseFloat(window.opera.version()) < 9.25)) {

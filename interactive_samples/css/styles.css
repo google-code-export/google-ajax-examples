@@ -546,6 +546,7 @@ li.ui-autocomplete-odd > a > strong, li.ui-autocomplete-even > a > strong {
   border:1px solid #ABB1BD;
   text-align: left;
   cursor: pointer;
+  z-index: 600;
 }
 
 .expanded {
