@@ -26,13 +26,15 @@ function init() {
 }
 
 function onData(data) {
-  var content = document.getElementById('content');
-
   // If the view_data had an error, then user is not signed in
   if (data.get('viewer_data').hadError()) {
     // Create the sign in link
-    content.innerHTML = '<a href="#" onclick="google.friendconnect.requestSignIn()">Sign in</a>';
+    var options = {
+      id: "content"
+    };
+    google.friendconnect.renderSignInButton(options);
   } else {
+    var content = document.getElementById('content');
     // If the view_data is not empty, we can display the current user
     // Create html to display the user's name, and a sign-out link.
     var viewer = data.get('viewer_data').getData();

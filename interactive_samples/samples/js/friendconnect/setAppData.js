@@ -14,10 +14,13 @@ function init() {
 }
 
 function setTimeCallback(data) {
-  var content = document.getElementById('content');
   if (data.hadError()) {
-    content.innerHTML = 'Must <a href="#" onclick="google.friendconnect.requestSignIn()">Sign in</a> first.';
+    var options = {
+      id: "content"
+    };
+    google.friendconnect.renderSignInButton(options);
   } else {
+    var content = document.getElementById('content');
     var html = 'The time has been stored. To view data, click below.<br/>';
     html += '<input type="button" onclick="retrieveData();" value="Retrieve Data" /><br/>';
     html += '<input type="button" onclick="init();" value="Store Time Again" /><br/>';
