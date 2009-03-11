@@ -19,10 +19,10 @@ function init() {
 }
 
 function fetchActivitiesHandler(resp) {
-  var content = document.getElementById('content');
   var viewerActivities = resp.get('viewerActivities');
   // You can verify whether the user is logged in by how many activities there are.
   if (viewerActivities.getData()) {
+    var content = document.getElementById('content');
     // If the user is logged in, get the activities as an array.
     var activities = viewerActivities.getData().asArray();
     var html = '';
@@ -37,6 +37,9 @@ function fetchActivitiesHandler(resp) {
     content.innerHTML = 'Viewer\'s activities: ' + html;
   } else {
     // If the user isn't logged in, add a login link.
-    content.innerHTML = '<a href="#" onclick="google.friendconnect.requestSignIn()">Sign in</a>';
+    var options = {
+      id: "content"
+    };
+    google.friendconnect.renderSignInButton(options);
   }
 }

@@ -24,10 +24,13 @@ function onData(data) {
     document.getElementById("site-name").innerHTML = owner_data.getDisplayName();
   }
 
-  var viewer_info = document.getElementById("viewer-info");
   if (data.get("viewer_data").hadError()) {
-    viewer_info.innerHTML = "<a href='#' onclick='google.friendconnect.requestSignIn()'>Sign in</a>";
+    var options = {
+      id: "viewer-info"
+    }
+    google.friendconnect.renderSignInButton(options);
   } else {
+    var viewer_info = document.getElementById("viewer-info");
     var viewer = data.get("viewer_data").getData();
     viewer_info.innerHTML = "Hello, " + viewer.getDisplayName() + " " +
         "<a href='#' onclick='google.friendconnect.requestSettings()'>Settings</a> | " + 
