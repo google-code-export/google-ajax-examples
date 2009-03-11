@@ -890,6 +890,7 @@
         $("#edit").css('height', newEditHeight + 'px');
         me.setDivShadow('editor', 'editShadowContainer');
         me.movedFlags.edit = true;
+        jsEditor.frame.style.height = (newEditHeight + "px");
       }
     });
 
