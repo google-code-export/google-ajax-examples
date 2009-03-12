@@ -88,6 +88,7 @@ class RetrieveCache(webapp.RequestHandler):
       code = codeObj.code
       code = code.replace('NEWLINE!!!', '\n');
       db.delete(codeObj)
+      self.response.headers['P3P'] = 'CP="CURa ADMa DEVa PSAo PSDo OUR BUS UNI PUR INT DEM STA PRE COM NAV OTC NOI DSP COR"'
       self.response.out.write(code)
 
 class ShowCode(webapp.RequestHandler):
