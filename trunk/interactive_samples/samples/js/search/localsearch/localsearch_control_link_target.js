@@ -11,10 +11,10 @@ google.load("elements", "1", {
 function OnLoad() {
   var content = document.getElementById("content");
   content.style.border = "1px solid #979797";
-  content.style.width = "700px";
   content.style.height = "350px";
 
   var map = new google.maps.Map2(content);
+  map.setMapType(G_PHYSICAL_MAP);
   map.setCenter(new google.maps.LatLng(46.688681, 7.686800), 11);
   var options = {
     linkTarget: '_blank'

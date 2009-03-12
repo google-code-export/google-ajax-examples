@@ -8,6 +8,7 @@ function initialize() {
   var resultsCanvas = document.getElementById("resultsCanvas");
 
   var map2 = new google.maps.Map2(mapCanvas);
+  map2.setMapType(G_PHYSICAL_MAP);
   map2.setCenter(new google.maps.LatLng(34.431, -119.573), 13);
   map2.addControl(new google.maps.SmallMapControl());
   map2.addControl(new google.maps.MapTypeControl());
