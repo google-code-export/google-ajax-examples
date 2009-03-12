@@ -14,9 +14,9 @@ handlers:
   static_files: static/canvas.html
   upload: static/canvas.html
   expiration: 10d
-- url: /firebug.html
-  static_files: static/firebug.html
-  upload: static/firebug.html
+- url: /firebug.js
+  static_files: static/firebug.js
+  upload: static/firebug.js
   expiration: 10d
 - url: .*
   script: main.py
