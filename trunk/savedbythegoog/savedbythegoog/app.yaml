@@ -3,12 +3,20 @@ version: 2
 runtime: python
 api_version: 1
 
+
+
 handlers:
 - url: /rpc_relay.html
   static_files: static/rpc_relay.html
   upload: static/rpc_relay.html
+  expiration: 10d
 - url: /canvas.html
   static_files: static/canvas.html
   upload: static/canvas.html
+  expiration: 10d
+- url: /firebug.html
+  static_files: static/firebug.html
+  upload: static/firebug.html
+  expiration: 10d
 - url: .*
   script: main.py
