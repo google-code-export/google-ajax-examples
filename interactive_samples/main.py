@@ -44,6 +44,7 @@ apis = {
   'visualization': 'samples/js/visualization_api_samples.js',
   'blogger': 'samples/js/blogger_api_samples.js',
   'calendar': 'samples/js/calendar_api_samples.js',
+  'youtube': 'samples/js/youtube_api_samples.js',
   'friendconnect' : 'samples/js/friendconnect_api_samples.js'
 }
 
