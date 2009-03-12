@@ -27,7 +27,7 @@
         media="screen,projection" type="text/css">
   <!-- JavaScript -->
   <title>AJAX APIs Playground</title>
-  <script src="codemirror/js/codemirror.js" type="text/javascript" charset="utf-8"></script>
+  <script src="codemirror/js/codemirror1.js" type="text/javascript" charset="utf-8"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js" type="text/javascript" charset="utf-8"></script>
   <script src="js/jquery-ui.js" type="text/javascript" charset="utf-8"></script>
   {% for i in sample_srcs %}
@@ -182,7 +182,7 @@
     </div>
     <script type="text/javascript" charset="utf-8">
       var jsEditor = new CodeMirror(document.getElementById('edit'), {
-        parserfile : ["tokenizejavascript.js", "parsejavascript.js"],
+        parserfile : ["tokenizejavascript1.js", "parsejavascript1.js"],
         stylesheet : 'codemirror/css/jscolors.css',
         autoMatchParens : true,
         path : 'codemirror/js/',
