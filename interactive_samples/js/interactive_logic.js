@@ -1031,7 +1031,7 @@
     if (typeof this.htmlEditor == 'undefined') {
       $('#codeOutput0').dialog('open').show();
       this.htmlEditor = new CodeMirror(document.getElementById('codeOutput0'), {
-        parserfile: ["parsexml.js", "parsecss.js", "tokenizejavascript.js", "parsejavascript.js", "parsehtmlmixed.js"],
+        parserfile: ["parsexml1.js", "parsecss1.js", "tokenizejavascript1.js", "parsejavascript1.js", "parsehtmlmixed1.js"],
         stylesheet: ["codemirror/css/jscolors.css", "codemirror/css/csscolors.css", "codemirror/css/xmlcolors.css"],
         autoMatchParens : true,
         path : 'codemirror/js/',
@@ -1050,7 +1050,7 @@
 
       $('#codeOutput' + this.numHTMLEditors).dialog('open').show();
       this.htmlEditor = new CodeMirror(document.getElementById('codeOutput' + this.numHTMLEditors), {
-        parserfile: ["parsexml.js", "parsecss.js", "tokenizejavascript.js", "parsejavascript.js", "parsehtmlmixed.js"],
+        parserfile: ["parsexml1.js", "parsecss1.js", "tokenizejavascript1.js", "parsejavascript1.js", "parsehtmlmixed1.js"],
         stylesheet: ["codemirror/css/jscolors.css", "codemirror/css/csscolors.css", "codemirror/css/xmlcolors.css"],
         autoMatchParens : true,
         path : 'codemirror/js/',
