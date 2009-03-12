@@ -17,6 +17,7 @@ function OnLoad() {
 
   // Create and Center a Map
   var map2 = new google.maps.Map2(content);
+  map2.setMapType(G_PHYSICAL_MAP);
   map2.setCenter(new google.maps.LatLng(34.431, -119.573), 13);
   map2.addControl(new google.maps.SmallMapControl());
   map2.addControl(new google.maps.MapTypeControl());
