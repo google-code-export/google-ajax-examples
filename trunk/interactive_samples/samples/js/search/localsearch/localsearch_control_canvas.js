@@ -9,9 +9,10 @@ function initialize() {
 
   var map2 = new google.maps.Map2(mapCanvas);
   map2.setMapType(G_PHYSICAL_MAP);
+  map2.removeMapType(G_HYBRID_MAP);
+  map2.addMapType(G_PHYSICAL_MAP);
+  map2.addControl(new google.maps.MenuMapTypeControl());
   map2.setCenter(new google.maps.LatLng(34.431, -119.573), 13);
-  map2.addControl(new google.maps.SmallMapControl());
-  map2.addControl(new google.maps.MapTypeControl());
 
 
   // Set where the results will appear
