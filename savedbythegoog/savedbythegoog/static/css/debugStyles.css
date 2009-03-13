@@ -17,6 +17,11 @@
   width: 170px;
   height: 10px;
 }
+.debugBarContent {
+  margin: 0 9px;
+  color: #427BD6;
+  font-weight: bolder;
+}
 .debugBarRunning .debugBarTop {
   background-image: url(/images/debugbar-running-top.png);
 }
@@ -34,7 +39,7 @@
   opacity: 0.45;
 }
 .debugBarRunning #debugBarText {
-  color: #427BD6;
+  color: #427BD6;;
 }
 .debugBarPaused .debugBarTop {
   background-image: url(/images/debugbar-paused-top.png);
