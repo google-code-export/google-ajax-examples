@@ -1,7 +1,6 @@
 google.friendconnect.container.setParentUrl('/' /* location of rpc_relay.html and canvas.html */);
 google.friendconnect.container.loadOpenSocialApi({
-  site: '16213644786251996348',
-  version: '0.8',
+  site: '16213644786251996348', // Change this on your site
   onload: function() { initAllData(); }
 });
 

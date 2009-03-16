@@ -1,3 +1,11 @@
+/*
+ * The Local Search Control for Google Maps performs AJAX Search API style 
+ * Local Searches on an existing map. If you already have a Google Maps 
+ * application and want to add search capabilities it doesn't get much 
+ * easier than this. Or, if you want to spruce up your Local Search results,
+ * this control will help you easily integrate those results onto a Google Map.
+*/
+
 google.load("maps", "2");
 google.load("elements", "1", {
   packages : ["localsearch"]
