@@ -18,7 +18,8 @@
   height: 10px;
 }
 .debugBarContent {
-  margin: 0 9px;
+  margin: 0 8px;
+  margin: expression('0 0 0 7px');
   color: #427BD6;
   font-weight: bolder;
 }
