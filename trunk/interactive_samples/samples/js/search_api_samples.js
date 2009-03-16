@@ -57,8 +57,9 @@ var tempJSON = [
       {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis/lsc_100_width.html", "files":["samples/js/search/localsearch/local_search_control_zoom_limit.js"], "sampleName":"Local Search Control Zoom Limit", "tags": "Localsearch, Maps, zoomLimit"},
       {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis/lsc_100_width.html", "files":["samples/js/search/localsearch/local_search_control_icons.js"], "sampleName":"Local Search Control Icons", "tags": "Localsearch, Maps, Icons, Pins, Labels"},
       {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis/lsc_100_width.html", "files":["samples/js/search/localsearch/local_search_control_ads.js"], "sampleName":"Local Search Control Ads", "tags": "Localsearch, Maps, Ads"},
-      // {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis/lsc_100_width.html", "files":["samples/js/search/localsearch/localsearch_control_small.js"], "sampleName":"Local Search Control Separate Results Small", "tags": "Localsearch, Maps"},
       {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis/lsc_map_canvas.html", "files":["samples/js/search/localsearch/localsearch_control_canvas.js"], "sampleName":"Local Search Control Separate Results Canvas", "tags": "Localsearch, Maps"}
+      // {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis/lsc_100_width.html", "files":["samples/js/search/localsearch/localsearch_control_small.js"], "sampleName":"Local Search Control Separate Results Small", "tags": "Localsearch, Maps"},
+
     ],
     "docsUrl":"http://code.google.com/apis/ajaxsearch/documentation/localsearch/index.html"
   },
