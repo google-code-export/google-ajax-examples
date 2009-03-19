@@ -62,11 +62,13 @@ def getTemplateValues(self, cgiArgs):
   greeting = ''
   logoutUrl = ''
   loginUrl = ''
+  email = ''
   isOnGoogleCode = self.request.path.find('apis/ajax/playground')
   if cgiArgs != '':
     cgiArgs = '?' + cgiArgs
   if user:
     greeting = '%s' % (user.nickname())
+    email = user.email()
     if isOnGoogleCode != -1:
       logoutUrl = users.create_logout_url('/apis/ajax/playground/' + cgiArgs)
     else:
@@ -76,11 +78,11 @@ def getTemplateValues(self, cgiArgs):
       loginUrl = users.create_login_url('/apis/ajax/playground/' + cgiArgs)
     else:
       loginUrl = users.create_login_url('/' + cgiArgs)
-
   template_values = {
     'loginUrl': loginUrl,
     'greeting': greeting,
-    'logoutUrl': logoutUrl
+    'logoutUrl': logoutUrl,
+    'userEmail': email
   }
   return template_values
 
@@ -274,11 +276,12 @@ class Save(webapp.RequestHandler):
     hashLink = '#' + sampleName.lower().replace(' ', '_')
     return hashLink
 
-  def updateCode(self, id, jscode):
+  def updateCode(self, id, jscode, boilerplateLoc):
     entry = db.get(db.Key(str(id)))
     user = users.get_current_user()
     if entry.user == user:
       entry.jscode = jscode
+      entry.boilerplateLoc = boilerplateLoc
       entry.put()
       hashLink = '#' + entry.sampleName.lower().replace(' ', '_')
       return hashLink
@@ -297,8 +300,8 @@ class Save(webapp.RequestHandler):
       tags = self.request.get('tags')
       boilerplateLoc = self.request.get('boilerplateLoc')
       if id and jscode:
-        hashLink = self.updateCode(id, jscode)
-      elif jscode and sampleName and boilerplateLoc:
+        hashLink = self.updateCode(id, jscode, boilerplateLoc)
+      elif jscode and sampleName:
         hashLink = self.saveCode(user, jscode, sampleName, tags, boilerplateLoc)
 
         # path = os.path.join(os.path.dirname(__file__), 'index.html')
@@ -314,7 +317,7 @@ class Save(webapp.RequestHandler):
     if apiTypes:
       cgiArgs = '?type=' + apiTypes
 
-
+    
     isOnGoogleCode = self.request.path.find('apis/ajax/playground')
     if isOnGoogleCode != -1:
       self.redirect('/apis/ajax/playground/' + cgiArgs + hashLink)

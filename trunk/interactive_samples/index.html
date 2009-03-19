@@ -1,4 +1,4 @@
-<!-- copyright (c) 2009 google inc.
+<!-- copyright (c) 2009 Google inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -48,7 +48,11 @@
     var curAPITypes = '{{ curAPITypes }}';
     var expandedCategory = '{{ expandedCategory }}';
   </script>
-
+  <style type="text/css" media="screen">
+    .dragger {
+      cursor: s-resize;
+    }
+  </style>
   <script src="js/interactive_logic.js" type="text/javascript" charset="utf-8"></script>
   <script type="text/javascript" charset="utf-8">
     var loginUrl = '{{ loginUrl }}';
@@ -56,15 +60,13 @@
     function init() {
       is.init(document.getElementById('editor'));
     }
+
     $(window).bind('load', function() {
       init();
     });
   </script>
 </head>
-<body style="padding: 15px 30px;">
-{% if deleted %}
-  Deleted {{deleted}}
-{% endif %}
+<body style="padding: 0px 0px;background-color: #E5ECF9;">
 <div id="runShadowContainer">
   <div class="blShadow bottomShadows">&nbsp;</div>
   <div class="bShadow bottomShadows">&nbsp;</div>
@@ -88,108 +90,181 @@
 </div>
 
 
-<div id="container">
-<div class="bluediv">
-  <table style="width:100%;">
-    <tr>
-      <td>
-        <h1 id="header">AJAX APIs Playground</h1>
-      </td>
-      <td id="googleLogoTD">
-        <img src="images/googlecode.png" alt="Google Logo">
-      </td>
-    </tr>
-  </table>
 
-</div>
+<div id="container">
+  <div id="loggedInBar">{% if userEmail %} {{ userEmail }} <span style="font-weight: normal">|</span> <a href="{{ logoutUrl }}">Sign out</a></div>{% else %} <a href="{{ loginUrl }}">Sign In</a></div> {% endif %}
+  <div class="whiteTopBar">
+    <table style="width:100%;">
+      <tr>
+        <td id="googleLogoTD">
+          <img src="images/googlecode.png" title="Google Logo">
+          
+        </td>
+        <td valign=middle style="width: 60%">
+          <h1 id="header">AJAX APIs Playground</h1>
+        </td>
+        <td style="width:80%;">&nbsp;</td>
+      </tr>
+    </table>
+  </div>
 
 
 <div id="content" style="height:500px;">
 <table class="contentTable">
 <tr>
   <td id="selectContainer">
-    <div id="selectDrag">
-      <h2>
-        <table class="headerTable">
-          <tbody>
-          <tr>
-            <td style="width: 40px">
-              Pick
-            </td>
-            <td align="right">
-              <div id="searchInputContainer">
-                <input tabindex="1" type="text" size="14" value="search"
-                       onclick="this.value = '';this.style.color = 'black';" id="search"/>
-              </div>
-            </td>
-          </tr>
-          </tbody>
-        </table>
-      </h2>
-    </div>
-    <div id="selectCode"></div>
+    <table cellpadding=0 cellspacing=0 style="width:100%;">
+      <tr>
+        <td class="border_tl"></td>
+        <td class="border_t"></td>
+        <td class="border_tr"></td>
+      </tr>
+      <tr>
+        <td class="border_l"></td>
+        <td>
+          <div>
+            <h2>
+              <table class="headerTable">
+                <tbody>
+                <tr>
+                  <td style="width: 90px" class="headerFont">
+                    Pick Sample
+                  </td>
+                  <td align="right">
+                    <table cellpadding=0 cellspacing=0>
+                      <tr>
+                        <td class="search_tl"></td>
+                        <td class="search_t_b"></td>
+                        <td class="search_tr"></td>
+                      </tr>
+                      <tr>
+                        <td class="search_l_r"></td>
+                        <td style="background-color:white;" class="searchContainer">
+                          <input type="text" id="search" value="Search" style="color:gray;" onclick="this.value='';this.style.color='black';return false;">
+                        </td>
+                        <td class="search_l_r"></td>
+                      </tr>
+                      <tr>
+                        <td class="search_bl"></td>
+                        <td class="search_t_b"></td>
+                        <td class="search_br"></td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </h2>
+          </div>
+          <div id="selectCode"></div>
+        </td>
+        <td class="border_r"></td>
+      </tr>
+      <tr>
+        <td class="border_bl"></td>
+        <td class="border_b dragger"></td>
+        <td class="border_br"></td>
+      </tr>
+    </table>
   </td>
 
 
 
 
   <td id="codeContainer">
-    <div id="editor">
-        <div id="editDrag">
-          <h2>
-          <table class="headerTable">
-            <tbody>
-              <tr>
-                <td style="width: 60px">Edit</td>
-                <td align="center" id="demoTitle">&nbsp;</td>
-                <td align="right" class="codeMenuTD">
-                  <span id="codeMenu" class="buttonDropdownContainer" style="">
-                    <span id="codeMenuButtonContainer" style="display:inline-block;">
-                      <span class="buttonText">Code Menu</span>
-                      <span class="dropdownButton"></span>
-                    </span>
-                    <br style="clear:both;">
-                    <!-- onmouseout="is.uiEffects.toggleDropdown($('#codeMenuDropdown'), true);" -->
-                    <span id="codeMenuDropdown" class="dropdown" >
-                      <span class="first" onmousedown="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.linkCode();return false;"><img src="images/export.png" alt="Export Code" width="17" />&nbsp;Export</span>
-                      <span onmousedown="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.outputSource();return false;"><img src="images/docs.png" alt="Show Source" width="13" />&nbsp;View Full Source</span>
+    <table cellpadding=0 cellspacing=0 style="width:100%;">
+      <tr>
+        <td class="border_tl"></td>
+        <td class="border_t"></td>
+        <td class="border_tr"></td>
+      </tr>
+      <tr>
+        <td class="border_l"></td>
+        <td>
+          <div id="editor">
+              <div id="editDrag">
+                <h2>
+                <table class="headerTable">
+                  <tbody>
+                    <tr>
+                      <td style="width: 80px" class="headerFont">Edit Code</td>
+                      <td align="center" id="demoTitle">&nbsp;</td>
+                      <td align="right" class="codeMenuTD">
+                        <span id="codeMenu" class="buttonDropdownContainer">
+                          <span id="codeMenuButtonContainer" style="">
+                            <a id="docsLink" target="_blank">
+                              <span id="docsButton"></span>
+                            </a>
+                            <span id="toggleEditHTMLButton" onclick="is.toggleEditHTML();return false;"></span>
+                            <span id="dropdownButton"></span>
+                          </span>
 
-                      {% if loginUrl %}
-                      <span onmousedown="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.confirmLogin('{{ loginUrl }}', true);return false;">
-                        <img src="images/save.png" alt="Save" width="15" />&nbsp;Save
-                      </span>
-                      <span onmousedown="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.confirmLogin('{{ loginUrl }}');return false;">
-                        Login
-                      </span>
-                      {% endif %}
-                      {% if logoutUrl %}
-                      <span onmousedown="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.saveCode();return false;">
-                        <img src="images/save.png" alt="Save" width="15"/>&nbsp;Save
-                      </span>
-                      <span onmousedown="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));location.href='{{ logoutUrl }}';return false;">
-                        Logout
-                      </span>
-                      {% endif %}
-                    </span>
-                  </span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </h2>
-      </div>
-      <div id="edit"></div>
-    </div>
+
+                          <!-- TODO: what do we do with this menu stuff?  what will i still have here?  save, export -->
+                          <!-- TODO: get rid of popout code -->
+                          <br style="clear:both;">
+                          <!-- onmouseout="is.uiEffects.toggleDropdown($('#codeMenuDropdown'), true);" -->
+                          <span id="codeMenuDropdown" class="dropdown" >
+                            <div class="menuTop"></div>
+                            <div class="menuTile">
+                              <span class="first" onmousedown="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.linkCode();return false;"><img src="images/export.png" title="Export Code" width="17" />
+                                &nbsp;Export
+                              </span>
+                              {% if loginUrl %}
+                              <span onmousedown="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.confirmLogin('{{ loginUrl }}', true);return false;">
+                                <img src="images/save.png" title="Save" width="15" />&nbsp;Save
+                              </span>
+                              {% else %}
+                              <span onmousedown="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.saveCode();return false;">
+                                <img src="images/save.png" title="Save" width="15"/>&nbsp;Save
+                              </span>
+                              {% endif %}
+                            </div>
+                            <div class="menuBottom"></div>
+                          </span>
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </h2>
+            </div>
+            <div id="edit">
+              <span id="editJS"></span>
+              <span id="editMixed"></span>
+            </div>
+          </div>
+        </td>
+        <td class="border_r"></td>
+      </tr>
+      <tr>
+        <td class="border_bl"></td>
+        <td class="border_b dragger"></td>
+        <td class="border_br"></td>
+      </tr>
+    </table>
     <script type="text/javascript" charset="utf-8">
-      var jsEditor = new CodeMirror(document.getElementById('edit'), {
+      var jsEditor = new CodeMirror(document.getElementById('editJS'), {
         parserfile : ["tokenizejavascript1.js", "parsejavascript1.js"],
         stylesheet : 'codemirror/css/jscolors.css',
         autoMatchParens : true,
         path : 'codemirror/js/',
-        height : '350px',
+        height : '320px',
         content: '',
         lineNumbers: true,
-        onLoad: function() {is.runCode();}
+        breakPoints: true,
+        onLoad: function() {is.runBox.runCode();}
+      });
+      var mixedEditor = new CodeMirror(document.getElementById('editMixed'), {
+        parserfile: ["parsexml1.js", "parsecss1.js", "tokenizejavascript1.js", "parsejavascript1.js", "parsehtmlmixed1.js"],
+        stylesheet: ["codemirror/css/xmlcolors.css", "codemirror/css/jscolors.css", "codemirror/css/csscolors.css"],
+        autoMatchParens : true,
+        path : 'codemirror/js/',
+        height : '320px',
+        content: '',
+        lineNumbers: true,
+        breakPoints: false,
+        onLoad: function() {is.runBox.runCode();}
       });
     </script>
   </td>
@@ -200,44 +275,58 @@
 
 
   <td id="outputContainer" colspan=2>
-    <!-- to change height/width, change #outputContainer in the CSS -->
-    <div id="outputDiv" class="draggable resizable">
-      <div id="outputDrag">
-        <h2>
-          <table  class="headerTable">
-            <tbody>
-              <tr>
-                <td style="width: 100px;">
-                  <span id="runButton" onmousedown="is.runCode();return false;" style="cursor: pointer;">Run <img src="images/play10x10.png" alt="Run"></span>
-                </td>
-                <td id="runBoxTitle">Output</td>
-                <td align="right" style="width: 100px;">
-                  <span onmousedown="is.runBox.changeToPopout();return false;" style="cursor: pointer;"><img src="images/new-window.png" alt="Pop-out"></span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </h2>
-      </div>
-
-      <div id="runbox"></div>
-    </div>
+    <table cellpadding=0 cellspacing=0 style="width:100%;margin-top: 5px;">
+      <tr>
+        <td class="border_tl"></td>
+        <td class="border_t"></td>
+        <td class="border_tr"></td>
+      </tr>
+      <tr>
+        <td class="border_l"></td>
+        <td>
+          <div id="outputDiv">
+            <div id="outputDrag">
+              <h2>
+                <table  class="headerTable">
+                  <tbody>
+                    <tr>
+                      <td class="headerFont">
+                        Output
+                      </td>
+                      <td align="right">
+                        <span onmousedown="is.runBox.runCode({debugMode: true});" style="cursor: pointer;"><img src="images/debug_code.png" title="Debug code with breakpoints and Firebug Lite."></span>
+                        <span onmousedown="is.runBox.runCode();return false;" style="cursor: pointer;"><img src="images/run_code.png" title="Run"></span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </h2>
+            </div>
+            <div id="runbox"></div>
+          </div>
+        </td>
+        <td class="border_r"></td>
+      </tr>
+      <tr>
+        <td class="border_bl"></td>
+        <td class="border_b"></td>
+        <td class="border_br"></td>
+      </tr>
+    </table>
   </td>
 </tr>
 
 
 
 <tr>
-  <td class="footer" id="footerImg">
-    <div style="background-image: url(images/sprites.png);background-position: -28px -28px;height:53px;margin:12px 0;width:143px;">&nbsp;</div>
-  </td>
-  <td class="footer" style="vertical-align: middle; font-size:80%; text-align: center">
+  <td colspan=2 class="footer" style="vertical-align: middle; font-size:80%; text-align: center">
     <div id="footerLinks">
       ©2009 Google -
       <a href="http://code.google.com/">Code Home</a> - <a href="http://www.google.com/accounts/TOS">Site Terms of Service</a> -
       <a href="http://www.google.com/privacy.html">Privacy Policy</a> -
       <a href="http://code.google.com/more/">Site Directory</a> -
-      <a href="http://code.google.com/p/google-ajax-examples/issues/list">Report Bug</a>
+      <a href="http://code.google.com/p/google-ajax-examples/issues/list" target="_blank">Report Bug</a> - 
+      <a href="http://spreadsheets.google.com/viewform?hl=en&formkey=cFM5OU5yN3BrRzhOOEhFc2VBMmlQU2c6MA" target="_blank">Give Feedback</a>
     </div>
   </td>
 </tr>
@@ -252,9 +341,8 @@ There's a bug in jQuery UI where if you drag over an iFrame
 then you can't drag anymore.  Putting an invisible div over the
 iFrame fixes it.
 -->
-<div id="dragsafe">&nbsp;</div>
+<div id="dragsafe"></div>
 
-<div id="codeOutput0" class="codeOutput"></div>
 <form action="http://savedbythegoog.appspot.com/add" id="linkCodeForm" method="POST" target="_blank">
   <input type="hidden" id="codeHolder" name="code" />
 </form>

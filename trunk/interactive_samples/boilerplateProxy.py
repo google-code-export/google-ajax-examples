@@ -31,7 +31,7 @@ class Main(webapp.RequestHandler):
 
     self.template_values = {
       "key": key,
-      "INSERT_JAVASCRIPT_HERE": 'try {if (window.parent && window.parent.is && window.parent.is.codeToRun) {eval(window.parent.is.codeToRun);window.onload = function() {window.document.body.onclick = function() {window.parent.is.uiEffects.bringRunBoxToFront();};};}} catch (e) {alert("Error: " + e.message);}'
+      "INSERT_JAVASCRIPT_HERE": 'INSERT_JAVASCRIPT_HERE'
     }
 
     path = os.path.join(os.path.dirname(__file__), path)

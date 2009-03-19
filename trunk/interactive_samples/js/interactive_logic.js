@@ -1,10 +1,10 @@
 // Anonymous function, keep the global namespace squeeky clean..
 (function() {
-
-  if (typeof console == 'undefined') {
-    var console = {
-      log : function() {}
-    };
+  if (typeof window.console != 'undefined' && /__debug__/i.test(document.location.href)) {
+  } else {
+    if (window.console) delete window.console;
+    window.console = {};  
+    window.console.log = function(message) {};
   }
 
   var fileTypes = {
@@ -28,75 +28,14 @@
     this.codeLIs = [];
     this.currentCode = new Object();
     this.curI = '';
-    this.htmlEditor;
+    this.codeEditorDivs;
+    this.currentEditor;
+    this.temporaryBoilerplate;
 
     this.uiEffects = new Object();
     this.runBox = new Object();
     this.autoCompleteData = [];
-    this.tryCatchRegex;
-  };
-
-  InteractiveSample.prototype.nameToHashName = function(name) {
-    var hashName = name.toLowerCase();
-    hashName = hashName.replace(/ /g, '_');
-    return hashName;
-  };
-
-  InteractiveSample.prototype.init = function(codeDiv) {
-    this.ie6 = ($.browser.msie && $.browser.version < 7);
-    this.runBox = new RunBox();
-    this.runBox.init(this, !$.browser.msie);
-    this.codeDiv = codeDiv;
-    this.createCategories();
-    this.addShowHideClicks();
-    this.uiEffects = new UIEffects();
-    this.uiEffects.init(this);
-    if (window.logoutUrl) {
-      this.putSafetyCookieInForms();
-    }
-
-    this.tryCatchRegex = /[ ]*try {if \(window\.parent && window\.parent\.is && window\.parent\.is\.codeToRun\) {eval\(window\.parent\.is\.codeToRun\);window\.onload = function\(\) {window\.document\.body\.onclick = function\(\) {window\.parent\.is\.uiEffects\.bringRunBoxToFront\(\);};};}} catch \(e\) {alert\("Error: " \+ e\.message\);}/;
-  };
-
-  InteractiveSample.prototype.getCookie = function(name) {
-    var nameEQ = name + "=";
-    var ca = document.cookie.split(';');
-    for(var i = 0; i < ca.length; i++) {
-      var c = ca[i];
-      while (c.charAt(0)==' ') c = c.substring(1, c.length);
-      if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-    }
-    return null;
-  };
-
-  InteractiveSample.prototype.getSafetyToken = function() {
-    var cookie = this.getCookie('dev_appserver_login');
-    cookie = (cookie) ? cookie.replace(/\"/g, '') : this.getCookie('ACSID');
-    cookie = (cookie) ? cookie.substring(6, 20) : null;
-    return 'safe' + cookie;
-  }
-
-  InteractiveSample.prototype.putSafetyCookieInForms = function() {
-    var safetyToken = this.getSafetyToken();
-    if (safetyToken) {
-      $('#safetyCookie').attr('value', safetyToken);
-    }
-  };
-
-  InteractiveSample.prototype.deleteCustomExample = function(id) {
-    var me = this;
-    return function() {
-      var confirmDelete = confirm('Are you sure you want to delete this example?');
-      if (confirmDelete) {
-        var redirect = 'delete?id=' + id;
-        var cookie = me.getCookie('dev_appserver_login');
-        cookie = (cookie) ? cookie.replace(/\"/g, '') : me.getCookie('ACSID');
-        cookie = (cookie) ? cookie.substring(6, 20) : null;
-        redirect += ((curAPITypes) ? '&type=' + curAPITypes : '');
-        redirect += (cookie) ? '&sc=' + 'safe' + cookie : '';
-        window.location = redirect;
-      }
-    };
+    this.insertJavascriptRegex;
   };
 
   InteractiveSample.prototype.addDeleteIcon = function(li, id) {
@@ -106,8 +45,21 @@
     deleteCodeImg.style.cursor = 'pointer';
     deleteCodeImg.style.marginLeft = '6px';
     $(deleteCodeImg).bind('click', this.deleteCustomExample(id));
-
     li.appendChild(deleteCodeImg);
+  };
+
+  InteractiveSample.prototype.addShowHideClicks = function() {
+    var i;
+    for (i = 0; i < this.categories.length; i++) {
+      var cat = this.categories[i];
+      var catTitle = cat.childNodes[0];
+      $(catTitle).bind('click', this.toggleShowHideSubCategories(cat));
+    }
+
+    for (i = 0; i < this.subCategories.length; i++) {
+      var subCatTitle = this.subCategories[i].childNodes[0];
+      $(subCatTitle).bind('click', this.toggleShowHideLIs(subCatTitle));
+    };
   };
 
   InteractiveSample.prototype.createCategories = function() {
@@ -139,10 +91,6 @@
 
         catName.appendChild(img);
         catName.innerHTML += category;
-        if (codeArray[i].docsUrl) {
-//          link = this.createDocsLink(codeArray[i].docsUrl);
-//          catName.appendChild(link);
-        }
         categoryDiv.appendChild(catName);
         this.selectCode.appendChild(categoryDiv);
 
@@ -162,12 +110,6 @@
         subCatName.innerHTML += subCategory;
 
         subCategoryDiv.appendChild(subCatName);
-
-        if (codeArray[i].docsUrl) {
-//          link = this.createDocsLink(codeArray[i].docsUrl);
-//          subCategoryDiv.appendChild(link);
-        }
-
         categoryDiv.appendChild(subCategoryDiv);
       }
 
@@ -186,9 +128,6 @@
         textNode.style.cursor = 'pointer';
         $(textNode).bind('click', this.showSample(item.sampleName));
         li.appendChild(textNode);
-        if (item.docsUrl) {
-//          li.appendChild(this.createDocsLink(item.docsUrl));
-        }
         if (category == 'Saved Code') {
           this.addDeleteIcon(li, codeArray[i].samples[j].id);
         }
@@ -200,7 +139,7 @@
 
         if (i == 0 && j == 0 && window.location.hash.length <= 1) {
           this.showSample(item.sampleName, true)();
-          this.hideAllCategoriesExcept(categoryDiv);
+          this.hideAllCategoriesExcept(categoryDiv);          
         }
 
         if (window.location.hash.length > 0) {
@@ -214,7 +153,7 @@
         if (window.expandedCategory && category.replace(' ', '').toLowerCase().indexOf(window.expandedCategory) != -1 && window.location.hash.length <= 1) {
           this.hideAllCategoriesExcept(categoryDiv);
           if (j == 0) {
-            this.showSample(item.sampleName)();
+            this.showSample(item.sampleName)();            
           }
         }
 
@@ -228,55 +167,139 @@
     }
   };
 
-  InteractiveSample.prototype.createDocsLink = function(docUrl) {
-    if (docUrl) {
-      var img = _cel('img');
-      img.src = 'images/docs.png';
-      img.className = 'docsImg';
-      img.border = 0;
-
-      var link = _cel('a');
-      link.href = docUrl;
-      link.target = "_blank";
-      link.className = "docsLink";
-      link.appendChild(img);
-      link.style.display = 'inline';
-
-      return link;
+  InteractiveSample.prototype.changeCodeMirror = function(content) {
+    try {
+      this.currentEditor.setCode(content);
+    } catch (e) {
+      window.console.log('changeCodeMirror failed!!');
     }
   };
 
-  InteractiveSample.prototype.toggleShowHideLIs = function(category) {
-    return function() {
-      var ul = category.nextSibling;
-      // if the sibling is an anchor, that means it's the docsLink anchor, so grab the one after.
-      if (ul.nodeName.toLowerCase() == 'a') ul = ul.nextSibling;
-      var el = category.childNodes[0];
-      if (el.className == 'expand')
-        el.className = 'collapse';
-      else
-        el.className = 'expand';
+  InteractiveSample.prototype.changeSamplesBoilerplateTo = function(sampleFileName, newBoilerplate) {
+    for (var i=0; i < codeArray.length; i++) {
+      for (var j=0; j < codeArray[i].samples.length; j++) {
+        var sampleObj = codeArray[i].samples[j];
+        for (var k=0; k < sampleObj.files.length; k++) {
+          var file = sampleObj.files[k];
+          if (sampleFileName == file) {
+            this.temporaryBoilerplate = codeArray[i].samples[j].boilerplateLoc;
+            codeArray[i].samples[j].boilerplateLoc = newBoilerplate;
+          }
+        }
+      }
+    }
+  };
 
-      if (ul.style.display == 'none') {
-        ul.style.display = 'block';
-      } else {
-        ul.style.display = 'none';
+  InteractiveSample.prototype.confirmLogin = function(url, opt_mustLogin) {
+    var confirmLeave;
+    if (opt_mustLogin) {
+      confirmLeave = confirm('You must login to save.  Logging in will lose any edited code.');
+    } else {
+      confirmLeave = confirm('Logging in will lose any edited code.');
+    }
+    url += "%23" + window.location.hash.substring(1);
+    if (confirmLeave) window.location = url;
+  };
+
+  InteractiveSample.prototype.deleteCustomExample = function(id) {
+    var me = this;
+    return function() {
+      var confirmDelete = confirm('Are you sure you want to delete this example?');
+      if (confirmDelete) {
+        var redirect = 'delete?id=' + id;
+        var cookie = me.getCookie('dev_appserver_login');
+        cookie = (cookie) ? cookie.replace(/\"/g, '') : me.getCookie('ACSID');
+        cookie = (cookie) ? cookie.substring(6, 20) : null;
+        redirect += ((curAPITypes) ? '&type=' + curAPITypes : '');
+        redirect += (cookie) ? '&sc=' + 'safe' + cookie : '';
+        window.location = redirect;
       }
     };
   };
 
-  InteractiveSample.prototype.toggleShowHideSubCategories = function(category) {
-    return function() {
-      // Change the collapse img to a + or a -
-      var collapseImg = category.childNodes[0].childNodes[0];
-      if (collapseImg.className == 'expand') {
-        collapseImg.className = 'collapse';
-        category.className = 'category categoryOpen';
-      } else {
-        collapseImg.className = 'expand';
-        category.className = 'category categoryClosed';
+  InteractiveSample.prototype.toggleEditHTML = function(data) {
+    if (is.currentEditor == window.mixedEditor) {
+      if (confirm("This will take you back to the original Javascript.  You will lose any changes.")) {
+        var curFilename = is.getCurFilename() || null;
+        var sampleObj = is.sampleFileNameToObject(curFilename);
+        is.showSample(sampleObj.sampleName)();
       }
-    };
+      return;
+    }
+
+    if (!data) {
+      this.getFullSrc(this.toggleEditHTML, savedByTheGoogAPIKey);
+      return;
+    }
+    // if we get to this line, we are in the callback of the above function call
+    // our context is window at that point, not InteractiveSample
+    var me = window.is;
+    me.useMixedEditor();
+    me.changeCodeMirror(data);
+    var curFilename = me.getCurFilename();
+    me.changeSamplesBoilerplateTo(curFilename, '');
+  };
+
+  InteractiveSample.prototype.findNumSpacesToIndentCode = function(data) {
+    var tryString = this.insertJavascriptRegex.exec(data)[0];
+    var i = '';
+    while(tryString.indexOf(' ') == 0) {
+      i += ' ';
+      tryString = tryString.substring(1);
+    }
+
+    return i;
+  };
+
+  InteractiveSample.prototype.getCode = function() {
+    return this.currentEditor.getCode();
+  };
+
+  InteractiveSample.prototype.getCookie = function(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for(var i = 0; i < ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0)==' ') c = c.substring(1, c.length);
+      if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+  };
+
+  InteractiveSample.prototype.getCurFilename = function() {
+    return this.curI;
+  };
+
+  InteractiveSample.prototype.getFullSrc = function(callbackFunc, opt_APIKey, jscode) {
+    var curFilename = this.getCurFilename();
+    var sampleObj = this.sampleFileNameToObject(curFilename);
+    var url = sampleObj.boilerplateLoc;
+    var me = this;
+    var code = jscode || this.getCode();
+    if (url == '') {
+      callbackFunc(code);
+      return;
+    }
+
+    $.get(url, function(data, success) {
+      if (success) {
+        var indentSpaces = me.findNumSpacesToIndentCode(data);
+        code = me.indentCodeWithTheseSpaces(code, indentSpaces);
+        data = me.insertJavascript(data, code);
+
+        var key = opt_APIKey || "<<INSERT KEY>>";
+        data = data.replace(/key=.*"/, "key=" + key + "\"");
+        // data += '<div id="debugBar" class="debugBarRunning"><div class="debugBarTop"></div><div class="debugBarTile"><div class="debugBarContent"><a href="#" class="debugContinuePaused" onclick="window.setContinue(true);return false;"><img border=0 src="/images/debug-btn-continue.png"></a><img class="debugContinueRunning" src="/images/debug-btn-continue.png"><a href="#" onclick="window.toggleFirebug();return false;"><img border=0 src="/images/debug-btn-firebug-lite.png"></a><span id="debugBarText">Complete.</span></div></div><div class="debugBarBottom"></div></div>';
+        callbackFunc(data);
+      }
+    });
+  };
+
+  InteractiveSample.prototype.getSafetyToken = function() {
+    var cookie = this.getCookie('dev_appserver_login');
+    cookie = (cookie) ? cookie.replace(/\"/g, '') : this.getCookie('ACSID');
+    cookie = (cookie) ? cookie.substring(6, 20) : null;
+    return 'safe' + cookie;
   };
 
   InteractiveSample.prototype.hideAllCategoriesExcept = function(category) {
@@ -293,18 +316,60 @@
     };
   };
 
-  InteractiveSample.prototype.addShowHideClicks = function() {
-    var i;
-    for (i = 0; i < this.categories.length; i++) {
-      var cat = this.categories[i];
-      var catTitle = cat.childNodes[0];
-      $(catTitle).bind('click', this.toggleShowHideSubCategories(cat));
+  InteractiveSample.prototype.indentCodeWithTheseSpaces = function(code, indentSpaces) {
+    code = indentSpaces.concat(code);
+    var newLine = code.indexOf('\n');
+    while (newLine != -1) {
+      var start = code.slice(0, newLine);
+      var end = code.slice(newLine+1);
+      end = ('\n' + indentSpaces).concat(end);
+      code = start.concat(end);
+      newLine = code.indexOf('\n', newLine + 1);
     }
 
-    for (i = 0; i < this.subCategories.length; i++) {
-      var subCatTitle = this.subCategories[i].childNodes[0];
-      $(subCatTitle).bind('click', this.toggleShowHideLIs(subCatTitle));
+    return code;
+  };
+
+  InteractiveSample.prototype.init = function(codeDiv) {
+    this.currentEditor = window.jsEditor;
+    this.codeEditorFrames = {
+      'editJS':document.getElementById('editJS'),
+      'editMixed':document.getElementById('editMixed')
     };
+    this.insertJavascriptRegex = /[ ]*INSERT_JAVASCRIPT_HERE/;
+    this.ie = ($.browser.msie);
+    this.ie6 = (this.ie && $.browser.version < 7);
+    this.runBox = new RunBox();
+    this.runBox.init(this, !$.browser.msie);
+    this.codeDiv = codeDiv;
+    this.createCategories();
+    this.addShowHideClicks();
+    this.uiEffects = new UIEffects();
+    this.uiEffects.init(this);
+    if (window.logoutUrl) {
+      this.putSafetyCookieInForms();
+    }
+  };
+
+  InteractiveSample.prototype.insertJavascript = function(data, code) {
+    data = data.replace(this.insertJavascriptRegex, code);
+    return data;
+  };
+
+  InteractiveSample.prototype.linkCode = function() {
+    var apiKey = savedByTheGoogAPIKey;
+    this.getFullSrc(this.sendCodeToServer, apiKey);
+  };
+
+  InteractiveSample.prototype.loadCode = function(filename, opt_changeCodeMirror) {
+    // If the code is in the currentCode buffer, then grab it there
+    // otherwise, load it via XHR
+    // If opt_changeCodeMirror is specified, load it into the window
+    // Get filetype
+    var filenameSplit = filename.split('.');
+    var extension = filenameSplit[filenameSplit.length - 1];
+    var fileType = fileTypes[extension.toLowerCase()];
+    this.loadRemotely(filename, fileType, opt_changeCodeMirror);
   };
 
   InteractiveSample.prototype.loadRemotely = function(filename, fileType, opt_changeCodeMirror) {
@@ -316,38 +381,19 @@
       if (opt_changeCodeMirror) {
         me.changeCodeMirror(data);
       }
-      me.currentCode[filename] = {
-        code : data
-      };
     });
   };
 
-  InteractiveSample.prototype.loadCode = function(filename, opt_changeCodeMirror) {
-    // If the code is in the currentCode buffer, then grab it there
-    // otherwise, load it via XHR
-    // If opt_changeCodeMirror is specified, load it into the window
-    // Get filetype
-    var filenameSplit = filename.split('.');
-    var extension = filenameSplit[filenameSplit.length - 1];
-    var fileType = fileTypes[extension.toLowerCase()];
-    var inBuffer = (this.currentCode[filename] && this.currentCode[filename].code);
-    if (inBuffer && opt_changeCodeMirror) {
-      this.changeCodeMirror(this.currentCode[filename].code);
-    } else {
-      this.loadRemotely(filename, fileType, opt_changeCodeMirror);
-    }
+  InteractiveSample.prototype.nameToHashName = function(name) {
+    var hashName = name.toLowerCase();
+    hashName = hashName.replace(/ /g, '_');
+    return hashName;
   };
 
-  InteractiveSample.prototype.sampleNameToObject = function(sampleName) {
-    for (var i=0; i < codeArray.length; i++) {
-      for (var j=0; j < codeArray[i].samples.length; j++) {
-        var sampleObj = codeArray[i].samples[j];
-        if (sampleObj.sampleName == sampleName) {
-          sampleObj['category'] = codeArray[i].category;
-          sampleObj['categoryDocsUrl'] = codeArray[i].docsUrl || null;
-          return sampleObj;
-        }
-      }
+  InteractiveSample.prototype.putSafetyCookieInForms = function() {
+    var safetyToken = this.getSafetyToken();
+    if (safetyToken) {
+      $('#safetyCookie').attr('value', safetyToken);
     }
   };
 
@@ -367,9 +413,74 @@
     }
   };
 
+  InteractiveSample.prototype.sampleNameToObject = function(sampleName) {
+    for (var i=0; i < codeArray.length; i++) {
+      for (var j=0; j < codeArray[i].samples.length; j++) {
+        var sampleObj = codeArray[i].samples[j];
+        if (sampleObj.sampleName == sampleName) {
+          sampleObj['category'] = codeArray[i].category;
+          sampleObj['categoryDocsUrl'] = codeArray[i].docsUrl || null;
+          return sampleObj;
+        }
+      }
+    }
+  };
+
+  InteractiveSample.prototype.saveCode = function() {
+    var curFilename = this.getCurFilename();
+    var sampleObj = this.sampleFileNameToObject(curFilename);
+    if (sampleObj.category == 'Saved Code') {
+      var confirmOverwrite = confirm('Are you sure you want to overwrite this code?');
+      if (confirmOverwrite) {
+        // HUGE HACK.  In IE, an input element can't store a newline character,
+        // or at least I can't find out how.  So they all get lost during the send
+        // so on the server side i will parse out NEWLINE!!! and add in the correct
+        // code :)
+        var code = this.getCode();
+        code = code.replace(/\n/g, 'NEWLINE!!!');
+        $('#jscodeSaveForm').attr('value', code);
+        $('#boilerplateLoc').attr('value', sampleObj.boilerplateLoc);
+        $('#idSaveForm').attr('value', sampleObj.id);
+        $('#saveForm').submit();
+      }
+    } else {
+     this.uiEffects.showSaveForm();
+    }
+  };
+
+  InteractiveSample.prototype.sendCodeToServer = function(code) {
+    code = code.replace(/\n/g, 'NEWLINE!!!');
+    $('#codeHolder').attr('value', code);
+    $('#linkCodeForm').get(0).submit();
+  };
+
+  InteractiveSample.prototype.setDemoTitle = function(sampleObj) {
+    var sampleName = sampleObj.sampleName;
+    var catSplit = sampleObj.category.split('-');
+    var title = $('<div>' + (catSplit[1] ? catSplit[1] : catSplit[0]) + ' > ' + sampleName + '</div>');
+    if (sampleObj.docsUrl || sampleObj.categoryDocsUrl) {
+      $('#docsLink').attr('href', (sampleObj.docsUrl || sampleObj.categoryDocsUrl)).css('display', 'block');
+      // 
+      // var docLink = $('&nbsp;<a href="' +
+      //                 (sampleObj.docsUrl || sampleObj.categoryDocsUrl) +
+      //                 '" target="_blank" class="docsLink">docs</a>');
+      // title.append(docLink);
+    } else {
+      $('#docsLink').css('display', 'none');
+    }
+
+    $('#demoTitle').html(title);
+    $('#saveSampleName').attr('value', 'Custom ' + sampleName);
+    $('#tagsSaveForm').attr('value', sampleObj.tags);
+  };
+
   InteractiveSample.prototype.showSample = function(sampleName, def) {
     me = this;
     return function() {
+      var curFilename = me.getCurFilename() || null;
+      if (curFilename) {
+        me.changeSamplesBoilerplateTo(curFilename, me.temporaryBoilerplate);
+      }
       var sampleObj = me.sampleNameToObject(sampleName);
       var files = sampleObj.files;
       var thisLI = sampleObj.li;
@@ -377,6 +488,14 @@
       var categoryName = catSplit[0];
 
       var codeLIs = me.codeLIs;
+      var setAsJSEditor = true;
+      me.temporaryBoilerplate = sampleObj.boilerplateLoc;
+      if (sampleObj.boilerplateLoc != '') {
+        me.useJsEditor();
+      } else {
+        me.useMixedEditor();
+      }
+
       me.runBox.iFrameLoaded = false;
       me.setDemoTitle(sampleObj);
       var i;
@@ -413,12 +532,12 @@
         // var containerDiv = _cel('div');
         // containerDiv.className = 'roundedcornr_box';
         // $(containerDiv).bind('click', me.changeTab(file));
-        // 
+        //
         // var html = '<div class="' + tabClass + '_top" ><div><\/div><\/div>';
         // html += '<div class="' + tabClass + '_roundedcornr_content" >';
         // html += file;
         // html += '<\/div>';
-        // 
+        //
         // containerDiv.innerHTML = html;
 
       // tab_bar.appendChild(containerDiv);
@@ -427,7 +546,6 @@
     // me.loadCode(files[0], textArea);
       me.hideAllCategoriesExcept(document.getElementById(categoryName));
       me.curI = files[0];
-      
       try {
         if (window.pageTracker) {
           window.pageTracker._trackPageview();
@@ -436,183 +554,50 @@
     };
   };
 
-  InteractiveSample.prototype.changeTab = function(i) {
-    var me = this;
+  InteractiveSample.prototype.toggleShowHideLIs = function(category) {
     return function() {
-      var siblings = this.parentNode.childNodes;
-      me.currentCode[me.curI].code = me.getCode();
+      var ul = category.nextSibling;
+      // if the sibling is an anchor, that means it's the docsLink anchor, so grab the one after.
+      if (ul.nodeName.toLowerCase() == 'a') ul = ul.nextSibling;
+      var el = category.childNodes[0];
+      if (el.className == 'expand')
+        el.className = 'collapse';
+      else
+        el.className = 'expand';
 
-    // Swap the colors of the tabs
-      for (var z=0; z < siblings.length; z++) {
-        if (siblings[z].childNodes[1].innerHTML == i) {
-          siblings[z].childNodes[0].className = 'db_top';
-          siblings[z].childNodes[1].className = 'db_roundedcornr_content';
-        } else {
-          siblings[z].childNodes[0].className = 'lb_top';
-          siblings[z].childNodes[1].className = 'lb_roundedcornr_content';
-        }
+      if (ul.style.display == 'none') {
+        ul.style.display = 'block';
+      } else {
+        ul.style.display = 'none';
       }
-
-      me.loadCode(i, true);
-      me.curI = i;
     };
   };
 
-  InteractiveSample.prototype.runCode = function() {
-    try {
-      if (typeof this.currentCode[this.curI] == 'undefined') {
-        this.currentCode[this.curI] = new Object();
+  InteractiveSample.prototype.toggleShowHideSubCategories = function(category) {
+    return function() {
+      // Change the collapse img to a + or a -
+      var collapseImg = category.childNodes[0].childNodes[0];
+      if (collapseImg.className == 'expand') {
+        collapseImg.className = 'collapse';
+        category.className = 'category categoryOpen';
+      } else {
+        collapseImg.className = 'expand';
+        category.className = 'category categoryClosed';
       }
-      this.codeToRun = this.currentCode[this.curI].code = this.getCode();
-      this.runBox.runCode();
-    } catch (e) {
-      // this will fail sometimes and that's OK.  It just means that CodeMirror
-      // doesn't have the code loaded that we are trying to use.
-    }
+    };
   };
 
-  InteractiveSample.prototype.changeCodeMirror = function(content) {
-    try {
-      window.jsEditor.setCode(content);
-    } catch (e) {
-      alert('fail!');
-    }
+  InteractiveSample.prototype.useJsEditor = function() {
+    this.codeEditorFrames.editJS.style.display = 'inline';
+    // this.codeEditorFrames.editMixed.style.display = 'none';
+    this.currentEditor = window.jsEditor;
   };
 
-  InteractiveSample.prototype.getCode = function() {
-    return window.jsEditor.getCode();
+  InteractiveSample.prototype.useMixedEditor = function() {
+  // this.codeEditorFrames.editMixed.style.display = 'inline';
+    this.codeEditorFrames.editJS.style.display = 'none';
+    this.currentEditor = window.mixedEditor;
   };
-
-  InteractiveSample.prototype.getCurFilename = function() {
-    return this.curI;
-  };
-
-  InteractiveSample.prototype.replaceTryCatchCode = function(data, code) {
-    data = data.replace(this.tryCatchRegex, code);
-    return data;
-  };
-
-  InteractiveSample.prototype.findNumSpacesToIndentCode = function(data) {
-    var tryString = this.tryCatchRegex.exec(data)[0];
-    var i = '';
-    while(tryString.indexOf(' ') == 0) {
-      i += ' ';
-      tryString = tryString.substring(1);
-    }
-
-    return i;
-  };
-
-  InteractiveSample.prototype.indentCodeWithTheseSpaces = function(code, indentSpaces) {
-    code = indentSpaces.concat(code);
-    var newLine = code.indexOf('\n');
-    while (newLine != -1) {
-      var start = code.slice(0, newLine);
-      var end = code.slice(newLine+1);
-      end = ('\n' + indentSpaces).concat(end);
-      code = start.concat(end);
-      newLine = code.indexOf('\n', newLine + 1);
-    }
-
-    return code;
-  };
-
-  InteractiveSample.prototype.getFullSrc = function(callbackFunc, opt_APIKey) {
-    var curFilename = this.getCurFilename();
-    var sampleObj = this.sampleFileNameToObject(curFilename);
-    var url = sampleObj.boilerplateLoc;
-    var me = this;
-
-    $.get(url, function(data, success) {
-      if (success) {
-        var code = me.getCode();
-        var indentSpaces = me.findNumSpacesToIndentCode(data);
-
-        code = me.indentCodeWithTheseSpaces(code, indentSpaces);
-
-        data = me.replaceTryCatchCode(data, code);
-
-        var key = opt_APIKey || "<<INSERT KEY>>";
-        data = data.replace(/key=.*"/, "key=" + key + "\"");
-        callbackFunc(data);
-      }
-    });
-  };
-
-  InteractiveSample.prototype.outputSource = function() {
-    this.getFullSrc(this.uiEffects.showSource);
-  };
-
-  InteractiveSample.prototype.setDemoTitle = function(sampleObj) {
-    var sampleName = sampleObj.sampleName;
-    var catSplit = sampleObj.category.split('-');
-    var title = $('<div>' + (catSplit[1] ? catSplit[1] : catSplit[0]) + ' > ' + sampleName + '</div>');
-    if (sampleObj.docsUrl || sampleObj.categoryDocsUrl) {
-      var docLink = $('<sup class="supDocs">&nbsp;<a href="' +
-                      (sampleObj.docsUrl || sampleObj.categoryDocsUrl) +
-                      '" target="_blank">docs</a></sup>');
-      title.append(docLink);
-    }
-
-    $('#demoTitle').html(title);
-    $('#saveSampleName').attr('value', 'Custom ' + sampleName);
-    $('#tagsSaveForm').attr('value', sampleObj.tags);
-  };
-
-  InteractiveSample.prototype.sendCodeToServer = function(code) {
-    code = code.replace(/\n/g, 'NEWLINE!!!');
-    $('#codeHolder').attr('value', code);
-    $('#linkCodeForm').get(0).submit();
-  };
-
-  InteractiveSample.prototype.linkCode = function() {
-    var apiKey = savedByTheGoogAPIKey;
-    this.getFullSrc(this.sendCodeToServer, apiKey);
-  };
-
-  InteractiveSample.prototype.saveCode = function() {
-    var curFilename = this.getCurFilename();
-    var sampleObj = this.sampleFileNameToObject(curFilename);
-    if (sampleObj.category == 'Saved Code') {
-      var confirmOverwrite = confirm('Are you sure you want to overwrite this code?');
-      if (confirmOverwrite) {
-
-        // HUGE HACK.  In IE, an input element can't store a newline character,
-        // or at least I can't find out how.  So they all get lost during the send
-        // so on the server side i will parse out NEWLINE!!! and add in the correct
-        // code :)
-        var code = this.getCode();
-        code = code.replace(/\n/g, 'NEWLINE!!!');
-        $('#jscodeSaveForm').attr('value', code);
-        // $('#saveSampleName').attr('value', sampleObj.sampleName);
-        $('#idSaveForm').attr('value', sampleObj.id);
-        // $('#tagsSaveForm').attr('value', sampleObj.tags);
-        $('#saveForm').submit();
-      }
-    } else {
-     this.uiEffects.showSaveForm();
-    }
-  };
-
-  InteractiveSample.prototype.confirmLogin = function(url, opt_mustLogin) {
-    var confirmLeave;
-    if (opt_mustLogin) {
-      confirmLeave = confirm('You must login to save.  Logging in will lose any edited code.');
-    } else {
-      confirmLeave = confirm('Logging in will lose any edited code.');
-    }
-    url += "%23" + window.location.hash.substring(1);
-    if (confirmLeave) window.location = url;
-  };
-
-
-
-
-
-
-
-
-
 
 
   /*
@@ -625,20 +610,13 @@
     this.uiEls;
     this.dropdownTimer;
     this.movedFlags;
+    this.dragging;
   }
 
   UIEffects.prototype.init = function(is) {
     this.is = is;
     this.numHTMLEditors = 0;
-    this.uiEls = {
-      'editor': $('#editor'),
-      'editShadowContainer': $('#editShadowContainer'),
-      'selectContainer': $('#selectContainer'),
-      'pickShadowContainer': $('#pickShadowContainer'),
-      'outputDrag': $('outputDrag'),
-      'outputDiv': $('#outputDiv'),
-      'runShadowContainer': $('#runShadowContainer')
-    };
+
 
     // so we can not resize the divs on a window resize if the user has them
     // moved on their own
@@ -658,129 +636,30 @@
       me.mousePos.x = e.pageX;
       me.mousePos.y = e.pageY;
     });
-    // Resizable/draggable is broken in jquery UI for IE... it doesn't like
-    // calculating correctly if you are scrolled down on the page at all..
-    if (!$.browser.msie) {
-      this.setResizables();
-      this.setDraggables();
+
+    if (this.is.ie6) {
+      this.fixPNGs();
     }
 
-    this.setAbsolutePosition('footerLinks');
-    this.setAbsolutePosition('footerImg');
-    this.setAbsolutePosition('outputDiv');
-    this.setAbsolutePosition('editor');
-    this.setAbsolutePosition('selectContainer');
-
-    // Don't do shadows if we're in IE6... because it doesn't like transparency
-    // in PNGs
-    if (!this.is.ie6) {
-      this.setDivShadow('outputDiv', 'runShadowContainer');
-      var height = $("#editor").height();
-      // one-off hack because firefox makes the editor div 2 pixels to tall
-      if($.browser.mozilla) $("#editor").css('height', height - 2);
-      this.setDivShadow('editor', 'editShadowContainer');
-      this.setDivShadow('selectContainer', 'pickShadowContainer');
-
-    } else {
-      $('.bottomShadows').css('background', 'none');
-      $('.rightShadows').css('background', 'none');
-    }
-    this.setWindowResize();
     this.initAutoComplete();
-
-    if ($.browser.safari) $('.buttonText').css('padding-bottom', '5px');
-    this.initShowSourceDiv();
     this.initSaveCodeDiv();
     this.setCodeMenuButtonClicks();
-    this.setBringWindowFrontClicks();
+    this.setMenuScrollHeight();
+    this.initDraggables();
   };
 
-  UIEffects.prototype.setAbsolutePosition = function(divID) {
-    var outputContainer = $("#" + divID);
-    var width = $(outputContainer).width();
-    var height = $(outputContainer).height();
-    var pos = $(outputContainer).position();
-    outputContainer.css('position', 'absolute')
-            .css('width', width)
-            .css('height', height)
-            .css('top', pos.top + 'px')
-            .css('left', pos.left + 'px');
-  };
-
-  UIEffects.prototype.setBringWindowFrontClicks = function() {
-    var me = this;
-    this.uiEls.editor.bind('click', function() {
-      me.bringEditorToFront();
+  UIEffects.prototype.fixPNGs = function() {
+    $.getScript('js/jquery.pngFix.pack.js', function() {
+      $(document).pngFix();
     });
-    this.uiEls.outputDiv.bind('click', function() {
-      me.bringRunBoxToFront();
-    });
-    this.uiEls.selectContainer.bind('click', function() {
-      me.bringSelectToFront();
-    });
-  };
-
-  UIEffects.prototype.decreaseZButRetainExistingHeirarchy = function(els, maxZ) {
-    function sortByZs(a, b){
-      var aZ = a.css('z-index');
-      var bZ = b.css('z-index');
-      if (aZ < bZ) {
-        return -1;
-      }
-      if (aZ > bZ) {
-        return 1;
-      }
-      return 0;
-    }
-    els = els.sort(sortByZs);
-    var curZ = maxZ;
-    for (var i = els.length - 1; i >= 0; i--) {
-      els[i].css('z-index', curZ--);
-    }
-  };
-
-  UIEffects.prototype.bringSelectToFront = function() {
-    this.uiEls.selectContainer.css('z-index', '502');
-    this.uiEls.pickShadowContainer.css('z-index', '501');
-    var elsToChange = [
-      this.uiEls.editor,
-      this.uiEls.editShadowContainer,
-      this.uiEls.outputDiv,
-      this.uiEls.runShadowContainer
-    ];
-    this.decreaseZButRetainExistingHeirarchy(elsToChange, 500);
-  };
-
-  UIEffects.prototype.bringEditorToFront = function() {
-    this.uiEls.editor.css('z-index', '502');
-    this.uiEls.editShadowContainer.css('z-index', '501');
-    var elsToChange = [
-      this.uiEls.selectContainer,
-      this.uiEls.pickShadowContainer,
-      this.uiEls.outputDiv,
-      this.uiEls.runShadowContainer
-    ];
-    this.decreaseZButRetainExistingHeirarchy(elsToChange, 500);
-  };
-
-  UIEffects.prototype.bringRunBoxToFront = function() {
-    this.uiEls.outputDiv.css('z-index', '502');
-    this.uiEls.runShadowContainer.css('z-index', '501');
-    var elsToChange = [
-      this.uiEls.selectContainer,
-      this.uiEls.pickShadowContainer,
-      this.uiEls.editor,
-      this.uiEls.editShadowContainer
-    ];
-    this.decreaseZButRetainExistingHeirarchy(elsToChange, 500);
-  };
+  }
 
   UIEffects.prototype.setCodeMenuButtonClicks = function() {
     var me = this;
     var codeMenuButtonContainer = $('#codeMenuButtonContainer');
     var codeMenuDropdown = $('#codeMenuDropdown');
 
-    codeMenuButtonContainer.bind('mousedown', function() {
+    $('#dropdownButton').bind('mousedown', function() {
       me.toggleDropdown('codeMenuDropdown');
       return false;
     });
@@ -806,266 +685,15 @@
     });
   };
 
-  UIEffects.prototype.setDivShadow = function(divName, shadowDivName) {
-    var outputContainer = $("#" + divName);
-    var width = $(outputContainer).width();
-    var height = $(outputContainer).height();
-    var pos = $(outputContainer).position();
-
-    this.setShadowDivSize(shadowDivName, width, height);
-    this.setShadowDivPosition(shadowDivName, pos.top, pos.left);
-    this.showShadowDiv(shadowDivName);
-  };
-
-  UIEffects.prototype.setWindowResize = function() {
-    var me = this;
-    $(window).bind('resize', function(e) {
-      if (!me.movedFlags.edit) {
-        me.resizeEdit();
-      }
-      if (!me.movedFlags.output) {
-        me.resizeOutput();
-      }
-    });
-  };
-
-  UIEffects.prototype.resizeEdit = function() {
-    var container = $('#container');
-    var containerWidth = container.width();
-    var containerLeft = container.position().left;
-    var containerRight = containerWidth + containerLeft;
-    var editor = this.uiEls.editor;
-    var editorLeft = editor.position().left;
-    var newWidth = containerRight - editorLeft - 4;
-    if (newWidth > 100) {
-      editor.css('width', newWidth + 'px');
-      this.setDivShadow('editor', 'editShadowContainer');
+  UIEffects.prototype.setMenuScrollHeight = function() {
+    var selC = $('#selectCode');
+    selC.scrollTop(0);
+    var thisLI = $('li.selected');
+    var sC = ($(thisLI).position().top - selC.position().top) - (selC.height() / 2);
+    if (sC > 0) {
+      selC.scrollTop(sC);
     }
-  };
-
-  UIEffects.prototype.resizeOutput = function() {
-    var containerWidth = $('#container').width();
-    var newWidth = containerWidth - 6;
-    if (newWidth > 100) {
-      $('#outputDiv').css('width', newWidth + 'px');
-      this.setDivShadow('outputDiv', 'runShadowContainer');
-    }
-  };
-
-  UIEffects.prototype.setResizables = function() {
-    var me = this;
-
-    $("#outputDiv").resizable({
-      handles: "se",
-      helper: 'proxy',
-      resize: function(e, ui) {
-        me.updateDragSafeDiv();
-        me.bringRunBoxToFront();
-      },
-      minHeight: 115,
-      minWidth: 115,
-      stop: function(e, ui) {
-        me.hideDragSafeDiv();
-        me.setDivShadow('outputDiv', 'runShadowContainer');
-//        me.setShadowDivSize('runShadowContainer', ui.size.width, ui.size.height);
-        me.is.runBox.setNewCodeRunIframeWidthHeight($('#runFrame'));
-        me.movedFlags.output = true;
-      }
-    });
-
-    $("#editor").resizable({
-      handles: "se",
-      helper: 'proxy',
-      minHeight: 115,
-      minWidth: 115,
-      resize: function(e, ui) {
-        me.updateDragSafeDiv();
-        me.bringEditorToFront();
-      },
-      stop: function(e, ui) {
-        me.hideDragSafeDiv();
-        var editor = me.uiEls.editor;
-        var editorHeight = editor.height();
-        var newEditHeight = editorHeight - 46;
-        $("#edit").css('height', newEditHeight + 'px');
-        me.setDivShadow('editor', 'editShadowContainer');
-        me.movedFlags.edit = true;
-        jsEditor.frame.style.height = (newEditHeight + "px");
-      }
-    });
-
-
-    $("#selectContainer").resizable({
-      handles: "se",
-      helper: 'proxy',
-      minHeight: 115,
-      minWidth: 115,
-      resize: function(e, ui) {
-        me.updateDragSafeDiv();
-        me.bringSelectToFront();
-      },
-      stop: function(e, ui) {
-        me.hideDragSafeDiv();
-        var selectContainer = me.uiEls.selectContainer;
-        var selectHeight = selectContainer.height();
-        var newEditHeight = selectHeight - 46;
-        $("#selectCode").css('height', newEditHeight + 'px');
-        me.setDivShadow('selectContainer', 'pickShadowContainer');
-      }
-    });
-  };
-
-  UIEffects.prototype.setDraggables = function() {
-    var me = this;
-    $("#outputDiv").draggable({
-      "handle": "h2",
-      drag: function(e, ui) {
-        me.updateDragSafeDiv();
-        me.setShadowDivPosition('runShadowContainer', ui.position.top, ui.position.left);
-        me.bringRunBoxToFront();
-      },
-      stop: function(e, ui) {
-        me.hideDragSafeDiv();
-        me.movedFlags.output = true;
-      }
-    });
-
-    $("#editor").draggable({
-      "handle": "h2",
-      drag: function(e, ui) {
-        me.updateDragSafeDiv();
-        me.setShadowDivPosition('editShadowContainer', ui.position.top, ui.position.left);
-        me.bringEditorToFront();
-      },
-      stop: function(e, ui) {
-        me.hideDragSafeDiv();
-        me.movedFlags.edit = true;
-      }
-    });
-
-    $("#selectContainer").draggable({
-      "handle": "h2",
-      drag: function(e, ui) {
-        me.updateDragSafeDiv();
-        me.setShadowDivPosition('pickShadowContainer', ui.position.top, ui.position.left);
-        me.bringSelectToFront();
-      },
-      stop: function(e, ui) {
-        me.hideDragSafeDiv();
-      }
-    });
-  };
-
-  UIEffects.prototype.updateDragSafeDiv = function() {
-    var newTop = this.mousePos.y - 300;
-    var newLeft = this.mousePos.x - 300;
-    $('#dragsafe').css('top', newTop + 'px').css('left', newLeft + 'px');
-  };
-
-  UIEffects.prototype.hideDragSafeDiv = function() {
-    $('#dragsafe').css('top', '-600px').css('left', '-600px');
-  };
-
-  UIEffects.prototype.showShadowDiv = function(containerName) {
-    $('#' + containerName).show();
-  };
-
-  UIEffects.prototype.setShadowDivPosition = function(containerName, top, left) {
-    containerName = '#' + containerName;
-    var shadowContainer = $(containerName);
-    $(shadowContainer).css('top', top + 'px').css('left', left + 'px');
-  };
-
-  UIEffects.prototype.setShadowDivSize = function(containerName, newWidth, newHeight) {
-    containerName = '#' + containerName;
-    var shadowContainer = $(containerName);
-    var oldWidth = $(shadowContainer).width();
-    var oldHeight = $(shadowContainer).height();
-    var changeWidth = newWidth - oldWidth;
-    var changeHeight = newHeight - oldHeight;
-
-  // Make bottom 1px shadow width change
-    var bShadow = $(containerName + " div.bShadow")[0];
-    var bShadowWidth = $(bShadow).width();
-    var newBShadowWidth = bShadowWidth + changeWidth;
-    $(bShadow).css('width', newBShadowWidth + 'px');
-
-  // Make right 1px shadow height change
-    var rShadow = $(containerName + " div.rShadow")[0];
-    var rShadowHeight = $(rShadow).height();
-    var newRShadowHeight = rShadowHeight + changeHeight;
-    $(rShadow).css('height', newRShadowHeight + 'px');
-
-    var bShadows = $(containerName + " .bottomShadows");
-    var bShadowsCurTop = $(bShadows[0]).position().top;
-    var newBShadowsTop = bShadowsCurTop + changeHeight;
-    $(bShadows).css('top', newBShadowsTop + 'px');
-
-    $(shadowContainer).css('width', newWidth + 'px').css('height', newHeight + 'px');
-  };
-
-  UIEffects.prototype.initShowSourceDiv = function() {
-    $("#codeOutput0").dialog({
-      modal: true,
-      overlay: {
-        opacity: 0.5,
-        background: "black"
-      },
-      title: 'Source Code',
-      height: 600,
-      width: 800,
-      resizable: false,
-      autoOpen: false,
-      draggable: false
-    });
-  };
-
-  UIEffects.prototype.showSource = function(code) {
-    // TODO: Be on the lookout for another fix for this bug:
-    // .dialog('open') in jQuery clones whatever's in the div, erases it, then
-    // remakes the div and inserts it.  Problem is, cloning the HTMLEditor iFrame
-    // from CodeMirror doesn't work, because you can't clone an iFrame completely
-    // Thus, what I do, is create a new CodeMirror everytime...  but CodeMirror
-    // keeps track of all of the divs it has editors in by ID, so I have to
-    // make it think it's inserting in a new Div.  Whew, this sucks.
-    if (typeof this.htmlEditor == 'undefined') {
-      $('#codeOutput0').dialog('open').show();
-      this.htmlEditor = new CodeMirror(document.getElementById('codeOutput0'), {
-        parserfile: ["parsexml1.js", "parsecss1.js", "tokenizejavascript1.js", "parsejavascript1.js", "parsehtmlmixed1.js"],
-        stylesheet: ["codemirror/css/jscolors.css", "codemirror/css/csscolors.css", "codemirror/css/xmlcolors.css"],
-        autoMatchParens : true,
-        path : 'codemirror/js/',
-        height : '100%',
-        width: '100%',
-        content: code,
-        onLoad: function() {}
-      });
-      this.numHTMLEditors = 0;
-    } else {
-      // please god don't let anyone read this code..
-      $('#codeOutput' + this.numHTMLEditors).empty();
-      var newId = 'codeOutput' + (parseFloat(this.numHTMLEditors)+1);
-      $('#codeOutput' + this.numHTMLEditors).attr('id', newId);
-      this.numHTMLEditors++;
-
-      $('#codeOutput' + this.numHTMLEditors).dialog('open').show();
-      this.htmlEditor = new CodeMirror(document.getElementById('codeOutput' + this.numHTMLEditors), {
-        parserfile: ["parsexml1.js", "parsecss1.js", "tokenizejavascript1.js", "parsejavascript1.js", "parsehtmlmixed1.js"],
-        stylesheet: ["codemirror/css/jscolors.css", "codemirror/css/csscolors.css", "codemirror/css/xmlcolors.css"],
-        autoMatchParens : true,
-        path : 'codemirror/js/',
-        height : '100%',
-        width: '100%',
-        content: code,
-        onLoad: function() {}
-      });
-//      this.htmlEditor.setCode(code);
-    }
-
-
-
-//    $('#codeOutput').html('<textarea style="width: 100%;height: 100%;">' + code + '<\/textarea>').dialog('open').show();
-  };
+  }
 
   UIEffects.prototype.createAutoComplete = function() {
     $("#search").autocomplete({
@@ -1105,7 +733,7 @@
       var acDiv = $('#acDiv');
       try {
         if (acDiv.position() && acDiv.css('display') != 'none' && $('#acShadowDiv').length == 0) {
-          $(acDiv).append($('<div id="acShadowDiv" style="width:100%;background: url(images/drop_shadows/short_b1px.png) repeat;height:15px;position:absolute;" class="">&nbsp<\/div>'));
+          $(acDiv).append($('<div id="acShadowDiv" class="">&nbsp<\/div>'));
         } else {}
       } catch(e) {}
     });
@@ -1115,7 +743,7 @@
     $('#searchInputContainer').show();
     this.createAutoComplete();
     this.setAutoCompleteClicks();
-    if (!this.is.ie6) {
+    if (!this.is.ie) {
       this.createAutoCompleteDropShadow();
     }
   };
@@ -1138,8 +766,8 @@
   };
 
   UIEffects.prototype.showSaveForm = function() {
-    var curSmapleObj = this.is.sampleFileNameToObject(this.is.getCurFilename());
-    var boilerplateLoc = curSmapleObj.boilerplateLoc;
+    var curSampleObj = this.is.sampleFileNameToObject(this.is.getCurFilename());
+    var boilerplateLoc = curSampleObj.boilerplateLoc;
     $('#boilerplateLoc').attr('value', boilerplateLoc);
     // HUGE HACK.  In IE, an input element can't store a newline character,
     // or at least I can't find out how.  So they all get lost during the send
@@ -1166,42 +794,46 @@
     }
   };
 
-  UIEffects.prototype.changeCodeSize = function(amount) {
-    var editor = this.uiEls.editor;
-    var edit = $('#edit');
-    var select = $('#selectCode');
-    var selContainer = this.uiEls.selectContainer;
-    var codeContainer = $('#codeContainer');
-    var curEditorHeight = editor.css('height');
-    var curEditHeight = edit.css('height');
-    var selectHeight = select.css('height');
-    var selContainerHeight = selContainer.css('height');
-    var codeContainerHeight = codeContainer.css('height');
-    var newEditorHeight = parseFloat(curEditorHeight) + amount;
-    var newEditHeight = parseFloat(curEditHeight) + amount;
-    var newSelectHeight = parseFloat(selectHeight) + amount;
-    var newSelContainerHeight = parseFloat(selContainerHeight) + amount;
-    var newCodeContainerHeight = parseFloat(codeContainerHeight) + amount;
-    editor.css('height', newEditorHeight + 'px');
-    edit.css('height', newEditHeight + 'px');
-    select.css('height', newSelectHeight + 'px');
-    if (!newSelContainerHeight) {
-      newSelContainerHeight = newCodeContainerHeight;
-    }
-    selContainer.css('height', newSelContainerHeight + 'px');
-    codeContainer.css('height', newCodeContainerHeight + 'px');
+  UIEffects.prototype.initDraggables = function() {
+    var me = this;
+    this.dragging = false;
+    this.editDiv = $('#edit');
+    this.editOffset = this.editDiv.position().top + 9;
+    this.draggers = $('.dragger');
+    this.dragsafeDiv = $('#dragsafe');
+    this.selectCodeDiv = $('#selectCode');
 
-    this.setDivShadow('outputDiv', 'runShadowContainer');
-    this.setDivShadow('editor', 'editShadowContainer');
-    this.setDivShadow('selectContainer', 'pickShadowContainer');
+    this.draggers
+      .attr('unselectable', 'on')
+      .css('MozUserSelect', 'none')
+      .bind('selectstart.ui', function() { return false; })
+      .mousedown(function() {
+        me.dragging = true;
+        $().one('mouseup', function() {
+          me.dragging = false;
+          me.dragsafeDiv.css('top', '-600px').css('left', '-600px');
+          if (is.currentEditor == window.jsEditor) {
+            var newHeight = $(window.jsEditor.frame).css('height');
+            $(window.mixedEditor.frame).css('height', newHeight);
+          } else {
+            var newHeight = $(window.mixedEditor.frame).css('height');
+            $(window.jsEditor.frame).css('height', newHeight);
+          }
+        });
+      });
+
+    $().mousemove(function(e) {
+      if (me.dragging) {
+        var newTop = e.clientY - 400;
+        var newLeft = e.clientX - 400;
+        var newHeight = (e.clientY - me.editOffset+ $().scrollTop()) + 'px';
+        me.dragsafeDiv.css('top', newTop + 'px').css('left', newLeft + 'px');
+        $(is.currentEditor.frame).css('height', newHeight);
+        me.editDiv.css('height', newHeight);
+        me.selectCodeDiv.css('height', newHeight);
+      }
+    });
   };
-
-
-
-
-
-
-
 
 
 
@@ -1226,6 +858,148 @@
     this.is = is;
   };
 
+  RunBox.prototype.insertDebuggingTools = function(code) {
+    // The YUI Compressor is going to munge a function named normally, so we
+    // have to make an anonymous function that gets called immediately.
+    var anony = (function () {
+      var debugMenuCSS = document.createElement('link');
+      debugMenuCSS.rel = 'stylesheet';
+      debugMenuCSS.href = '/css/debugStyles.css';
+      debugMenuCSS.type = 'text/css';
+      debugMenuCSS.media = 'screen';
+      debugMenuCSS.charset = 'utf-8';
+      document.getElementsByTagName('head')[0].appendChild(debugMenuCSS);
+
+      window.setContinue = function(doContinue) {
+        window.doContinue = doContinue;
+        var debugBar = document.getElementById('debugBar');
+        var debugText = document.getElementById('debugBarText');
+        if (doContinue) {
+          debugBar.className = 'debugBarRunning';
+          debugText.innerHTML = 'Complete.';
+        } else {
+          debugBar.className = 'debugBarPaused';
+          debugText.innerHTML = 'Paused (Line:' + window.curBreakLineNum + ')';
+        }
+      };
+      function addLoadEvent(func) {
+        var oldonload = window.onload;
+        if (typeof window.onload != 'function') {
+          window.onload = func;
+        }
+        else {
+          window.onload = function() {
+            oldonload();
+            func();
+          }
+        }
+      }
+      window.toggleFirebug = function(options) {
+        if (!window.firebug.env.minimized || (options && options.closeIt)) {
+          window.firebug.env.minimized=true;
+          window.firebug.el.main.environment.addStyle({ "height":"35px" });
+          window.firebug.el.mainiframe.environment.addStyle({ "height":"35px" });
+          window.firebug.el.button.maximize.environment.addStyle({ "display":"block" });
+          window.firebug.el.button.minimize.environment.addStyle({ "display":"none" });
+          window.firebug.win.refreshSize();
+        } else {
+          window.firebug.env.minimized=false;
+          window.firebug.el.button.minimize.environment.addStyle({ "display":"block" });
+          window.firebug.el.button.maximize.environment.addStyle({ "display":"none" });
+          window.firebug.win.setHeight(firebug.env.height);
+        }
+      }
+      addLoadEvent(function() {
+        var debugBar = document.createElement('div');
+        debugBar.id = 'debugBar';
+        debugBar.className = 'debugBarRunning';
+        debugBar.innerHTML = '<div class="debugBarTop">\n</div>\n<div class="debugBarTile">\n<div class="debugBarContent">\n<a href="#" class="debugContinuePaused" onclick="window.setContinue(true);return false;">\n<img border=0 src="/images/debug-btn-continue.png">\n</a>\n<img class="debugContinueRunning" src="/images/debug-btn-continue.png">\n<a href="#" onclick="window.toggleFirebug();return false;">\n<img border=0 src="/images/debug-btn-firebug-lite.png">\n</a>\n<span id="debugBarText">\nComplete.</span>\n</div>\n</div>\n<div class="debugBarBottom">\n</div>\n';
+        window.document.body.appendChild(debugBar);
+        if (window.firebug.el && window.firebug.el.main && window.firebug.el.main.environment) {
+          window.toggleFirebug();
+        }
+      });
+    });
+    var firebugScriptString = '<script type="text/javascript" src="http://savedbythegoog.appspot.com/firebug.js"></script>\n<script type="text/javascript">firebug.env.height = 220;\nfirebug.env.liteFilename = \'firebug.js\';\n';
+    if (code.indexOf('<head>') == -1) alert('Sample must have <head> element');
+    code = code.replace('<head>', '<head>\n' + firebugScriptString + '(' + anony.toString() + ')();</script>');
+    return code;
+  }
+
+  RunBox.prototype.insertBreakPoints = function(code, breakPoints) {
+    var breakPointsArray = [];
+    for(i in breakPoints) {
+      if (breakPoints[i] == true) {
+        breakPointsArray.push(i);
+      }
+    }
+    
+    // If we are breaking inside of a function, make sure to only grab the
+    // rest of the function for code.
+    function findCodeSelection(code, startIndex) {
+      var endBracketLoc = code.indexOf('}', startIndex);
+      if (endBracketLoc != -1) {
+        endBracketLoc += 1;
+        var subCode = code.substring(0, endBracketLoc + 1);
+        var doneCount = (subCode.split('}').length - 1) - (subCode.split('{').length - 1);
+        if (doneCount == 1) {
+          var end = endBracketLoc - 1;
+          code = code.substring(0, end)
+          return code;
+        }
+        return findCodeSelection(code, endBracketLoc);
+      } else {
+        return code; 
+      }
+    }
+    
+    function addBreakPointCode(codeToGoIn, lineNum) {
+      var bpCode = '\nwindow.curBreakLineNum = ' + lineNum + ';\n';
+      bpCode += 'window.setContinue(false);\n';
+      bpCode += 'function breakpointAtLine'+lineNum+'() {\n';
+      bpCode += 'if (!doContinue) {\n';
+      bpCode += 'if (window.scheduledConsoleLogs && window.scheduledConsoleLogs.length > 0) {\n';
+      bpCode += 'for (var i =0; i < window.scheduledConsoleLogs.length; i++) {\n';
+      bpCode += 'console.log(eval(window.scheduledConsoleLogs[i]));\n';
+      bpCode += '}\n';
+      bpCode += '}\n';
+      bpCode += 'window.scheduledConsoleLogs = [];\n';
+      bpCode += 'window.setTimeout(breakpointAtLine'+lineNum+', 100);\n';
+      bpCode += '} else {\n';
+      bpCode += codeToGoIn + '\n';
+      bpCode += '}\n';
+      bpCode += '}\n';
+      bpCode += 'breakpointAtLine'+lineNum+'();\n';
+      return bpCode;
+    }
+    
+    for (var i = breakPointsArray.length - 1; i >= 0; i--){
+      // for each one of these, we need to go to that line in the string and insert extra code.
+      var breakPointLine = breakPointsArray[i];
+      var atLine = 0;
+      var indexOfNewline = 0;
+      while(atLine + 1 != breakPointLine) {
+        indexOfNewline = code.indexOf('\n', indexOfNewline + 1);
+        if (indexOfNewline == -1) {
+          window.console.log('AddBreakPointCode failed.');
+          break;
+        } else {
+          atLine++;
+        }
+      }
+      var firstPartOfCode = code.substring(0, indexOfNewline - 1);
+      var secondPartOfCode = code.substring(indexOfNewline);
+      var replaceableCode = findCodeSelection(secondPartOfCode, 0);
+      secondPartOfCode = secondPartOfCode.replace(replaceableCode, '');
+      replaceableCode = addBreakPointCode(replaceableCode, breakPointLine);
+      firstPartOfCode = firstPartOfCode.concat(replaceableCode);
+      firstPartOfCode = firstPartOfCode.concat(secondPartOfCode);
+      code = firstPartOfCode;
+    }
+
+    return code;
+  }
+
   RunBox.prototype.hideOnScreenRun = function() {
     // body...
   };
@@ -1238,29 +1012,14 @@
     // If you load the iFrame first, THEN set the src, Safari likes it.
     // Lame.
     if ($.browser.safari) {
-      var iFrame = $('<iframe id="runFrame" onload="is.runBox.iFrameLoaded = true;"><\/iframe>');
-      iFrame = this.setNewCodeRunIframeWidthHeight(iFrame);
+      var iFrame = $('<iframe id="runFrame" style="height: 450px;" onload="is.runBox.iFrameLoaded = true;"><\/iframe>');
       $(this.runBoxDiv).empty().append(iFrame);
       iFrame = iFrame.get(0);
       iFrame.src = boilerplateLoc;
     } else {
-      var iFrame = $('<iframe src="'+boilerplateLoc+'" onload="is.runBox.iFrameLoaded = true;" id="runFrame"><\/iframe>');
-      iFrame = this.setNewCodeRunIframeWidthHeight(iFrame);
+      var iFrame = $('<iframe src="'+boilerplateLoc+'" style="height: 450px;" onload="is.runBox.iFrameLoaded = true;" id="runFrame"><\/iframe>');
       $(this.runBoxDiv).empty().append(iFrame);
     }
-  };
-
-  RunBox.prototype.setNewCodeRunIframeWidthHeight = function(iFrame) {
-    var fakeDiv = $('<div id="fakeCalcDiv"><\/div>');
-    $(this.runBoxDiv).prepend(fakeDiv);
-    var outputDiv = $('#outputDiv');
-    var containerHeight = outputDiv.height();
-    var containerCurPos = outputDiv.offset();
-    var curDivPos = $(fakeDiv).offset();
-    var height = containerHeight - curDivPos.top + containerCurPos.top;
-    if (this.resizable) height -= 15;
-
-    return $(iFrame).css('height', height + 'px');
   };
 
   RunBox.prototype.createIframeOrPopout = function(response) {
@@ -1275,15 +1034,35 @@
     }
   };
 
-  RunBox.prototype.sendCodeToSavedByTheGoog = function(code) {
-    var self = this;
-    var cacheCodeLoc = location.protocol + '//' + location.host + '/apis/ajax/playground/cacheCode';
-    $.post(cacheCodeLoc, {'code': code}, window.is.runBox.createIframeOrPopout);
+  RunBox.prototype.sendCodeToSavedByTheGoog = function(options) {
+    var me = this;
+    return function(code) {
+      var cacheCodeLoc = location.protocol + '//' + location.host + '/apis/ajax/playground/cacheCode';
+      var postVars = {};
+
+      if (options && options.debugMode) {
+        code = me.insertDebuggingTools(code);
+      }
+
+      postVars.code = code;
+      $.post(cacheCodeLoc, postVars, window.is.runBox.createIframeOrPopout);      
+    }
   }
 
-  RunBox.prototype.runCode = function() {
-    var apiKey = savedByTheGoogAPIKey;
-    this.is.getFullSrc(this.sendCodeToSavedByTheGoog, apiKey);
+  RunBox.prototype.runCode = function(options) {
+    var code = this.is.getCode();
+    if (this.is.currentEditor == window.mixedEditor) {
+      this.sendCodeToSavedByTheGoog(options)(code);
+    } else {
+      var apiKey = savedByTheGoogAPIKey;
+
+      if (options && options.debugMode) {
+        var breakPoints = this.is.currentEditor.getBreakPoints();
+        breakPoints = (breakPoints.length == 0) ? null : breakPoints;
+        code = this.insertBreakPoints(code, breakPoints);
+      }
+      this.is.getFullSrc(this.sendCodeToSavedByTheGoog(options), apiKey, code);
+    }
   };
 
   RunBox.prototype.changeToPopout = function() {
@@ -1297,14 +1076,13 @@
     this.runBoxPoppedOut = false;
     $(this.outputContainer).show();
     $(this.runShadowContainer).show();
-    this.is.runCode();
+    this.runCode();
   };
 
 
   // Create and export the interactive sample instance to the global.
   window.is = new InteractiveSample();
 })();
-
 
 function setBgColorWhite() {
   this.style.backgroundColor = 'white';
