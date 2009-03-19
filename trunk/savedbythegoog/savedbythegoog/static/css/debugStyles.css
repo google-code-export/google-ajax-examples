@@ -11,6 +11,7 @@
 .debugBarTile {
   background-repeat: repeat;
   width: 170px;
+  margin-top: expression('-10px');
 }
 .debugBarBottom {
   background-repeat: no-repeat;
