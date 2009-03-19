@@ -22,7 +22,7 @@ function fadeInOut() {
 }
 
 function OnLoad(){
-  window.setInterval('fadeInOut()', 1000);
+  window.setInterval(fadeInOut, 1000);
 }
 
 google.setOnLoadCallback(OnLoad);

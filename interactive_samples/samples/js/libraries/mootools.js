@@ -25,7 +25,7 @@ function OnLoad(){
   content = document.getElementById('content');
   content.innerHTML = '<h1>Tweening</h1>';
   // call tweenColor every 1000 miliseconds
-  window.setInterval('tweenColor();', 1000);
+  window.setInterval(tweenColor, 1000);
 }
 
 google.setOnLoadCallback(OnLoad);
