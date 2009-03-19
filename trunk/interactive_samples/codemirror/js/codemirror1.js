@@ -48,6 +48,7 @@ var CodeMirror = (function(){
     activeTokens: null,
     cursorActivity: null,
     lineNumbers: false,
+    breakPoints: false,
     indentUnit: 2
   });
 
@@ -63,6 +64,7 @@ var CodeMirror = (function(){
         nums.style.setExpression("height", "this.previousSibling.offsetHeight + 'px'");
       nums.style.top = "0px";
       nums.style.overflow = "hidden";
+      nums.style.whiteSpace = "nowrap";
       place(container);
       container.appendChild(node);
       container.appendChild(nums);
@@ -71,7 +73,7 @@ var CodeMirror = (function(){
     }
   }
 
-  function applyLineNumbers(frame) {
+  function applyLineNumbers(frame, cmInstance, opt_breakPoints) {
     var win = frame.contentWindow, doc = win.document,
         nums = frame.nextSibling, scroller = nums.firstChild;
 
@@ -79,7 +81,6 @@ var CodeMirror = (function(){
     function sizeBar() {
       if (nums.offsetWidth != barWidth) {
         barWidth = nums.offsetWidth;
-        nums.style.marginLeft = '-10px';
         nums.style.left = "-" + (frame.parentNode.style.marginLeft = barWidth + "px");
       }
     }
@@ -87,7 +88,26 @@ var CodeMirror = (function(){
       var diff = 20 + Math.max(doc.body.offsetHeight, frame.offsetHeight) - scroller.offsetHeight;
       for (var n = Math.ceil(diff / 10); n > 0; n--) {
         var num = document.createElement('span');
+        num.id = 'line-number-' + nextNum;
         num.className = 'line-number';
+        if (opt_breakPoints){
+          num.onclick = function(number, el) {
+            return function() {
+              if (!el.previousSibling || el.previousSibling.nodeName != 'IMG') {
+                var breakPoint = document.createElement('img');
+                breakPoint.src = '/images/breakpoint.png';
+                breakPoint.className = 'breakpoint';
+                breakPoint.title = 'Breakpoint';
+                cmInstance.breakpoints[number] = true;
+                el.parentNode.insertBefore(breakPoint, el);
+              } else {
+                delete cmInstance.breakpoints[number];
+                el.parentNode.removeChild(el.previousSibling);
+              }
+            };
+          }(nextNum, num);
+        }
+
         num.innerHTML = nextNum++;
         scroller.appendChild(num);
         scroller.appendChild(document.createElement("BR"));
@@ -107,6 +127,7 @@ var CodeMirror = (function(){
 
     // Use passed options, if any, to override defaults.
     this.options = options = options || {};
+    this.breakpoints = [];
     setDefaults(options, CodeMirrorConfig);
 
     var frame = this.frame = document.createElement("IFRAME");
@@ -154,11 +175,9 @@ var CodeMirror = (function(){
   CodeMirror.prototype = {
     init: function() {
       if (this.options.initCallback) this.options.initCallback(this);
-      if (this.options.lineNumbers) {
-        applyLineNumbers(this.frame);
-      }
+      if (this.options.lineNumbers) applyLineNumbers(this.frame, this, this.options.breakPoints);
     },
-
+    getBreakPoints: function() {return this.breakpoints},
     getCode: function() {return this.editor.getCode();},
     setCode: function(code) {this.editor.importCode(code);},
     selection: function() {return this.editor.selectedText();},
