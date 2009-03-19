@@ -21,7 +21,7 @@ function searchComplete(searcher) {
       var result = results[i];
       var imgContainer = document.createElement('div');
 
-      var title = document.createElement('h1');
+      var title = document.createElement('h2');
       // We use titleNoFormatting so that no HTML tags are left in the title
       title.innerHTML = result.titleNoFormatting;
 
