@@ -495,7 +495,7 @@
       } else {
         me.useMixedEditor();
       }
-
+      me.currentEditor.clearBreakPoints();
       me.runBox.iFrameLoaded = false;
       me.setDemoTitle(sampleObj);
       var i;
@@ -605,37 +605,15 @@
   */
   function UIEffects() {
     this.is = new Object();
-    this.mousePos = new Object();
     this.numHTMLEditors;
     this.uiEls;
     this.dropdownTimer;
-    this.movedFlags;
-    this.dragging;
+    this.draggingMid;
   }
 
   UIEffects.prototype.init = function(is) {
     this.is = is;
     this.numHTMLEditors = 0;
-
-
-    // so we can not resize the divs on a window resize if the user has them
-    // moved on their own
-    this.movedFlags = {
-      'edit' : false,
-      'output' : false
-    };
-
-    this.mousePos = {
-      'x': 0,
-      'y': 0
-    };
-
-    var me = this;
-  // So that we can track the mouse movement
-    $().mousemove(function(e){
-      me.mousePos.x = e.pageX;
-      me.mousePos.y = e.pageY;
-    });
 
     if (this.is.ie6) {
       this.fixPNGs();
@@ -796,21 +774,26 @@
 
   UIEffects.prototype.initDraggables = function() {
     var me = this;
-    this.dragging = false;
+    this.draggingMid = false;
     this.editDiv = $('#edit');
     this.editOffset = this.editDiv.position().top + 9;
-    this.draggers = $('.dragger');
+    this.draggersMid = $('.draggerMid');
     this.dragsafeDiv = $('#dragsafe');
     this.selectCodeDiv = $('#selectCode');
 
-    this.draggers
+    this.draggerBot = $('.draggerBot');
+    this.draggingBot = false;
+    this.runFrame = null;
+    this.runFrameOffset = null;
+
+    this.draggersMid
       .attr('unselectable', 'on')
       .css('MozUserSelect', 'none')
       .bind('selectstart.ui', function() { return false; })
       .mousedown(function() {
-        me.dragging = true;
+        me.draggingMid = true;
         $().one('mouseup', function() {
-          me.dragging = false;
+          me.draggingMid = false;
           me.dragsafeDiv.css('top', '-600px').css('left', '-600px');
           if (is.currentEditor == window.jsEditor) {
             var newHeight = $(window.jsEditor.frame).css('height');
@@ -822,8 +805,23 @@
         });
       });
 
+    this.draggerBot
+      .attr('unselectable', 'on')
+      .css('MozUserSelect', 'none')
+      .bind('selectstart.ui', function() { return false; })
+      .mousedown(function() {
+        me.runFrame = $('#runFrame');
+        me.runFrameOffset = me.runFrame.position().top;
+
+        me.draggingBot = true;
+        $().one('mouseup', function() {
+          me.draggingBot = false;
+          me.dragsafeDiv.css('top', '-600px').css('left', '-600px');
+        });
+      });
+
     $().mousemove(function(e) {
-      if (me.dragging) {
+      if (me.draggingMid) {
         var newTop = e.clientY - 400;
         var newLeft = e.clientX - 400;
         var newHeight = (e.clientY - me.editOffset+ $().scrollTop()) + 'px';
@@ -831,6 +829,13 @@
         $(is.currentEditor.frame).css('height', newHeight);
         me.editDiv.css('height', newHeight);
         me.selectCodeDiv.css('height', newHeight);
+      }
+      if (me.draggingBot) {
+        var newTop = e.clientY - 400;
+        var newLeft = e.clientX - 400;
+        var newHeight = (e.clientY - me.runFrameOffset + $().scrollTop()) + 'px';
+        me.dragsafeDiv.css('top', newTop + 'px').css('left', newLeft + 'px');
+        me.runFrame.css('height', newHeight);        
       }
     });
   };
@@ -864,7 +869,7 @@
     var anony = (function () {
       var debugMenuCSS = document.createElement('link');
       debugMenuCSS.rel = 'stylesheet';
-      debugMenuCSS.href = '/css/debugStyles.css';
+      debugMenuCSS.href = 'http://www.lisbakken.com/debugStyles.css';
       debugMenuCSS.type = 'text/css';
       debugMenuCSS.media = 'screen';
       debugMenuCSS.charset = 'utf-8';
@@ -913,7 +918,7 @@
         var debugBar = document.createElement('div');
         debugBar.id = 'debugBar';
         debugBar.className = 'debugBarRunning';
-        debugBar.innerHTML = '<div class="debugBarTop">\n</div>\n<div class="debugBarTile">\n<div class="debugBarContent">\n<a href="#" class="debugContinuePaused" onclick="window.setContinue(true);return false;">\n<img border=0 src="/images/debug-btn-continue.png">\n</a>\n<img class="debugContinueRunning" src="/images/debug-btn-continue.png">\n<a href="#" onclick="window.toggleFirebug();return false;">\n<img border=0 src="/images/debug-btn-firebug-lite.png">\n</a>\n<span id="debugBarText">\nComplete.</span>\n</div>\n</div>\n<div class="debugBarBottom">\n</div>\n';
+        debugBar.innerHTML = '<div class="debugBarTop">\n</div>\n<div class="debugBarTile">\n<div class="debugBarContent">\n<a href="#" class="debugContinuePaused" onclick="window.setContinue(true);return false;"><img border=0 src="/images/debug-btn-continue.png"></a>\n<img class="debugContinueRunning" src="/images/debug-btn-continue.png">\n<a href="#" onclick="window.toggleFirebug();return false;"><img border=0 src="/images/debug-btn-firebug-lite.png"></a>\n<span id="debugBarText">\nComplete.</span>\n</div>\n</div>\n<div class="debugBarBottom">\n</div>\n';
         window.document.body.appendChild(debugBar);
         if (window.firebug.el && window.firebug.el.main && window.firebug.el.main.environment) {
           window.toggleFirebug();
@@ -987,7 +992,7 @@
           atLine++;
         }
       }
-      var firstPartOfCode = code.substring(0, indexOfNewline - 1);
+      var firstPartOfCode = code.substring(0, indexOfNewline);
       var secondPartOfCode = code.substring(indexOfNewline);
       var replaceableCode = findCodeSelection(secondPartOfCode, 0);
       secondPartOfCode = secondPartOfCode.replace(replaceableCode, '');

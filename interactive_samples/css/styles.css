@@ -109,6 +109,7 @@ div {
 .breakpoint {
   margin-right: 2px;
   margin-bottom: 1px;
+  cursor: pointer;
 }
 
 #editor {
@@ -165,7 +166,7 @@ iframe {
 #header {
   margin: 0;
   display: inline;
-  font-size: 28pt;
+  font-size: 26pt;
   font-family: Arial, sans-serif;
   font-weight: bold;
 }
@@ -189,6 +190,9 @@ iframe {
 .disallowDebugCode {
   opacity: 0.45;
   cursor: default;
+}
+a:link {
+  color: #427bd6;
 }
 
 h2 {
@@ -629,6 +633,15 @@ li.ui-autocomplete-odd > a > strong, li.ui-autocomplete-even > a > strong {
   display: none;
   float:left;
 }
+#docsLink a:link {
+  color: #427bd6;
+}
+#docsLink a:visited {
+  color: #427bd6;
+}
+#docsLink a:active {
+  color: #427bd6;
+}
 
 #docsButton {
   background:transparent url(../images/btn-view-docs.png) no-repeat;
@@ -661,6 +674,10 @@ li.ui-autocomplete-odd > a > strong, li.ui-autocomplete-even > a > strong {
 
 #codeMenu {
   float: right;
+}
+
+.draggerMid, .draggerBot {
+  cursor: s-resize;
 }
 
 .dropdown {

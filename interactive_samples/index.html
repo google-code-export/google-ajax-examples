@@ -48,11 +48,6 @@
     var curAPITypes = '{{ curAPITypes }}';
     var expandedCategory = '{{ expandedCategory }}';
   </script>
-  <style type="text/css" media="screen">
-    .dragger {
-      cursor: s-resize;
-    }
-  </style>
   <script src="js/interactive_logic.js" type="text/javascript" charset="utf-8"></script>
   <script type="text/javascript" charset="utf-8">
     var loginUrl = '{{ loginUrl }}';
@@ -94,10 +89,10 @@
 <div id="container">
   <div id="loggedInBar">{% if userEmail %} {{ userEmail }} <span style="font-weight: normal">|</span> <a href="{{ logoutUrl }}">Sign out</a></div>{% else %} <a href="{{ loginUrl }}">Sign In</a></div> {% endif %}
   <div class="whiteTopBar">
-    <table style="width:100%;">
+    <table style="">
       <tr>
         <td id="googleLogoTD">
-          <img src="images/googlecode.png" title="Google Logo">
+          <img height="53px" src="images/googlecode.png" title="Google Logo">
           
         </td>
         <td valign=middle style="width: 60%">
@@ -162,7 +157,7 @@
       </tr>
       <tr>
         <td class="border_bl"></td>
-        <td class="border_b dragger"></td>
+        <td class="border_b draggerMid"></td>
         <td class="border_br"></td>
       </tr>
     </table>
@@ -192,31 +187,27 @@
                       <td align="right" class="codeMenuTD">
                         <span id="codeMenu" class="buttonDropdownContainer">
                           <span id="codeMenuButtonContainer" style="">
-                            <a id="docsLink" target="_blank">
+                            <a id="docsLink" target="_blank" title="View the documentation for this sample.">
                               <span id="docsButton"></span>
                             </a>
-                            <span id="toggleEditHTMLButton" onclick="is.toggleEditHTML();return false;"></span>
+                            <a href="javascript:is.toggleEditHTML();" title="Toggle between Javascript and HTML editing."><span id="toggleEditHTMLButton"></span></a>
                             <span id="dropdownButton"></span>
                           </span>
 
 
-                          <!-- TODO: what do we do with this menu stuff?  what will i still have here?  save, export -->
-                          <!-- TODO: get rid of popout code -->
                           <br style="clear:both;">
-                          <!-- onmouseout="is.uiEffects.toggleDropdown($('#codeMenuDropdown'), true);" -->
                           <span id="codeMenuDropdown" class="dropdown" >
                             <div class="menuTop"></div>
                             <div class="menuTile">
-                              <span class="first" onmousedown="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.linkCode();return false;"><img src="images/export.png" title="Export Code" width="17" />
-                                &nbsp;Export
+                              <span class="first" onmousedown="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.linkCode();return false;"><img src="images/export.png" title="Export Code" />&nbsp;Export
                               </span>
                               {% if loginUrl %}
                               <span onmousedown="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.confirmLogin('{{ loginUrl }}', true);return false;">
-                                <img src="images/save.png" title="Save" width="15" />&nbsp;Save
+                                <img src="images/save.png" title="Save" />&nbsp;Save
                               </span>
                               {% else %}
                               <span onmousedown="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.saveCode();return false;">
-                                <img src="images/save.png" title="Save" width="15"/>&nbsp;Save
+                                <img src="images/save.png" title="Save" />&nbsp;Save
                               </span>
                               {% endif %}
                             </div>
@@ -239,7 +230,7 @@
       </tr>
       <tr>
         <td class="border_bl"></td>
-        <td class="border_b dragger"></td>
+        <td class="border_b draggerMid"></td>
         <td class="border_br"></td>
       </tr>
     </table>
@@ -294,8 +285,8 @@
                         Output
                       </td>
                       <td align="right">
-                        <span onmousedown="is.runBox.runCode({debugMode: true});" style="cursor: pointer;"><img src="images/debug_code.png" title="Debug code with breakpoints and Firebug Lite."></span>
-                        <span onmousedown="is.runBox.runCode();return false;" style="cursor: pointer;"><img src="images/run_code.png" title="Run"></span>
+                        <a href="javascript:is.runBox.runCode({debugMode: true});" style="text-decoration: none;" title="Run this sample in 'Debug Mode' which enables breakpoints and inserts Firebug Lite."><img border=0 src="images/debug_code.png"></a>
+                        <a href="javascript:is.runBox.runCode();" title="Run this sample."><img border=0 src="images/run_code.png"></a>
                       </td>
                     </tr>
                   </tbody>
@@ -309,7 +300,7 @@
       </tr>
       <tr>
         <td class="border_bl"></td>
-        <td class="border_b"></td>
+        <td class="border_b draggerBot"></td>
         <td class="border_br"></td>
       </tr>
     </table>

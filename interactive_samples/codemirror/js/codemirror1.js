@@ -98,6 +98,13 @@ var CodeMirror = (function(){
                 breakPoint.src = '/images/breakpoint.png';
                 breakPoint.className = 'breakpoint';
                 breakPoint.title = 'Breakpoint';
+                breakPoint.id = "breakPoint-" + number;
+                breakPoint.onclick = function(number, el) {
+                  return function() {
+                    delete cmInstance.breakpoints[number];
+                    el.parentNode.removeChild(el.previousSibling);
+                  }
+                }(number, el);
                 cmInstance.breakpoints[number] = true;
                 el.parentNode.insertBefore(breakPoint, el);
               } else {
@@ -178,6 +185,15 @@ var CodeMirror = (function(){
       if (this.options.lineNumbers) applyLineNumbers(this.frame, this, this.options.breakPoints);
     },
     getBreakPoints: function() {return this.breakpoints},
+    clearBreakPoints: function() {
+      for(i in this.breakpoints) {
+        if (this.breakpoints[i] == true) {
+          breakPoint = document.getElementById('breakPoint-' + i);
+          breakPoint.parentNode.removeChild(breakPoint);
+        }
+      }
+      this.breakpoints = [];
+    },
     getCode: function() {return this.editor.getCode();},
     setCode: function(code) {this.editor.importCode(code);},
     selection: function() {return this.editor.selectedText();},
