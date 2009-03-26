@@ -1,6 +1,6 @@
 var tempJSON = [
   {
-    "category":"YouTube APIs-Player API",
+    "category":"YouTube API-Player API",
     "samples":[
       {"boilerplateLoc":"samples/boilerplateHTML/youtube/simple_embed.html", "files":["samples/js/youtube/simple_embed.js"], "sampleName":"Simple Embed", "tags": ""},
       {"boilerplateLoc":"samples/boilerplateHTML/youtube/polling_player.html", "files":["samples/js/youtube/polling_player.js"], "sampleName":"Polling the Player", "tags": ""}, 

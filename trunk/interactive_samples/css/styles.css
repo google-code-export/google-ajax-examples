@@ -83,6 +83,44 @@ div {
 
 }
 
+#grayOverlay {
+  border-width: 0pt;
+  margin: 0pt;
+  padding: 0pt;
+  background: black none repeat scroll 0% 0%;
+  position: absolute;
+  top: 0pt;
+  left: 0pt;
+  opacity: 0.5;
+  z-index: 1001;
+  display: none;
+}
+
+#saveFormSubmit {
+  display: inline;
+  width: 69px;
+  height: 25px;
+  cursor: pointer;
+}
+
+#cancelFormSubmit {
+  display: inline;
+  width: 82px;
+  height: 25px;
+  cursor: pointer;
+}
+
+#saveDiv {
+  z-index:9999;
+  overflow: hidden;
+  position: absolute;
+  width: 400px;
+  height: 300px;
+  outline-style: none;
+  outline-width: 0pt;
+  display: none;
+}
+
 #selectContainer {
   width:20%;
   min-width: 240px;
@@ -444,31 +482,6 @@ span.categoryClosed div, span.categoryClosed ul {
   text-decoration: none;
 }
 
-#saveCodeForm {
-  background-color: white;
-  width: 800px;
-  height: 600px;
-  display:none;
-  overflow: hidden;
-}
-
-.ui-dialog-titlebar {
-  background-color: #E5ECF9;
-  border-style:none none solid;
-  border-width:0 0 1px;
-  color:#555555;
-  font-weight:normal;
-  list-style-image:none;
-  list-style-position:outside;
-  list-style-type:none;
-  margin:0;
-  outline-style:none;
-  outline-width:0;
-  padding: 3px;
-  position:relative;
-  text-decoration:none;
-}
-
 .explain {
   color:#676767;
   font-size: 80%;
@@ -476,25 +489,6 @@ span.categoryClosed div, span.categoryClosed ul {
 
 .formLabel {
   font-size: 90%;
-}
-
-.ui-dialog-titlebar-close {
-  border:0 none;
-  font-size:90%;
-  height:11px;
-  list-style-image:none;
-  list-style-position:outside;
-  list-style-type:none;
-  margin:0;
-  outline-style:none;
-  outline-width:0;
-  padding:0;
-  position:absolute;
-  right:5px;
-  text-decoration:none;
-  top:4px;
-  width:11px;
-  z-index:100;
 }
 
 #demoTitle {

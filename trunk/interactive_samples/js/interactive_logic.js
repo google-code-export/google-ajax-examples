@@ -620,7 +620,6 @@
     }
 
     this.initAutoComplete();
-    this.initSaveCodeDiv();
     this.setCodeMenuButtonClicks();
     this.setMenuScrollHeight();
     this.initDraggables();
@@ -672,6 +671,11 @@
       selC.scrollTop(sC);
     }
   }
+
+  UIEffects.prototype.closeSaveForm = function() {
+    $('#grayOverlay').css('display', 'none');
+    $('#saveDiv').css('display', 'none');
+  };
 
   UIEffects.prototype.createAutoComplete = function() {
     $("#search").autocomplete({
@@ -726,24 +730,24 @@
     }
   };
 
-  UIEffects.prototype.initSaveCodeDiv = function() {
-    $("#saveCodeForm").dialog({
-      modal: true,
-      overlay: {
-        opacity: 0.5,
-        background: "black"
-      },
-      title: 'Save Code',
-      height: 300,
-      width: 400,
-      resizable: false,
-      autoOpen: false,
-      draggable: false
-    });
-    // $("div.ui-dialog > div.ui-resizable-handle").css('display', 'none');
-  };
+  UIEffects.prototype.resizeAndShowSaveForm = function() {
+    var windowWidth = $(document.body).width();
+    var windowHeight = $(window).height() + 15;
+    var newSaveDivLeft = (windowWidth/2) - 200;
+    var newSaveDivTop = (windowHeight/2) - 150;
+    $('#grayOverlay')
+        .css('width', windowWidth + 'px')
+        .css('height', windowHeight + 'px')
+        .css('display', 'inline');
+    $('#saveDiv')
+        .css('left', newSaveDivLeft + 'px')
+        .css('top', newSaveDivTop + 'px')
+        .css('display', 'block');
+  }
 
   UIEffects.prototype.showSaveForm = function() {
+    this.resizeAndShowSaveForm();
+    $(window).resize(window.is.uiEffects.resizeAndShowSaveForm);
     var curSampleObj = this.is.sampleFileNameToObject(this.is.getCurFilename());
     var boilerplateLoc = curSampleObj.boilerplateLoc;
     $('#boilerplateLoc').attr('value', boilerplateLoc);
@@ -754,8 +758,6 @@
     var code = this.is.getCode();
     code = code.replace(/\n/g, 'NEWLINE!!!');
     $('#jscodeSaveForm').attr('value', code);
-
-    $('#saveCodeForm').dialog('open').show();
   };
 
   UIEffects.prototype.toggleDropdown = function(elID, opt_close) {
