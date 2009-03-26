@@ -1,3 +1,33 @@
+// Software License Agreement (BSD License)
+// 
+// Copyright (c) 2007, Parakey Inc.
+// All rights reserved.
+// 
+// Redistribution and use of this software in source and binary forms, with or without modification,
+// are permitted provided that the following conditions are met:
+// 
+// * Redistributions of source code must retain the above
+//   copyright notice, this list of conditions and the
+//   following disclaimer.
+// 
+// * Redistributions in binary form must reproduce the above
+//   copyright notice, this list of conditions and the
+//   following disclaimer in the documentation and/or other
+//   materials provided with the distribution.
+// 
+// * Neither the name of Parakey Inc. nor the names of its
+//   contributors may be used to endorse or promote products
+//   derived from this software without specific prior
+//   written permission of Parakey Inc.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR
+// IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+// FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+// CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+// DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
+// IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+// OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 var firebug={version:[1.23,20090309],el:{},env:{"cache":{},"extConsole":null,"css":"http://getfirebug.com/releases/lite/1.2/firebug-lite.css","debug":true,"detectFirebug":false,"dIndex":"console","height":295,"hideDOMFunctions":false,"init":false,"isPopup":false,"liteFilename":"firebug-lite.js","minimized":false,"openInPopup":false,"override":false,"ml":false,"popupWin":null,"showIconWhenHidden":true,"targetWindow":undefined,"popupTop":1,"popupLeft":1,"popupWidth":undefined,"popupHeight":undefined},initConsole:function(){var command;try{if((!window.console||(window.console&&!window.console.firebug))||(firebug.env.override&&!(/Firefox\/3/i.test(navigator.userAgent)))){window.console={"provider":"Firebug Lite"};for(command in firebug.d.console.cmd){window.console[command]=firebug.lib.util.Curry(firebug.d.console.run,window,command);};}
 window.onerror=function(_message,_file,_line){firebug.d.console.run('error',firebug.lib.util.String.format('{0} ({1},{2})',_message,firebug.getFileName(_file),_line));};}catch(e){}},overrideConsole:function(){with(firebug){env.override=true;try{env.extConsole=window.console;}catch(e){}
 initConsole();}},restoreConsole:function(){with(firebug){if(env.extConsole){env.override=false;try{window.console=env.extConsole;}catch(e){}
