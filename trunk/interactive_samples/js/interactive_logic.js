@@ -170,6 +170,8 @@
   InteractiveSample.prototype.changeCodeMirror = function(content) {
     try {
       this.currentEditor.setCode(content);
+      $(this.currentEditor.frame.contentWindow.window.document.body).scrollTop(10);
+      $(this.currentEditor.frame.contentWindow.window.document.body).scrollTop(0);
     } catch (e) {
       window.console.log('changeCodeMirror failed!!');
     }
