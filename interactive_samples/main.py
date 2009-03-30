@@ -172,8 +172,12 @@ class Main(webapp.RequestHandler):
       for i in types:
         apiSampleSources.append(apis[i])
     else:
-      for i in apis:
-        apiSampleSources.append(apis[i])
+      theApis = sorted(apis.keys())
+      for i in range(0, len(theApis) - 1):
+        if theApis[i] == 'language':
+          apiSampleSources.insert(0, apis[theApis[i]])
+        else:
+          apiSampleSources.append(apis[theApis[i]])
 
     return apiSampleSources
 
@@ -345,7 +349,7 @@ def main():
                                         ('/apis/ajax/playground/delete', Delete),
                                         ('/apis/ajax/playground/get', GetCode),
                                         ('/apis/ajax/playground/cacheCode', CacheCode)],
-                                       debug=False)
+                                       debug=True)
   wsgiref.handlers.CGIHandler().run(application)
 
 
