@@ -199,14 +199,14 @@
                           <span id="codeMenuDropdown" class="dropdown" >
                             <div class="menuTop"></div>
                             <div class="menuTile">
-                              <span class="first" onmousedown="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.linkCode();return false;"><img src="images/export.png" title="Export Code" />&nbsp;Export
+                              <span class="first" onclick="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.linkCode();return false;"><img src="images/export.png" title="Export Code" />&nbsp;Export
                               </span>
                               {% if loginUrl %}
-                              <span onmousedown="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.confirmLogin('{{ loginUrl }}', true);return false;">
+                              <span onclick="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.confirmLogin('{{ loginUrl }}', true);return false;">
                                 <img src="images/save.png" title="Save" />&nbsp;Save
                               </span>
                               {% else %}
-                              <span onmousedown="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.saveCode();return false;">
+                              <span onclick="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.saveCode();return false;">
                                 <img src="images/save.png" title="Save" />&nbsp;Save
                               </span>
                               {% endif %}
