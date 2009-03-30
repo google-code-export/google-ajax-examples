@@ -235,28 +235,28 @@
       </tr>
     </table>
     <script type="text/javascript" charset="utf-8">
-      var jsEditor = new CodeMirror(document.getElementById('editJS'), {
-        parserfile : ["tokenizejavascript1.js", "parsejavascript1.js"],
-        stylesheet : 'codemirror/css/jscolors.css',
-        autoMatchParens : true,
-        path : 'codemirror/js/',
-        height : '320px',
-        content: '',
-        lineNumbers: true,
-        breakPoints: true,
-        onLoad: function() {is.runBox.runCode();}
-      });
-      var mixedEditor = new CodeMirror(document.getElementById('editMixed'), {
-        parserfile: ["parsexml1.js", "parsecss1.js", "tokenizejavascript1.js", "parsejavascript1.js", "parsehtmlmixed1.js"],
-        stylesheet: ["codemirror/css/xmlcolors.css", "codemirror/css/jscolors.css", "codemirror/css/csscolors.css"],
-        autoMatchParens : true,
-        path : 'codemirror/js/',
-        height : '320px',
-        content: '',
-        lineNumbers: true,
-        breakPoints: false,
-        onLoad: function() {is.runBox.runCode();}
-      });
+    var mixedEditor = new CodeMirror(document.getElementById('editMixed'), {
+      parserfile: ["parsexml1.js", "parsecss1.js", "tokenizejavascript1.js", "parsejavascript1.js", "parsehtmlmixed1.js"],
+      stylesheet: ["codemirror/css/xmlcolors.css", "codemirror/css/jscolors.css", "codemirror/css/csscolors.css"],
+      autoMatchParens : true,
+      path : 'codemirror/js/',
+      height : '320px',
+      content: '',
+      lineNumbers: true,
+      breakPoints: false,
+      onLoad: function() {is.runBox.runCode();}
+    });
+    var jsEditor = new CodeMirror(document.getElementById('editJS'), {
+      parserfile : ["tokenizejavascript1.js", "parsejavascript1.js"],
+      stylesheet : 'codemirror/css/jscolors.css',
+      autoMatchParens : true,
+      path : 'codemirror/js/',
+      height : '320px',
+      content: '',
+      lineNumbers: true,
+      breakPoints: true,
+      onLoad: function() {is.runBox.runCode();}
+    });
     </script>
   </td>
 </tr>
