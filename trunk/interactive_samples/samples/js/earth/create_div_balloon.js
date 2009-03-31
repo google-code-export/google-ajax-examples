@@ -51,9 +51,7 @@ function initCB(instance) {
                                                                    pluginVersion;
 }
 
-function failureCB(errorCode) {
-  alert(errorCode);
-}
+function failureCB(errorCode) {}
 
 function createBalloon() {
   var balloon = ge.createHtmlDivBalloon('');

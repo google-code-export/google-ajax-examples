@@ -56,9 +56,7 @@ function initCB(instance) {
                                                                   pluginVersion;
 }
 
-function failureCB(errorCode) {
-  alert(errorCode);
-}
+function failureCB(errorCode) {}
 
 function createFeatureBalloon() {
   var balloon = ge.createFeatureBalloon('');
