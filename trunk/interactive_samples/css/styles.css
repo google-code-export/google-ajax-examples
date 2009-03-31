@@ -306,25 +306,24 @@ img.expand, img.collapse {
   padding: 0;
   position: relative;
   width: 9px;
-  background-image: url(../images/sprites.png);
   vertical-align: middle;
   cursor: pointer;
 }
 
 img.collapse {
-  background-position: -28px -310px; /* The empty Plus */
+  background-image: url(../images/normal_minus.png); /* The empty Plus */
 }
 
 img.collapse:hover {
-  background-position:-28px -508px; /* The filled Plus */
+  background-image: url(../images/pressed_minus.png); /* The filled Plus */
 }
 
 img.expand {
-  background-position: -28px -246px; /* The empty Plus */
+  background-image: url(../images/normal_plus.png); /* The empty plus */
 }
 
 img.expand:hover {
-  background-position:-28px -444px; /* The filled Plus */
+  background-image: url(../images/pressed_plus.png); /* The filled Plus */
 }
 
 
@@ -700,6 +699,7 @@ li.ui-autocomplete-odd > a > strong, li.ui-autocomplete-even > a > strong {
   cursor: pointer;
   font-family:Arial,sans-serif;
   font-size:12px;
+  font-weight: bold;
 /*  margin-left: 5px;*/
   h: expression(onmouseover=setBgColorWhite);
   m: expression(onmouseout=setBgColorBlue);
