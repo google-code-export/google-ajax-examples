@@ -66,8 +66,6 @@ function initCB(instance) {
   });
 }
 
-function failureCB(errorCode) {
-  alert(errorCode);
-}
+function failureCB(errorCode) {}
 
 google.setOnLoadCallback(init);

@@ -13,9 +13,7 @@ function init() {
   google.earth.createInstance('content', initCB, failureCB);
 }
 
-function failureCB(errorCode) {
-  alert(errorCode);
-}
+function failureCB(errorCode) {}
 
 function initCB(instance) {
   // Store our Google Earth instance.
