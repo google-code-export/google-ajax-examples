@@ -878,17 +878,22 @@
       debugMenuCSS.media = 'screen';
       debugMenuCSS.charset = 'utf-8';
       document.getElementsByTagName('head')[0].appendChild(debugMenuCSS);
-
+      window.doContinue = true;
       window.setContinue = function(doContinue) {
         window.doContinue = doContinue;
         var debugBar = document.getElementById('debugBar');
         var debugText = document.getElementById('debugBarText');
-        if (doContinue) {
-          debugBar.className = 'debugBarRunning';
-          debugText.innerHTML = 'Complete.';
+        if (debugBar) {
+
+          if (doContinue) {
+            debugBar.className = 'debugBarRunning';
+            debugText.innerHTML = 'Complete.';
+          } else {
+            debugBar.className = 'debugBarPaused';
+            debugText.innerHTML = 'Paused (Line:' + window.curBreakLineNum + ')';
+          }
         } else {
-          debugBar.className = 'debugBarPaused';
-          debugText.innerHTML = 'Paused (Line:' + window.curBreakLineNum + ')';
+          window.doContinue = false;
         }
       };
       function addLoadEvent(func) {
@@ -921,8 +926,8 @@
       addLoadEvent(function() {
         var debugBar = document.createElement('div');
         debugBar.id = 'debugBar';
-        debugBar.className = 'debugBarRunning';
-        debugBar.innerHTML = '<div class="debugBarTop">\n</div>\n<div class="debugBarTile">\n<div class="debugBarContent">\n<a href="#" class="debugContinuePaused" onclick="window.setContinue(true);return false;"><img border=0 src="/images/debug-btn-continue.png"></a>\n<img class="debugContinueRunning" src="/images/debug-btn-continue.png">\n<a href="#" onclick="window.toggleFirebug();return false;"><img border=0 src="/images/debug-btn-firebug-lite.png"></a>\n<span id="debugBarText">\nComplete.</span>\n</div>\n</div>\n<div class="debugBarBottom">\n</div>\n';
+        debugBar.className = (window.doContinue) ? "debugBarRunning" : "debugBarPaused";
+        debugBar.innerHTML = '<div class="debugBarTop">\n</div>\n<div class="debugBarTile">\n<div class="debugBarContent">\n<a href="#" class="debugContinuePaused" onclick="window.setContinue(true);return false;"><img border=0 src="/images/debug-btn-continue.png"></a>\n<img class="debugContinueRunning" src="/images/debug-btn-continue.png">\n<a href="#" onclick="window.toggleFirebug();return false;"><img border=0 src="/images/debug-btn-firebug-lite.png"></a>\n<span id="debugBarText">\n' + ((window.doContinue) ? "Complete.":"Paused (Line:" + window.curBreakLineNum + ")") + '</span>\n</div>\n</div>\n<div class="debugBarBottom">\n</div>\n';
         window.document.body.appendChild(debugBar);
         if (window.firebug.el && window.firebug.el.main && window.firebug.el.main.environment) {
           window.toggleFirebug();
