@@ -29,6 +29,7 @@ from google.appengine.ext import db
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import template
 from google.appengine.api import memcache
+from google.appengine.api import urlfetch
 
 class SavedCode(db.Model):
   code = db.TextProperty()
@@ -81,15 +82,34 @@ class CacheCode(webapp.RequestHandler):
 class RetrieveCache(webapp.RequestHandler):
   def get(self):
     unique_id = self.request.get('unique_id')
-    codeObj = db.get(db.Key(str(unique_id)))
-    if codeObj is None:
-      self.response.out.write('Deleted.')
+    defaultSample = self.request.get('defaultSample')
+    self.response.headers['P3P'] = 'CP="CURa ADMa DEVa PSAo PSDo OUR BUS UNI PUR INT DEM STA PRE COM NAV OTC NOI DSP COR"'
+    code = ''
+    if defaultSample:
+      self.response.headers['Expires'] = "Fri, 01 Jan 1990 00:00:00 GMT"
+      self.response.headers['content-type'] = 'text/html'
+      self.response.headers['cache-control'] = 'no-cache, no-store, max-age=0, must-revalidate'
+      code = memcache.get(unique_id)
+      if code:
+        self.response.out.write(code)
+      else:
+        uniqueSplit = unique_id.split('|')
+        bpUrl = uniqueSplit[0]
+        jsUrl = uniqueSplit[1]
+        bpData = urlfetch.fetch(bpUrl, "GET").content
+        jsData = urlfetch.fetch(jsUrl, "GET").content
+        bpData = bpData.replace('INSERT_JAVASCRIPT_HERE', jsData)
+        memcache.set(unique_id, bpData, 600)
+        self.response.out.write(bpData)
     else:
-      code = codeObj.code
-      code = code.replace('NEWLINE!!!', '\n');
-      db.delete(codeObj)
-      self.response.headers['P3P'] = 'CP="CURa ADMa DEVa PSAo PSDo OUR BUS UNI PUR INT DEM STA PRE COM NAV OTC NOI DSP COR"'
-      self.response.out.write(code)
+      codeObj = db.get(db.Key(str(unique_id)))
+      if codeObj is None:
+        self.response.out.write('Deleted.')
+      else:
+        code = codeObj.code
+        code = code.replace('NEWLINE!!!', '\n');
+        db.delete(codeObj)
+        self.response.out.write(code)
 
 class ShowCode(webapp.RequestHandler):
   def get(self):
