@@ -27,9 +27,10 @@
         media="screen,projection" type="text/css">
   <!-- JavaScript -->
   <title>AJAX APIs Playground</title>
-  <script src="codemirror/js/codemirror1.js" type="text/javascript" charset="utf-8"></script>
+  <script src="codemirror/js/prod_codemirrorz_9bf826fa11cdc08be1ddc183663eeab4.js" type="text/javascript" charset="utf-8"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js" type="text/javascript" charset="utf-8"></script>
-  <script src="js/jquery-ui.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/jquery-ui-packed.js" type="text/javascript" charset="utf-8"></script>
+
   {% for i in sample_srcs %}
     <script src="{{ i }}" type="text/javascript" charset="utf-8"></script>
   {% endfor %}
@@ -240,7 +241,7 @@
       options.defaultSample = true;
     }
     var mixedEditor = new CodeMirror(document.getElementById('editMixed'), {
-      parserfile: ["mixed.js"],
+      parserfile: ["prod_mixed_5ca7530f0218ca2f6b1bfc8ffc1bbbf0.js"],
       stylesheet: ["codemirror/css/xmlcolors.css", "codemirror/css/jscolors.css", "codemirror/css/csscolors.css"],
       autoMatchParens : true,
       path : 'codemirror/js/',
@@ -251,8 +252,8 @@
       onLoad: function() {is.runBox.runCode(options);}
     });
     var jsEditor = new CodeMirror(document.getElementById('editJS'), {
-      parserfile : ["js_only.js"],
-      stylesheet : 'codemirror/css/jscolors.css',
+      parserfile: ["prod_js_only_8cbac90cb8e8e9b015f995a7ff89cab1.js"],
+      stylesheet: 'codemirror/css/jscolors.css',
       autoMatchParens : true,
       path : 'codemirror/js/',
       height : '320px',

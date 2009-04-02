@@ -29,7 +29,7 @@ var CodeMirror = (function(){
     stylesheet: "",
     path: "",
     parserfile: [],
-    basefiles: ["basefile.js"],
+    basefiles: ['prod_base_0f7c85805b26606e181dcf31e249f007.js'],
     linesPerPass: 30,
     passDelay: 200,
     continuousScanning: false,

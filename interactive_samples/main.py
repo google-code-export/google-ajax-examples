@@ -174,7 +174,7 @@ class Main(webapp.RequestHandler):
         apiSampleSources.append(apis[i])
     else:
       theApis = sorted(apis.keys())
-      for i in range(0, len(theApis) - 1):
+      for i in range(0, len(theApis)):
         if theApis[i] == 'language':
           apiSampleSources.insert(0, apis[theApis[i]])
         else:
@@ -347,7 +347,7 @@ class GetTOC(webapp.RequestHandler):
   def getAllTOCs(self):
     the_response_script = ''
     theApis = sorted(apis.keys())
-    for i in range(0, len(theApis) - 1):
+    for i in range(0, len(theApis)):
       the_file = open(apis[theApis[i]])
       if theApis[i] == 'language':
         the_response_script = the_file.read() + '\n' + the_response_script
@@ -389,57 +389,7 @@ class GetTOC(webapp.RequestHandler):
     self.response.headers['content-type'] = 'text/javascript'
     self.response.headers['cache-control'] = 'no-cache, no-store, max-age=0, must-revalidate'
     self.response.out.write(the_response_script)
-    
-            # 
-            #     
-            #     
-            # if not types:
-            #   allTOC = memcache.get('TOC:all')
-            #   # memcache.delete('TOC:all')
-            #   if allTOC:
-            #     self.response.headers['Expires'] = "Fri, 01 Jan 1990 00:00:00 GMT"
-            #     self.response.headers['content-type'] = 'application/javascript'
-            #     self.response.out.write('// 1\n')
-            #     self.response.out.write(allTOC)
-            #   else:  
-            #     the_response_script = ""
-            #     
-            #     theApis = sorted(apis.keys())
-            #     for i in range(0, len(theApis) - 1):
-            #       the_file = open(apis[theApis[i]])
-            #       
-            #       if theApis[i] == 'language':
-            #         the_response_script = the_file.read() + '\n' + the_response_script
-            #       else:
-            #         the_response_script += "\n" + the_file.read()
-            #       the_file.close()
-            #       
-            #     memcache.set('TOC:all', the_response_script)
-            #     self.response.headers['Expires'] = "Fri, 01 Jan 1990 00:00:00 GMT"
-            #     self.response.headers['content-type'] = 'application/javascript'
-            #     self.response.out.write('// 2\n')
-            #     self.response.out.write(the_response_script)
-            # else:
-            #   TOC = memcache.get('TOC:' + types)
-            #   if (TOC):
-            #     self.response.headers['Expires'] = "Fri, 01 Jan 1990 00:00:00 GMT"
-            #     self.response.headers['content-type'] = 'application/javascript'
-            #     self.response.out.write('// 11\n')
-            #     self.response.out.write(TOC)
-            #   else:
-            #     the_response_script = ""
-            #     splitTypes = types.split('|')
-            # 
-            #     for i in splitTypes:
-            #       if apis.has_key(i):
-            #         the_file = open(apis[i])
-            #         the_response_script += "\n" + the_file.read()
-            #         the_file.close()
-            #     memcache.set('TOC:' + types, the_response_script)
-            #     self.response.headers['Expires'] = "Fri, 01 Jan 1990 00:00:00 GMT"
-            #     self.response.headers['content-type'] = 'application/javascript'
-            #     self.response.out.write('// 22' + types + '\n')
-            #     self.response.out.write(the_response_script)
+
         
 def main():
   application = webapp.WSGIApplication([('/', Main),
