@@ -848,7 +848,6 @@
 
   function RunBox() {
     this.outputContainer;
-    this.runShadowContainer;
     this.runBoxPoppedOut;
     this.popoutWindow;
     this.is;
@@ -863,7 +862,6 @@
     this.runBoxDiv = document.getElementById('runbox');
     this.runBoxPoppedOut = false;
     this.outputContainer = $("#outputContainer");
-    this.runShadowContainer = $("#runShadowContainer");
     this.is = is;
   };
 
@@ -1067,14 +1065,16 @@
     if (options && options.defaultSample) {
       var curFilename = this.is.getCurFilename();
       var sampleObj = this.is.sampleFileNameToObject(curFilename);
-      var baseUrl = location.protocol + '//' + location.host + location.pathname;
-      var jsUrl = baseUrl + sampleObj.files[0];
-      jsUrl = encodeURIComponent(jsUrl);
-      var bpUrl = baseUrl + sampleObj.boilerplateLoc;
-      bpUrl = encodeURIComponent(bpUrl);
-      uniqueID = bpUrl + '%7C' + jsUrl + "&defaultSample=true";
-      this.createIframeOrPopout(uniqueID);
-      return;
+      if (sampleObj.category != 'Saved Code') {
+        var baseUrl = location.protocol + '//' + location.host + location.pathname;
+        var jsUrl = baseUrl + sampleObj.files[0];
+        jsUrl = encodeURIComponent(jsUrl);
+        var bpUrl = baseUrl + sampleObj.boilerplateLoc;
+        bpUrl = encodeURIComponent(bpUrl);
+        uniqueID = bpUrl + '%7C' + jsUrl + "&defaultSample=true";
+        this.createIframeOrPopout(uniqueID);
+        return;
+      }
     }
     var code = this.is.getCode();
     if (this.is.currentEditor == window.mixedEditor) {
@@ -1094,14 +1094,12 @@
   RunBox.prototype.changeToPopout = function() {
     this.runBoxPoppedOut = true;
     $(this.outputContainer).hide();
-    $(this.runShadowContainer).hide();
     this.popoutWindow = window.open('popout.html','popout', 'left=20,top=20,width=600,height=500,toolbar=1,resizable=1');
   };
 
   RunBox.prototype.changeToInline = function() {
     this.runBoxPoppedOut = false;
     $(this.outputContainer).show();
-    $(this.runShadowContainer).show();
     this.runCode();
   };
 
