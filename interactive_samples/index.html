@@ -235,8 +235,12 @@
       </tr>
     </table>
     <script type="text/javascript" charset="utf-8">
+    var options = {}
+    if (!location.host.match(/localhost/) && !location.href.match(/\/\/172/)) {
+      options.defaultSample = true;
+    }
     var mixedEditor = new CodeMirror(document.getElementById('editMixed'), {
-      parserfile: ["parsexml1.js", "parsecss1.js", "tokenizejavascript1.js", "parsejavascript1.js", "parsehtmlmixed1.js"],
+      parserfile: ["mixed.js"],
       stylesheet: ["codemirror/css/xmlcolors.css", "codemirror/css/jscolors.css", "codemirror/css/csscolors.css"],
       autoMatchParens : true,
       path : 'codemirror/js/',
@@ -244,10 +248,10 @@
       content: '',
       lineNumbers: true,
       breakPoints: false,
-      onLoad: function() {is.runBox.runCode();}
+      onLoad: function() {is.runBox.runCode(options);}
     });
     var jsEditor = new CodeMirror(document.getElementById('editJS'), {
-      parserfile : ["tokenizejavascript1.js", "parsejavascript1.js"],
+      parserfile : ["js_only.js"],
       stylesheet : 'codemirror/css/jscolors.css',
       autoMatchParens : true,
       path : 'codemirror/js/',
@@ -255,7 +259,7 @@
       content: '',
       lineNumbers: true,
       breakPoints: true,
-      onLoad: function() {is.runBox.runCode();}
+      onLoad: function() {is.runBox.runCode(options);}
     });
     </script>
   </td>
