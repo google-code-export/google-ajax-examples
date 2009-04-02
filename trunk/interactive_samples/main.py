@@ -390,7 +390,14 @@ class GetTOC(webapp.RequestHandler):
     self.response.headers['cache-control'] = 'no-cache, no-store, max-age=0, must-revalidate'
     self.response.out.write(the_response_script)
 
-        
+class FlushMemcache(webapp.RequestHandler):
+  def get(self):
+    user = users.get_current_user()
+    if user and (user.email() == 'lisbakke@gmail.com' or user.email() == 'lisbakke@google.com'):
+      self.response.out.write(memcache.flush_all())
+    else:
+      self.response.out.write('bad you!')
+
 def main():
   application = webapp.WSGIApplication([('/', Main),
                                         ('/save', Save),
@@ -403,8 +410,9 @@ def main():
                                         ('/apis/ajax/playground/delete', Delete),
                                         ('/apis/ajax/playground/get', GetCode),
                                         ('/apis/ajax/playground/cacheCode', CacheCode),
-                                        ('/apis/ajax/playground/getTOC', GetTOC)],
-                                       debug=True)
+                                        ('/apis/ajax/playground/getTOC', GetTOC),
+                                        ('/apis/ajax/playground/flush_memcache', FlushMemcache)],
+                                       debug=False)
   wsgiref.handlers.CGIHandler().run(application)
 
 
