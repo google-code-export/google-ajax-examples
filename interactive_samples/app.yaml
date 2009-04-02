@@ -80,3 +80,5 @@ handlers:
   script: main.py
 - url: /apis/ajax/playground/getTOC
   script: main.py
+- url: /apis/ajax/playground/flush_memcache
+  script: main.py
