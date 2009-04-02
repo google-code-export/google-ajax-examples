@@ -78,3 +78,5 @@ handlers:
   script: main.py
 - url: /apis/ajax/playground
   script: main.py
+- url: /apis/ajax/playground/getTOC
+  script: main.py

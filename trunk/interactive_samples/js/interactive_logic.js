@@ -1064,6 +1064,18 @@
   }
 
   RunBox.prototype.runCode = function(options) {
+    if (options && options.defaultSample) {
+      var curFilename = this.is.getCurFilename();
+      var sampleObj = this.is.sampleFileNameToObject(curFilename);
+      var baseUrl = location.protocol + '//' + location.host + location.pathname;
+      var jsUrl = baseUrl + sampleObj.files[0];
+      jsUrl = encodeURIComponent(jsUrl);
+      var bpUrl = baseUrl + sampleObj.boilerplateLoc;
+      bpUrl = encodeURIComponent(bpUrl);
+      uniqueID = bpUrl + '%7C' + jsUrl + "&defaultSample=true";
+      this.createIframeOrPopout(uniqueID);
+      return;
+    }
     var code = this.is.getCode();
     if (this.is.currentEditor == window.mixedEditor) {
       this.sendCodeToSavedByTheGoog(options)(code);

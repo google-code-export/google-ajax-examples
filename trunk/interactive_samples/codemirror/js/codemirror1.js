@@ -29,7 +29,7 @@ var CodeMirror = (function(){
     stylesheet: "",
     path: "",
     parserfile: [],
-    basefiles: ["util1.js", "stringstream1.js", "select1.js", "undo1.js", "editor1.js", "tokenize1.js"],
+    basefiles: ["basefile.js"],
     linesPerPass: 30,
     passDelay: 200,
     continuousScanning: false,

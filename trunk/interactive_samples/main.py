@@ -27,6 +27,7 @@ import Cookie
 import datetime
 import time
 import urllib
+from google.appengine.api import memcache
 
 from google.appengine.ext import webapp
 from google.appengine.api import users
@@ -35,17 +36,17 @@ from google.appengine.api import urlfetch
 
 # GLOBAL ARRAY OF APIS & THEIR CONFIGURED JSON FILES.  DON'T EDIT UNLESS YOU'RE SURE
 apis = {
-  'search': 'samples/js/search_api_samples.js',
-  'language': 'samples/js/lang_api_samples.js',
-  'feeds': 'samples/js/feeds_api_samples.js',
-  'libraries': 'samples/js/libs_api_samples.js',
-  'earth': 'samples/js/earth_api_samples.js',
-  'maps': 'samples/js/maps_api_samples.js',
-  'visualization': 'samples/js/visualization_api_samples.js',
-  'blogger': 'samples/js/blogger_api_samples.js',
-  'calendar': 'samples/js/calendar_api_samples.js',
-  'youtube': 'samples/js/youtube_api_samples.js',
-  'friendconnect' : 'samples/js/friendconnect_api_samples.js'
+  'search': 'samples/TOC/search_api_samples.js',
+  'language': 'samples/TOC/lang_api_samples.js',
+  'feeds': 'samples/TOC/feeds_api_samples.js',
+  'libraries': 'samples/TOC/libs_api_samples.js',
+  'earth': 'samples/TOC/earth_api_samples.js',
+  'maps': 'samples/TOC/maps_api_samples.js',
+  'visualization': 'samples/TOC/visualization_api_samples.js',
+  'blogger': 'samples/TOC/blogger_api_samples.js',
+  'calendar': 'samples/TOC/calendar_api_samples.js',
+  'youtube': 'samples/TOC/youtube_api_samples.js',
+  'friendconnect' : 'samples/TOC/friendconnect_api_samples.js'
 }
 
 class SavedCode(db.Model):
@@ -200,7 +201,12 @@ class Main(webapp.RequestHandler):
     if expanded:
       self.template_values['expandedCategory'] = expanded
 
-    sample_srcs = self.getAPISampleSourceIncludes(apiTypes)
+    # sample_srcs = self.getAPISampleSourceIncludes(apiTypes)
+    if apiTypes:
+      apiTypes = '?type=' + apiTypes
+    else:
+      apiTypes = ''
+    sample_srcs = ['/apis/ajax/playground/getTOC' + apiTypes]
     self.template_values['sample_srcs'] = sample_srcs
     # self.response.out.write(simplejson.dumps(a))
     if users.get_current_user():
@@ -337,6 +343,104 @@ class CacheCode(webapp.RequestHandler):
     data = urlfetch.fetch('http://savedbythegoog.appspot.com/cache_code', query, "POST")
     self.response.out.write(data.content)
 
+class GetTOC(webapp.RequestHandler):
+  def getAllTOCs(self):
+    the_response_script = ''
+    theApis = sorted(apis.keys())
+    for i in range(0, len(theApis) - 1):
+      the_file = open(apis[theApis[i]])
+      if theApis[i] == 'language':
+        the_response_script = the_file.read() + '\n' + the_response_script
+      else:
+        the_response_script += "\n" + the_file.read()
+      the_file.close()
+    return the_response_script
+  def getTOCsByType(self, types):
+    the_response_script = ''
+    splitTypes = types.split('|')
+    for i in splitTypes:
+      if apis.has_key(i):
+        the_file = open(apis[i])
+        the_response_script += "\n" + the_file.read()
+        the_file.close()
+    return the_response_script
+
+  def get(self):
+    types = self.request.get('type')
+    
+    if not types:
+      types = 'all'
+    TOC = memcache.get('TOC:' + types)
+    the_response_script = ""
+    if TOC:
+      the_response_script = TOC
+    else:
+      # We don't have it in memcache, we need to grab the files and put them in memcache
+      if types == 'all':
+        # just grab all
+        the_response_script = self.getAllTOCs()
+      else:
+        # grab only what we need    
+        the_response_script = self.getTOCsByType(types)
+        if the_response_script == '':
+          the_response_script = self.getAllTOCs()
+      memcache.set('TOC:' + types, the_response_script, 600)
+    self.response.headers['Expires'] = "Fri, 01 Jan 1990 00:00:00 GMT"
+    self.response.headers['content-type'] = 'text/javascript'
+    self.response.headers['cache-control'] = 'no-cache, no-store, max-age=0, must-revalidate'
+    self.response.out.write(the_response_script)
+    
+            # 
+            #     
+            #     
+            # if not types:
+            #   allTOC = memcache.get('TOC:all')
+            #   # memcache.delete('TOC:all')
+            #   if allTOC:
+            #     self.response.headers['Expires'] = "Fri, 01 Jan 1990 00:00:00 GMT"
+            #     self.response.headers['content-type'] = 'application/javascript'
+            #     self.response.out.write('// 1\n')
+            #     self.response.out.write(allTOC)
+            #   else:  
+            #     the_response_script = ""
+            #     
+            #     theApis = sorted(apis.keys())
+            #     for i in range(0, len(theApis) - 1):
+            #       the_file = open(apis[theApis[i]])
+            #       
+            #       if theApis[i] == 'language':
+            #         the_response_script = the_file.read() + '\n' + the_response_script
+            #       else:
+            #         the_response_script += "\n" + the_file.read()
+            #       the_file.close()
+            #       
+            #     memcache.set('TOC:all', the_response_script)
+            #     self.response.headers['Expires'] = "Fri, 01 Jan 1990 00:00:00 GMT"
+            #     self.response.headers['content-type'] = 'application/javascript'
+            #     self.response.out.write('// 2\n')
+            #     self.response.out.write(the_response_script)
+            # else:
+            #   TOC = memcache.get('TOC:' + types)
+            #   if (TOC):
+            #     self.response.headers['Expires'] = "Fri, 01 Jan 1990 00:00:00 GMT"
+            #     self.response.headers['content-type'] = 'application/javascript'
+            #     self.response.out.write('// 11\n')
+            #     self.response.out.write(TOC)
+            #   else:
+            #     the_response_script = ""
+            #     splitTypes = types.split('|')
+            # 
+            #     for i in splitTypes:
+            #       if apis.has_key(i):
+            #         the_file = open(apis[i])
+            #         the_response_script += "\n" + the_file.read()
+            #         the_file.close()
+            #     memcache.set('TOC:' + types, the_response_script)
+            #     self.response.headers['Expires'] = "Fri, 01 Jan 1990 00:00:00 GMT"
+            #     self.response.headers['content-type'] = 'application/javascript'
+            #     self.response.out.write('// 22' + types + '\n')
+            #     self.response.out.write(the_response_script)
+        
 def main():
   application = webapp.WSGIApplication([('/', Main),
                                         ('/save', Save),
@@ -348,7 +452,8 @@ def main():
                                         ('/apis/ajax/playground/save', Save),
                                         ('/apis/ajax/playground/delete', Delete),
                                         ('/apis/ajax/playground/get', GetCode),
-                                        ('/apis/ajax/playground/cacheCode', CacheCode)],
+                                        ('/apis/ajax/playground/cacheCode', CacheCode),
+                                        ('/apis/ajax/playground/getTOC', GetTOC)],
                                        debug=True)
   wsgiref.handlers.CGIHandler().run(application)
 
