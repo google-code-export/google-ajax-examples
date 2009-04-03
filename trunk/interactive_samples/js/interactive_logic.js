@@ -1,9 +1,7 @@
 // Anonymous function, keep the global namespace squeeky clean..
 (function() {
-  if (typeof window.console != 'undefined' && /__debug__/i.test(document.location.href)) {
-  } else {
-    if (window.console) delete window.console;
-    window.console = {};  
+  if (typeof window.console == 'undefined') {
+    window.console = {};
     window.console.log = function(message) {};
   }
 
