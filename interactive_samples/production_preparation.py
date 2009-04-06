@@ -27,3 +27,23 @@ index_text = re.sub('interactive_logic\.js', 'interactive_logic_'+m.hexdigest()+
 index_file = open('index.html', 'w')
 index_file.write(index_text)
 index_file.close()
+
+
+
+
+
+m = md5.new()
+styles = open('css/styles.css')
+m.update(styles.read())
+styles.close()
+os.system('mv css/styles.css css/styles_'+m.hexdigest()+'.css')
+
+index_file = open('index.html')
+index_text = index_file.read()
+index_file.close()
+index_text = re.sub('styles\.css', 'styles_'+m.hexdigest()+'.css', index_text)
+index_file = open('index.html', 'w')
+index_file.write(index_text)
+index_file.close()
+
+# styles.css
