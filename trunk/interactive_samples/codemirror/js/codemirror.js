@@ -95,7 +95,7 @@ var CodeMirror = (function(){
             return function() {
               if (!el.previousSibling || el.previousSibling.nodeName != 'IMG') {
                 var breakPoint = document.createElement('img');
-                breakPoint.src = '/images/breakpoint.png';
+                breakPoint.src = 'images/breakpoint.png';
                 breakPoint.className = 'breakpoint';
                 breakPoint.title = 'Breakpoint';
                 breakPoint.id = "breakPoint-" + number;

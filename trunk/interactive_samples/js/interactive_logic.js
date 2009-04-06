@@ -796,7 +796,7 @@
         me.draggingMid = true;
         $().one('mouseup', function() {
           me.draggingMid = false;
-          me.dragsafeDiv.css('top', '-600px').css('left', '-600px');
+          me.dragsafeDiv.css('top', '-800px').css('left', '-800px');
           if (is.currentEditor == window.jsEditor) {
             var newHeight = $(window.jsEditor.frame).css('height');
             $(window.mixedEditor.frame).css('height', newHeight);
@@ -818,7 +818,7 @@
         me.draggingBot = true;
         $().one('mouseup', function() {
           me.draggingBot = false;
-          me.dragsafeDiv.css('top', '-600px').css('left', '-600px');
+          me.dragsafeDiv.css('top', '-800px').css('left', '-800px');
         });
       });
 

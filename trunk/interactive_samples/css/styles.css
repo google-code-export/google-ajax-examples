@@ -596,7 +596,7 @@ li.ui-autocomplete-odd > a > strong, li.ui-autocomplete-even > a > strong {
 }
 
 .menuTile {
-  background-image:url(/images/code_menu/menu-tile.png);
+  background-image:url(../images/code_menu/menu-tile.png);
   background-repeat:repeat;
 /*  margin-right:0;
   padding-left:5px;
