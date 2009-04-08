@@ -182,7 +182,8 @@ class Main(webapp.RequestHandler):
 
     return apiSampleSources
 
-
+  def head(self):
+    self.response.out.write('')
   def get(self):
     apiTypes = getTypes(self)
     expanded = getExpanded(self)

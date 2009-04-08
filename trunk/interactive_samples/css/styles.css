@@ -9,7 +9,6 @@ td {
 #container {
   width: 100%;
   margin:0 auto;
-/*  max-width:1024px;*/
 }
 
 #loggedInBar {
@@ -35,10 +34,6 @@ tr {
   vertical-align: top;
 }
 
-div {
-/*  border: 1px solid #999;*/
-}
-
 #header {
   height: 50px;
   padding-left: 15px;
@@ -59,10 +54,6 @@ div {
   padding-left: 10px;
 }
 
-#selectContainer, #codeContainer, #editor {
-/*  height: 370px;*/
-}
-
 #acShadowDiv {
   width:100%;
   background: url(../images/drop_shadows/short_b1px.png) repeat;
@@ -76,11 +67,6 @@ div {
 
 #edit {
   overflow: hidden;
-}
-
-#editMixed {
-/*  display: none;*/
-
 }
 
 #grayOverlay {
@@ -124,10 +110,6 @@ div {
 #selectContainer {
   width:20%;
   min-width: 240px;
-}
-
-#outputContainer {
-  /*height: 350px;*/
 }
 
 .CodeMirror-line-numbers {
@@ -188,7 +170,6 @@ div {
 
 iframe {
   font-family: Arial, Helvetica, sans-serif;
-/*  overflow-x: hidden;*/
 }
 
 #runFrame {
@@ -452,14 +433,12 @@ span.categoryClosed div, span.categoryClosed ul {
 }
 #runbox {
   width: 100%;
-  /*height: 100%;*/
 }
 
 #runbox iframe {
   border: 0 none white;
   width: 100%;
   height: 100%;
-/*  border: 0 none #999;*/
 }
 
 #outputDiv {
@@ -577,10 +556,6 @@ li.ui-autocomplete-odd > a > strong, li.ui-autocomplete-even > a > strong {
 /* ------ Dropdown Menu------- */
 #codeMenuDrop {
   z-index:9998;
-/*  position:relative;
-  left:-35px;
-  top:-2px;*/
-  
   position:relative;
   top:-8px;
 }
@@ -598,16 +573,9 @@ li.ui-autocomplete-odd > a > strong, li.ui-autocomplete-even > a > strong {
 .menuTile {
   background-image:url(../images/code_menu/menu-tile.png);
   background-repeat:repeat;
-/*  margin-right:0;
-  padding-left:5px;
-  margin-top: 0px;
-  padding-right:0;
-*/  
   position:relative;
-/*  text-align:left;*/
   width:200px;
   left: 2px;
-/*  margin-top: -8px;*/
   top: expression('-8px');
 }
 
@@ -622,7 +590,6 @@ li.ui-autocomplete-odd > a > strong, li.ui-autocomplete-even > a > strong {
 }
 
 #docsLink {
-/*  display: none;*/
   display: none;
   float:left;
 }
@@ -700,7 +667,6 @@ li.ui-autocomplete-odd > a > strong, li.ui-autocomplete-even > a > strong {
   font-family:Arial,sans-serif;
   font-size:12px;
   font-weight: bold;
-/*  margin-left: 5px;*/
   h: expression(onmouseover=setBgColorWhite);
   m: expression(onmouseout=setBgColorBlue);
 }
