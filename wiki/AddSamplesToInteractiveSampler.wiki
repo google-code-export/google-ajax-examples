@@ -12,9 +12,9 @@ Samples are stored in the samples/ directory in the codebase.  There are four pa
 
 1. The boilerplate HTML.  This is an HTML file that has generic HTML or Javascript code that your samples use.  The point of this is to avoid repetition while writing demos as well as promote consistency among your sample code.  Please try to minimize the number of boilerplate HTML files per Javascript files.  Here's what a boilerplate HTML file looks like: http://code.google.com/p/google-ajax-examples/source/browse/trunk/interactive_samples/samples/boilerplateHTML/ajaxapis.html
 
-2. The Javascript sample code.  This is the code that the developers will actually see and edit.  Here is an example of a file http://code.google.com/p/google-ajax-examples/source/browse/trunk/interactive_samples/samples/js/search/imagesearch/color_restrict.js and what it looks like live http://interactivesampler.appspot.com/#color_restriction
+2. The Javascript sample code.  This is the code that the developers will actually see and edit.  Here is an example of a file http://code.google.com/p/google-ajax-examples/source/browse/trunk/interactive_samples/samples/js/search/imagesearch/color_restrict.js and what it looks like live http://code.google.com/apis/ajax/playground/#color_restriction
 
-3. The JSON file.  To hook the boilerplate and JS together, as well as specify some meta-data about the samples, you create a JSON file.  Here is an example http://code.google.com/p/google-ajax-examples/source/browse/trunk/interactive_samples/samples/js/search_api_samples.js  Here is what the different properties mean:
+3. The JSON file.  To hook the boilerplate and JS together, as well as specify some meta-data about the samples, you create a JSON file.  Here is an example http://code.google.com/p/google-ajax-examples/source/browse/trunk/interactive_samples/samples/TOC/search_api_samples.js  Here is what the different properties mean:
     * *category*: The category samples will be in.  The format is Category-Subcategory.  A category value of Search API-Cool Samples will have the samples show up in a dropdown in Cool Samples, which will be in a drop down Search API.
     * *samples[]*: This is an array of the samples for a category.
       * *boilerplateHTML*: Specifies the path to the boilerplate HTML for a sample.  Path is relative to the base directory of the codebase.
