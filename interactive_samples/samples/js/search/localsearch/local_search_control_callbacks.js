@@ -48,4 +48,4 @@ function OnLoad() {
   map.addControl(lsc);
 }
 
-google.setOnLoadCallback(OnLoad);​​​
+google.setOnLoadCallback(OnLoad);
