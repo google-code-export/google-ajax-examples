@@ -33,7 +33,7 @@ function OnLoad() {
     var colorSearcher = new google.search.ImageSearch();
     colorSearcher.setRestriction(GimageSearch.RESTRICT_COLORFILTER,
                                  colors[i]);
-    var colorName = colors[i][0].toUpperCase() + colors[i].substring(1);
+    var colorName = colors[i].substring(0,1).toUpperCase() + colors[i].substring(1);
     colorSearcher.setUserDefinedLabel(colorName);
     control.addSearcher(colorSearcher, options);
   };
@@ -42,7 +42,7 @@ function OnLoad() {
   var drawOptions = new google.search.DrawOptions();
   drawOptions.setDrawMode(google.search.SearchControl.DRAW_MODE_TABBED);
   control.draw(searchControlDiv, drawOptions);
-  control.execute("Berries");
+  control.execute("Tree");
 }
 
 google.setOnLoadCallback(OnLoad);
