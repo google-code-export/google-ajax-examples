@@ -134,7 +134,7 @@ def verify_xsrf_token(method):
       return method(self, *args, **kwargs)
     else:
       self.error(500)
-      self.response.out.write("Unauthorized.");
+      self.response.out.write("Unauthorized.  Do you have cookies enabled?  If not, please enable them.  If you still experience this error, please e-mail lisbakke+playground@google.com");
       return
   return wrapper
 
