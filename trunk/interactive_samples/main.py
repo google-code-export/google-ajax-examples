@@ -28,6 +28,7 @@ import datetime
 import time
 import urllib
 from google.appengine.api import memcache
+import logging
 
 from google.appengine.ext import webapp
 from google.appengine.api import users
@@ -133,6 +134,9 @@ def verify_xsrf_token(method):
     if cookieVal and cookieVal == self.request.get('sc'):
       return method(self, *args, **kwargs)
     else:
+      logging.debug(self.request.headers['Cookie'])
+      logging.debug('cookieVal: ' + cookieVal)
+      logging.debug(self.request.get('sc'))
       self.error(500)
       self.response.out.write("Unauthorized.  Do you have cookies enabled?  If not, please enable them.  If you still experience this error, please e-mail lisbakke+playground@google.com");
       return

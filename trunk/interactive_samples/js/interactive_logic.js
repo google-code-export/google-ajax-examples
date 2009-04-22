@@ -429,6 +429,7 @@
   InteractiveSample.prototype.saveCode = function() {
     var curFilename = this.getCurFilename();
     var sampleObj = this.sampleFileNameToObject(curFilename);
+    this.putSafetyCookieInForms();
     if (sampleObj.category == 'Saved Code') {
       var confirmOverwrite = confirm('Are you sure you want to overwrite this code?');
       if (confirmOverwrite) {
