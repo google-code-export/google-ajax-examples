@@ -29,6 +29,8 @@ import time
 import urllib
 from google.appengine.api import memcache
 import logging
+import hmac
+import base64
 
 from google.appengine.ext import webapp
 from google.appengine.api import users
@@ -88,10 +90,10 @@ def getTemplateValues(self, cgiArgs):
   }
   return template_values
 
-def grabSavedCode(self):
+def grabSavedCode(self, user):
   # get all entries associated with the user and return them as an array
   codeEntries = db.GqlQuery('SELECT * FROM SavedCode WHERE user = :1',
-                             users.get_current_user())
+                             user)
   codeEntries = codeEntries.fetch(100)
   if len(codeEntries) > 0:
     return codeEntries
@@ -216,7 +218,7 @@ class Main(webapp.RequestHandler):
     # self.response.out.write(simplejson.dumps(a))
     if users.get_current_user():
       # savedCode is an array of code entries..
-      savedCode = grabSavedCode(self)
+      savedCode = grabSavedCode(self, users.get_current_user())
       savedCodeArr = []
       if savedCode:
         for i in savedCode:
@@ -403,6 +405,96 @@ class FlushMemcache(webapp.RequestHandler):
     else:
       self.response.out.write('bad you!')
 
+class GetProjects(webapp.RequestHandler):
+  def isSecure(self, token, email):
+    secret = 'super_secret'
+    unencoded_token = base64.b64decode(token)
+    split_token = unencoded_token.split('|')
+    if len(split_token) > 1:
+      token_time = int(split_token[1])
+      time_now = int(time.time())
+      if time_now - token_time < 120:
+        token_hmac = split_token[0]
+        compare_hmac = hmac.new(email + '|' + str(token_time), secret).hexdigest()
+        if token_hmac == compare_hmac:
+          return True
+        else:
+          response = {
+            'responseDetails': 'hmac does not match.',
+            'responseStatus': '401'
+          }
+          self.response.out.write(simplejson.dumps(response))
+          return False
+      else:
+        response = {
+          'responseDetails': 'Expired Token.',
+          'responseStatus': '401'
+        }
+        self.response.out.write(simplejson.dumps(response))
+        return False
+    else:
+      response = {
+        'responseDetails': 'Token missing time.',
+        'responseStatus': '401'
+      }
+      self.response.out.write(simplejson.dumps(response))
+      return False
+  def nameToHashName(self, name):
+      hashName = name.lower()
+      hashName = hashName.replace(' ', '_')
+      return hashName
+  def returnSamples(self, user):
+    samples = grabSavedCode(self, user)
+    if samples:
+      samplesLen = len(samples)
+      if samplesLen > 5:
+        samples = samples[0:5]
+      savedCodeArr = []
+      for i in samples:
+        sampleName = cgi.escape(i.sampleName)
+        savedCodeArr.append({
+          'sampleName': sampleName,
+          'sampleLoc': '/apis/ajax/playground/#%s' % self.nameToHashName(sampleName)
+        })
+      response = {
+        'responseDetails': '',
+        'responseStatus': '200',
+        'numSamples':samplesLen,
+        'samples':savedCodeArr
+      }
+    else:
+      response = {
+        'responseDetails': 'Username has no samples.',
+        'responseStatus': '404'
+      }
+    self.response.out.write(simplejson.dumps(response))
+  def get(self):
+    response = {
+      'responseDetails': 'POST only',
+      'responseStatus': '400'
+    }
+    self.response.out.write(simplejson.dumps(response))
+  def post(self):
+    email = self.request.get('u')
+    token = self.request.get('token')
+    if email and token:
+      if self.isSecure(token, email):
+        user = users.User(email)
+        if user:
+          self.returnSamples(user)
+        else:
+          response = {
+            'responseDetails': 'Username has no samples.',
+            'responseStatus': '404'
+          }
+          self.response.out.write(simplejson.dumps(response))
+    else:
+      response = {
+        'responseDetails': 'Missing e-mail or token in request',
+        'responseStatus': '400'
+      }
+      self.response.out.write(simplejson.dumps(response))
+
 def main():
   application = webapp.WSGIApplication([('/', Main),
                                         ('/save', Save),
@@ -416,7 +508,8 @@ def main():
                                         ('/apis/ajax/playground/get', GetCode),
                                         ('/apis/ajax/playground/cacheCode', CacheCode),
                                         ('/apis/ajax/playground/getTOC', GetTOC),
-                                        ('/apis/ajax/playground/flush_memcache', FlushMemcache)],
+                                        ('/apis/ajax/playground/flush_memcache', FlushMemcache),
+                                        ('/apis/ajax/playground/get_projects', GetProjects)],
                                        debug=False)
   wsgiref.handlers.CGIHandler().run(application)
 

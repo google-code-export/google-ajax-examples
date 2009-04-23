@@ -82,3 +82,5 @@ handlers:
   script: main.py
 - url: /apis/ajax/playground/flush_memcache
   script: main.py
+- url: /apis/ajax/playground/get_projects
+  script: main.py
