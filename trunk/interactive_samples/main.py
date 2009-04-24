@@ -408,7 +408,15 @@ class FlushMemcache(webapp.RequestHandler):
 class GetProjects(webapp.RequestHandler):
   def isSecure(self, token, email):
     secret = 'super_secret'
-    unencoded_token = base64.b64decode(token)
+    try:
+      unencoded_token = base64.b64decode(token)
+    except TypeError:
+      response = {
+        'responseDetails': 'Not encoded correctly.',
+        'responseStatus': '400'
+      }
+      self.response.out.write(simplejson.dumps(response))
+      return False
     split_token = unencoded_token.split('|')
     if len(split_token) > 1:
       token_time = int(split_token[1])
