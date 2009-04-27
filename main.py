@@ -46,7 +46,8 @@ apis = {
   'blogger': 'samples/TOC/blogger_api_samples.js',
   'calendar': 'samples/TOC/calendar_api_samples.js',
   'youtube': 'samples/TOC/youtube_api_samples.js',
-  'friendconnect' : 'samples/TOC/friendconnect_api_samples.js'
+  'friendconnect' : 'samples/TOC/friendconnect_api_samples.js',
+  'javascript' : 'samples/TOC/javascript_api_samples.js'
 }
 
 class SavedCode(db.Model):
