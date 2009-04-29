@@ -169,7 +169,7 @@ function displayFeed(feedLink) {
 }
 
 function getLinkedMap(lat, lng) {
-  var url = "http://maps.google.com/staticmap?center=" + lat + "," + lng + "&zoom=13&size=200x200&key=ABQIAAAAjU0EJWnWPMv7oQ-jjS7dYxSPW5CJgpdgO_s4yyMovOaVh_KvvhSfpvagV18eOyDWu7VytS6Bi1CWxw";
+  var url = "http://maps.google.com/staticmap?center=" + lat + "," + lng + "&zoom=13&size=200x200&key=ABQIAAAA-O3c-Om9OcvXMOJXreXHAxQGj0PqsCtxKvarsoS-iqLdqZSKfxS27kJqGZajBjvuzOBLizi931BUow";
   var mapsUrl = "http://maps.google.com/?ll=" + lat + "," + lng + "&z=13";
   var html = '<a target="_blank" href="' + mapsUrl + '"><img src="' + url + '"></a>';
   return html;
