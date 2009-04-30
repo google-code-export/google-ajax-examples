@@ -407,7 +407,7 @@ class FlushMemcache(webapp.RequestHandler):
 
 class GetProjects(webapp.RequestHandler):
   def isSecure(self, token, email):
-    secret = 'super_secret'
+    secret = """super_secret"""
     try:
       unencoded_token = base64.b64decode(token)
     except TypeError:
@@ -421,7 +421,7 @@ class GetProjects(webapp.RequestHandler):
     if len(split_token) > 1:
       token_time = int(split_token[1])
       time_now = int(time.time())
-      if time_now - token_time < 120:
+      if abs(time_now - token_time) < 120:
         token_hmac = split_token[0]
         compare_hmac = hmac.new(email + '|' + str(token_time), secret).hexdigest()
         if token_hmac == compare_hmac:
