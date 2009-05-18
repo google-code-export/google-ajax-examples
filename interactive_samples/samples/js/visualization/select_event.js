@@ -1,3 +1,9 @@
+// Note: This sample shows the select event.
+// The select event is a generic select event,
+// for selecting rows, columns, and cells.
+// However, in this example, only rows are selected.
+// Read more here: http://code.google.com/apis/visualization/documentation/gallery/table.html#Events
+
 function drawVisualization() {
   visualization = new google.visualization.Table(document.getElementById('table'));
   visualization.draw(data, null);
