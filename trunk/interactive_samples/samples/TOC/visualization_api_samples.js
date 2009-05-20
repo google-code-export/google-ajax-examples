@@ -19,7 +19,7 @@ var tempJSON = [
                {"docsUrl": "http://code.google.com/apis/visualization/documentation/gallery/piechart.html", "boilerplateLoc": "samples/boilerplateHTML/visualization/piechart.html", "files":["samples/js/visualization/piechart.js"], "sampleName":"Pie Chart", "tags": ""},
                {"docsUrl": "http://code.google.com/apis/visualization/documentation/gallery/scatterchart.html", "boilerplateLoc": "samples/boilerplateHTML/visualization/scatterchart.html", "files":["samples/js/visualization/scatterchart.js"], "sampleName":"Scatter Chart", "tags": ""},
                {"docsUrl": "http://code.google.com/apis/visualization/documentation/gallery/sparkline.html", "boilerplateLoc": "samples/boilerplateHTML/visualization/sparkline.html", "files":["samples/js/visualization/sparkline.js"], "sampleName":"Sparkline", "tags": ""},
-               {"docsUrl": "http://code.google.com/apis/visualization/documentation/gallery/table.html", "boilerplateLoc": "samples/boilerplateHTML/visualization/table.html", "files":["samples/js/visualization/table.js"], "sampleName":"Table", "tags": ""},
+               {"docsUrl": "http://code.google.com/apis/visualization/documentation/gallery/table.html", "boilerplateLoc": "samples/boilerplateHTML/visualization/table.html", "files":["samples/js/visualization/table.js"], "sampleName":"Table", "tags": ""}
     ],
     "docsUrl": "http://code.google.com/apis/visualization/documentation/gallery.html"
   },
