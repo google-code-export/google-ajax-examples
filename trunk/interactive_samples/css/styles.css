@@ -12,7 +12,7 @@ td {
 }
 
 #loggedInBar {
-  border-bottom: solid 2px #E5ECF9;
+  border-bottom: 1px solid #C9D7F1;
   padding: 3px 10px 5px 0px;
   background-color:white;
   font-family: arial,sans-serif;
@@ -32,11 +32,6 @@ td {
 
 tr {
   vertical-align: top;
-}
-
-#header {
-  height: 50px;
-  padding-left: 15px;
 }
 
 #selectSample {
@@ -183,9 +178,11 @@ iframe {
 }
 
 #header {
+  height: 40px;
+  padding-left: 15px;
   margin: 0;
   display: inline;
-  font-size: 26pt;
+  font-size: 20pt;
   font-family: Arial, sans-serif;
   font-weight: bold;
 }
@@ -248,7 +245,7 @@ h2 {
   background-color: white;
   font-size:1em;
   margin:0;
-  padding:0.1em 0;
+  padding: 16px 0 0.1em;
   white-space:nowrap;
   margin-left: 2px;
   margin-right: 2px;
@@ -317,7 +314,7 @@ td.footer {
   text-align:right;
   vertical-align:middle;
   padding-right: 15px;
-  padding-left: 30px;
+  padding-left: 4px;
 }
 
 #tab_bar {
