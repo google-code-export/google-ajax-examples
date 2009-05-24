@@ -1,4 +1,6 @@
 function drawVisualization() {
+  // To see the data that this visualization uses, browse to
+  // http://spreadsheets.google.com/ccc?key=pCQbetd-CptGXxxQIG7VFIQ	
   var query = new google.visualization.Query(
       'http://spreadsheets.google.com/tq?key=pCQbetd-CptGXxxQIG7VFIQ&pub=1');
   
