@@ -10,6 +10,7 @@ function outerFunction(someNum) {
   var content = document.getElementById('content');
   function innerFunction() {
     content.innerHTML = someNum + ': ' + someString;
+    content = null; // IE memory leak for DOM reference
   }
   innerFunction();
 }

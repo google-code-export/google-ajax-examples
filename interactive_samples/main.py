@@ -504,6 +504,10 @@ class GetProjects(webapp.RequestHandler):
       }
       self.response.out.write(simplejson.dumps(response))
 
+class GaError(webapp.RequestHandler):
+  def get(self):
+    logging.error('There was an error loading ga.js')
+    self.response.out.write('Thanks!')
 def main():
   application = webapp.WSGIApplication([('/', Main),
                                         ('/save', Save),
@@ -518,7 +522,8 @@ def main():
                                         ('/apis/ajax/playground/cacheCode', CacheCode),
                                         ('/apis/ajax/playground/getTOC', GetTOC),
                                         ('/apis/ajax/playground/flush_memcache', FlushMemcache),
-                                        ('/apis/ajax/playground/get_projects', GetProjects)],
+                                        ('/apis/ajax/playground/get_projects', GetProjects),
+                                        ('/apis/ajax/playground/ga_error', GaError)],
                                        debug=False)
   wsgiref.handlers.CGIHandler().run(application)
 
