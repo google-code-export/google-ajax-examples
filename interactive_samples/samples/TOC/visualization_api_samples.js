@@ -26,7 +26,8 @@ var tempJSON = [
   {
     "category":"Visualization API-Data View",
     "samples":[
-      {"boilerplateLoc":"samples/boilerplateHTML/visualization/data_view.html", "files":["samples/js/visualization/data_view.js"], "sampleName":"Simple Data View", "tags": ""}
+      {"boilerplateLoc":"samples/boilerplateHTML/visualization/data_view.html", "files":["samples/js/visualization/data_view.js"], "sampleName":"Simple Data View", "tags": ""},
+      {"boilerplateLoc":"samples/boilerplateHTML/visualization/chart_data_view.html", "files":["samples/js/visualization/chart_data_view.js"], "sampleName":"Another Data View", "tags": ""}
     ],
     "docsUrl": "http://code.google.com/apis/visualization/documentation/reference.html#DataView"
   },
