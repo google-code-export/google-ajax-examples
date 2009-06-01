@@ -1,0 +1,17 @@
+<html>
+<head>
+  <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+  <script type="text/javascript">
+    google.load('visualization', '1', {packages: ['piechart']});
+
+    var visualization;
+    {{ INSERT_JAVASCRIPT_HERE }}
+
+    google.setOnLoadCallback(draw);
+  </script>
+</head>
+<body>
+  <div id="visualization_div" style="width: 270px; height: 200px;"></div>
+  <div id="toolbar_div"></div>
+</body>
+</html>
