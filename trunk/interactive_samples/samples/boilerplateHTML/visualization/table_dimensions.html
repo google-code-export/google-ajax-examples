@@ -1,0 +1,74 @@
+<!--
+  copyright (c) 2009 Google inc.
+
+  You are free to copy and use this sample.
+  License can be found here: http://code.google.com/apis/ajaxsearch/faq/#license
+-->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>
+      Google Visualization API Sample
+    </title>
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load('visualization', '1', {packages: ['table']});
+    </script>
+    <script type="text/javascript">
+    var visualization;
+    var data;
+
+    {{ INSERT_JAVASCRIPT_HERE }}
+
+    google.setOnLoadCallback(drawVisualization);
+
+    // sets the width/height of the table
+    function setDimension(dimension, value) {
+      if (value) {
+        options[dimension] = value;
+      } else {
+        options[dimension] = null;
+      }
+      draw();
+    }
+    
+        
+    </script>
+  </head>
+  <body style="font-family: Arial;border: 0 none;">
+    <div style="margin-bottom: 10px; padding: 5px; border: 1px solid gray; background-color: buttonface;">
+      <span> Configure the width and height of the table</span><br /> 
+      <form action="">
+        <span style="font-size: 12px;">Width:</span>
+        <select onchange='setDimension("width", this.value)'>
+          <option value=''>None</option>
+          <option value='120'>120</option>
+          <option value='260px'>260px</option>
+          <option value='370'>370</option>
+          <option value='400'>400 </option>
+          <option value='410px'>410px</option>
+          <option value='450pt'>450pt</option>
+          <option value='500px'>500px</option>
+          <option value='800px'>800px</option>
+          <option value='1000'>1000</option>
+          <option value='30cm'>30cm</option>
+      </select>
+        <span style="padding-left: 5px; font-size: 12px;">Height: </span>
+        <select onchange='setDimension("height", this.value)'>
+          <option value=''>None</option>
+          <option value='150px'>150px</option>
+          <option value='160px'>160px</option>
+          <option value='170'>170</option>
+          <option value='320pt'>320pt</option>
+          <option value='420pt'>420pt</option>
+          <option value='7cm'>7cm</option>
+          <option value='18cm'>18cm</option>
+          <option value='20cm'>20cm</option>
+        </select> 
+      </form>
+      </div>
+    <div id="table"></div>
+  </body>
+</html>

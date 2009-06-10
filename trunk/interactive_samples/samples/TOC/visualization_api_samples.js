@@ -28,6 +28,7 @@ var tempJSON = [
     "samples": [
        {"docsUrl": "http://code.google.com/apis/visualization/documentation/gallery/annotatedtimeline.html#Configuration_Options", "boilerplateLoc": "samples/boilerplateHTML/visualization/annotatedtimeline_config.html", "files":["samples/js/visualization/annotatedtimeline_config.js"], "sampleName":"Annotated Time Line Configuration", "tags": ""},
        {"docsUrl": "http://code.google.com/apis/visualization/documentation/reference.html#DataTable", "boilerplateLoc": "samples/boilerplateHTML/visualization/datatablemethods.html", "files":["samples/js/visualization/datatablemethods.js"], "sampleName":"Data Table Advanced Population", "tags": ""},
+       {"docsUrl": "http://code.google.com/apis/visualization/documentation/gallery/table.html", "boilerplateLoc":"samples/boilerplateHTML/visualization/table_dimensions.html", "files":["samples/js/visualization/table_dimensions.js"], "sampleName":"Table Dimensions", "tags": ""},
        {"docsUrl": "http://code.google.com/apis/visualization/documentation/gallery/table.html", "boilerplateLoc":"samples/boilerplateHTML/visualization/table_paging.html", "files":["samples/js/visualization/table_paging.js"], "sampleName":"Table Paging", "tags": ""}
 
     ],
