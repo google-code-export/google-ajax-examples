@@ -1,0 +1,78 @@
+<!--
+  copyright (c) 2009 Google inc.
+
+  You are free to copy and use this sample.
+  License can be found here: http://code.google.com/apis/ajaxsearch/faq/#license
+-->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>
+      Google Visualization API Sample
+    </title>
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load('visualization', '1', {packages: ['table']});
+    </script>
+    <script type="text/javascript">
+    var visualization;
+    var data;
+
+    {{ INSERT_JAVASCRIPT_HERE }}
+
+    google.setOnLoadCallback(drawVisualization);
+
+    // sets the number of pages according to the user selection.
+    function setNumberOfPages(value) {
+      if (value) {
+        options['pageSize'] = parseInt(value, 10);
+        options['page'] = 'enable';
+      } else {
+      	options['pageSize'] = null;
+      	options['page'] = null;  
+      }
+      draw();
+    }
+
+    // Sets custom paging symbols "Prev"/"Next"
+    function setCustomPagingButtons(toSet) {
+      options['pagingSymbols'] = toSet ? {next: 'next', prev: 'prev'} : null;
+      draw();  
+    }
+
+    function setPagingButtonsConfiguration(value) {
+      options['pagingButtonsConfiguration'] = value;
+      draw();
+    }
+    
+    </script>
+  </head>
+  <body style="font-family: Arial;border: 0 none;">
+    <div style="margin-bottom: 10px; padding: 5px; border: 1px solid gray; background-color: buttonface;">
+      <span> Configure the paging options in the table</span><br /> 
+      <form action="">
+        <span style="font-size: 12px;">Number of rows:</span>
+        <select style="font-size: 12px" onchange="setNumberOfPages(this.value)">
+          <option value="">No paging</option>
+          <option value="3">3</option>
+          <option value="5">5</option>
+          <option value="9">9</option>
+          <option selected="selected" value="10">10</option>
+          <option value="100">100</option>
+        </select>
+        <span style="padding-left: 5px; font-size: 12px;">Custom paging symbols </span>
+        <input type="checkbox" checked="checked" onclick="setCustomPagingButtons(this.checked)">
+        <span style="padding-left: 5px; font-size: 12px">Configure buttons enabled/disabled</span>
+          <select style="font-size: 12px" id='enable-paging-buttons' onchange='setPagingButtonsConfiguration(this.value)'>
+            <option value=''>Default (auto)</option>
+            <option value='prev'>prev</option>
+            <option value='next'>next</option>
+            <option value='both'>both</option>
+         </select> 
+      </form>
+      </div>
+    <div id="table"></div>
+  </body>
+</html>
