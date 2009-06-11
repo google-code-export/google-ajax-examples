@@ -82,7 +82,8 @@ var tempJSON = [
     "category":"Visualization API-Data Source Requests",
     "samples": [
       {"boilerplateLoc":"samples/boilerplateHTML/visualization/simple_query.html", "files":["samples/js/visualization/simple_query.js"], "sampleName":"Data Source Request", "tags": ""},
-      {"boilerplateLoc":"samples/boilerplateHTML/visualization/query_language.html", "files":["samples/js/visualization/query_language.js"], "sampleName":"Using The Query Language", "tags": ""}
+      {"boilerplateLoc":"samples/boilerplateHTML/visualization/query_language.html", "files":["samples/js/visualization/query_language.js"], "sampleName":"Using The Query Language", "tags": ""},
+      {"docsUrl": "http://code.google.com/apis/visualization/documentation/querylanguage.html", "boilerplateLoc":"samples/boilerplateHTML/visualization/more_query_options.html", "files":["samples/js/visualization/more_query_options.js"], "sampleName":"More Query Options", "tags": ""}
     ],
     "docsUrl": "http://code.google.com/apis/visualization/documentation/queries.html"
   },
