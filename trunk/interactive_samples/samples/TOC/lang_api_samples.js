@@ -1,6 +1,6 @@
 var tempJSON = [
   {
-    "category":"LanguageAPI-Methods and Enums",
+    "category":"Language API-Methods and Enums",
     "samples":[
       {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html","files":["samples/js/language/methodsEnums/language_check.js"],"sampleName":"Is It Translatable?","tags":"languages isTranslatable isFontRenderingSupported closure"}
     ],
