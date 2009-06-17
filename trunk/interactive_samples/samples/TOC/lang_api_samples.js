@@ -2,7 +2,7 @@ var tempJSON = [
   {
     "category":"Language API-Methods and Enums",
     "samples":[
-      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html","files":["samples/js/language/methodsEnums/language_check.js"],"sampleName":"Is It Translatable?","tags":"languages isTranslatable isFontRenderingSupported closure"}
+      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis/isTranslatable.html","files":["samples/js/language/methodsEnums/language_check.js"],"sampleName":"Is It Translatable?","tags":"languages isTranslatable isFontRenderingSupported closure"}
     ],
     "docsUrl":"http://code.google.com/apis/ajaxlanguage/documentation/reference.html"
   },
