@@ -1,12 +1,5 @@
 var tempJSON = [
   {
-    "category":"Language API-Methods and Enums",
-    "samples":[
-      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis/isTranslatable.html","files":["samples/js/language/methodsEnums/language_check.js"],"sampleName":"Is It Translatable?","tags":"languages isTranslatable isFontRenderingSupported closure"}
-    ],
-    "docsUrl":"http://code.google.com/apis/ajaxlanguage/documentation/reference.html"
-  },
-  {
     "category":"Language API-Translation",
     "samples":[
       {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/language/translation/translate.js"], "sampleName":"Translate", "tags": "Basic Translate"},
@@ -14,6 +7,13 @@ var tempJSON = [
       {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/language/translation/detect_language.js"], "sampleName":"Language Detect", "tags": "Detect, Languages Enum"}
     ],
     "docsUrl": "http://code.google.com/apis/ajaxlanguage/documentation/reference.html"
+  },
+  {
+    "category":"Language API-Methods and Enums",
+    "samples":[
+      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis/isTranslatable.html","files":["samples/js/language/methodsEnums/language_check.js"],"sampleName":"Is It Translatable","tags":"languages isTranslatable isFontRenderingSupported closure"}
+    ],
+    "docsUrl":"http://code.google.com/apis/ajaxlanguage/documentation/reference.html"
   },
   {
     "category":"Language API-Transliteration",
