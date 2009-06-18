@@ -391,9 +391,11 @@ if (window.location.href.match(/code\.google\.com/)) {
 try { 
   var pageTracker = _gat._getTracker("UA-18071-1");
 } catch(err) {
-  var nocacheParam = '?nocache=' + (new Date()).getTime();
-  var url = 'http://code.google.com/apis/ajax/playground/ga_error' + nocacheParam;
-  $.get(url, function(data, success) {});
+  if (window.location.href.match(/code\.google\.com/)) {
+    var nocacheParam = '?nocache=' + (new Date()).getTime();
+    var url = 'http://code.google.com/apis/ajax/playground/ga_error' + nocacheParam;
+    $.get(url, function(data, success) {});
+  }
 }
 </script>
 </body>

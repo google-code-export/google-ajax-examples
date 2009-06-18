@@ -17,6 +17,13 @@ var tempJSON = [
     "docsUrl": "http://code.google.com/apis/ajaxsearch/documentation/reference.html#_class_GSearch"
   },
   {
+    "category":"Search API-Custom Search Control",
+    "samples":[
+      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/search/custom_search_control.js"], "sampleName":"Custom Search Control", "tags": ""}
+    ],
+    "docsUrl": "http://code.google.com/apis/ajaxsearch/documentation/customsearch/index.html"
+  },
+  {
     "category":"Search API-Video Search",
     "samples":[
       {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/search/videosearch/youtube_channel.js"], "sampleName":"YouTube Channels", "tags":"YouTube, Channel"},
