@@ -27,7 +27,7 @@ var tempJSON = [
     "category":"Language API-Virtual Keyboard",
     "samples":[
       {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/language/keyboard/keyboard.js"], "sampleName":"Virtual Keyboard", "tags":"Keyboard, Input"},
-      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/language/keyboard/showhide.js"], "sampleName":"Show/Hide", "tags":"Keyboard, Input"},
+      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/language/keyboard/showhide.js"], "sampleName":"Change Visibility", "tags":"Keyboard, Input"},
       {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/language/keyboard/setlayout.js"], "sampleName":"Change Layout", "tags":"Keyboard, Input"},
       {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/language/keyboard/twokbds.js"], "sampleName":"Two Keyboards", "tags":"Keyboard, Input"}
     ],
