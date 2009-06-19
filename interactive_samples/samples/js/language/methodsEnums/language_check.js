@@ -16,6 +16,7 @@ function init(){
     }
   };
 
+  var tbody = document.createElement('tbody');
   // now we loop through the languages array
   for (var i in languages) {
     // Create the row and cells
@@ -57,8 +58,9 @@ function init(){
     tr.appendChild(tranTd);
     tr.appendChild(fontTd);
     tr.appendChild(helloTd);
-    table.appendChild(tr);
+    tbody.appendChild(tr);
   }
+  table.appendChild(tbody);
 }
 
 google.setOnLoadCallback(init);
