@@ -31,7 +31,7 @@ var tempJSON = [
       {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/language/keyboard/setlayout.js"], "sampleName":"Change Layout", "tags":"Keyboard, Input"},
       {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/language/keyboard/twokbds.js"], "sampleName":"Two Keyboards", "tags":"Keyboard, Input"}
     ],
-    "docsUrl": "http://code.google.com/apis/ajaxlanguage/documentation/referenceKeybaord.html"
+    "docsUrl": "http://code.google.com/apis/ajaxlanguage/documentation/referenceKeyboard.html"
   }
 ];
 
