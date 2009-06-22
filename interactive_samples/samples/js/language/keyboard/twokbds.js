@@ -7,8 +7,8 @@ google.load("elements", "1", {packages: "keyboard"});
 function onLoad() {
   var content = document.getElementById('content');
   // Create the HTML for out text area
-  content.innerHTML = '<div>Type Hindi in one textarea and type Arabic in the ' +
-                      'other.</div>' +
+  content.innerHTML = '<div><i>(Scroll down)</i> ' +
+                      'Type Hindi in one textarea and type Arabic in the other.</div>' +
                       '<textarea id="t1" cols="40" rows="5"></textarea> ' +
                       '<textarea id="t2" cols="40" rows="5" ' +
                       'style="direction: rtl;"></textarea> ';

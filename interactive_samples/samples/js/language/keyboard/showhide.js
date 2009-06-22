@@ -9,7 +9,8 @@ var kbd;
 function onLoad() {
   var content = document.getElementById('content');
   // Create the HTML for out text area
-  content.innerHTML = '<div>You can click the Show/Hide button enable/disable' +
+  content.innerHTML = '<div><i>(Scroll down)</i> ' +
+                      'You can click the Show/Hide button enable/disable' +
                       ' the Virtual Keyboard.</div>' +
                       '<input type="button" onclick="toggleVisible()" ' +
                       'id="btVisible" value="Hide"></input><br/>' +
