@@ -9,7 +9,8 @@ var kbd;
 function onLoad() {
   var content = document.getElementById('content');
   // Create the HTML for out text area
-  content.innerHTML = '<div>You can click the buttons below to choose a ' +
+  content.innerHTML = '<div><i>(Scroll down)</i> ' +
+                      'You can click the buttons below to choose a ' +
                       'keyboard layout.</div>' +
                       '<input onclick="kbd.setLayout(\'ru\')" type="button" ' +
                       'value="Russian" /> ' +
