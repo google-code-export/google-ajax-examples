@@ -9,9 +9,10 @@ function onLoad() {
   // Create the HTML for out text area
   content.innerHTML = '<div><i>(Scroll down)</i> ' +
                       'Type Hindi in one textarea and type Arabic in the other.</div>' +
-                      '<textarea id="t1" cols="40" rows="5"></textarea> ' +
-                      '<textarea id="t2" cols="40" rows="5" ' +
-                      'style="direction: rtl;"></textarea> ';
+                      '<textarea id="t1" style="width: 300px; ' +
+                      'height: 100px;"></textarea> ' +
+                      '<textarea id="t2" style="width: 300px; ' +
+                      'height: 100px; direction: rtl;"></textarea> ';
 
   var kbd1 = new google.elements.keyboard.Keyboard(
       [google.elements.keyboard.LayoutCode.HINDI],
