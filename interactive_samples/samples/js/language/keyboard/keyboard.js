@@ -9,7 +9,7 @@ function onLoad() {
   // Create the HTML for out text area
   content.innerHTML = '<div><i>(Scroll down)</i> ' +
                       'You can click the buttons on the onscreen ' +
-                      'keybaord to type Russian. You can also type Russian '+
+                      'keyboard to type Russian. You can also type Russian '+
                       'with your keyboard. When you need to type English, ' +
                       'please click the [-] button to minimize the keyboard.' +
                       '</div><textarea id="t1" cols="100" rows="5"></textarea>';
