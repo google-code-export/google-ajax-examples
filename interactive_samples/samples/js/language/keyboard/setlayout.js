@@ -21,7 +21,9 @@ function onLoad() {
                       '<input onclick="kbd.setLayout(\'ar\')" type="button" ' +
                       'value="Arabic" /> ' +
                       '<input onclick="kbd.setLayout(\'pl\')" type="button" ' +
-                      'value="Polish" /><br/> ' +
+                      'value="Polish" /> ' +
+                      '<input onclick="kbd.setLayout(\'fa\')" type="button" ' +
+                      'value="Persian" /><br/> ' +
                       '<textarea id="t1" cols="100" rows="5"></textarea>';
 
   kbd = new google.elements.keyboard.Keyboard(
