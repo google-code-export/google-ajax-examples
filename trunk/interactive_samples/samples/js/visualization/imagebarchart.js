@@ -3,7 +3,6 @@ function drawVisualization() {
   var data = new google.visualization.DataTable();
   data.addColumn('string', 'Name');
   data.addColumn('number', 'Height');
-  data.addColumn('boolean', 'Smokes');
   data.addRows(3);
   data.setCell(0, 0, 'Tong Ning mu');
   data.setCell(1, 0, 'Huang Ang fa');
@@ -11,11 +10,44 @@ function drawVisualization() {
   data.setCell(0, 1, 174);
   data.setCell(1, 1, 523);
   data.setCell(2, 1, 86);
-  data.setCell(0, 2, true);
-  data.setCell(1, 2, false);
-  data.setCell(2, 2, true);
+
+  var options = {};
+
+  // 'bhg' is a horizontal grouped bar chart in the Google Chart API.
+  // The grouping is irrelevant here since there is only one numeric column.
+  options.cht = 'bhg';
+
+  // Add a data range.
+  var min = 0;
+  var max = 700;
+  options.chds = min + ',' + max;
+
+  // Now add data point labels at the end of each bar.
+
+  // Add meters suffix to the labels.
+  var meters = 'N** m';
+
+  // Draw labels in pink.
+  var color = 'ff3399';
+
+  // Google Chart API needs to know which column to draw the labels on.
+  // Here we have one labels column and one data column.
+  // The Chart API doesn't see the label column.  From its point of view,
+  // the data column is column 0.
+  var index = 0;
+
+  // -1 tells Google Chart API to draw a label on all bars.
+  var allbars = -1;
+
+  // 10 pixels font size for the labels.
+  var fontSize = 10;
+ 
+  // Priority is not so important here, but Google Chart API requires it.
+  var priority = 0;
+
+  options.chm = [meters, color, index, allbars, fontSize, priority].join(',');
 
   // Create and draw the visualization.
-  new google.visualization.ImageBarChart(document.getElementById('visualization')).
-      draw(data, null);  
+  new google.visualization.ImageChart(document.getElementById('visualization')).
+    draw(data, options);  
 }
