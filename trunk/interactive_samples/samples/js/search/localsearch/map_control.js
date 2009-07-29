@@ -6,8 +6,8 @@
 google.load( 'maps' , '2' );
 google.load( 'search' , '1' );
 
-// Second, we set up our function, init
-function init(){
+// Second, we set up our function, OnLoad
+function OnLoad(){
   // First, we build our control
   // You will notice that we pass in the id of the content div
   // And we hand it also the string that we want to use for our
@@ -128,6 +128,6 @@ LSstaticMapControl.prototype.clear = function(){
   }
 }
 
-// Finally, we set our onload callback to call init and get
+// Finally, we set our onload callback to call OnLoad and get
 // the ball rolling!
-google.setOnLoadCallback(init);
+google.setOnLoadCallback(OnLoad);

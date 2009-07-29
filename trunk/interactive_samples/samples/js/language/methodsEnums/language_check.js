@@ -1,6 +1,6 @@
 google.load('language', '1');
 
-function init(){
+function OnLoad(){
   // Get the Languages array so we can be lazy
   var languages = google.language.Languages;
 
@@ -63,4 +63,4 @@ function init(){
   table.appendChild(tbody);
 }
 
-google.setOnLoadCallback(init);
+google.setOnLoadCallback(OnLoad);

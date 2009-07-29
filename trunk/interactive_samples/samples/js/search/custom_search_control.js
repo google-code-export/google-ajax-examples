@@ -7,7 +7,7 @@
 
 google.load('search', '1');
 
-function init() {
+function OnLoad() {
   // Create a custom search control that uses a CSE restricted to code.google.com
   var customSearchControl = new google.search.CustomSearchControl('012157912978810372049:-cv6ao3zqua');
 
@@ -17,4 +17,4 @@ function init() {
   // run a query
   customSearchControl.execute('ajax api');
 }
-google.setOnLoadCallback(init);​
+google.setOnLoadCallback(OnLoad);​
