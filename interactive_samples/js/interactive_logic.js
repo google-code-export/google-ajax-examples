@@ -46,6 +46,42 @@
     li.appendChild(deleteCodeImg);
   };
 
+  InteractiveSample.prototype.addNewSampleMarkers = function(response) {
+    var newSamples;
+    if (response.responseStatus == 200) {
+      newSamples = {};
+      entries = response.responseData.feed.entries;
+      for (var i = 0; i < entries.length; i++) {
+        var sampleAddedRegex = /Add.*\/trunk\/interactive_samples\/.*\.js/g;
+        var matches = entries[i].content.match(sampleAddedRegex);
+        if (matches) {
+          for (var j = 0; j < matches.length; j++) {
+            var filename = matches[j].match(/samples\/js.*/g)[0];
+            if (typeof newSamples[filename] == 'undefined') {
+              newSamples[filename] = true;;
+            }
+          }
+        }
+      }
+    }
+    
+    for (var i in newSamples) {
+      if (newSamples.hasOwnProperty(i)) {
+        var sample = this.sampleFileNameToObject(i);
+        if (sample) {
+          var li = sample.li;
+          var newSup = this.createNewSup(' New!');
+          li.appendChild(newSup);
+          var parentCategory = is.getLiCategoryTitle(li);
+          if (parentCategory.innerHTML.indexOf('<sup') == -1) {
+            var newCatSup = this.createNewSup(' New Samples!');
+            parentCategory.appendChild(newCatSup);
+          }
+        }
+      }        
+    }
+  };    
+
   InteractiveSample.prototype.addShowHideClicks = function() {
     var i;
     for (i = 0; i < this.categories.length; i++) {
@@ -58,6 +94,42 @@
       var subCatTitle = this.subCategories[i].childNodes[0];
       $(subCatTitle).bind('click', this.toggleShowHideLIs(subCatTitle));
     };
+  };
+
+  InteractiveSample.prototype.changeCodeMirror = function(content) {
+    try {
+      this.currentEditor.setCode(content);
+      $(this.currentEditor.frame.contentWindow.window.document.body).scrollTop(10);
+      $(this.currentEditor.frame.contentWindow.window.document.body).scrollTop(0);
+    } catch (e) {
+      window.console.log('changeCodeMirror failed!!');
+    }
+  };
+
+  InteractiveSample.prototype.changeSamplesBoilerplateTo = function(sampleFileName, newBoilerplate) {
+    for (var i=0; i < codeArray.length; i++) {
+      for (var j=0; j < codeArray[i].samples.length; j++) {
+        var sampleObj = codeArray[i].samples[j];
+        for (var k=0; k < sampleObj.files.length; k++) {
+          var file = sampleObj.files[k];
+          if (sampleFileName == file) {
+            this.temporaryBoilerplate = codeArray[i].samples[j].boilerplateLoc;
+            codeArray[i].samples[j].boilerplateLoc = newBoilerplate;
+          }
+        }
+      }
+    }
+  };
+
+  InteractiveSample.prototype.confirmLogin = function(url, opt_mustLogin) {
+    var confirmLeave;
+    if (opt_mustLogin) {
+      confirmLeave = confirm('You must login to save.  Logging in will lose any edited code.');
+    } else {
+      confirmLeave = confirm('Logging in will lose any edited code.');
+    }
+    url += "%23" + window.location.hash.substring(1);
+    if (confirmLeave) window.location = url;
   };
 
   InteractiveSample.prototype.createCategories = function() {
@@ -165,41 +237,12 @@
     }
   };
 
-  InteractiveSample.prototype.changeCodeMirror = function(content) {
-    try {
-      this.currentEditor.setCode(content);
-      $(this.currentEditor.frame.contentWindow.window.document.body).scrollTop(10);
-      $(this.currentEditor.frame.contentWindow.window.document.body).scrollTop(0);
-    } catch (e) {
-      window.console.log('changeCodeMirror failed!!');
-    }
-  };
-
-  InteractiveSample.prototype.changeSamplesBoilerplateTo = function(sampleFileName, newBoilerplate) {
-    for (var i=0; i < codeArray.length; i++) {
-      for (var j=0; j < codeArray[i].samples.length; j++) {
-        var sampleObj = codeArray[i].samples[j];
-        for (var k=0; k < sampleObj.files.length; k++) {
-          var file = sampleObj.files[k];
-          if (sampleFileName == file) {
-            this.temporaryBoilerplate = codeArray[i].samples[j].boilerplateLoc;
-            codeArray[i].samples[j].boilerplateLoc = newBoilerplate;
-          }
-        }
-      }
-    }
-  };
-
-  InteractiveSample.prototype.confirmLogin = function(url, opt_mustLogin) {
-    var confirmLeave;
-    if (opt_mustLogin) {
-      confirmLeave = confirm('You must login to save.  Logging in will lose any edited code.');
-    } else {
-      confirmLeave = confirm('Logging in will lose any edited code.');
-    }
-    url += "%23" + window.location.hash.substring(1);
-    if (confirmLeave) window.location = url;
-  };
+  InteractiveSample.prototype.createNewSup = function(text) {
+    var newSup = document.createElement('sup');
+    newSup.className = 'new';
+    newSup.innerHTML = text;
+    return newSup;
+  }
 
   InteractiveSample.prototype.deleteCustomExample = function(id) {
     var me = this;
@@ -295,6 +338,18 @@
     });
   };
 
+  InteractiveSample.prototype.getLiCategoryTitle = function(li) {
+    var parent = $(li.parentNode);
+    var i = 0;
+    while (!parent.hasClass('category')) {
+      parent = parent.parent();
+      i++;
+      // for precaution, so we don't endless loop if there's an accidental bug
+      if (i > 10) break;
+    }
+    return parent.children()[0];
+  }
+
   InteractiveSample.prototype.getSafetyToken = function() {
     var cookie = this.getCookie('dev_appserver_login');
     cookie = (cookie) ? cookie.replace(/\"/g, '') : this.getCookie('ACSID');
@@ -349,6 +404,7 @@
     if (window.logoutUrl) {
       this.putSafetyCookieInForms();
     }
+    this.loadCodesiteFeed();
   };
 
   InteractiveSample.prototype.insertJavascript = function(data, code) {
@@ -371,6 +427,13 @@
     var fileType = fileTypes[extension.toLowerCase()];
     this.loadRemotely(filename, fileType, opt_changeCodeMirror);
   };
+
+  InteractiveSample.prototype.loadCodesiteFeed = function() {
+    var script = document.createElement('script');
+    script.src = 'http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&q=http://code.google.com/feeds/p/google-ajax-examples/svnchanges/basic&num=20&callback=is.addNewSampleMarkers';
+    script.type = 'text/javascript';
+    document.body.appendChild(script);
+  }
 
   InteractiveSample.prototype.loadRemotely = function(filename, fileType, opt_changeCodeMirror) {
     var me = this;
@@ -411,6 +474,7 @@
         }
       }
     }
+    return null;
   };
 
   InteractiveSample.prototype.sampleNameToObject = function(sampleName) {
