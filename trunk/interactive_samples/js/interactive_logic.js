@@ -73,7 +73,7 @@
           var newSup = this.createNewSup(' New!');
           li.appendChild(newSup);
           var parentCategory = is.getLiCategoryTitle(li);
-          if (parentCategory.innerHTML.indexOf('<sup') == -1) {
+          if (parentCategory.innerHTML.toLowerCase().indexOf('<sup') == -1) {
             var newCatSup = this.createNewSup(' New Samples!');
             parentCategory.appendChild(newCatSup);
           }
