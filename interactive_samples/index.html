@@ -19,6 +19,7 @@
         "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <!-- CSS -->
   <link rel="stylesheet" href="css/styles.css"
@@ -55,6 +56,11 @@
     var logoutUrl = '{{ logoutUrl }}';
     function init() {
       is.init(document.getElementById('editor'));
+      CFInstall.check({
+        'onmissing': is.uiEffects.showGetChromeFrameDiv,
+        'preventPrompt': true,
+        destination: window.location.href
+      });
     }
 
     $(window).bind('load', function() {
@@ -63,7 +69,6 @@
   </script>
 </head>
 <body style="padding: 0px 0px;background-color: #E5ECF9;">
-
 
 <div id="container">
   <div id="loggedInBar">{% if userEmail %} {{ userEmail }} <span style="font-weight: normal">|</span> <a href="http://spreadsheets.google.com/viewform?hl=en&formkey=cFM5OU5yN3BrRzhOOEhFc2VBMmlQU2c6MA" style="color: #C00000;font-weight: bold;" target="_blank">Tell us what you think</a> <span style="font-weight: normal">|</span> <a href="{{ logoutUrl }}">Sign out</a></div>{% else %} <a href="http://spreadsheets.google.com/viewform?hl=en&formkey=cFM5OU5yN3BrRzhOOEhFc2VBMmlQU2c6MA" style="color: #C00000;font-weight: bold;" target="_blank">Tell us what you think</a> <span style="font-weight: normal">|</span> <a href="{{ loginUrl }}">Sign In</a></div> {% endif %}
@@ -364,7 +369,7 @@ iFrame fixes it.
             <tr>
               <td align='right'colspan='2'>
                 <img id="saveFormSubmit" src="images/dialog-btn-save.png" onclick="$('#saveForm').submit();" />
-                <img id="cancelFormSubmit" src="images/dialog-btn-cancel.png" onclick="is.uiEffects.closeSaveForm();return false;" />
+                <img id="cancelFormSubmit" src="images/dialog-btn-cancel.png" onclick="is.uiEffects.closeDialog('saveDiv');return false;" />
               </td>
             </tr>
           </table>
@@ -380,7 +385,32 @@ iFrame fixes it.
     </tr>
   </table>
 </div>
-<script src="js/pushup.js" type="text/javascript" charset="utf-8"></script>
+<div id="getChromeFrameDiv">
+  <table cellpadding=0 cellspacing=0 style="width:100%;margin-top: 5px;">
+    <tr>
+      <td class="border_tl"></td>
+      <td class="border_t"></td>
+      <td class="border_tr"></td>
+    </tr>
+    <tr>
+      <td class="border_l"></td>
+      <td style="background-color: white;">
+        <h2 style="height:20px">Get Chrome Frame</h2>
+        <p style="padding-left: 10px">The Playground no longer supports Internet Explorer.  Please <a href="http://www.google.com/chromeframe" target="_blank">install the Chrome Frame plugin</a> to use the Playground.</p>
+        <table border="0" cellspacing="0" cellpadding="0" style="width:100%">
+          <tr><td style="width:100%;" align="right" onclick="is.uiEffects.closeDialog('getChromeFrameDiv');return false;"><img id="cancelFormSubmit" src="images/dialog-btn-cancel.png" /></td></tr>
+        </table>
+      </td>
+      <td class="border_r"></td>
+    </tr>
+    <tr>
+      <td class="border_bl"></td>
+      <td class="border_b draggerMid"></td>
+      <td class="border_br"></td>
+    </tr>
+  </table>
+</div>
+<script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
 if (window.location.href.match(/code\.google\.com/)) {
   var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");

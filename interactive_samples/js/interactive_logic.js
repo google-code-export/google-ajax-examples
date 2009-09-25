@@ -737,9 +737,9 @@
     }
   }
 
-  UIEffects.prototype.closeSaveForm = function() {
+  UIEffects.prototype.closeDialog = function(div) {
     $('#grayOverlay').css('display', 'none');
-    $('#saveDiv').css('display', 'none');
+    $('#' + div).css('display', 'none');
   };
 
   UIEffects.prototype.createAutoComplete = function() {
@@ -795,7 +795,7 @@
     }
   };
 
-  UIEffects.prototype.resizeAndShowSaveForm = function() {
+  UIEffects.prototype.resizeAndShowDialog = function(divId) {
     var windowWidth = $(document.body).width();
     var windowHeight = $(window).height() + 15;
     var newSaveDivLeft = (windowWidth/2) - 200;
@@ -804,15 +804,17 @@
         .css('width', windowWidth + 'px')
         .css('height', windowHeight + 'px')
         .css('display', 'inline');
-    $('#saveDiv')
+    $('#' + divId)
         .css('left', newSaveDivLeft + 'px')
         .css('top', newSaveDivTop + 'px')
         .css('display', 'block');
   }
 
   UIEffects.prototype.showSaveForm = function() {
-    this.resizeAndShowSaveForm();
-    $(window).resize(window.is.uiEffects.resizeAndShowSaveForm);
+    this.resizeAndShowDialog('saveDiv');
+    $(window).resize(function() {
+      window.is.uiEffects.resizeAndShowDialog('saveDiv');
+    });
     var curSampleObj = this.is.sampleFileNameToObject(this.is.getCurFilename());
     var boilerplateLoc = curSampleObj.boilerplateLoc;
     $('#boilerplateLoc').attr('value', boilerplateLoc);
@@ -824,6 +826,13 @@
     code = code.replace(/\n/g, 'NEWLINE!!!');
     $('#jscodeSaveForm').attr('value', code);
   };
+
+  UIEffects.prototype.showGetChromeFrameDiv = function() {
+    window.is.uiEffects.resizeAndShowDialog('getChromeFrameDiv');
+    $(window).resize(function() {
+      window.is.uiEffects.resizeAndShowDialog('getChromeFrameDiv');
+    });
+  }
 
   UIEffects.prototype.toggleDropdown = function(elID, opt_close) {
     var el = $('#' + elID);
