@@ -282,6 +282,22 @@
     var curFilename = me.getCurFilename();
     me.changeSamplesBoilerplateTo(curFilename, '');
   };
+  
+  InteractiveSample.prototype.setDocsUrl = function(url) {
+    this.docsUrl = url;
+    if (!this.docsUrl) {
+      $('#docsButton').hide();
+    } else {
+      $('#docsButton').show();
+    }
+    
+  };
+  
+  InteractiveSample.prototype.viewDocs = function() {
+    if (this.docsUrl) {
+      window.open(this.docsUrl, "_is_docs");
+    }
+  };
 
   InteractiveSample.prototype.findNumSpacesToIndentCode = function(data) {
     var tryString = this.insertJavascriptRegex.exec(data)[0];
@@ -522,16 +538,16 @@
   InteractiveSample.prototype.setDemoTitle = function(sampleObj) {
     var sampleName = sampleObj.sampleName;
     var catSplit = sampleObj.category.split('-');
-    var title = $('<div>' + (catSplit[1] ? catSplit[1] : catSplit[0]) + ' > ' + sampleName + '</div>');
+    var title = $('<div>' + (catSplit[1] ? catSplit[1] : catSplit[0]) + '&nbsp;&nbsp;&raquo;&nbsp;&nbsp;' + sampleName + '</div>');
     if (sampleObj.docsUrl || sampleObj.categoryDocsUrl) {
-      $('#docsLink').attr('href', (sampleObj.docsUrl || sampleObj.categoryDocsUrl)).css('display', 'block');
+      this.setDocsUrl(sampleObj.docsUrl || sampleObj.categoryDocsUrl);
       // 
       // var docLink = $('&nbsp;<a href="' +
       //                 (sampleObj.docsUrl || sampleObj.categoryDocsUrl) +
       //                 '" target="_blank" class="docsLink">docs</a>');
       // title.append(docLink);
     } else {
-      $('#docsLink').css('display', 'none');
+      this.setDocsUrl(null);
     }
 
     $('#demoTitle').html(title);
@@ -673,7 +689,6 @@
     this.numHTMLEditors;
     this.uiEls;
     this.dropdownTimer;
-    this.draggingMid;
   }
 
   UIEffects.prototype.init = function(is) {
@@ -698,26 +713,30 @@
 
   UIEffects.prototype.setCodeMenuButtonClicks = function() {
     var me = this;
-    var codeMenuButtonContainer = $('#codeMenuButtonContainer');
+    var codeMenuButton = $('#codeMenuButton');
     var codeMenuDropdown = $('#codeMenuDropdown');
 
-    $('#dropdownButton').bind('mousedown', function() {
-      me.toggleDropdown('codeMenuDropdown');
+    codeMenuButton.bind('mousedown', function() {
+      me.toggleDropdown($('#codeMenuDropdown'));
       return false;
     });
 
-    codeMenuButtonContainer.bind('mouseout', function() {
-      me.dropdownTimer = window.setTimeout("window.is.uiEffects.toggleDropdown('codeMenuDropdown', true);", 100);
+    codeMenuButton.bind('mouseout', function() {
+      me.dropdownTimer = window.setTimeout(function() {
+        window.is.uiEffects.toggleDropdown($('#codeMenuDropdown'), true);
+      }, 100);
     });
 
-    codeMenuButtonContainer.bind('mouseover', function() {
+    codeMenuButton.bind('mouseover', function() {
       if (me.dropdownTimer) {
         window.clearTimeout(me.dropdownTimer);
       }
     });
 
     codeMenuDropdown.bind('mouseout', function() {
-      me.dropdownTimer = window.setTimeout("window.is.uiEffects.toggleDropdown('codeMenuDropdown', true);", 100);
+      me.dropdownTimer = window.setTimeout(function() {
+        window.is.uiEffects.toggleDropdown($('#codeMenuDropdown'), true);
+      }, 100);
     });
 
     codeMenuDropdown.bind('mouseover', function() {
@@ -754,11 +773,6 @@
         return result;
       },
       formatItem : function() {
-        if (arguments.length > 3) {
-          if (!$('.ui-autocomplete-results')[0].getAttribute('id')) {
-            $('.ui-autocomplete-results')[0].id = 'acDiv';
-          }
-        }
         return arguments[0][0];
       }
     });
@@ -775,24 +789,34 @@
     });
   };
 
-  UIEffects.prototype.createAutoCompleteDropShadow = function() {
-    $('#search').bind('keyup', function() {
-      var acDiv = $('#acDiv');
-      try {
-        if (acDiv.position() && acDiv.css('display') != 'none' && $('#acShadowDiv').length == 0) {
-          $(acDiv).append($('<div id="acShadowDiv" class="">&nbsp<\/div>'));
-        } else {}
-      } catch(e) {}
-    });
-  };
-
   UIEffects.prototype.initAutoComplete = function() {
-    $('#searchInputContainer').show();
+    this.initSearchBox();
     this.createAutoComplete();
     this.setAutoCompleteClicks();
-    if (!this.is.ie) {
-      this.createAutoCompleteDropShadow();
+  };
+  
+  UIEffects.prototype.initSearchBox = function() {
+    var searchBox = $('#search');
+    var searchPlaceholder = searchBox.attr('placeholder');
+
+    if (searchBox.val() == '' || searchBox.val() == searchPlaceholder) {
+      searchBox.val(searchPlaceholder);
+      searchBox.addClass('placeholder');
     }
+
+    searchBox
+        .focus(function() {
+          if (searchBox.val() == '' || searchBox.val() == searchPlaceholder) {
+            searchBox.val('');
+            searchBox.removeClass('placeholder');
+          }
+        })
+        .blur(function() {
+          if (searchBox.val() == '' || searchBox.val() == searchPlaceholder) {
+            searchBox.val(searchPlaceholder);
+            searchBox.addClass('placeholder');
+          }
+        });
   };
 
   UIEffects.prototype.resizeAndShowDialog = function(divId) {
@@ -834,8 +858,8 @@
     });
   }
 
-  UIEffects.prototype.toggleDropdown = function(elID, opt_close) {
-    var el = $('#' + elID);
+  UIEffects.prototype.toggleDropdown = function(el, opt_close) {
+    el = $(el);
     if (opt_close) {
       el.removeClass('expanded');
       return;
@@ -849,71 +873,50 @@
   };
 
   UIEffects.prototype.initDraggables = function() {
-    var me = this;
-    this.draggingMid = false;
-    this.editDiv = $('#edit');
-    this.editOffset = this.editDiv.position().top + 9;
-    this.draggersMid = $('.draggerMid');
-    this.dragsafeDiv = $('#dragsafe');
-    this.selectCodeDiv = $('#selectCode');
+    var dragging;
+    var dragRowId = null;
+    var heightEls = null;
 
-    this.draggerBot = $('.draggerBot');
-    this.draggingBot = false;
-    this.runFrame = null;
-    this.runFrameOffset = null;
-
-    this.draggersMid
+    $('.pane-row-sizer')
       .attr('unselectable', 'on')
       .css('MozUserSelect', 'none')
       .bind('selectstart.ui', function() { return false; })
       .mousedown(function() {
-        me.draggingMid = true;
-        $().one('mouseup', function() {
-          me.draggingMid = false;
-          me.dragsafeDiv.css('top', '-800px').css('left', '-800px');
-          if (is.currentEditor == window.jsEditor) {
-            var newHeight = $(window.jsEditor.frame).css('height');
-            $(window.mixedEditor.frame).css('height', newHeight);
-          } else {
-            var newHeight = $(window.mixedEditor.frame).css('height');
-            $(window.jsEditor.frame).css('height', newHeight);
+        dragging = true;
+        dragRowId = $(this).prev('.pane-row').get(0).id;
+        heightEls = $('.pane-row-heighter', $(this).prev('.pane-row'));
+      })
+      .dblclick(function() {
+        dragging = false;
+        heightEls.height(200);
+      });
+    
+    $(document)
+      .mouseup(function() {
+        if (!dragging)
+          return;
+        dragging = false;
+        $('#dragsafe').height('0').css('top', '0');
+        if (is.currentEditor == window.jsEditor) {
+          var newHeight = $(window.jsEditor.frame).css('height');
+          $(window.mixedEditor.frame).height(newHeight);
+        } else {
+          var newHeight = $(window.mixedEditor.frame).css('height');
+          $(window.jsEditor.frame).height(newHeight);
+        }
+      })
+      .mousemove(function(e) {
+        if (dragging) {
+          var newTop = e.clientY;
+          var newLeft = e.clientX;
+          var newHeight = (e.clientY - heightEls.offset().top - 16 + $(document).scrollTop()) + 'px';
+          $('#dragsafe').css('top', heightEls.offset().top + 'px').height(newHeight);
+          if (dragRowId == 'codeRow') {
+            $(is.currentEditor.frame).height(newHeight);
           }
-        });
+          heightEls.height(newHeight);
+        }
       });
-
-    this.draggerBot
-      .attr('unselectable', 'on')
-      .css('MozUserSelect', 'none')
-      .bind('selectstart.ui', function() { return false; })
-      .mousedown(function() {
-        me.runFrame = $('#runFrame');
-        me.runFrameOffset = me.runFrame.position().top;
-
-        me.draggingBot = true;
-        $().one('mouseup', function() {
-          me.draggingBot = false;
-          me.dragsafeDiv.css('top', '-800px').css('left', '-800px');
-        });
-      });
-
-    $().mousemove(function(e) {
-      if (me.draggingMid) {
-        var newTop = e.clientY - 400;
-        var newLeft = e.clientX - 400;
-        var newHeight = (e.clientY - me.editOffset+ $().scrollTop()) + 'px';
-        me.dragsafeDiv.css('top', newTop + 'px').css('left', newLeft + 'px');
-        $(is.currentEditor.frame).css('height', newHeight);
-        me.editDiv.css('height', newHeight);
-        me.selectCodeDiv.css('height', newHeight);
-      }
-      if (me.draggingBot) {
-        var newTop = e.clientY - 400;
-        var newLeft = e.clientX - 400;
-        var newHeight = (e.clientY - me.runFrameOffset + $().scrollTop()) + 'px';
-        me.dragsafeDiv.css('top', newTop + 'px').css('left', newLeft + 'px');
-        me.runFrame.css('height', newHeight);        
-      }
-    });
   };
 
 
@@ -1095,13 +1098,14 @@
     // ignoring that i'm passing in a NEW URL for boilerplateLoc.
     // If you load the iFrame first, THEN set the src, Safari likes it.
     // Lame.
+    var height = $('#runFrame').height() || '450';
     if ($.browser.safari) {
-      var iFrame = $('<iframe id="runFrame" style="height: 450px;" onload="is.runBox.iFrameLoaded = true;"><\/iframe>');
+      var iFrame = $('<iframe id="runFrame" class="pane-row-heighter" style="height: ' + height + 'px;" onload="is.runBox.iFrameLoaded = true;"><\/iframe>');
       $(this.runBoxDiv).empty().append(iFrame);
       iFrame = iFrame.get(0);
       iFrame.src = boilerplateLoc;
     } else {
-      var iFrame = $('<iframe src="'+boilerplateLoc+'" style="height: 450px;" onload="is.runBox.iFrameLoaded = true;" id="runFrame"><\/iframe>');
+      var iFrame = $('<iframe src="'+boilerplateLoc+'" class="pane-row-heighter" style="height: ' + height + 'px;" onload="is.runBox.iFrameLoaded = true;" id="runFrame"><\/iframe>');
       $(this.runBoxDiv).empty().append(iFrame);
     }
   };
