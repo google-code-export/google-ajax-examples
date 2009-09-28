@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<html>
 <!-- copyright (c) 2009 Google inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,20 +16,14 @@
  *
  * Author: Ben Lisbakken
 -->
-
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-        "http://www.w3.org/TR/html4/loose.dtd">
-<html>
 <head>
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <!-- CSS -->
-  <link rel="stylesheet" href="css/styles.css"
-        media="screen,projection" type="text/css">
-  <link rel="stylesheet" href="codemirror/css/docs.css"
-        media="screen,projection" type="text/css">
+  <link rel="stylesheet" href="css/yui-reset.css" type="text/css">
+  <link rel="stylesheet" href="css/styles.css" type="text/css">
   <!-- JavaScript -->
-  <title>AJAX APIs Playground</title>
+  <title>Google Code Playground</title>
   <script src="codemirror/js/prod_codemirrorz_513eeb9927a9d790c360886e3bb09a43.js" type="text/javascript" charset="utf-8"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js" type="text/javascript" charset="utf-8"></script>
   <script src="js/jquery-ui-packed.js" type="text/javascript" charset="utf-8"></script>
@@ -68,156 +64,68 @@
     });
   </script>
 </head>
-<body style="padding: 0px 0px;background-color: #E5ECF9;">
+<body>
 
 <div id="container">
-  <div id="loggedInBar">{% if userEmail %} {{ userEmail }} <span style="font-weight: normal">|</span> <a href="http://spreadsheets.google.com/viewform?hl=en&formkey=cFM5OU5yN3BrRzhOOEhFc2VBMmlQU2c6MA" style="color: #C00000;font-weight: bold;" target="_blank">Tell us what you think</a> <span style="font-weight: normal">|</span> <a href="{{ logoutUrl }}">Sign out</a></div>{% else %} <a href="http://spreadsheets.google.com/viewform?hl=en&formkey=cFM5OU5yN3BrRzhOOEhFc2VBMmlQU2c6MA" style="color: #C00000;font-weight: bold;" target="_blank">Tell us what you think</a> <span style="font-weight: normal">|</span> <a href="{{ loginUrl }}">Sign In</a></div> {% endif %}
-  <div class="whiteTopBar">
-    <table style="">
-      <tr>
-        <td id="googleLogoTD">
-          <a href="http://code.google.com/"><img border=0 src="images/code_logo.png" title="Google Logo"></a>
-          
-        </td>
-        <td valign=top style="width: 60%">
-          <h1 id="header">Code Playground</h1>
-        </td>
-        <td style="width:80%;">&nbsp;</td>
-      </tr>
-    </table>
+  <div id="whiteTopBar">
+    <div id="loggedInBar">{% if userEmail %} {{ userEmail }} <span style="font-weight: normal">|</span> <a href="http://spreadsheets.google.com/viewform?hl=en&formkey=cFM5OU5yN3BrRzhOOEhFc2VBMmlQU2c6MA" style="color: #C00000;font-weight: bold;" target="_blank">Tell us what you think</a> <span style="font-weight: normal">|</span> <a href="{{ logoutUrl }}">Sign out</a></div>{% else %} <a href="http://spreadsheets.google.com/viewform?hl=en&formkey=cFM5OU5yN3BrRzhOOEhFc2VBMmlQU2c6MA" style="color: #C00000;font-weight: bold;" target="_blank">Tell us what you think</a> <span style="font-weight: normal">|</span> <a href="{{ loginUrl }}">Sign in</a></div> {% endif %}
+    
+    <div id="googleCodeLogo" class="clearfix">
+      <a href="http://code.google.com/"><img border=0 src="images/code_logo.png" title="Google Logo"></a>
+    </div>
+    
+    <h1>Code Playground</h1>
   </div>
-
-
-<div id="content" style="height:500px;">
-<table class="contentTable">
-<tr>
-  <td id="selectContainer">
-    <table cellpadding=0 cellspacing=0 style="width:100%;">
-      <tr>
-        <td class="border_tl"></td>
-        <td class="border_t"></td>
-        <td class="border_tr"></td>
-      </tr>
-      <tr>
-        <td class="border_l"></td>
-        <td>
-          <div>
-            <h2>
-              <table class="headerTable">
-                <tbody>
-                <tr>
-                  <td style="width: 90px" class="headerFont">
-                    Pick Sample
-                  </td>
-                  <td align="right">
-                    <table cellpadding=0 cellspacing=0>
-                      <tr>
-                        <td class="search_tl"></td>
-                        <td class="search_t_b"></td>
-                        <td class="search_tr"></td>
-                      </tr>
-                      <tr>
-                        <td class="search_l_r"></td>
-                        <td style="background-color:white;" class="searchContainer">
-                          <input type="text" id="search" value="Search" style="color:gray;" onclick="this.value='';this.style.color='black';return false;">
-                        </td>
-                        <td class="search_l_r"></td>
-                      </tr>
-                      <tr>
-                        <td class="search_bl"></td>
-                        <td class="search_t_b"></td>
-                        <td class="search_br"></td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-                </tbody>
-              </table>
-            </h2>
-          </div>
-          <div id="selectCode"></div>
-        </td>
-        <td class="border_r"></td>
-      </tr>
-      <tr>
-        <td class="border_bl"></td>
-        <td class="border_b draggerMid"></td>
-        <td class="border_br"></td>
-      </tr>
-    </table>
-  </td>
-
-
-
-
-  <td id="codeContainer">
-    <table cellpadding=0 cellspacing=0 style="width:100%;">
-      <tr>
-        <td class="border_tl"></td>
-        <td class="border_t"></td>
-        <td class="border_tr"></td>
-      </tr>
-      <tr>
-        <td class="border_l"></td>
-        <td>
-          <div id="editor">
-              <div id="editDrag">
-                <h2>
-                <table class="headerTable">
-                  <tbody>
-                    <tr>
-                      <td style="width: 80px" class="headerFont">Edit Code</td>
-                      <td align="center" id="demoTitle">&nbsp;</td>
-                      <td align="right" class="codeMenuTD">
-                        <span id="codeMenu" class="buttonDropdownContainer">
-                          <span id="codeMenuButtonContainer" style="">
-                            <a id="docsLink" target="_blank" title="View the documentation for this sample.">
-                              <span id="docsButton"></span>
-                            </a>
-                            <a href="javascript:is.toggleEditHTML();" title="Toggle between Javascript and HTML editing."><span id="toggleEditHTMLButton"></span></a>
-                            <span id="dropdownButton"></span>
-                          </span>
-
-
-                          <br style="clear:both;">
-                          <span id="codeMenuDropdown" class="dropdown" >
-                            <div class="menuTop"></div>
-                            <div class="menuTile">
-                              <span class="first" onclick="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.linkCode();return false;"><img src="images/export.png" title="Export Code" />&nbsp;Export
-                              </span>
-                              {% if loginUrl %}
-                              <span onclick="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.confirmLogin('{{ loginUrl }}', true);return false;">
-                                <img src="images/save.png" title="Save" />&nbsp;Save
-                              </span>
-                              {% else %}
-                              <span onclick="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.saveCode();return false;">
-                                <img src="images/save.png" title="Save" />&nbsp;Save
-                              </span>
-                              {% endif %}
-                            </div>
-                            <div class="menuBottom"></div>
-                          </span>
-                        </span>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </h2>
+  
+  <div class="pane-row" id="codeRow">
+    <div class="pane" id="selectCodeContainer">
+      <div class="pane-header">
+        <h2>Pick Sample</h2>
+        <input type="search" placeholder="Search" id="search">
+      </div>
+      <div class="pane-content">
+        <div id="selectCode" class="pane-row-heighter"></div>
+      </div>
+    </div>
+  
+    <div class="pane" id="codeContainer">
+      <div class="pane-header">
+        <h2>Edit Code</h2>
+        <div id="demoTitle"></div>
+        <div class="pane-buttons">
+          <button id="docsButton" onclick="is.viewDocs();" title="View the documentation for this sample.">
+            <span class="docs-icon icon-text">View Docs</span>
+          </button>
+          <button id="toggleEditHTMLButton" onclick="is.toggleEditHTML();" title="Toggle between Javascript and HTML editing.">
+            <span class="html-icon icon-text">Edit HTML</span>
+          </button>
+          <button id="codeMenuButton" class="dropdown">
+            <span class="dropdown-icon icon-only">&nbsp;</span>
+          </button>
+          <div class="dropdown-content" id="codeMenuDropdown">
+            <div onclick="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.linkCode();return false;">
+              <span class="export-icon icon-text">Export</span>
             </div>
-            <div id="edit">
-              <span id="editJS"></span>
-              <span id="editMixed"></span>
+            {% if loginUrl %}
+            <div onclick="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.confirmLogin('{{ loginUrl }}', true);return false;">
+              <span class="save-icon icon-text">Save</span>
             </div>
+            {% else %}
+            <div onclick="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.saveCode();return false;">
+              <span class="save-icon icon-text">Save</span>
+            </div>
+            {% endif %}
           </div>
-        </td>
-        <td class="border_r"></td>
-      </tr>
-      <tr>
-        <td class="border_bl"></td>
-        <td class="border_b draggerMid"></td>
-        <td class="border_br"></td>
-      </tr>
-    </table>
+        </div>
+      </div>
+      <div class="pane-content">
+        <div id="edit" class="pane-row-heighter">
+          <span id="editJS"></span>
+          <span id="editMixed"></span>
+        </div>
+      </div>
+    </div>
+    
     <script type="text/javascript" charset="utf-8">
     var options = {}
     if (!location.host.match(/localhost/) && !location.href.match(/\/\/172/)) {
@@ -230,6 +138,7 @@
       path : 'codemirror/js/',
       height : '320px',
       content: '',
+      textWrapping: false,
       lineNumbers: true,
       breakPoints: false,
       onLoad: function() {is.runBox.runCode(options);}
@@ -241,75 +150,45 @@
       path : 'codemirror/js/',
       height : '320px',
       content: '',
+      textWrapping: false,
       lineNumbers: true,
       breakPoints: true,
       onLoad: function() {is.runBox.runCode(options);}
     });
     </script>
-  </td>
-</tr>
-<tr>
-
-
-
-
-  <td id="outputContainer" colspan=2>
-    <table cellpadding=0 cellspacing=0 style="width:100%;margin-top: 5px;">
-      <tr>
-        <td class="border_tl"></td>
-        <td class="border_t"></td>
-        <td class="border_tr"></td>
-      </tr>
-      <tr>
-        <td class="border_l"></td>
-        <td>
-          <div id="outputDiv">
-            <div id="outputDrag">
-              <h2>
-                <table  class="headerTable">
-                  <tbody>
-                    <tr>
-                      <td class="headerFont">
-                        Output
-                      </td>
-                      <td align="right">
-                        <a href="javascript:is.runBox.runCode({debugMode: true});" style="text-decoration: none;" title="Run this sample in 'Debug Mode' which enables breakpoints and inserts Firebug Lite."><img border=0 src="images/debug_code.png"></a>
-                        <a href="javascript:is.runBox.runCode();" title="Run this sample."><img border=0 src="images/run_code.png"></a>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </h2>
-            </div>
-            <div id="runbox"></div>
-          </div>
-        </td>
-        <td class="border_r"></td>
-      </tr>
-      <tr>
-        <td class="border_bl"></td>
-        <td class="border_b draggerBot"></td>
-        <td class="border_br"></td>
-      </tr>
-    </table>
-  </td>
-</tr>
-
-
-
-<tr>
-  <td colspan=2 class="footer" style="vertical-align: middle; font-size:80%; text-align: center">
-    <div id="footerLinks">
-      ©2009 Google -
-      <a href="http://code.google.com/">Code Home</a> - <a href="http://www.google.com/accounts/TOS">Site Terms of Service</a> -
-      <a href="http://www.google.com/privacy.html">Privacy Policy</a> -
-      <a href="http://code.google.com/more/">Site Directory</a> -
-      <a href="http://code.google.com/p/google-ajax-examples/issues/list" target="_blank">Report Bug</a>
+  </div>
+  
+  <div class="pane-row-sizer"></div>
+  
+  <div class="pane-row" id="outputRow">
+    <div class="pane" id="outputContainer">
+      <div class="pane-header">
+        <h2>Output</h2>
+        <div class="pane-buttons">
+          <button onclick="is.runBox.runCode({debugMode: true});" title="Run this sample in 'Debug Mode' which enables breakpoints and inserts Firebug Lite.">
+            <span class="debug-icon icon-text">Debug Code</span>
+          </button>
+        
+          <button onclick="is.runBox.runCode();" title="Run this sample.">
+            <span class="run-icon icon-text">Run Code</span>
+          </button>
+        </div>
+      </div>
+      <div class="pane-content">
+        <div id="runbox"></div>
+      </div>
     </div>
-  </td>
-</tr>
-</table>
-</div>
+  </div>
+  
+  <div class="pane-row-sizer"></div>
+  
+  <div id="footer">
+    ©2009 Google -
+    <a href="http://code.google.com/">Code Home</a> - <a href="http://www.google.com/accounts/TOS">Site Terms of Service</a> -
+    <a href="http://www.google.com/privacy.html">Privacy Policy</a> -
+    <a href="http://code.google.com/more/">Site Directory</a> -
+    <a href="http://code.google.com/p/google-ajax-examples/issues/list" target="_blank">Report Bug</a>
+  </div>
 </div>
 
 <div id="HTMLforInlineJavascript" style="display:none;">&nbsp;</div>
@@ -325,91 +204,62 @@ iFrame fixes it.
   <input type="hidden" id="codeHolder" name="code" />
 </form>
 <div id="grayOverlay"></div>
-<div id="saveDiv">
-  <table cellpadding=0 cellspacing=0 style="width:100%;margin-top: 5px;">
-    <tr>
-      <td class="border_tl"></td>
-      <td class="border_t"></td>
-      <td class="border_tr"></td>
-    </tr>
-    <tr>
-      <td class="border_l"></td>
-      <td style="background-color: white;">
-        <h2 style="height:20px">Save Code</h2>
-        <form action="save" method="POST" id="saveForm">
-          <input type="hidden" name="boilerplateLoc" value="" id="boilerplateLoc">
-          <input name="jscode" id="jscodeSaveForm" style="display: none;" />
-          <input type="hidden" name="id" value="" id="idSaveForm">
-          <input type="hidden" name="type" value="{{curAPITypes}}">
-          <input type="hidden" name="sc" id="safetyCookie">
-          <table id="saveFormTable">
-            <tr>
-              <td style="vertical-align: top;" class="formLabel">Sample Name:</td>
-              <td>
-                <div>
-                  <input type="text" id="saveSampleName" name="sampleName" value="My Sample" />
-                  <div class="explain">
-                    This is the display name of the sample.  It must have a unique name.
-                  </div>
-                </div>
-              </td>
-            </tr>
 
-            <tr>
-              <td style="vertical-align: top;" class="formLabel">Tags:</td>
-              <td>
-                <div>
-                  <input type="text" id="tagsSaveForm" name="tags" value="tag1, tag2, tag3" />
-                  <div class="explain">
-                    Tags associated with this sample.  They will be used for the search bar.
-                  </div>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td align='right'colspan='2'>
-                <img id="saveFormSubmit" src="images/dialog-btn-save.png" onclick="$('#saveForm').submit();" />
-                <img id="cancelFormSubmit" src="images/dialog-btn-cancel.png" onclick="is.uiEffects.closeDialog('saveDiv');return false;" />
-              </td>
-            </tr>
-          </table>
-        </form>
+<div id="saveDiv" class="dialog">
+  <h2 style="height:20px">Save Code</h2>
+  <form action="save" method="POST" id="saveForm">
+    <input type="hidden" name="boilerplateLoc" value="" id="boilerplateLoc">
+    <input name="jscode" id="jscodeSaveForm" style="display: none;" />
+    <input type="hidden" name="id" value="" id="idSaveForm">
+    <input type="hidden" name="type" value="{{curAPITypes}}">
+    <input type="hidden" name="sc" id="safetyCookie">
+    <table id="saveFormTable">
+      <tr>
+        <td style="vertical-align: top;" class="formLabel">Sample Name:</td>
+        <td>
+          <div>
+            <input type="text" id="saveSampleName" name="sampleName" value="My Sample" />
+            <div class="explain">
+              This is the display name of the sample.  It must have a unique name.
+            </div>
+          </div>
+        </td>
+      </tr>
 
-      </td>
-      <td class="border_r"></td>
-    </tr>
-    <tr>
-      <td class="border_bl"></td>
-      <td class="border_b draggerMid"></td>
-      <td class="border_br"></td>
-    </tr>
+      <tr>
+        <td style="vertical-align: top;" class="formLabel">Tags:</td>
+        <td>
+          <div>
+            <input type="text" id="tagsSaveForm" name="tags" value="tag1, tag2, tag3" />
+            <div class="explain">
+              Tags associated with this sample.  They will be used for the search bar.
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td align='right'colspan='2'>
+          <button id="saveFormSubmit" onclick="$('#saveForm').submit();">
+            <span class="save-icon icon-text">Save</span>
+          </button>
+          
+          <button class="negative" id="cancelFormSubmit" onclick="is.uiEffects.closeDialog('saveDiv');return false;">
+            <span class="cancel-icon icon-text">Cancel</span>
+          </button>
+        </td>
+      </tr>
+    </table>
+  </form>
+</div>
+
+<div id="getChromeFrameDiv" class="dialog">
+  <h2>Get Chrome Frame</h2>
+  <p style="padding-left: 10px">The Playground no longer supports Internet Explorer.  Please <a href="http://www.google.com/chromeframe" target="_blank">install the Chrome Frame plugin</a> to use the Playground.</p>
+  <table border="0" cellspacing="0" cellpadding="0" style="width:100%">
+    <tr><td style="width:100%;" align="right" onclick="is.uiEffects.closeDialog('getChromeFrameDiv');return false;"><img id="cancelFormSubmit" src="images/dialog-btn-cancel.png" /></td></tr>
   </table>
 </div>
-<div id="getChromeFrameDiv">
-  <table cellpadding=0 cellspacing=0 style="width:100%;margin-top: 5px;">
-    <tr>
-      <td class="border_tl"></td>
-      <td class="border_t"></td>
-      <td class="border_tr"></td>
-    </tr>
-    <tr>
-      <td class="border_l"></td>
-      <td style="background-color: white;">
-        <h2 style="height:20px">Get Chrome Frame</h2>
-        <p style="padding-left: 10px">The Playground no longer supports Internet Explorer.  Please <a href="http://www.google.com/chromeframe" target="_blank">install the Chrome Frame plugin</a> to use the Playground.</p>
-        <table border="0" cellspacing="0" cellpadding="0" style="width:100%">
-          <tr><td style="width:100%;" align="right" onclick="is.uiEffects.closeDialog('getChromeFrameDiv');return false;"><img id="cancelFormSubmit" src="images/dialog-btn-cancel.png" /></td></tr>
-        </table>
-      </td>
-      <td class="border_r"></td>
-    </tr>
-    <tr>
-      <td class="border_bl"></td>
-      <td class="border_b draggerMid"></td>
-      <td class="border_br"></td>
-    </tr>
-  </table>
-</div>
+
 <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
 if (window.location.href.match(/code\.google\.com/)) {
