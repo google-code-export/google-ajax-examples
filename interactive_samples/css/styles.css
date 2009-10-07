@@ -87,10 +87,10 @@ button.negative:hover {
 }
 
 h1 {
-  position: relative;
-  top: -4px;
+  position: absolute;
+  left: 200px;
+  top: 18px;
   vertical-align: middle;
-  padding-left: 30px;
   display: inline-block;
   font-weight: bold;
   font-size: 24px;
@@ -176,6 +176,11 @@ h1 {
   padding-left: 324px;
 }
 
+/* IE6 hack */
+* html #selectCodeContainer {
+  left: -324px;
+}
+
 #selectCodeContainer {
   position: absolute;
   width: 300px;
@@ -219,11 +224,10 @@ h1 {
 
 
 #edit, #selectCode {
+  position: relative;
   height: 320px;
-}
-
-#edit {
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 #saveDiv, #getChromeFrameDiv {
