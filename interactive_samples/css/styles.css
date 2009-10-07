@@ -5,10 +5,6 @@ html, body {
   background-color: #E5ECF9;
 }
 
-td {
-  padding: 0;
-}
-
 .new {
   color:red;
   font-size:10px;
@@ -66,7 +62,7 @@ button.negative:hover {
   border-bottom: 1px solid #427bd6;
   font-size: 1em;
   margin: 0;
-  padding: 16px 16px 8px 16px;
+  padding: 16px 16px 4px 16px;
   white-space: nowrap;
 }
 
@@ -92,7 +88,7 @@ button.negative:hover {
 
 h1 {
   position: relative;
-  top: -3px;
+  top: -4px;
   vertical-align: middle;
   padding-left: 30px;
   display: inline-block;
@@ -325,18 +321,6 @@ iframe {
 
 a:link {
   color: #427bd6;
-}
-
-.headerTable td{
-  vertical-align: middle;
-  padding: 0;
-}
-.headerTable {
-  width: 100%;
-  height: 100%;
-  table-layout: fixed;
-  margin-top: -2px;
-  padding: 0;
 }
 
 li.selected {
@@ -624,20 +608,6 @@ li.ui-autocomplete-odd > a > strong, li.ui-autocomplete-even > a > strong {
   filter: alpha(opacity = 80);
 }
 
-#saveFormSubmit {
-  display: inline;
-  width: 69px;
-  height: 25px;
-  cursor: pointer;
-}
-
-#cancelFormSubmit {
-  display: inline;
-  width: 82px;
-  height: 25px;
-  cursor: pointer;
-}
-
 form table td {
   padding-bottom: 8px;
 }
@@ -650,4 +620,9 @@ form table td {
   padding-top: 4px;
   color: #888;
   font-size: 11px;
+}
+
+.dialog-buttons {
+  text-align: right;
+  padding-top: 5px;
 }

@@ -837,6 +837,8 @@
   UIEffects.prototype.showSaveForm = function() {
     this.resizeAndShowDialog('saveDiv');
     $(window).resize(function() {
+      if ($('#saveDiv').css('display') == 'none')
+        return;
       window.is.uiEffects.resizeAndShowDialog('saveDiv');
     });
     var curSampleObj = this.is.sampleFileNameToObject(this.is.getCurFilename());
@@ -854,6 +856,8 @@
   UIEffects.prototype.showGetChromeFrameDiv = function() {
     window.is.uiEffects.resizeAndShowDialog('getChromeFrameDiv');
     $(window).resize(function() {
+      if ($('#getChromeFrameDiv').css('display') == 'none')
+        return;
       window.is.uiEffects.resizeAndShowDialog('getChromeFrameDiv');
     });
   }

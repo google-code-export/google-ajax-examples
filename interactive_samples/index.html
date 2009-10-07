@@ -81,7 +81,7 @@
     <div class="pane" id="selectCodeContainer">
       <div class="pane-header">
         <h2>Pick Sample</h2>
-        <input type="search" placeholder="Search" id="search">
+        <input type="text" placeholder="Search" id="search">
       </div>
       <div class="pane-content">
         <div id="selectCode" class="pane-row-heighter"></div>
@@ -237,27 +237,28 @@ iFrame fixes it.
           </div>
         </td>
       </tr>
-      <tr>
-        <td align='right'colspan='2'>
-          <button id="saveFormSubmit" onclick="$('#saveForm').submit();">
-            <span class="save-icon icon-text">Save</span>
-          </button>
-          
-          <button class="negative" id="cancelFormSubmit" onclick="is.uiEffects.closeDialog('saveDiv');return false;">
-            <span class="cancel-icon icon-text">Cancel</span>
-          </button>
-        </td>
-      </tr>
     </table>
+    <div class="dialog-buttons">
+      <button onclick="$('#saveForm').submit();">
+        <span class="save-icon icon-text">Save</span>
+      </button>
+    
+      <button class="negative" onclick="is.uiEffects.closeDialog('saveDiv');return false;">
+        <span class="cancel-icon icon-text">Cancel</span>
+      </button>
+    </div>
   </form>
 </div>
 
 <div id="getChromeFrameDiv" class="dialog">
   <h2>Get Chrome Frame</h2>
-  <p style="padding-left: 10px">The Playground no longer supports Internet Explorer.  Please <a href="http://www.google.com/chromeframe" target="_blank">install the Chrome Frame plugin</a> to use the Playground.</p>
-  <table border="0" cellspacing="0" cellpadding="0" style="width:100%">
-    <tr><td style="width:100%;" align="right" onclick="is.uiEffects.closeDialog('getChromeFrameDiv');return false;"><img id="cancelFormSubmit" src="images/dialog-btn-cancel.png" /></td></tr>
-  </table>
+  <p>The Playground no longer supports Internet Explorer.  Please <a href="http://www.google.com/chromeframe" target="_blank">install the Chrome Frame plugin</a> to use the Playground.</p>
+  
+  <div class="dialog-buttons">
+    <button class="negative" onclick="is.uiEffects.closeDialog('getChromeFrameDiv');return false;">
+      <span class="cancel-icon icon-text">Close</span>
+    </button>
+  </div>
 </div>
 
 <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js" type="text/javascript" charset="utf-8"></script>
