@@ -56,8 +56,8 @@
         var matches = entries[i].content.match(sampleAddedRegex);
         if (matches) {
           for (var j = 0; j < matches.length; j++) {
-            var filename = matches[j].match(/samples\/js.*/g)[0];
-            if (typeof newSamples[filename] == 'undefined') {
+            var filename = matches[j].match(/samples\/js.*/g);
+            if (filename != null && typeof newSamples[filename[0]] == 'undefined') {
               newSamples[filename] = true;;
             }
           }
