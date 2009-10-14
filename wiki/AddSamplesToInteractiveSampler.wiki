@@ -27,6 +27,13 @@ Samples are stored in the samples/ directory in the codebase.  There are four pa
 
 4. Specify your JSON in the App Engine script, main.py.  There is an array at the top of the file which has paths to the JSON file, and the name of the API.  Only change this if you are adding an API.  http://code.google.com/p/google-ajax-examples/source/browse/trunk/interactive_samples/main.py
 
+5. Run the production preperation script. It may prompt you for a secret token but you can enter anything you like unless you are pushing this to code.google.com. If you are running your own instance, the secret token is not needed. The preperation script creates a directory {{{../interactive_copy}}} which is what should be run as the app so 
+{{{
+python production_preparation.py
+cd ../interactive_copy
+}}}
+then push to App Engine from the {{{interactive_copy}}} directory.
+
 = Examples =
 Here is a sample commit that added samples:
 http://code.google.com/p/google-ajax-examples/source/detail?r=320
