@@ -313,7 +313,7 @@ class Save(webapp.RequestHandler):
       jscode = self.request.get('jscode')
       #  This hack is because of IE not being able to POST the code with the
       #  newline characters in it
-      jscode = jscode.replace('NEWLINE!!!', '\n');
+      jscode = jscode.replace('&#x000a;', '\n');
       sampleName =  self.request.get('sampleName')
       tags = self.request.get('tags')
       boilerplateLoc = self.request.get('boilerplateLoc')
@@ -348,7 +348,7 @@ class CacheCode(webapp.RequestHandler):
     unique_id = self.request.get('unique_id')
     code = code.encode('utf-8')
     query = urllib.urlencode({'code' : code, 'unique_id' : unique_id})
-    data = urlfetch.fetch('http://savedbythegoog.appspot.com/cache_code', query, "POST")
+    data = urlfetch.fetch('http://localhost:8082/cache_code', query, "POST")
     self.response.out.write(data.content)
 
 class GetTOC(webapp.RequestHandler):
