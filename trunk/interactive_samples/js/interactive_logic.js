@@ -515,10 +515,10 @@
       if (confirmOverwrite) {
         // HUGE HACK.  In IE, an input element can't store a newline character,
         // or at least I can't find out how.  So they all get lost during the send
-        // so on the server side i will parse out NEWLINE!!! and add in the correct
+        // so on the server side i will parse out &#x000a; and add in the correct
         // code :)
         var code = this.getCode();
-        code = code.replace(/\n/g, 'NEWLINE!!!');
+        code = code.replace(/\n/g, '&#x000a;');
         $('#jscodeSaveForm').attr('value', code);
         $('#boilerplateLoc').attr('value', sampleObj.boilerplateLoc);
         $('#idSaveForm').attr('value', sampleObj.id);
@@ -530,7 +530,7 @@
   };
 
   InteractiveSample.prototype.sendCodeToServer = function(code) {
-    code = code.replace(/\n/g, 'NEWLINE!!!');
+    code = code.replace(/\n/g, '&#x000a;');
     $('#codeHolder').attr('value', code);
     $('#linkCodeForm').get(0).submit();
   };
@@ -846,10 +846,10 @@
     $('#boilerplateLoc').attr('value', boilerplateLoc);
     // HUGE HACK.  In IE, an input element can't store a newline character,
     // or at least I can't find out how.  So they all get lost during the send
-    // so on the server side i will parse out NEWLINE!!! and add in the correct
+    // so on the server side i will parse out &#x000a; and add in the correct
     // code :)
     var code = this.is.getCode();
-    code = code.replace(/\n/g, 'NEWLINE!!!');
+    code = code.replace(/\n/g, '&#x000a;');
     $('#jscodeSaveForm').attr('value', code);
   };
 
