@@ -95,7 +95,10 @@ class RetrieveCache(webapp.RequestHandler):
     last_key = self.request.cookies.get('lastKey')
     self.response.headers['P3P'] = 'CP="CURa ADMa DEVa PSAo PSDo OUR BUS UNI PUR INT DEM STA PRE COM NAV OTC NOI DSP COR"'
     code = memcache.get(unique_id)
+    if code:
+      logging.info('From passed id memcache');
     if not code and not default_sample and last_key:
+      logging.info('From cookie id memcache');
       code = memcache.get(last_key)
     if code:
       # Cache HIT
@@ -103,8 +106,7 @@ class RetrieveCache(webapp.RequestHandler):
       # Refresh the cache, commonly used code snippets shouldn't expire as
       # quickly as infrequently used ones.
       memcache.set(key=unique_id, value=code, time=600)
-      self.response.headers['Set-Cookie'] =
-        ('Set-Cookie: lastKey=%S; path=/' % unique_id)
+      self.response.headers['Set-Cookie'] = str('lastKey=%s; path=/' % (unique_id or last_key))
       self.response.out.write(code)
     elif default_sample:
       # Cache MISS, doing HTTP request
@@ -123,11 +125,10 @@ class RetrieveCache(webapp.RequestHandler):
       self.response.headers['Expires'] = "Fri, 01 Jan 1990 00:00:00 GMT"
       self.response.headers['Content-Type'] = 'text/html'
       self.response.headers['Cache-Control'] = 'no-cache, no-store, max-age=0, must-revalidate'
-      self.response.headers['Set-Cookie'] =
-        ('Set-Cookie: lastKey=%S; path=/' % alt_key)
-
+      self.response.headers['Set-Cookie'] = str('lastKey=%s; path=/' % alt_key)
       memcache.set(key=alt_key, value=bp_data, time=600)
       memcache.set(key=unique_id, value=bp_data, time=600)
+      logging.info('From default_sample');
       self.response.out.write(bp_data)
     else:
       # Cache MISS, epic fail
@@ -143,11 +144,11 @@ class ShowCode(webapp.RequestHandler):
       code = memcache.get(key or last_key)
     if key or last_key and not code:
       saved_code = SavedCode.get_by_key_name(key or last_key)
+      logging.info('From datastore');
       code = saved_code and saved_code.code
     if code:
       # Cache HIT
-      self.response.headers['Set-Cookie'] =
-        ('Set-Cookie: lastKey=%S; path=/' % key)
+      self.response.headers['Set-Cookie'] = str('lastKey=%s; path=/' % key)
       self.response.out.write(code)
     elif key:
       # Cache MISS, epic fail
