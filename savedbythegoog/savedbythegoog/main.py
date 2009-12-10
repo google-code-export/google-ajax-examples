@@ -33,7 +33,25 @@ from google.appengine.ext.webapp import template
 from google.appengine.api import memcache
 from google.appengine.api import urlfetch
 
+class SavedCode(db.Model):
+  code = db.TextProperty()
+  date = db.DateTimeProperty(auto_now_add=True)
+
 def saveCode(code):
+  # IE won't let an HTML input element store newline chars,
+  # so we change them to &#x000a; for the input element, then on the
+  # serverside change them back to actual newlines.
+  code = code.replace('&#x000a;', '\n')
+  h = hashlib.sha1()
+  h.update(code)
+  key = h.hexdigest()
+  saved_code = SavedCode(key_name=key)
+  saved_code.code = code
+  saved_code.put()
+  logging.info("Saving to datastore with key: " + key)
+  return key
+
+def cacheCode(code):
   # IE won't let an HTML input element store newline chars,
   # so we change them to &#x000a; for the input element, then on the
   # serverside change them back to actual newlines.
@@ -58,7 +76,7 @@ class AddCode(webapp.RequestHandler):
       # Store that this IP added code in the last 10 seconds
       memcache.set(key=ip, value="1", time=10)
       code = code.replace('&#x000a;', '\n');
-      if (code):
+      if code.strip():
         key = saveCode(code)
         self.redirect('/?id=' + str(key))
       else:
@@ -67,42 +85,50 @@ class AddCode(webapp.RequestHandler):
 class CacheCode(webapp.RequestHandler):
   def post(self):
     code = self.request.get('code')
-    key = saveCode(code)
+    key = cacheCode(code)
     self.response.out.write(str(key))
 
 class RetrieveCache(webapp.RequestHandler):
   def get(self):
     unique_id = self.request.get('unique_id')
-    defaultSample = self.request.get('defaultSample')
+    default_sample = self.request.get('defaultSample')
+    last_key = self.request.cookies.get('lastKey')
     self.response.headers['P3P'] = 'CP="CURa ADMa DEVa PSAo PSDo OUR BUS UNI PUR INT DEM STA PRE COM NAV OTC NOI DSP COR"'
     code = memcache.get(unique_id)
+    if not code and not default_sample and last_key:
+      code = memcache.get(last_key)
     if code:
       # Cache HIT
 
       # Refresh the cache, commonly used code snippets shouldn't expire as
       # quickly as infrequently used ones.
       memcache.set(key=unique_id, value=code, time=600)
+      self.response.headers['Set-Cookie'] =
+        ('Set-Cookie: lastKey=%S; path=/' % unique_id)
       self.response.out.write(code)
-    elif defaultSample:
+    elif default_sample:
       # Cache MISS, doing HTTP request
-      self.response.headers['Expires'] = "Fri, 01 Jan 1990 00:00:00 GMT"
-      self.response.headers['Content-Type'] = 'text/html'
-      self.response.headers['Cache-Control'] = 'no-cache, no-store, max-age=0, must-revalidate'
-      uniqueSplit = unique_id.split('|')
-      bpUrl = uniqueSplit[0]
-      jsUrl = uniqueSplit[1]
-      bpData = urlfetch.fetch(bpUrl, "GET").content
-      jsData = urlfetch.fetch(jsUrl, "GET").content
-      bpData = bpData.replace('INSERT_JAVASCRIPT_HERE', jsData)
+      unique_split = unique_id.split('|')
+      bp_url = unique_split[0]
+      js_url = unique_split[1]
+      bp_data = urlfetch.fetch(bp_url, "GET").content
+      js_data = urlfetch.fetch(js_url, "GET").content
+      bp_data = bp_data.replace('INSERT_JAVASCRIPT_HERE', js_data)
 
       # Do we want this?
       h = hashlib.sha1()
-      h.update(bpData)
+      h.update(bp_data)
       alt_key = h.hexdigest()
-      memcache.set(key=alt_key, value=bpData, time=600)      
 
-      memcache.set(key=unique_id, value=bpData, time=600)
-      self.response.out.write(bpData)
+      self.response.headers['Expires'] = "Fri, 01 Jan 1990 00:00:00 GMT"
+      self.response.headers['Content-Type'] = 'text/html'
+      self.response.headers['Cache-Control'] = 'no-cache, no-store, max-age=0, must-revalidate'
+      self.response.headers['Set-Cookie'] =
+        ('Set-Cookie: lastKey=%S; path=/' % alt_key)
+
+      memcache.set(key=alt_key, value=bp_data, time=600)
+      memcache.set(key=unique_id, value=bp_data, time=600)
+      self.response.out.write(bp_data)
     else:
       # Cache MISS, epic fail
       self.response.set_status(404)
@@ -111,8 +137,11 @@ class RetrieveCache(webapp.RequestHandler):
 class ShowCode(webapp.RequestHandler):
   def get(self):
     key = self.request.get('id')
+    last_key = self.request.cookies.get('lastKey')
     if key:
       code = memcache.get(key)
+      if not code and last_key:
+        code = memcache.get(last_key)
       if code:
         # Cache HIT
         self.response.out.write(code)
@@ -135,7 +164,6 @@ def main():
     ('/show', ShowCode)
   ],debug=False)                        
   wsgiref.handlers.CGIHandler().run(application)
-
 
 if __name__ == '__main__':
   main()
