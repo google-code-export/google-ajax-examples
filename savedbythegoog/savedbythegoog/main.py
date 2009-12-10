@@ -106,7 +106,9 @@ class RetrieveCache(webapp.RequestHandler):
       # Refresh the cache, commonly used code snippets shouldn't expire as
       # quickly as infrequently used ones.
       memcache.set(key=unique_id, value=code, time=600)
-      self.response.headers['Set-Cookie'] = str('lastKey=%s; path=/' % (unique_id or last_key))
+      key = default_sample and unique_id or last_key
+      logging.info("Key we're storing as cookie in RetrieveCache: %s" % key)
+      self.response.headers['Set-Cookie'] = str('lastKey=%s; path=/' % key)
       self.response.out.write(code)
     elif default_sample:
       # Cache MISS, doing HTTP request
