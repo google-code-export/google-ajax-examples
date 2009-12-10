@@ -144,6 +144,8 @@ class ShowCode(webapp.RequestHandler):
         code = memcache.get(last_key)
       if code:
         # Cache HIT
+        self.response.headers['Set-Cookie'] =
+          ('Set-Cookie: lastKey=%S; path=/' % key)
         self.response.out.write(code)
       else:
         # Cache MISS, epic fail
