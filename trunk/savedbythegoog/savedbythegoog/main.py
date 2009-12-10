@@ -138,19 +138,21 @@ class ShowCode(webapp.RequestHandler):
   def get(self):
     key = self.request.get('id')
     last_key = self.request.cookies.get('lastKey')
-    if key:
-      code = memcache.get(key)
-      if not code and last_key:
-        code = memcache.get(last_key)
-      if code:
-        # Cache HIT
-        self.response.headers['Set-Cookie'] =
-          ('Set-Cookie: lastKey=%S; path=/' % key)
-        self.response.out.write(code)
-      else:
-        # Cache MISS, epic fail
-        self.response.set_status(404)
-        self.response.out.write('Expired or non-existent.')
+    code = None
+    if key or last_key:
+      code = memcache.get(key or last_key)
+    if key or last_key and not code:
+      saved_code = SavedCode.get_by_key_name(key or last_key)
+      code = saved_code and saved_code.code
+    if code:
+      # Cache HIT
+      self.response.headers['Set-Cookie'] =
+        ('Set-Cookie: lastKey=%S; path=/' % key)
+      self.response.out.write(code)
+    elif key:
+      # Cache MISS, epic fail
+      self.response.set_status(404)
+      self.response.out.write('Expired or non-existent.')
     else:
       # Bad Request
       self.response.set_status(400)
