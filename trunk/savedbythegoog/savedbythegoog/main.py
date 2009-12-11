@@ -65,6 +65,14 @@ def cacheCode(code):
   logging.info("Saving to memcache with key: " + key)
   return key
 
+def retrieveCode(key):
+  """Checks memcached for the key first, then checks the data store."""
+  code = memcache.get(key)
+  if not code:
+    saved_code = SavedCode.get_by_key_name(key)
+    code = saved_code and saved_code.code
+  return code
+
 class AddCode(webapp.RequestHandler):
   def post(self):
     code = self.request.get('code')
@@ -90,18 +98,25 @@ class CacheCode(webapp.RequestHandler):
 
 class RetrieveCache(webapp.RequestHandler):
   def get(self):
-    unique_id = self.request.get('unique_id')
+    unique_id = self.request.get('unique_id') or self.request.get('id')
     default_sample = self.request.get('defaultSample')
     last_key = self.request.cookies.get('lastKey')
     self.response.headers['P3P'] = 'CP="CURa ADMa DEVa PSAo PSDo OUR BUS UNI PUR INT DEM STA PRE COM NAV OTC NOI DSP COR"'
-    key = unique_id
-    code = memcache.get(unique_id)
-    if code:
-      logging.info('ID supplied by URI');
-    if not code and not default_sample and last_key:
-      logging.info('ID supplied by cookie');
-      code = memcache.get(last_key)
-      key = last_key
+    key = None
+    code = None
+    # If a unique ID was sent via the URI, check memcache and the datastore
+    # for matching code, otherwise, if there is a lastKey cookie value,
+    # check memcache and the datastore for that instead.
+    if unique_id:
+      code = retrieveCode(unique_id)
+      if code:
+        key = unique_id
+        logging.info('ID supplied by URI');
+    if not unique_id and not default_sample and last_key:
+      code = retrieveCode(last_key)
+      if code:
+        key = last_key
+        logging.info('ID supplied by cookie');
     if code:
       # Cache HIT
 
@@ -116,7 +131,8 @@ class RetrieveCache(webapp.RequestHandler):
       self.response.headers['Set-Cookie'] = str('lastKey=%s; path=/' % key)
       self.response.out.write(code)
     elif default_sample:
-      # Cache MISS, doing HTTP request
+      # Cache MISS, but it was a default sample, so retrieve and rebuild
+      # the code from its component parts.
       unique_split = unique_id.split('|')
       bp_url = unique_split[0]
       js_url = unique_split[1]
@@ -130,45 +146,31 @@ class RetrieveCache(webapp.RequestHandler):
 
       self.response.headers['Set-Cookie'] = str('lastKey=%s; path=/' % key)
       memcache.set(key=key, value=bp_data, time=600)
+      
+      # This is a crude hack to avoid subsequent rebuilds.  Essentially, we
+      # make a second entry in the cache under the key used for this
+      # request, rather than only under the content hash.
+      memcache.set(key=unique_id, value=bp_data, time=600)
+      
       logging.info('Default sample cached.  Redirecting.');
       self.redirect('/retrieve_cache?unique_id=' + str(key))
-    else:
-      # Cache MISS, epic fail
-      self.response.set_status(404)
-      self.response.out.write('Expired or non-existent.')
-
-class ShowCode(webapp.RequestHandler):
-  def get(self):
-    key = self.request.get('id')
-    last_key = self.request.cookies.get('lastKey')
-    code = None
-    if key or last_key:
-      code = memcache.get(key or last_key)
-    if key or last_key and not code:
-      saved_code = SavedCode.get_by_key_name(key or last_key)
-      logging.info('From datastore');
-      code = saved_code and saved_code.code
-    if code:
-      # Cache HIT
-      self.response.headers['Set-Cookie'] = str('lastKey=%s; path=/' % key)
-      self.response.out.write(code)
-    elif key:
-      # Cache MISS, epic fail
-      self.response.set_status(404)
-      self.response.out.write('Expired or non-existent.')
-    else:
+    elif not unique_id:
       # Bad Request
       self.response.set_status(400)
       self.response.headers['Content-Type'] = 'text/plain'
       self.response.out.write('Must supply code ID')
+    else:
+      # Cache MISS, epic fail
+      self.response.set_status(404)
+      self.response.out.write('Expired or non-existent.')
 
 def main():
   application = webapp.WSGIApplication([
     ('/add', AddCode),
-    ('/', ShowCode),
+    ('/', RetrieveCache),
     ('/cache_code', CacheCode),
     ('/retrieve_cache', RetrieveCache),
-    ('/show', ShowCode)
+    ('/show', RetrieveCache)
   ],debug=False)                        
   wsgiref.handlers.CGIHandler().run(application)
 
