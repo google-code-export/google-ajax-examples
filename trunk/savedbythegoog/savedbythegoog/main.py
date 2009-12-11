@@ -94,20 +94,25 @@ class RetrieveCache(webapp.RequestHandler):
     default_sample = self.request.get('defaultSample')
     last_key = self.request.cookies.get('lastKey')
     self.response.headers['P3P'] = 'CP="CURa ADMa DEVa PSAo PSDo OUR BUS UNI PUR INT DEM STA PRE COM NAV OTC NOI DSP COR"'
+    key = unique_id
     code = memcache.get(unique_id)
     if code:
-      logging.info('From passed id memcache');
+      logging.info('ID supplied by URI');
     if not code and not default_sample and last_key:
-      logging.info('From cookie id memcache');
+      logging.info('ID supplied by cookie');
       code = memcache.get(last_key)
+      key = last_key
     if code:
       # Cache HIT
 
       # Refresh the cache, commonly used code snippets shouldn't expire as
       # quickly as infrequently used ones.
-      memcache.set(key=unique_id, value=code, time=600)
-      key = default_sample and unique_id or last_key
-      logging.info("Key we're storing as cookie in RetrieveCache: %s" % key)
+      memcache.set(key=key, value=code, time=600)
+      logging.info('Memcache hit: %s' % key)
+      self.response.headers['Expires'] = "Fri, 01 Jan 1990 00:00:00 GMT"
+      self.response.headers['Content-Type'] = 'text/html'
+      self.response.headers['Cache-Control'] = \
+        'no-cache, no-store, max-age=0, must-revalidate'
       self.response.headers['Set-Cookie'] = str('lastKey=%s; path=/' % key)
       self.response.out.write(code)
     elif default_sample:
@@ -119,19 +124,14 @@ class RetrieveCache(webapp.RequestHandler):
       js_data = urlfetch.fetch(js_url, "GET").content
       bp_data = bp_data.replace('INSERT_JAVASCRIPT_HERE', js_data)
 
-      # Do we want this?
       h = hashlib.sha1()
       h.update(bp_data)
-      alt_key = h.hexdigest()
+      key = h.hexdigest()
 
-      self.response.headers['Expires'] = "Fri, 01 Jan 1990 00:00:00 GMT"
-      self.response.headers['Content-Type'] = 'text/html'
-      self.response.headers['Cache-Control'] = 'no-cache, no-store, max-age=0, must-revalidate'
-      self.response.headers['Set-Cookie'] = str('lastKey=%s; path=/' % alt_key)
-      memcache.set(key=alt_key, value=bp_data, time=600)
-      memcache.set(key=unique_id, value=bp_data, time=600)
-      logging.info('From default_sample');
-      self.response.out.write(bp_data)
+      self.response.headers['Set-Cookie'] = str('lastKey=%s; path=/' % key)
+      memcache.set(key=key, value=bp_data, time=600)
+      logging.info('Default sample cached.  Redirecting.');
+      self.redirect('/retrieve_cache?unique_id=' + str(key))
     else:
       # Cache MISS, epic fail
       self.response.set_status(404)
