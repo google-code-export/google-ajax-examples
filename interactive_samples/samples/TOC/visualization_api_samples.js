@@ -29,7 +29,6 @@ var tempJSON = [
     "category":"Visualization API-Advanced",
     "samples": [
        {"docsUrl": "http://code.google.com/apis/visualization/documentation/gallery/annotatedtimeline.html#Configuration_Options", "boilerplateLoc": "samples/boilerplateHTML/visualization/annotatedtimeline_config.html", "files":["samples/js/visualization/annotatedtimeline_config.js"], "sampleName":"Annotated Time Line Configuration", "tags": ""},
-       {"docsUrl": "http://code.google.com/apis/visualization/documentation/reference.html#DataTable", "boilerplateLoc": "samples/boilerplateHTML/visualization/datatablemethods.html", "files":["samples/js/visualization/datatablemethods.js"], "sampleName":"Data Table Advanced Population", "tags": ""},
        {"docsUrl": "http://code.google.com/apis/visualization/documentation/gallery/genericimagechart.html", "boilerplateLoc": "samples/boilerplateHTML/visualization/imagechart.html", "files":["samples/js/visualization/imagemulticolorbarchart.js"], "sampleName":"Image Multicolor Bar Chart", "tags": ""},
        {"docsUrl": "http://code.google.com/apis/visualization/documentation/gallery/motionchart.html", "boilerplateLoc": "samples/boilerplateHTML/visualization/motionchart_time_formats.html", "files":["samples/js/visualization/motionchart_time_formats.js"], "sampleName":"Motion Chart Time Formats", "tags": ""},
        {"docsUrl": "http://code.google.com/apis/visualization/documentation/gallery/table.html", "boilerplateLoc":"samples/boilerplateHTML/visualization/table_dimensions.html", "files":["samples/js/visualization/table_dimensions.js"], "sampleName":"Table Dimensions", "tags": ""},
@@ -46,12 +45,14 @@ var tempJSON = [
     "docsUrl": "http://code.google.com/apis/visualization/documentation/toolsgallery.html"
   },
   {
-    "category":"Visualization API-Data View",
+    "category":"Visualization API-Data Manipulation",
     "samples": [
-      {"boilerplateLoc":"samples/boilerplateHTML/visualization/data_view.html", "files":["samples/js/visualization/data_view.js"], "sampleName":"Simple Data View", "tags": ""},
-      {"boilerplateLoc":"samples/boilerplateHTML/visualization/chart_data_view.html", "files":["samples/js/visualization/chart_data_view.js"], "sampleName":"Another Data View", "tags": ""}
-    ],
-    "docsUrl": "http://code.google.com/apis/visualization/documentation/reference.html#DataView"
+      {"docsUrl": "http://code.google.com/apis/visualization/documentation/reference.html#DataView", "boilerplateLoc":"samples/boilerplateHTML/visualization/data_view.html", "files":["samples/js/visualization/data_view.js"], "sampleName":"Simple Data View", "tags": ""},
+      {"docsUrl": "http://code.google.com/apis/visualization/documentation/reference.html#DataView", "boilerplateLoc":"samples/boilerplateHTML/visualization/chart_data_view.html", "files":["samples/js/visualization/chart_data_view.js"], "sampleName":"Another Data View", "tags": ""},
+      {"docsUrl": "http://code.google.com/apis/visualization/documentation/reference.html#google_visualization_data_join", "boilerplateLoc":"samples/boilerplateHTML/visualization/join.html", "files":["samples/js/visualization/join.js"], "sampleName":"Join", "tags": ""},
+      {"docsUrl": "http://code.google.com/apis/visualization/documentation/reference.html#google_visualization_data_group", "boilerplateLoc":"samples/boilerplateHTML/visualization/group.html", "files":["samples/js/visualization/group.js"], "sampleName":"Group", "tags": ""},
+      {"docsUrl": "http://code.google.com/apis/visualization/documentation/reference.html#DataTable", "boilerplateLoc": "samples/boilerplateHTML/visualization/datatablemethods.html", "files":["samples/js/visualization/datatablemethods.js"], "sampleName":"Data Table Advanced Population", "tags": ""}
+    ]
   },
   {
     "category":"Visualization API-Interactions",
@@ -97,7 +98,7 @@ var tempJSON = [
       {"boilerplateLoc":"samples/boilerplateHTML/visualization/myvisualizationsimple.html", "files":["samples/js/visualization/myvisualizationsimple.js"], "sampleName":"Simple Visualization", "tags": ""}
     ],
     "docsUrl": "http://code.google.com/apis/visualization/documentation/dev/index.html"
-  },  
+  },
   {
     "category":"Visualization API-JSON Data Table",
     "samples": [
