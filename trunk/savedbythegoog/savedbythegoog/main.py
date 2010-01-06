@@ -42,6 +42,7 @@ def saveCode(code):
   # so we change them to &#x000a; for the input element, then on the
   # serverside change them back to actual newlines.
   code = code.replace('&#x000a;', '\n')
+  code = code.replace('NEWLINE!!!', '\n')
   h = hashlib.sha1()
   h.update(code)
   key = h.hexdigest()
@@ -56,6 +57,7 @@ def cacheCode(code):
   # so we change them to &#x000a; for the input element, then on the
   # serverside change them back to actual newlines.
   code = code.replace('&#x000a;', '\n')
+  code = code.replace('NEWLINE!!!', '\n')
   h = hashlib.sha1()
   h.update(code)
   key = h.hexdigest()
@@ -76,14 +78,15 @@ def retrieveCode(key):
 class AddCode(webapp.RequestHandler):
   def post(self):
     code = self.request.get('code')
-    ip = self.request.remote_addr;
+    ip = self.request.remote_addr
     data = memcache.get(ip)
     if data is not None:
       self.response.out.write('Rate limited.')
     else:
       # Store that this IP added code in the last 10 seconds
       memcache.set(key=ip, value="1", time=10)
-      code = code.replace('&#x000a;', '\n');
+      code = code.replace('&#x000a;', '\n')
+      code = code.replace('NEWLINE!!!', '\n')
       if code.strip():
         key = saveCode(code)
         self.redirect('/?id=' + str(key))
