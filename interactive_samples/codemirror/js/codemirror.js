@@ -131,6 +131,9 @@ var CodeMirror = (function(){
         scroller.appendChild(document.createElement("BR"));
       }
       nums.scrollTop = doc.body.scrollTop || doc.documentElement.scrollTop || 0;
+      if (window.navigator.userAgent.toLowerCase().indexOf('chrome/4') > -1) {
+        throw "Necessary Exception.";
+      }
     }
     sizeBar();
     update();
