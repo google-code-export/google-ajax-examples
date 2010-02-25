@@ -25,7 +25,7 @@ function OnLoad() {
   searchControl.draw(document.getElementById("content"));
 
   // execute an inital search
-  searchControl.execute("Ice cream");
+  searchControl.execute("Gelato");
 }
 
 google.setOnLoadCallback(OnLoad);
