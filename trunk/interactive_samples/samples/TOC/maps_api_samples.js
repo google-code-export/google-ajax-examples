@@ -75,7 +75,8 @@ var tempJSON = [
   {
     "category":"Maps-Service Examples",
     "samples":[
-      {"boilerplateLoc":"samples/boilerplateHTML/maps/map-simple.html", "files":["samples/js/maps/map-xhr-requests.js"], "sampleName":"XHR Requests", "tags": ""},
+      // this doesn't work because it's cross domain from savedbythegoog.appspot.com
+      // {"boilerplateLoc":"samples/boilerplateHTML/maps/map-simple.html", "files":["samples/js/maps/map-xhr-requests.js"], "sampleName":"Map XHR Requests", "tags": ""},
       {"boilerplateLoc":"samples/boilerplateHTML/maps/map-geocoding-simple.html", "files":["samples/js/maps/map-geocoding-simple.js"], "sampleName":"Geocoding Simple", "tags": ""},
       {"boilerplateLoc":"samples/boilerplateHTML/maps/map-geocoding-extraction.html", "files":["samples/js/maps/map-geocoding-extraction.js"], "sampleName":"Geocoding Extraction", "tags": ""},
       {"boilerplateLoc":"samples/boilerplateHTML/maps/map-simple.html", "files":["samples/js/maps/map-geocoding-reverse.js"], "sampleName":"Geocoding Reverse", "tags": ""},
