@@ -7,7 +7,7 @@ var tempJSON = [
       {"boilerplateLoc":"samples/boilerplateHTML/blogsearch/hello.html", "files":["samples/js/blogsearch/blog_search_setsiterestrict.js"], "sampleName":"Set a site restriction", "tags": "setSiteRestrict"},
       {"boilerplateLoc":"samples/boilerplateHTML/blogsearch/hello.html", "files":["samples/js/blogsearch/blog_search_setresultorder.js"], "sampleName":"Order search results by date", "tags": "setResultOrder"},
       {"boilerplateLoc":"samples/boilerplateHTML/blogsearch/hello.html", "files":["samples/js/blogsearch/blog_search_addquery.js"], "sampleName":"Add another search query", "tags": "setQueryAddition"},
-      {"boilerplateLoc":"samples/boilerplateHTML/blogsearch/hello.html", "files":["samples/js/blogsearch/blog_search_cursor.js"], "sampleName":"Add results pagination", "tags": "cursor"},
+      {"boilerplateLoc":"samples/boilerplateHTML/blogsearch/hello.html", "files":["samples/js/blogsearch/blog_search_cursor.js"], "sampleName":"Add results pagination", "tags": "cursor"}
     ],
     "docsUrl": "http://code.google.com/apis/ajaxlanguage/documentation/reference.html"
   },
@@ -24,11 +24,12 @@ var tempJSON = [
       {"boilerplateLoc":"samples/boilerplateHTML/blogsearch/blog_bar_hello_horiz.html", "files":["samples/js/blogsearch/blog_bar_cyclemode.js"], "sampleName":"Cycle through queries randomly", "tags": "cycle mode, linear, random"},
       {"boilerplateLoc":"samples/boilerplateHTML/blogsearch/blog_bar_hello_horiz_js.html", "files":["samples/js/blogsearch/blog_bar_jslink.js"], "sampleName":"Control content with a JavaScript link", "tags": "javascript link"},
       {"boilerplateLoc":"samples/boilerplateHTML/blogsearch/blog_bar_hello_horiz_div.html", "files":["samples/js/blogsearch/blog_bar_newdiv.js"], "sampleName":"Show current result in a new div", "tags": "new div"},
-      {"boilerplateLoc":"samples/boilerplateHTML/blogsearch/blog_bar_hello.html", "files":["samples/js/blogsearch/blog_bar_linktarget.js"], "sampleName":"Set a link target", "tags": "link target, blank, self, parent, top"},
+      {"boilerplateLoc":"samples/boilerplateHTML/blogsearch/blog_bar_hello.html", "files":["samples/js/blogsearch/blog_bar_linktarget.js"], "sampleName":"Set a link target", "tags": "link target, blank, self, parent, top"}
     ],
     "docsUrl":"http://www.google.com/uds/solutions/blogbar/reference.html"
   }
 ];
+
 if (typeof codeArray != 'undefined' && codeArray.length) {
   codeArray = codeArray.concat(tempJSON);
   delete tempJSON;

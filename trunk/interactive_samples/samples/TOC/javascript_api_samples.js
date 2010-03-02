@@ -34,7 +34,6 @@ var tempJSON = [
   }
 ];
 
-
 if (typeof codeArray != 'undefined' && codeArray.length) {
   codeArray = codeArray.concat(tempJSON);
   delete tempJSON;
