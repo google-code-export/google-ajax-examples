@@ -80,7 +80,7 @@
   <div class="pane-row" id="codeRow">
     <div class="pane" id="selectCodeContainer">
       <div class="pane-header">
-        <h2>Pick Sample</h2>
+        <h2>Pick an API</h2>
         <input type="text" placeholder="Search" id="search">
       </div>
       <div class="pane-content">
@@ -93,25 +93,25 @@
         <h2>Edit Code</h2>
         <div id="demoTitle"></div>
         <div class="pane-buttons">
-          <button id="docsButton" onclick="is.viewDocs();" title="View the documentation for this sample.">
+          <button id="docsButton" onClick="is.viewDocs();" title="View the documentation for this sample.">
             <span class="docs-icon icon-text">View Docs</span>
           </button>
-          <button id="toggleEditHTMLButton" onclick="is.toggleEditHTML();" title="Toggle between Javascript and HTML editing.">
+          <button id="toggleEditHTMLButton" onClick="is.toggleEditHTML();" title="Toggle between Javascript and HTML editing.">
             <span class="html-icon icon-text">Edit HTML</span>
           </button>
           <button id="codeMenuButton" class="dropdown">
             <span class="dropdown-icon icon-only">&nbsp;</span>
           </button>
           <div class="dropdown-content" id="codeMenuDropdown">
-            <div onclick="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.linkCode();return false;">
+            <div onClick="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.linkCode();return false;">
               <span class="export-icon icon-text">Export</span>
             </div>
             {% if loginUrl %}
-            <div onclick="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.confirmLogin('{{ loginUrl }}', true);return false;">
+            <div onClick="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.confirmLogin('{{ loginUrl }}', true);return false;">
               <span class="save-icon icon-text">Save</span>
             </div>
             {% else %}
-            <div onclick="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.saveCode();return false;">
+            <div onClick="is.uiEffects.toggleDropdown($('#codeMenuDropdown'));is.saveCode();return false;">
               <span class="save-icon icon-text">Save</span>
             </div>
             {% endif %}
@@ -165,11 +165,11 @@
       <div class="pane-header">
         <h2>Output</h2>
         <div class="pane-buttons">
-          <button onclick="is.runBox.runCode({debugMode: true});" title="Run this sample in 'Debug Mode' which enables breakpoints and inserts Firebug Lite.">
+          <button onClick="is.runBox.runCode({debugMode: true});" title="Run this sample in 'Debug Mode' which enables breakpoints and inserts Firebug Lite.">
             <span class="debug-icon icon-text">Debug Code</span>
           </button>
         
-          <button onclick="is.runBox.runCode();" title="Run this sample.">
+          <button onClick="is.runBox.runCode();" title="Run this sample.">
             <span class="run-icon icon-text">Run Code</span>
           </button>
         </div>
@@ -239,11 +239,11 @@ iFrame fixes it.
       </tr>
     </table>
     <div class="dialog-buttons">
-      <button onclick="$('#saveForm').submit();">
+      <button onClick="$('#saveForm').submit();">
         <span class="save-icon icon-text">Save</span>
       </button>
     
-      <button class="negative" onclick="is.uiEffects.closeDialog('saveDiv');return false;">
+      <button class="negative" onClick="is.uiEffects.closeDialog('saveDiv');return false;">
         <span class="cancel-icon icon-text">Cancel</span>
       </button>
     </div>
@@ -255,7 +255,7 @@ iFrame fixes it.
   <p>The Playground no longer supports Internet Explorer.  Please <a href="http://www.google.com/chromeframe" target="_blank">install the Chrome Frame plugin</a> to use the Playground.</p>
   
   <div class="dialog-buttons">
-    <button class="negative" onclick="is.uiEffects.closeDialog('getChromeFrameDiv');return false;">
+    <button class="negative" onClick="is.uiEffects.closeDialog('getChromeFrameDiv');return false;">
       <span class="cancel-icon icon-text">Close</span>
     </button>
   </div>

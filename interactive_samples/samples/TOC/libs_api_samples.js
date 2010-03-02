@@ -1,6 +1,6 @@
 var tempJSON = [
   {
-    "category":"Libraries API",
+    "category":"Libraries",
     "samples":[
       {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/libraries/jquery.js"], "sampleName":"jQuery", "tags": "jQuery JSONP, Search With JSONP", "docsUrl": "http://code.google.com/apis/ajaxlibs/documentation/#jquery"},
       {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/libraries/jqueryui.js"], "sampleName":"jQueryUI", "tags": "Drag", "docsUrl": "http://code.google.com/apis/ajaxlibs/documentation/#jqueryUI"},

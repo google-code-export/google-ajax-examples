@@ -1,6 +1,6 @@
 var tempJSON = [
   {
-    "category":"Feeds API",
+    "category":"Feeds",
     "samples":[
       {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/feeds/load_feed.js"], "sampleName":"Load Feed", "tags": ""},
       {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/feeds/historical_entries.js"], "sampleName":"Historical Entries", "tags": "Set Number of Results"},

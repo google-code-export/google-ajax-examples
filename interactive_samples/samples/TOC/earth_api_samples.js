@@ -1,6 +1,6 @@
 var tempJSON = [
   {
-    "category": "Earth API",
+    "category": "Earth",
     "samples":[
       {"boilerplateLoc":"samples/boilerplateHTML/earth/earth-simple.html", "files":["samples/js/earth/hello-earth.js"], "sampleName":"Hello, Earth", "tags": "", "docsUrl": ""},
       {"boilerplateLoc":"samples/boilerplateHTML/earth/earth-with-basic-ui.html", "files":["samples/js/earth/geocoder.js"], "sampleName":"Geocoding via the Maps API", "tags": "", "docsUrl": ""},
@@ -9,7 +9,7 @@ var tempJSON = [
     "docsUrl": "http://code.google.com/apis/earth/documentation/reference/index.html"
   },
   {
-    "category": "Earth API-Working with KML",
+    "category": "Earth-Working with KML",
     "samples":[
       {"boilerplateLoc":"samples/boilerplateHTML/earth/earth-with-basic-ui.html", "files":["samples/js/earth/networklink.js"], "sampleName":"Creating Network Links", "tags": "", "docsUrl": ""},
       {"boilerplateLoc":"samples/boilerplateHTML/earth/earth-simple.html", "files":["samples/js/earth/kml-fetch-good.js"], "sampleName":"Fetch Good KML", "tags": "KML", "docsUrl": ""},
@@ -23,7 +23,7 @@ var tempJSON = [
     "docsUrl": "http://code.google.com/apis/earth/documentation/reference/index.html"
   },
   {
-    "category": "Earth API-Point Placemarks",
+    "category": "Earth-Point Placemarks",
     "samples":[
       {"boilerplateLoc":"samples/boilerplateHTML/earth/earth-with-basic-ui.html", "files":["samples/js/earth/placemark-point.js"], "sampleName":"Creating Placemarks", "tags": "", "docsUrl": ""},
       {"boilerplateLoc":"samples/boilerplateHTML/earth/earth-simple.html", "files":["samples/js/earth/placemark-ocean.js"], "sampleName":"Underwater Placemarks", "tags": "Geometries, Google Earth 5.0", "docsUrl": ""},
@@ -33,7 +33,7 @@ var tempJSON = [
     "docsUrl": "http://code.google.com/apis/earth/documentation/reference/index.html"
   },
   {
-    "category": "Earth API-Geometries",
+    "category": "Earth-Geometries",
     "samples":[
       {"boilerplateLoc":"samples/boilerplateHTML/earth/earth-with-basic-ui.html", "files":["samples/js/earth/linestring.js"], "sampleName":"Creating Line Strings", "tags": "Geometries", "docsUrl": ""},
       {"boilerplateLoc":"samples/boilerplateHTML/earth/earth-with-basic-ui.html", "files":["samples/js/earth/linestring-style.js"], "sampleName":"Line String Styling", "tags": "Geometries", "docsUrl": ""},
@@ -46,7 +46,7 @@ var tempJSON = [
     "docsUrl": "http://code.google.com/apis/earth/documentation/reference/index.html"
   },
   {
-    "category": "Earth API-Balloons",
+    "category": "Earth-Balloons",
     "samples":[
       {"boilerplateLoc":"samples/boilerplateHTML/earth/earth-with-basic-ui.html", "files":["samples/js/earth/balloon-feature.js"], "sampleName":"Feature Balloons", "tags": "Balloons", "docsUrl": ""},
       {"boilerplateLoc":"samples/boilerplateHTML/earth/earth-with-basic-ui.html", "files":["samples/js/earth/balloon-string.js"], "sampleName":"HTML String Balloons", "tags": "Balloons", "docsUrl": ""},
@@ -59,7 +59,7 @@ var tempJSON = [
     "docsUrl": "http://code.google.com/apis/earth/documentation/reference/index.html"
   },
   {
-    "category": "Earth API-Events",
+    "category": "Earth-Events",
     "samples":[
       {"boilerplateLoc":"samples/boilerplateHTML/earth/earth-with-basic-ui.html", "files":["samples/js/earth/event-listeners.js"], "sampleName":"Toggling Event Listeners", "tags": "Events", "docsUrl": ""},
       {"boilerplateLoc":"samples/boilerplateHTML/earth/earth-simple.html", "files":["samples/js/earth/event-globe.js"], "sampleName":"Globe/Window Event Handling", "tags": "Events", "docsUrl": ""},
@@ -70,7 +70,7 @@ var tempJSON = [
     "docsUrl": "http://code.google.com/apis/earth/documentation/reference/index.html"
   },
   {
-    "category": "Earth API-Camera Manipulation",
+    "category": "Earth-Camera Manipulation",
     "samples":[
       {"boilerplateLoc":"samples/boilerplateHTML/earth/earth-with-basic-ui.html", "files":["samples/js/earth/camera-move.js"], "sampleName":"Move Camera", "tags": "Camera and LookAt", "docsUrl": ""},
       {"boilerplateLoc":"samples/boilerplateHTML/earth/earth-simple.html", "files":["samples/js/earth/camera-move-timeouts.js"], "sampleName":"Move Camera with Timeouts", "tags": "Camera and LookAt", "docsUrl": ""},
@@ -79,7 +79,7 @@ var tempJSON = [
     "docsUrl": "http://code.google.com/apis/earth/documentation/reference/index.html"
   },
   {
-    "category": "Earth API-Other KML Features",
+    "category": "Earth-Other KML Features",
     "samples":[
       {"boilerplateLoc":"samples/boilerplateHTML/earth/earth-with-basic-ui.html", "files":["samples/js/earth/groundoverlay.js"], "sampleName":"Creating Ground Overlays", "tags": "", "docsUrl": ""},
       {"boilerplateLoc":"samples/boilerplateHTML/earth/earth-with-basic-ui.html", "files":["samples/js/earth/screenoverlay.js"], "sampleName":"Creating Screen Overlays", "tags": "", "docsUrl": ""},
@@ -90,7 +90,7 @@ var tempJSON = [
     "docsUrl": "http://code.google.com/apis/earth/documentation/reference/index.html"
   },
   {
-    "category": "Earth API-Querying the Viewport State",
+    "category": "Earth-Querying the Viewport State",
     "samples":[
       {"boilerplateLoc":"samples/boilerplateHTML/earth/earth-with-basic-ui.html", "files":["samples/js/earth/groundaltitude.js"], "sampleName":"Retrieving Ground Altitude Data", "tags": "", "docsUrl": ""},
       {"boilerplateLoc":"samples/boilerplateHTML/earth/earth-ind-bounds.html", "files":["samples/js/earth/bounds.js"], "sampleName":"Getting Viewport Globe Bounds", "tags": "Google Earth 5.0, Camera and LookAt", "docsUrl": ""},
@@ -100,7 +100,7 @@ var tempJSON = [
     "docsUrl": "http://code.google.com/apis/earth/documentation/reference/index.html"
   },
   {
-    "category": "Earth API-Layers, Map Types, and Options",
+    "category": "Earth-Layers, Map Types, and Options",
     "samples":[
       {"boilerplateLoc":"samples/boilerplateHTML/earth/earth-with-basic-ui.html", "files":["samples/js/earth/navigationcontrol.js"], "sampleName":"Show/Hide Navigation Controls", "tags": "", "docsUrl": ""},
       {"boilerplateLoc":"samples/boilerplateHTML/earth/earth-with-basic-ui.html", "files":["samples/js/earth/terrain.js"], "sampleName":"Show/Hide Terrain", "tags": "", "docsUrl": ""},

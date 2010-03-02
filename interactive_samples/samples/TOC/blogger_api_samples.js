@@ -1,13 +1,13 @@
 var tempJSON = [
   {
-    "category":"Blogger API-Blogs",
+    "category":"Blogger-Blogs",
     "samples":[
       {"boilerplateLoc":"samples/boilerplateHTML/bloggerapis.html", "files":["samples/js/blogger/list_blogs.js"], "sampleName":"List Blogs", "tags": ""}
     ],
     "docsUrl": "http://code.google.com/apis/blogger/docs/2.0/developers_guide_protocol.html"
   },
   {
-    "category":"Blogger API-Posts",
+    "category":"Blogger-Posts",
     "samples":[
     {"boilerplateLoc":"samples/boilerplateHTML/bloggerapis.html", "files":["samples/js/blogger/list_posts.js"], "sampleName":"List Posts", "tags": ""},
     {"boilerplateLoc":"samples/boilerplateHTML/bloggerapis.html", "files":["samples/js/blogger/query_posts.js"], "sampleName":"Query Posts", "tags": ""},
@@ -16,7 +16,7 @@ var tempJSON = [
     "docsUrl": "http://code.google.com/apis/blogger/docs/2.0/developers_guide_protocol.html"
   },
   {
-    "category":"Blogger API-Comments",
+    "category":"Blogger-Comments",
     "samples":[
     {"boilerplateLoc":"samples/boilerplateHTML/bloggerapis.html", "files":["samples/js/blogger/list_comments.js"], "sampleName":"List Comments", "tags": ""}
     ],
