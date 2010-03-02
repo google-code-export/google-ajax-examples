@@ -50,7 +50,14 @@ apis = {
   'calendar': 'samples/TOC/calendar_api_samples.js',
   'youtube': 'samples/TOC/youtube_api_samples.js',
   'friendconnect' : 'samples/TOC/friendconnect_api_samples.js',
-  'javascript': 'samples/TOC/javascript_api_samples.js'
+  'javascript': 'samples/TOC/javascript_api_samples.js',
+  'localsearch': 'samples/TOC/local_search_api_samples.js',
+  'videosearch': 'samples/TOC/video_search_api_samples.js',
+  'blogsearch': 'samples/TOC/blog_search_api_samples.js',
+  'newssearch': 'samples/TOC/news_search_api_samples.js',
+  'booksearch': 'samples/TOC/book_search_api_samples.js',
+  'imagesearch': 'samples/TOC/image_search_api_samples.js',
+  'patentsearch': 'samples/TOC/patent_search_api_samples.js'
 }
 
 class SavedCode(db.Model):

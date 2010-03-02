@@ -1,6 +1,6 @@
 var tempJSON = [
   {
-    "category":"Language API-Translation",
+    "category":"Language-Translation",
     "samples":[
       {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/language/translation/translate.js"], "sampleName":"Translate", "tags": "Basic Translate"},
       {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/language/translation/batch_translate.js"], "sampleName":"Batch Translate", "tags": "JSONP, Translate to All Languages"},
@@ -9,14 +9,14 @@ var tempJSON = [
     "docsUrl": "http://code.google.com/apis/ajaxlanguage/documentation/reference.html"
   },
   {
-    "category":"Language API-Methods and Enums",
+    "category":"Language-Methods and Enums",
     "samples":[
       {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis/isTranslatable.html","files":["samples/js/language/methodsEnums/language_check.js"],"sampleName":"Is It Translatable","tags":"languages isTranslatable isFontRenderingSupported closure"}
     ],
     "docsUrl":"http://code.google.com/apis/ajaxlanguage/documentation/reference.html"
   },
   {
-    "category":"Language API-Transliteration",
+    "category":"Language-Transliteration",
     "samples":[
       {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/language/transliteration/transliterate.js"], "sampleName":"Transliterate Hindi", "tags": "Textarea, Hindi"},
       {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/language/transliteration/transliterateArabic.js"], "sampleName":"Transliterate Arabic", "tags": "Textarea, Hindi"}
@@ -24,7 +24,7 @@ var tempJSON = [
     "docsUrl": "http://code.google.com/apis/ajaxlanguage/documentation/referenceTransliteration.html"
   },
   {
-    "category":"Language API-Virtual Keyboard",
+    "category":"Language-Virtual Keyboard",
     "samples":[
       {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/language/keyboard/keyboard.js"], "sampleName":"Virtual Keyboard", "tags":"Keyboard, Input"},
       {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/language/keyboard/showhide.js"], "sampleName":"Change Visibility", "tags":"Keyboard, Input"},

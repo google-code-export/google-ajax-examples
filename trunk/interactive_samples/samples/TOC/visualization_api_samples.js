@@ -1,6 +1,6 @@
 var tempJSON = [
   {
-    "category":"Visualization API-Basics",
+    "category":"Visualization-Basics",
     "samples": [
                {"docsUrl": "http://code.google.com/apis/visualization/documentation/gallery/annotatedtimeline.html", "boilerplateLoc": "samples/boilerplateHTML/visualization/annotatedtimeline.html", "files":["samples/js/visualization/annotatedtimeline.js"], "sampleName":"Annotated Time Line", "tags": ""},
                {"docsUrl": "http://code.google.com/apis/visualization/documentation/gallery/areachart.html", "boilerplateLoc": "samples/boilerplateHTML/visualization/areachart.html", "files":["samples/js/visualization/areachart.js"], "sampleName":"Area Chart", "tags": ""},
@@ -26,7 +26,7 @@ var tempJSON = [
     "docsUrl": "http://code.google.com/apis/visualization/documentation/gallery.html"
   },
   {
-    "category":"Visualization API-Advanced",
+    "category":"Visualization-Advanced",
     "samples": [
        {"docsUrl": "http://code.google.com/apis/visualization/documentation/gallery/annotatedtimeline.html#Configuration_Options", "boilerplateLoc": "samples/boilerplateHTML/visualization/annotatedtimeline_config.html", "files":["samples/js/visualization/annotatedtimeline_config.js"], "sampleName":"Annotated Time Line Configuration", "tags": ""},
        {"docsUrl": "http://code.google.com/apis/visualization/documentation/gallery/genericimagechart.html", "boilerplateLoc": "samples/boilerplateHTML/visualization/imagechart.html", "files":["samples/js/visualization/imagemulticolorbarchart.js"], "sampleName":"Image Multicolor Bar Chart", "tags": ""},
@@ -38,14 +38,14 @@ var tempJSON = [
     "docsUrl": "http://code.google.com/apis/visualization/documentation/gallery.html"
   },
   {
-    "category":"Visualization API-Tools",
+    "category":"Visualization-Tools",
     "samples": [
       {"boilerplateLoc":"samples/boilerplateHTML/visualization/toolbar.html", "files":["samples/js/visualization/toolbar.js"], "sampleName":"Toolbar", "tags": ""}
     ],
     "docsUrl": "http://code.google.com/apis/visualization/documentation/toolsgallery.html"
   },
   {
-    "category":"Visualization API-Data Manipulation",
+    "category":"Visualization-Data Manipulation",
     "samples": [
       {"docsUrl": "http://code.google.com/apis/visualization/documentation/reference.html#DataView", "boilerplateLoc":"samples/boilerplateHTML/visualization/data_view.html", "files":["samples/js/visualization/data_view.js"], "sampleName":"Simple Data View", "tags": ""},
       {"docsUrl": "http://code.google.com/apis/visualization/documentation/reference.html#DataView", "boilerplateLoc":"samples/boilerplateHTML/visualization/chart_data_view.html", "files":["samples/js/visualization/chart_data_view.js"], "sampleName":"Another Data View", "tags": ""},
@@ -55,14 +55,14 @@ var tempJSON = [
     ]
   },
   {
-    "category":"Visualization API-Interactions",
+    "category":"Visualization-Interactions",
     "samples": [
       {"boilerplateLoc":"samples/boilerplateHTML/visualization/gauge_interaction.html", "files":["samples/js/visualization/gauge_interaction.js"], "sampleName":"Gauge Interaction", "tags": ""}
     ],
     "docsUrl": "http://code.google.com/apis/visualization/documentation/using_overview.html"
   },
   {
-    "category":"Visualization API-Events",
+    "category":"Visualization-Events",
     "samples": [
       {"boilerplateLoc":"samples/boilerplateHTML/visualization/select_event.html", "files":["samples/js/visualization/select_event.js"], "sampleName":"Select Event", "tags": ""},
       {"boilerplateLoc":"samples/boilerplateHTML/visualization/orgchart_and_table_select_event.html", "files":["samples/js/visualization/orgchart_and_table_select_event.js"], "sampleName":"Interaction Using Events", "tags": ""},
@@ -72,7 +72,7 @@ var tempJSON = [
     "docsUrl": "http://code.google.com/apis/visualization/documentation/events.html"
   },
   {
-    "category":"Visualization API-Formatters",
+    "category":"Visualization-Formatters",
     "samples": [
       {"boilerplateLoc":"samples/boilerplateHTML/visualization/formatters.html", "files":["samples/js/visualization/arrow_format.js"], "sampleName":"Arrow Formatter", "tags": ""},
       {"boilerplateLoc":"samples/boilerplateHTML/visualization/formatters.html", "files":["samples/js/visualization/bar_format.js"], "sampleName":"Bar Formatter", "tags": ""},
@@ -84,7 +84,7 @@ var tempJSON = [
     "docsUrl": "http://code.google.com/apis/visualization/documentation/gallery/table.html#Formatters"
   },
   {
-    "category":"Visualization API-Data Source Requests",
+    "category":"Visualization-Data Source Requests",
     "samples": [
       {"boilerplateLoc":"samples/boilerplateHTML/visualization/simple_query.html", "files":["samples/js/visualization/simple_query.js"], "sampleName":"Data Source Request", "tags": ""},
       {"boilerplateLoc":"samples/boilerplateHTML/visualization/query_language.html", "files":["samples/js/visualization/query_language.js"], "sampleName":"Using The Query Language", "tags": ""},
@@ -93,14 +93,14 @@ var tempJSON = [
     "docsUrl": "http://code.google.com/apis/visualization/documentation/queries.html"
   },
   {
-    "category":"Visualization API-Your Own Visualizations",
+    "category":"Visualization-Your Own Visualizations",
     "samples": [
       {"boilerplateLoc":"samples/boilerplateHTML/visualization/myvisualizationsimple.html", "files":["samples/js/visualization/myvisualizationsimple.js"], "sampleName":"Simple Visualization", "tags": ""}
     ],
     "docsUrl": "http://code.google.com/apis/visualization/documentation/dev/index.html"
   },
   {
-    "category":"Visualization API-JSON Data Table",
+    "category":"Visualization-JSON Data Table",
     "samples": [
       {"boilerplateLoc":"samples/boilerplateHTML/visualization/json_data_table.html", "files":["samples/js/visualization/json_data_table.js"], "sampleName":"JSON Data Table", "tags": ""}
     ],
