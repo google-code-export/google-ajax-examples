@@ -256,7 +256,7 @@ class Main(webapp.RequestHandler):
 
     # self.response.headers['Expires'] = todayFormatted + ' GMT'
     self.response.headers['Expires'] = "Fri, 01 Jan 1990 00:00:00 GMT"
-
+    self.response.headers['X-UA-Compatible'] = "chrome=1"
     path = os.path.join(os.path.dirname(__file__), 'index.html')
     self.response.out.write(template.render(path, self.template_values))
 
