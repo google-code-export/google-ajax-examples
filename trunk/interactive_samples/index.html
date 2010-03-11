@@ -51,12 +51,14 @@
     var loginUrl = '{{ loginUrl }}';
     var logoutUrl = '{{ logoutUrl }}';
     function init() {
-      is.init(document.getElementById('editor'));
-      CFInstall.check({
-        'onmissing': is.uiEffects.showGetChromeFrameDiv,
-        'preventPrompt': true,
-        destination: window.location.href
-      });
+      if (jQuery.browser.msie) {
+        CFInstall.check({
+          mode : 'overlay',
+          destination: window.location.href
+        });
+      } else {
+        is.init(document.getElementById('editor'));
+      }
     }
 
     $(window).bind('load', function() {
