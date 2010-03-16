@@ -3,7 +3,7 @@ var tempJSON = [
   {
     "category":"Search-General Search",
     "samples":[
-      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/search/hello_world.js"], "sampleName":"The Hello World of General Searchs", "tags": ""},
+      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/search/hello_world.js"], "sampleName":"The Hello World of General Search", "tags": ""},
       {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/search/restrict_search.js"], "sampleName":"Set Site Restrict", "tags": "setSiteRestriction, Restrict to Site"},
       {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/search/tabbed_display_mode.js"], "sampleName":"Tabbed Display Mode", "tags": "Search Control"},
       {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/search/large_result_set.js"], "sampleName":"Large Result Set", "tags": " Result Size, Number of Results"},
@@ -23,16 +23,6 @@ var tempJSON = [
     ],
     "docsUrl": "http://code.google.com/apis/ajaxsearch/documentation/customsearch/index.html"
   },
-  {
-    "category":"Search-Web Search",
-    "samples":[
-      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/search/websearch/restrict_by_cse.js"], "sampleName":"Restrict by CSE", "tags": "setSiteRestriction, Custom Search Engine"},
-      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapisde.html", "files":["samples/js/search/websearch/google_locale_restrict.js"], "sampleName":"Set Google Locale Using Hostname", "tags": "Language"},
-      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/search/websearch/set_google_locale_restrict.js"], "sampleName":"Set Google Locale Restriction", "tags": "Language, setRestriction"},
-      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/search/websearch/set_lang_restrict.js"], "sampleName":"Set Language Restriction", "tags": "Language, setRestriction"}
-    ],
-    "docsUrl": "http://code.google.com/apis/ajaxsearch/documentation/reference.html#_class_GwebSearch"
-  }
 ];
 
 if (typeof codeArray != 'undefined' && codeArray.length) {
