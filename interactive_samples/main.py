@@ -57,6 +57,7 @@ apis = {
   'newssearch': 'samples/TOC/news_search_api_samples.js',
   'booksearch': 'samples/TOC/book_search_api_samples.js',
   'imagesearch': 'samples/TOC/image_search_api_samples.js',
+  'websearch' : 'samples/TOC/web_search_api_samples.js',
   'patentsearch': 'samples/TOC/patent_search_api_samples.js'
 }
 
