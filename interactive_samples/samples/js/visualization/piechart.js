@@ -17,5 +17,5 @@ function drawVisualization() {
 
   // Create and draw the visualization.
   new google.visualization.PieChart(document.getElementById('visualization')).
-      draw(data, null);
+      draw(data, {title:"So, how was your day?"});
 }

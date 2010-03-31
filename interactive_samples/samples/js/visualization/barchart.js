@@ -1,24 +1,33 @@
 function drawVisualization() {
   // Create and populate the data table.
   var data = new google.visualization.DataTable();
+  var raw_data = [['Austria', 1257233, 1432414, 1447207, 1336060, 1538156, 1576579, 1600652, 1968113, 1901067],
+                  ['Bulgaria', 280727, 354905, 343432, 400361, 366849, 440514, 434552, 393032, 517206],
+                  ['Denmark', 1021798, 1102964, 1075800, 1001582, 1119450, 993360, 1004163, 979198, 916965],
+                  ['Greece', 798386, 867643, 897497, 997974, 941795, 930593, 897127, 1080887, 1056036]];
+  
+  var years = [2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008];
+                  
   data.addColumn('string', 'Year');
-  data.addColumn('number', 'Sales');
-  data.addColumn('number', 'Expenses');
-  data.addRows(4);
-  data.setValue(0, 0, '2004');
-  data.setValue(0, 1, 1000);
-  data.setValue(0, 2, 400);
-  data.setValue(1, 0, '2005');
-  data.setValue(1, 1, 1170);
-  data.setValue(1, 2, 460);
-  data.setValue(2, 0, '2006');
-  data.setValue(2, 1, 660);
-  data.setValue(2, 2, 1120);
-  data.setValue(3, 0, '2007');
-  data.setValue(3, 1, 1030);
-  data.setValue(3, 2, 540);
+  for (var i = 0; i  < raw_data.length; ++i) {
+	  data.addColumn('number', raw_data[i][0]);	  
+  }
+  
+  data.addRows(years.length);
 
+  for (var j = 0; j < years.length; ++j) {	  
+	  data.setValue(j, 0, years[j].toString());	  
+  }
+  for (var i = 0; i  < raw_data.length; ++i) {
+	  for (var j = 1; j  < raw_data[i].length; ++j) {
+		  data.setValue(j-1, i+1, raw_data[i][j]);	  
+	  }
+  }
+  
   // Create and draw the visualization.
   new google.visualization.BarChart(document.getElementById('visualization')).
-      draw(data, null);
+      draw(data, 
+    		  {title:"Yearly Coffee Consumption by Country", 
+    	  		width:800, height:400}    		  
+      );
 }
