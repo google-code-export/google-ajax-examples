@@ -1,17 +1,26 @@
 function drawVisualization() {
   // Create and populate the data table.
   var data = new google.visualization.DataTable();
-  data.addColumn('string', 'Name');
-  data.addColumn('number', 'Height');
-  data.addRows(3);
-  data.setCell(0, 0, 'Tong Ning mu');
-  data.setCell(1, 0, 'Huang Ang fa');
-  data.setCell(2, 0, 'Teng nu');
-  data.setCell(0, 1, 174);
-  data.setCell(1, 1, 523);
-  data.setCell(2, 1, 86);
-
+  data.addColumn('string', 'x');
+  data.addColumn('number', 'Cats');
+  data.addColumn('number', 'Blanket 1');
+  data.addColumn('number', 'Blanket 2');
+  data.addRow(["A", 1, 1, 0.5]);
+  data.addRow(["B", 2, 0.5, 1]);
+  data.addRow(["C", 4, 1, 0.5]);
+  data.addRow(["D", 8, 0.5, 1]);
+  data.addRow(["E", 7, 1, 0.5]);
+  data.addRow(["F", 7, 0.5, 1]);
+  data.addRow(["G", 8, 1, 0.5]);
+  data.addRow(["H", 4, 0.5, 1]);
+  data.addRow(["I", 2, 1, 0.5]);
+  data.addRow(["J", 3.5, 0.5, 1]);
+  data.addRow(["K", 3, 1, 0.5]);
+  data.addRow(["L", 3.5, 0.5, 1]);
+  data.addRow(["M", 1, 1, 0.5]);
+  data.addRow(["N", 1, 0.5, 1]);
+ 
   // Create and draw the visualization.
   new google.visualization.LineChart(document.getElementById('visualization')).
-      draw(data, null);  
+      draw(data, {smoothLine: true, width: 600, height: 400});  
 }

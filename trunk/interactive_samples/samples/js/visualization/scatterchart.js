@@ -1,24 +1,20 @@
 function drawVisualization() {
     // Create and populate the data table.
     var data = new google.visualization.DataTable();
-    data.addColumn('number', 'Age');
-    data.addColumn('number', 'Weight');
-    data.addRows(6);
-    data.setValue(0, 0, 8);
-    data.setValue(0, 1, 12);
-    data.setValue(1, 0, 4);
-    data.setValue(1, 1, 5.5);
-    data.setValue(2, 0, 11);
-    data.setValue(2, 1, 14);
-    data.setValue(3, 0, 4);
-    data.setValue(3, 1, 5);
-    data.setValue(4, 0, 3);
-    data.setValue(4, 1, 3.5);
-    data.setValue(5, 0, 6.5);
-    data.setValue(5, 1, 7);
+    data.addColumn('number', 'X');
+    data.addColumn('number', 'Y1');
+    data.addColumn('number', 'Y2');
+    for (var i = 0; i < 500; ++i) {
+      data.addRow([Math.sin(i / 5) * 0.25, Math.cos(i / 25), null])
+    }
+    for (var i = 0; i < 500; i++) {
+      data.addRow([Math.sin(i / 25), null, Math.cos(i / 10) * 0.5]);
+    }
 
     // Create and draw the visualization.
-    new google.visualization.ScatterChart(document.getElementById('visualization')).
-	draw(data, {titleX: 'Age', titleY: 'Weight', legend: 'none'});  
+    var chart = new google.visualization.ScatterChart(
+        document.getElementById('visualization'));
+    chart.draw(data, {titleX: 'X', titleY: 'Y', legend: 'none',
+                      width:600, height: 400});  
 }
 
