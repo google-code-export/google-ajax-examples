@@ -2,6 +2,7 @@ var tempJSON = [
   {
     "category":"News Search-News Search",
     "samples":[
+      {"boilerplateLoc":"samples/boilerplateHTML/blogsearch/hello.html", "files":["samples/js/search/newssearch/news_hello.js"], "sampleName":"The Hello World of News Search", "tags": "News Hello World"},
       {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/search/newssearch/geo_restrict.js"], "sampleName":"Geo Restriction", "tags": "Location News"},
       {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/search/newssearch/topic_restrict.js"], "sampleName":"Topic Restriction", "tags": "setRestriction, News Type"},
       {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/search/newssearch/news_edition_restrict.js"], "sampleName":"News Edition Restriction", "tags": "setRestriction"},

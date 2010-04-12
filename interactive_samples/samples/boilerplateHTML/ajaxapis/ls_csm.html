@@ -1,0 +1,107 @@
+<!-- 
+  Copyright (c) 2008 Google Inc.
+  
+  You are free to copy and use this sample.
+  License can be found here: http://code.google.com/apis/ajaxsearch/faq/#license
+--> 
+ 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+  <head> 
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/> 
+    <title>Static Map Tiles - Google AJAX Search API demo</title> 
+    <style type="text/css"> 
+    
+    body {
+      background-color: white;
+      color: black;
+      font-family: Arial, sans-serif;
+      font-size: 13px;
+    }
+ 
+    td {
+      vertical-align : top;
+    }
+ 
+    td.search-form {
+      width : 300px;
+    }
+ 
+    #results .header {
+      font-size : 16px;
+      font-weight : bold;
+      margin-bottom : .25em;
+      margin-top : 1em;
+    }
+ 
+    #results .gs-result {
+      margin-bottom : .5em;
+    }
+ 
+    #results div.gs-watermark {
+      display : none;
+    }
+ 
+    #results div.gs-directions {
+      display : none;
+    }
+ 
+    #results div.gs-directions-to-from {
+      display : block;
+    }
+ 
+    div.static-map {
+      float : left;
+      margin-right : 1em;
+    }
+ 
+    a.static-map img {
+      border : 1px solid #7777cc;
+    }
+ 
+    .breaker {
+      clear : both;
+      margin-bottom : 2em;
+    }
+ 
+    .results-td {
+      width : 400px
+    }
+    .maps-td {
+      width : 400px
+    }
+ 
+    #resultsImg {
+      border : 1px solid #f7f7f7;
+      margin-bottom : 2em;
+    }
+ 
+ 
+    </style> 
+    
+    <!-- Replace with http://www.google.com/jsapi --> 
+    <script src="http://www.google.com/jsapi" type="text/javascript"></script> 
+    <script type="text/javascript"> 
+    {{ INSERT_JAVASCRIPT_HERE }}
+    </script> 
+  </head> 
+  <body> 
+    <form id="searcher"> 
+      <table> 
+        <td class="search-form"> 
+          <div id="searchform">Loading</div> 
+        </td> 
+      </table> 
+    </form> 
+    <table> 
+      <tr> 
+        <td class="results-td"> 
+          <div id="results"></div> 
+        </td> 
+        <td class="maps-td"> 
+          <img id="resultsImg"></img> 
+        </td> 
+      </tr> 
+    </table> 
+  </body> 
+</html> 
