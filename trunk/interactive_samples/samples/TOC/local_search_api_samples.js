@@ -2,6 +2,8 @@ var tempJSON = [
    {
     "category":"Local Search-Local Search",
     "samples":[
+      {"boilerplateLoc":"samples/boilerplateHTML/blogsearch/hello.html", "files":["samples/js/search/localsearch/ls_hello.js"], "sampleName":"The Hello World of Local Search", "tags": "Maps, setCenter"},
+      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis/ls_csm.html", "files":["samples/js/search/localsearch/compute_static_map_url.js"], "sampleName":"Create a Static Map Image", "tags": "Maps, computeStaticMapUrl"},
       {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/search/localsearch/center_search.js"], "sampleName":"Center LocalSearch", "tags": "Maps, setCenter"},
       {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/search/localsearch/localsearch_markers.js"], "sampleName":"LocalSearch with Markers", "tags": "Markers, Viewport, Maps"},
       {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/search/localsearch/map_control.js"], "sampleName":"Static Map Control", "tags": "Static Maps, Prototypes, Custom Control, Maps"},
