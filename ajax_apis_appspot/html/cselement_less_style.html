@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<!-- Copyright 2010 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. -->
+<html>
+  <head>
+    <title>Styled Custom Search Engine!</title>
+    <link rel="stylesheet" type="text/css" href="/css/cselement_less_style.css"/>
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+ 
+      google.load('search', '1');
+
+      function onLoad() {
+        // Create a Custom Search control that uses a CSE restricted to code.google.com
+        // Change the customSearchId string to the ID of your own Custom Search engine.
+        var customSearchControl = new google.search.CustomSearchControl('006146382722072746140:rc7_dtmydr0');
+        customSearchControl.enableAds(/* put your publisher ID here */);
+
+        // Set drawing options to use my text box as input instead of having the library create one.
+        var drawOptions = new google.search.DrawOptions();
+        drawOptions.setInput(document.getElementById('query_input'));
+
+        // Draw the control in content div
+        customSearchControl.draw('results', drawOptions);
+      }
+
+      google.setOnLoadCallback(onLoad);
+
+    </script>
+  </head>
+  <body>
+    <div id="left-column">
+      <div id="search-area">
+        <label for="query_input">Your Query:</label>
+        <input type="text" id="query_input"/>
+      
+        <div class="help-text">
+        Type your search in the box above and results will be populated below using a Custom Search engine targeted to Google Code.
+        </div>
+      </div>
+    </div>
+    <div id="right-column">
+      <div id="results"></div>
+    </div>
+  </body>
+</html>

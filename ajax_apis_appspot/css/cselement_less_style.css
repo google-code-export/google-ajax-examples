@@ -1,0 +1,52 @@
+body {
+  margin: 16px 16px 16px 24px;
+  padding: 0 0;
+  font-family: arial, helvetica, sans-serif;
+  background-color: #fff;
+  font-size: 13px;
+}
+
+#left-column {
+  width: 30%;
+  float: left;
+  padding: 10px;
+}
+
+#right-column {
+  width: 60%;
+  float: left;
+  padding: 10px;
+}
+
+#search-area {
+  background-color: #fe9;
+  border: 1px solid #fc0;
+  margin-bottom: 16px;
+  padding: 8px;
+  border-radius: 8px;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  color: #620;
+}
+
+#search-area {
+  padding: 8px 8px 8px 20px;
+}
+
+#search-area .help-text {
+  margin-top: 0.5em;
+  font-size: 12px;
+  font-weight: bold;
+  opacity: 0.5;
+  -moz-opacity: 0.5;
+}
+
+#search-area input {
+  font-size: 18px;
+  background-color: #000;
+  color: #fc0;
+  padding: 4px;
+  margin: 4px 0;
+  border: 0;
+  font-family: arial, helvetica, sans-serif;
+}

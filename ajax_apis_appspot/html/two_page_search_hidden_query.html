@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<!-- Copyright 2010 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. -->
+<html>
+  <head>
+    <title>Two page search example - query form</title>
+    <script type="text/javascript">
+      function inputFocus() {
+        document.getElementById('query-input').style['background'] = '';
+      }
+
+      function inputBlur() {
+        var queryInput = document.getElementById('query-input');
+        if (!queryInput.value) {
+          queryInput.style['background'] = 'white url(http://www.google.com/coop/images/google_custom_search_watermark.gif) no-repeat 0% 50%';
+        }
+      }
+    </script>
+  </head>
+  <body onload="inputBlur();">
+    <div style="width:500px; margin:auto; margin-top:100px;">
+    <form action="/html/two_page_search_hidden_query_results.html" method="GET">
+      <input name="q" size="50"id="query-input" onfocus="inputFocus();" onblur="inputBlur();" />
+      <button type="submit">Search</button>
+    </form>
+    <div id="branding"></div>
+    </div>
+  </body>
+</html>
