@@ -34,4 +34,4 @@ function drawVisualization() {
         width: 600,
         height: 400
       });
-}​
+}
