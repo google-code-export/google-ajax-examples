@@ -138,8 +138,8 @@ def verify_xsrf_token(method):
   def wrapper(self, *args, **kwargs):
     c = Cookie.SimpleCookie()
     c.load(self.request.headers['Cookie'])
-    if c.has_key("ACSID"):
-      cookieVal = "safe" + c["ACSID"].value[6:20]
+    if c.has_key("SID"):
+      cookieVal = "safe" + c["SID"].value[6:20]
     if c.has_key("dev_appserver_login"):
       cookieVal = "safe" + c["dev_appserver_login"].value[6:20]
     if cookieVal and cookieVal == self.request.get('sc'):
