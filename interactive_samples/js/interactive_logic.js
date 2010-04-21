@@ -251,7 +251,7 @@
       if (confirmDelete) {
         var redirect = 'delete?id=' + id;
         var cookie = me.getCookie('dev_appserver_login');
-        cookie = (cookie) ? cookie.replace(/\"/g, '') : me.getCookie('ACSID');
+        cookie = (cookie) ? cookie.replace(/\"/g, '') : me.getCookie('SID');
         cookie = (cookie) ? cookie.substring(6, 20) : null;
         redirect += ((curAPITypes) ? '&type=' + curAPITypes : '');
         redirect += (cookie) ? '&sc=' + 'safe' + cookie : '';
@@ -368,7 +368,7 @@
 
   InteractiveSample.prototype.getSafetyToken = function() {
     var cookie = this.getCookie('dev_appserver_login');
-    cookie = (cookie) ? cookie.replace(/\"/g, '') : this.getCookie('ACSID');
+    cookie = (cookie) ? cookie.replace(/\"/g, '') : this.getCookie('SID');
     cookie = (cookie) ? cookie.substring(6, 20) : null;
     return 'safe' + cookie;
   };
