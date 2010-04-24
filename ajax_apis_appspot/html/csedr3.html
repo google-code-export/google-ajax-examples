@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Custom Search Engine</title>
+
+  <script src="http://www.google.com/jsapi" type="text/javascript"></script>
+  <script type="text/javascript">
+    // Load the Search API
+    google.load('search', '1');
+
+    // Set a callback to load the Custom Search Control when you page loads
+    google.setOnLoadCallback(
+      function(){
+        var customSearchControl = new google.search.CustomSearchControl(
+            '000458029060823693019:rufl7axsp9k');
+
+        // Use "mysite_" as a unique ID to override the default rendering.
+        google.search.Csedr.addOverride("mysite_");
+
+        // Draw the Custom Search Control in the div named "CSE"
+        customSearchControl.draw('cse');
+
+        // Execute an initial search
+        customSearchControl.execute("cheetah");
+      },
+    true);
+  </script>
+</head>
+<body>
+  <div style="display:none">
+
+    <div id="mysite_thumbnail">
+      <div data-if="Vars.thumbnail" class="gs-image-box gs-web-image-box">
+        <a class="gs-image" data-attr="{href:url, target:target}">
+          <img class="gs-image" data-attr="{src:thumbnail.src, width:48, height: 48}"/>
+        </a>
+      </div>
+    </div>
+
+    <div id="mysite_webResult">
+      <div class="gs-webResult gs-result"
+        data-vars="{longUrl:function() {
+          var i = unescapedUrl.indexOf(visibleUrl);
+          return i &lt; 1 ? visibleUrl : unescapedUrl.substring(i);}}">
+
+        <table>
+          <tr>
+            <td valign="top">
+              <div data-if="Vars.richSnippet" data-attr="0"
+                data-body="render('thumbnail',richSnippet,{url:unescapedUrl,target:target})"></div>
+            </td>
+
+            <td valign="top">
+              <div class="gs-title">
+                <a class="gs-title" data-attr="{href:unescapedUrl,target:target}"
+                  data-body="html(title)"></a>
+              </div>
+              <div class="gs-snippet" data-body="html(content)"></div>
+              <div class="gs-visibleUrl gs-visibleUrl-short" data-body="longUrl()"></div>
+              <div style="color:#676767" data-if="Vars.richSnippet && Vars.richSnippet.document">
+                <img data-attr="{src:Vars.richSnippet.document.filetypeImage}">
+                By <span data-body="Vars.richSnippet.document.author"></span> &nbsp;-&nbsp;
+                <span data-body="Vars.richSnippet.document.pageCount"></span> pages&nbsp;-&nbsp;
+                <span data-body="Vars.richSnippet.document.viewCount"></span> views
+                &nbsp;-&nbsp;last modified&nbsp; <span data-body="Vars.richSnippet.document.timeAgo"></span>
+              </div>
+
+              <div data-if="Vars.richSnippet && Vars.richSnippet.action" class="gs-actions"
+                data-body="render('action',richSnippet,{url:unescapedUrl,target:target})"></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div id="cse"></div>
+</body>
+</html>

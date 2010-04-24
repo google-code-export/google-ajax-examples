@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Custom Search Engine</title>
+
+  <script src="http://www.google.com/jsapi" type="text/javascript"></script>
+  <script type="text/javascript">
+    // Load the Search API
+    google.load('search', '1');
+
+    // Set a callback to load the Custom Search Control when you page loads
+    google.setOnLoadCallback(
+      function(){
+        var customSearchControl = new google.search.CustomSearchControl(
+            '000458029060823693019:rufl7axsp9k');
+
+        // Draw the Custom Search Control in the div named "CSE"
+        customSearchControl.draw('cse');
+
+        // Execute an initial search
+        customSearchControl.execute("cheetah");
+      },
+    true);
+  </script>
+</head>
+<body>
+  <div id="cse"></div>
+</body>
+</html>
