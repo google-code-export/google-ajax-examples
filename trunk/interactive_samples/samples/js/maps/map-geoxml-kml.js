@@ -4,9 +4,9 @@ var toggleState = 1;
 
 function initialize() {
   if (GBrowserIsCompatible()) {
-    geoXml = new GGeoXml("http://mapgadgets.googlepages.com/cta.kml");
-    map = new GMap2(document.getElementById("map_canvas")); 
-    map.setCenter(new GLatLng(41.875696,-87.624207), 11); 
+    geoXml = new GGeoXml("http://code.google.com/apis/kml/documentation/KML_Samples.kml");
+    map = new GMap2(document.getElementById("map_canvas"));
+    map.setCenter(new GLatLng(37.42228990140251, -122.0822035425683), 16);
     map.addControl(new GLargeMapControl());
     map.addControl(new GLargeMapControl());
     map.addOverlay(geoXml);
