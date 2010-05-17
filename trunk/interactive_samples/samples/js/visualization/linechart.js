@@ -22,5 +22,8 @@ function drawVisualization() {
  
   // Create and draw the visualization.
   new google.visualization.LineChart(document.getElementById('visualization')).
-      draw(data, {smoothLine: true, width: 600, height: 400});  
+      draw(data, {curveType: "function",
+                  width: 500, height: 400,
+                  vAxis: {maxValue: 10}}
+          );
 }
