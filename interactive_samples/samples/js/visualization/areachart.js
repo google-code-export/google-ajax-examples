@@ -32,6 +32,8 @@ function drawVisualization() {
     title : 'Monthly Coffee Production by Country',
     isStacked: true,
     width: 600,
-    height: 400
+    height: 400,
+    vAxis: {title: "Cups"},
+    hAxis: {title: "Month"}
   });
 }

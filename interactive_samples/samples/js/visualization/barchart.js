@@ -1,12 +1,12 @@
 function drawVisualization() {
   // Create and populate the data table.
   var data = new google.visualization.DataTable();
-  var raw_data = [['Austria', 1257233, 1432414, 1447207, 1336060, 1538156, 1576579, 1600652, 1968113, 1901067],
-                  ['Bulgaria', 280727, 354905, 343432, 400361, 366849, 440514, 434552, 393032, 517206],
-                  ['Denmark', 1021798, 1102964, 1075800, 1001582, 1119450, 993360, 1004163, 979198, 916965],
-                  ['Greece', 798386, 867643, 897497, 997974, 941795, 930593, 897127, 1080887, 1056036]];
+  var raw_data = [['Austria', 1336060, 1538156, 1576579, 1600652, 1968113, 1901067],
+                  ['Bulgaria', 400361, 366849, 440514, 434552, 393032, 517206],
+                  ['Denmark', 1001582, 1119450, 993360, 1004163, 979198, 916965],
+                  ['Greece', 997974, 941795, 930593, 897127, 1080887, 1056036]];
   
-  var years = [2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008];
+  var years = [2003, 2004, 2005, 2006, 2007, 2008];
                   
   data.addColumn('string', 'Year');
   for (var i = 0; i  < raw_data.length; ++i) {
@@ -26,8 +26,10 @@ function drawVisualization() {
   
   // Create and draw the visualization.
   new google.visualization.BarChart(document.getElementById('visualization')).
-      draw(data, 
-    		  {title:"Yearly Coffee Consumption by Country", 
-    	  		width:800, height:400}    		  
+      draw(data,
+           {title:"Yearly Coffee Consumption by Country",
+            width:600, height:400,
+            vAxis: {title: "Year"},
+            hAxis: {title: "Cups"}}
       );
 }
