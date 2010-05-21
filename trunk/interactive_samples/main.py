@@ -45,6 +45,7 @@ apis = {
   'libraries': 'samples/TOC/libs_api_samples.js',
   'earth': 'samples/TOC/earth_api_samples.js',
   'maps': 'samples/TOC/maps_api_samples.js',
+  'mapsv3': 'samples/TOC/maps_v3_api_samples.js',
   'visualization': 'samples/TOC/visualization_api_samples.js',
   'blogger': 'samples/TOC/blogger_api_samples.js',
   'calendar': 'samples/TOC/calendar_api_samples.js',
