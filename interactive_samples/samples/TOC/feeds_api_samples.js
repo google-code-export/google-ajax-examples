@@ -13,6 +13,14 @@ var tempJSON = [
       {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis/slideshow.html", "files":["samples/js/feeds/slideshow.js"], "sampleName":"Slideshow of Photo Feed", "tags": "Wizard", "docsUrl": "http://www.google.com/uds/solutions/slideshow/reference.html"}
     ],
     "docsUrl": "http://code.google.com/apis/ajaxfeeds/documentation/reference.html"
+  },
+  {
+    "category":"Feeds-Push",
+    "samples":[
+      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/feeds/subscribe.js"], "sampleName":"Subscribe", "tags": ""},
+      {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/feeds/push_include_historical_entries.js"], "sampleName":"Include Historical Entries", "tags": ""}
+    ],
+    "docsUrl": "http://code.google.com/apis/ajaxfeeds/documentation/reference.html"
   }
 ];
 
