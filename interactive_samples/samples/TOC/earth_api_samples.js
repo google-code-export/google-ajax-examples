@@ -54,7 +54,8 @@ var tempJSON = [
       {"boilerplateLoc":"samples/boilerplateHTML/earth/earth-with-basic-ui.html", "files":["samples/js/earth/balloon-change-content.js"], "sampleName":"Changing Balloon Content", "tags": "Balloons", "docsUrl": ""},
       {"boilerplateLoc":"samples/boilerplateHTML/earth/earth-with-basic-ui.html", "files":["samples/js/earth/balloon-close.js"], "sampleName":"Closing Balloons", "tags": "Balloons", "docsUrl": ""},
       {"boilerplateLoc":"samples/boilerplateHTML/earth/earth-with-basic-ui.html", "files":["samples/js/earth/balloon-javascript.js"], "sampleName":"JavaScript in Balloons", "tags": "Balloons", "docsUrl": ""},
-      {"boilerplateLoc":"samples/boilerplateHTML/earth/earth-with-basic-ui.html", "files":["samples/js/earth/balloon-youtube.js"], "sampleName":"Embedding YouTube Videos in Balloons", "tags": "Balloons", "docsUrl": ""}
+      {"boilerplateLoc":"samples/boilerplateHTML/earth/earth-with-basic-ui.html", "files":["samples/js/earth/balloon-youtube.js"], "sampleName":"Embedding YouTube Videos in Balloons", "tags": "Balloons", "docsUrl": ""},
+      {"boilerplateLoc":"samples/boilerplateHTML/earth/earth-with-basic-ui.html", "files":["samples/js/earth/balloon-extended.js"], "sampleName":"Extended Data in Balloons", "tags": "Balloons", "docsUrl": ""}
     ],
     "docsUrl": "http://code.google.com/apis/earth/documentation/reference/index.html"
   },
@@ -75,6 +76,15 @@ var tempJSON = [
       {"boilerplateLoc":"samples/boilerplateHTML/earth/earth-with-basic-ui.html", "files":["samples/js/earth/camera-move.js"], "sampleName":"Move Camera", "tags": "Camera and LookAt", "docsUrl": ""},
       {"boilerplateLoc":"samples/boilerplateHTML/earth/earth-simple.html", "files":["samples/js/earth/camera-move-timeouts.js"], "sampleName":"Move Camera with Timeouts", "tags": "Camera and LookAt", "docsUrl": ""},
       {"boilerplateLoc":"samples/boilerplateHTML/earth/earth-simple.html", "files":["samples/js/earth/camera-tilt.js"], "sampleName":"Tilt Camera", "tags": "Camera and LookAt", "docsUrl": ""}
+    ],
+    "docsUrl": "http://code.google.com/apis/earth/documentation/reference/index.html"
+  },
+  {
+    "category": "Earth-Working with Time",
+    "samples":[
+      {"boilerplateLoc":"samples/boilerplateHTML/earth/earth-with-basic-ui-with-gex.html", "files":["samples/js/earth/time-basics.js"], "sampleName":"Time Basics", "tags": "Time and Time UI", "docsUrl": ""},
+      {"boilerplateLoc":"samples/boilerplateHTML/earth/earth-with-basic-ui-with-gex.html", "files":["samples/js/earth/time-ui.js"], "sampleName":"Time and Historical Imagery UI", "tags": "Time and Time UI", "docsUrl": ""},
+      {"boilerplateLoc":"samples/boilerplateHTML/earth/earth-with-basic-ui-with-gex.html", "files":["samples/js/earth/internal-clock.js"], "sampleName":"Internal clock rate", "tags": "Time and Time UI", "docsUrl": ""}
     ],
     "docsUrl": "http://code.google.com/apis/earth/documentation/reference/index.html"
   },
