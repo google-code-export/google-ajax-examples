@@ -28,7 +28,7 @@ limitations under the License. -->
         if (queryStart > 0) {
           var parts = url.substr(queryStart).split('&');
           for (var i = 0; i < parts.length; i++) {
-            if (parts[i].substr(0, 1) == 'q') {
+            if (parts[i].length > 2 && parts[i].substr(0, 2) == 'q=') {
               return decodeURIComponent(
                   parts[i].split('=')[1].replace(/\+/g, ' '));
             }
@@ -41,10 +41,13 @@ limitations under the License. -->
         // Create a custom search control that uses a CSE restricted to
         // code.google.com
         var customSearchControl = new google.search.CustomSearchControl(
-            '012157912978810372049:-cv6ao3zqua');
+            '006146382722072746140:rc7_dtmydr0');
+
+        var drawOptions = new google.search.DrawOptions();
+        drawOptions.setAutoComplete(true);
 
         // Draw the control in content div
-        customSearchControl.draw('results');
+        customSearchControl.draw('results', drawOptions);
 
         // Run a query
         customSearchControl.execute(getQuery());
