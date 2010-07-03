@@ -15,7 +15,10 @@ limitations under the License. -->
 <html>
   <head>
     <title>Two page search example - query form</title>
+    <script src="//www.google.com/jsapi" type="text/javascript"></script>
     <script type="text/javascript">
+      google.load('search', '1');
+
       function inputFocus() {
         document.getElementById('query-input').style['background'] = '';
       }
@@ -23,15 +26,35 @@ limitations under the License. -->
       function inputBlur() {
         var queryInput = document.getElementById('query-input');
         if (!queryInput.value) {
-          queryInput.style['background'] = 'white url(http://www.google.com/coop/images/google_custom_search_watermark.gif) no-repeat 0% 50%';
+          queryInput.style['background'] =
+              'white url(http://www.google.com/coop/images/'
+              + 'google_custom_search_watermark.gif) no-repeat 0% 50%';
         }
       }
+
+      function init() {
+        google.search.CustomSearchControl.attachAutoCompletion(
+            '006146382722072746140:rc7_dtmydr0',
+            document.getElementById('query-input'),
+            'two-page-form');
+        inputBlur();
+      }
+
+      function submitQuery() {
+        window.location = '/html/two_page_search_hidden_query_results.html?q='
+            + encodeURIComponent(
+                document.getElementById('query-input').value);
+        return false;
+      }
+
+      google.setOnLoadCallback(init);
     </script>
   </head>
-  <body onload="inputBlur();">
+  <body>
     <div style="width:500px; margin:auto; margin-top:100px;">
-    <form action="/html/two_page_search_hidden_query_results.html" method="GET" accept-charset="UTF-8">
-      <input name="q" size="50"id="query-input" onfocus="inputFocus();" onblur="inputBlur();" />
+    <form onsubmit="return submitQuery()">
+      <input name="q" size="50" id="query-input" onfocus="inputFocus();"
+               onblur="inputBlur();" autocomplete="off" />
       <button type="submit">Search</button>
     </form>
     </div>
