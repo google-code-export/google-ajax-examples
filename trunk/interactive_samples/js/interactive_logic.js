@@ -15,7 +15,7 @@
     return document.createElement(name);
   }
 
-  var savedByTheGoogAPIKey = "ABQIAAAA1XbMiDxx_BTCY2_FkPh06RRaGTYH6UMl8mADNa0YKuWNNa8VNxQEerTAUcfkyrr6OwBovxn7TDAH5Q";
+  var savedByTheGoogAPIKey = "AIzaSyA5m1Nc8ws2BbmPRwKu5gFradvD_hgq6G0";
 
   function InteractiveSample(){
     this.categories = [];
