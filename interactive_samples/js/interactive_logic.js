@@ -347,7 +347,7 @@
         data = me.insertJavascript(data, code);
 
         var key = opt_APIKey || "<<INSERT KEY>>";
-        data = data.replace(/key=.*"/, "key=" + key + "\"");
+        data = data.replace(/key={{ +key +}}/, "key=" + key);
         // data += '<div id="debugBar" class="debugBarRunning"><div class="debugBarTop"></div><div class="debugBarTile"><div class="debugBarContent"><a href="#" class="debugContinuePaused" onclick="window.setContinue(true);return false;"><img border=0 src="/images/debug-btn-continue.png"></a><img class="debugContinueRunning" src="/images/debug-btn-continue.png"><a href="#" onclick="window.toggleFirebug();return false;"><img border=0 src="/images/debug-btn-firebug-lite.png"></a><span id="debugBarText">Complete.</span></div></div><div class="debugBarBottom"></div></div>';
         callbackFunc(data);
       }
