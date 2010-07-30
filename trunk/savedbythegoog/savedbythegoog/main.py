@@ -73,7 +73,7 @@ def retrieveCode(key):
   if not code:
     saved_code = SavedCode.get_by_key_name(key)
     code = saved_code and saved_code.code
-  return code
+  return str(code).replace('{{ key }}', 'AIzaSyA5m1Nc8ws2BbmPRwKu5gFradvD_hgq6G0')
 
 class AddCode(webapp.RequestHandler):
   def post(self):
