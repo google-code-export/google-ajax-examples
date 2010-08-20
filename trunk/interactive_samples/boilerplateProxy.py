@@ -14,18 +14,21 @@ class Main(webapp.RequestHandler):
     path = path.replace('apis/ajax/playground/', '')
 
     url = self.request.url
-    key = ''
+    self.template_values = {}
+    if path.find('samples/js') != -1:
+      path = os.path.join(os.path.dirname(__file__), path)
+      self.response.out.write(template.render(path, self.template_values))
+    else:
+      self.template_values = {
+        "key": "{{ key }}",
+        "INSERT_JAVASCRIPT_HERE": 'INSERT_JAVASCRIPT_HERE'
+      }
 
-    self.template_values = {
-      "key": "{{ key }}",
-      "INSERT_JAVASCRIPT_HERE": 'INSERT_JAVASCRIPT_HERE'
-    }
+      path = os.path.join(os.path.dirname(__file__), path)
+      self.response.out.write(template.render(path, self.template_values))
 
-    path = os.path.join(os.path.dirname(__file__), path)
-    self.response.out.write(template.render(path, self.template_values))
-
-application = webapp.WSGIApplication([(r'/samples/boilerplateHTML/.*', Main),
-                                      (r'/apis/ajax/playground/samples/boilerplateHTML/.*', Main)
+application = webapp.WSGIApplication([(r'/samples/.*', Main),
+                                      (r'/apis/ajax/playground/samples/.*', Main)
                                      ],
                                      debug=False)
 

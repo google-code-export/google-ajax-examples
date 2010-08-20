@@ -25,20 +25,24 @@
   <link rel="stylesheet" href="css/styles.css" type="text/css">
   <!-- JavaScript -->
   <title>Google Code Playground</title>
-  <script src="codemirror/js/prod_codemirrorz_237dc27be9961d049c38dd9ba4c126c3.js" type="text/javascript" charset="utf-8"></script>
+  <script src="codemirror/js/prod_codemirrorz_8db196a86fd2de1349c8e3f7c8968199.js" type="text/javascript" charset="utf-8"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js" type="text/javascript" charset="utf-8"></script>
   <script src="js/jquery-ui-packed.js" type="text/javascript" charset="utf-8"></script>
-
-  {% for i in sample_srcs %}
-    <script src="{{ i }}" type="text/javascript" charset="utf-8"></script>
-  {% endfor %}
+  <script type="text/javascript" charset="utf-8">
+  function pgSamplesLoadedCB(codeObj) {
+    window.codeArray = codeObj.codeArray;
+  }
+  
+  </script>
+  {% if toc %}
+    <script src="{{ toc }}" type="text/javascript" charset="utf-8"></script>
+  {% endif %}
   <!--
     Undesirable to put inline script in between script includes
     but this is the best way to load saved examples
   -->
   <script type="text/javascript" charset="utf-8">
     {% if usersSamplesJSON %}
-
       var userJSON = {{ usersSamplesJSON }};
     if (typeof userJSON != 'undefined' && userJSON.length) {
       codeArray = userJSON.concat(codeArray);

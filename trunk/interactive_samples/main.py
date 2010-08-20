@@ -218,13 +218,16 @@ class Main(webapp.RequestHandler):
     if expanded:
       self.template_values['expandedCategory'] = expanded
 
-    # sample_srcs = self.getAPISampleSourceIncludes(apiTypes)
     if apiTypes:
       apiTypes = '?type=' + apiTypes
     else:
       apiTypes = ''
-    sample_srcs = ['/apis/ajax/playground/getTOC' + apiTypes]
-    self.template_values['sample_srcs'] = sample_srcs
+    toc = '/apis/ajax/playground/getTOC'
+    if not apiTypes == '':
+      toc += apiTypes + '&amp;cb=pgSamplesLoadedCB';
+    else:
+      toc += '?cb=pgSamplesLoadedCB'
+    self.template_values['toc'] = toc
     # self.response.out.write(simplejson.dumps(a))
     if users.get_current_user():
       # savedCode is an array of code entries..
@@ -362,29 +365,28 @@ class CacheCode(webapp.RequestHandler):
 
 class GetTOC(webapp.RequestHandler):
   def getAllTOCs(self):
-    the_response_script = ''
+    the_file = open(apis['language']).read()
+    codeArray = simplejson.loads(the_file)['codeArray']
     theApis = sorted(apis.keys())
     for i in range(0, len(theApis)):
       the_file = open(apis[theApis[i]])
-      if theApis[i] == 'language':
-        the_response_script = the_file.read() + '\n' + the_response_script
-      else:
-        the_response_script += "\n" + the_file.read()
+      if not theApis[i] == 'language':
+        codeArray.extend(simplejson.loads(the_file.read())['codeArray'])
       the_file.close()
-    return the_response_script
+    return simplejson.dumps({'codeArray' : codeArray})
   def getTOCsByType(self, types):
-    the_response_script = ''
+    codeArray = []
     splitTypes = types.split('|')
     for i in splitTypes:
       if apis.has_key(i):
         the_file = open(apis[i])
-        the_response_script += "\n" + the_file.read()
+        codeArray.extend(simplejson.loads(the_file.read())['codeArray'])
         the_file.close()
-    return the_response_script
+    return simplejson.dumps({'codeArray' : codeArray})
 
   def get(self):
     types = self.request.get('type')
-    
+    cb = self.request.get('cb')
     if not types:
       types = 'all'
     TOC = memcache.get('TOC:' + types)
@@ -405,7 +407,10 @@ class GetTOC(webapp.RequestHandler):
     self.response.headers['Expires'] = "Fri, 01 Jan 1990 00:00:00 GMT"
     self.response.headers['content-type'] = 'text/javascript'
     self.response.headers['cache-control'] = 'no-cache, no-store, max-age=0, must-revalidate'
-    self.response.out.write(the_response_script)
+    if cb:
+      self.response.out.write(cb + '(' + the_response_script + ');')
+    else:
+      self.response.out.write(the_response_script)
 
 class FlushMemcache(webapp.RequestHandler):
   def get(self):
@@ -517,6 +522,52 @@ class GaError(webapp.RequestHandler):
   def get(self):
     logging.error('There was an error loading ga.js')
     self.response.out.write('Thanks!')
+
+class ServeJSONPSamples(webapp.RequestHandler):
+  def get(self):
+    the_toc = memcache.get('TOC:all')
+    samplename = self.request.get('samplename')
+    callback = self.request.get('cb')
+    context = self.request.get('context')
+    if not the_toc:
+      toc = GetTOC()
+      the_toc = toc.getAllTOCs()
+      memcache.set('TOC:all', the_toc, 600)
+    if not the_toc:
+      logging.error('error getting toc in jsonp samples')
+      self.response.out.write('Error.');
+    else:
+      the_toc = simplejson.loads(the_toc)
+      found = False
+      jsLoc = ''
+      htmlLoc = ''
+      for category in the_toc['codeArray']:
+        for sample in category['samples']:
+          js = sample['files'][0]
+          html = sample['boilerplateLoc']
+          name = sample['sampleName']
+          if name.lower() == samplename.lower():
+            jsLoc = js
+            htmlLoc = html
+            found = True
+            break
+        if found:
+          break
+      response = {}
+      if not jsLoc == '':
+        jsFile = open(jsLoc)
+        jsFileContents = jsFile.read()
+        jsFile.close()
+        response['js'] = jsFileContents
+      if not htmlLoc == '':
+        htmlFile = open(htmlLoc)
+        htmlFileContents = htmlFile.read()
+        htmlFile.close()
+        response['html'] = htmlFileContents
+    if context:
+      response['context'] = context
+    response['samplename'] = samplename
+    self.response.out.write(callback + '(' + simplejson.dumps(response) + ');')
 def main():
   application = webapp.WSGIApplication([('/', Main),
                                         ('/save', Save),
@@ -532,8 +583,9 @@ def main():
                                         ('/apis/ajax/playground/getTOC', GetTOC),
                                         ('/apis/ajax/playground/flush_memcache', FlushMemcache),
                                         ('/apis/ajax/playground/get_projects', GetProjects),
-                                        ('/apis/ajax/playground/ga_error', GaError)],
-                                       debug=False)
+                                        ('/apis/ajax/playground/ga_error', GaError),
+                                        ('/apis/ajax/playground/jsonpSamples', ServeJSONPSamples)],
+                                       debug=True)
   wsgiref.handlers.CGIHandler().run(application)
 
 

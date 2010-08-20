@@ -27,7 +27,6 @@ os.system('rm codemirror/js/prod_*')
 
 def append_files_and_compress(files, path, output_file_name):
   file_buffer = ''
-  print(len(files))
   for i in range(0, len(files)):
     this_file = open(path + files[i])
     file_buffer += this_file.read() + '\n'
@@ -58,8 +57,6 @@ codemirror_file.write(codemirror_text)
 codemirror_file.close()
 codemirror_file_name = append_files_and_compress(['codemirror.js'], 'codemirror/js/', 'codemirrorz')
 
-
-
 # open index.html, replace the parserfile lines
 index_file = open('index.html')
 index_text = index_file.read()
@@ -70,3 +67,12 @@ index_text = re.sub('src="codemirror/js/prod_codemirrorz.*\.js', 'src="codemirro
 index_file = open('index.html', 'w')
 index_file.write(index_text)
 index_file.close()
+
+# open js/code_widget.js, replace the prod_codemirrorz line
+cw_file = open('js/code_widget.js')
+cw_text = cw_file.read()
+cw_file.close()
+cw_text = re.sub('codemirror/js/prod_codemirrorz.*\.js', 'codemirror/js/' + codemirror_file_name, cw_text)
+cw_file = open('js/code_widget.js', 'w')
+cw_file.write(cw_text)
+cw_file.close()
