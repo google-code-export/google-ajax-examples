@@ -1,0 +1,23 @@
+.CodeMirror-line-numbers {
+  width: 2.2em;
+  background-color: #eee;
+  color: #aaa;
+  text-align: right;
+  padding-right: .3em;
+  font-size: 10pt;
+  font-family: monospace;
+  padding-top: 0;
+  margin-right: 0.3em;
+}
+
+.cw-button-container {
+  text-align: right;
+}
+
+.cw-view-all {
+  margin-right: 2px;
+}
+
+cw-run-code {
+  margin-right: 2px;
+}

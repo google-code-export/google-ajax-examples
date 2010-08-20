@@ -1,5 +1,5 @@
 application: interactivesampler
-version: 8
+version: 9
 runtime: python
 api_version: 1
 
@@ -23,13 +23,10 @@ handlers:
 - url: /codemirror
   static_dir: codemirror
   expiration: "10d"
-- url: /samples/boilerplateHTML/(.*\.html)
+- url: /samples/(.*)
   script: boilerplateProxy.py
 - url: /index.html
   script: main.py
-- url: /samples/js
-  static_dir: samples/js
-  expiration: "10s"
 - url: /save
   script: main.py
 - url: /delete
@@ -59,13 +56,10 @@ handlers:
 - url: /apis/ajax/playground/codemirror
   static_dir: codemirror
   expiration: "10d"
-- url: /apis/ajax/playground/samples/boilerplateHTML/(.*\.html)
+- url: /apis/ajax/playground/samples/(.*)
   script: boilerplateProxy.py
 - url: /apis/ajax/playground/index.html
   script: main.py
-- url: /apis/ajax/playground/samples/js
-  static_dir: samples/js
-  expiration: "10s"
 - url: /apis/ajax/playground/save
   script: main.py
 - url: /apis/ajax/playground/delete
@@ -85,4 +79,6 @@ handlers:
 - url: /apis/ajax/playground/get_projects
   script: main.py
 - url: /apis/ajax/playground/ga_error
+  script: main.py
+- url: /apis/ajax/playground/jsonpSamples
   script: main.py
