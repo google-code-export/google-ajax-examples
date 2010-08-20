@@ -19,7 +19,6 @@ if secret_token:
 
   os.system('find ./js -name \'*.js\' | xargs -L1 -IMYFILES -t java -jar yuicompressor-2.4.1.jar MYFILES -o MYFILES')
   os.system('find . -name \'*.css\' | xargs -L1 -IMYFILES -t java -jar yuicompressor-2.4.1.jar --type css MYFILES -o MYFILES')
-  os.system('find samples/TOC/*.js | xargs -L1 -IMYFILES -t java -jar yuicompressor-2.4.1.jar MYFILES -o MYFILES')
 
   m = md5.new()
   interactive_logic = open('js/interactive_logic.js')

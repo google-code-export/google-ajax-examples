@@ -24,7 +24,7 @@ playground.CodeWidget = function(options) {
 
   if (!playground.CodeWidget.isCodeMirrorScriptLoaded_()) {
     var codemirrorScript = document.createElement('script');
-    codemirrorScript.src = location.protocol + '//' + location.host +
+    codemirrorScript.src = 'http://code.google.com/apis/ajax/playground' +
         '/codemirror/js/prod_codemirrorz_8db196a86fd2de1349c8e3f7c8968199.js';
     if (window.navigator.userAgent.indexOf('MSIE') != -1) {
       codemirrorScript.onreadystatechange =
@@ -173,8 +173,8 @@ playground.CodeWidget.prototype.loadCode_ = function() {
       'cb=playground.CodeWidget.RawCompletion_',
       'context=' + context
     ];
-    script.src = location.protocol + '//' + location.host +
-      '/apis/ajax/playground/jsonpSamples?' + args.join('&');
+    script.src = 'http://code.google.com/apis/ajax/playground/jsonpSamples?' +
+                  args.join('&');
     document.body.appendChild(script);
   }
 };
@@ -249,7 +249,7 @@ playground.CodeWidget.prototype.runCode_ = function() {
     var code = self.editor_.getCode();
     code = self.originalCode_.replace(self.shownCode_, code);
     code = code.replace('{{ key }}', playground.CodeWidget.savedByTheGoogAPIKey);
-    var cacheCodeLoc = location.protocol + '//' + location.host + '/apis/ajax/playground/cacheCode';
+    var cacheCodeLoc = 'http://code.google.com/apis/ajax/playground/cacheCode';
   	playground.CodeWidget.downloadUrl(cacheCodeLoc, function(self) {
   	  return function(responseText, status) {
   	    var token = responseText;
