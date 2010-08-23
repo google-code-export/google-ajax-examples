@@ -15,9 +15,8 @@ function drawVisualization() {
     var chart = new google.visualization.ScatterChart(
         document.getElementById('visualization'));
     chart.draw(data, {title: 'Cool shapes',
-                      width:600, height: 400,
-                      vAxis: {title: "Y", titleColor: "green"},
-                      hAxis: {title: "X", titleColor: "green"}}
+                      width: 600, height: 400,
+                      vAxis: {title: "Y", titleTextStyle: {color: "green"}},
+                      hAxis: {title: "X", titleTextStyle: {color: "green"}}}
               );
 }
-
