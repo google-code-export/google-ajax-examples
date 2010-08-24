@@ -585,7 +585,7 @@ def main():
                                         ('/apis/ajax/playground/get_projects', GetProjects),
                                         ('/apis/ajax/playground/ga_error', GaError),
                                         ('/apis/ajax/playground/jsonpSamples', ServeJSONPSamples)],
-                                       debug=True)
+                                       debug=False)
   wsgiref.handlers.CGIHandler().run(application)
 
 

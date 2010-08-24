@@ -6,6 +6,7 @@ playground.CodeWidget = function(options) {
     options.container = document.getElementById(options.container);
   }
   this.options_ = options;
+  this.host_ = '//' + (this.options_.devaddress || 'code.google.com');
   if (this.options_.editorHeight == 'auto') {
     this.options_.container.style.height = '0px';
   } else {
@@ -24,8 +25,8 @@ playground.CodeWidget = function(options) {
 
   if (!playground.CodeWidget.isCodeMirrorScriptLoaded_()) {
     var codemirrorScript = document.createElement('script');
-    codemirrorScript.src = 'http://code.google.com/apis/ajax/playground' +
-        '/codemirror/js/prod_codemirrorz_8db196a86fd2de1349c8e3f7c8968199.js';
+    codemirrorScript.src = this.host_ + '/apis/ajax/playground' +
+        '/codemirror/js/prod_codemirrorz_5b6d8fa21fb3d7fd8f309cf6e62b8c1b.js';
     if (window.navigator.userAgent.indexOf('MSIE') != -1) {
       codemirrorScript.onreadystatechange =
         playground.CodeWidget.codeMirrorScriptCb_;
@@ -173,8 +174,8 @@ playground.CodeWidget.prototype.loadCode_ = function() {
       'cb=playground.CodeWidget.RawCompletion_',
       'context=' + context
     ];
-    script.src = 'http://code.google.com/apis/ajax/playground/jsonpSamples?' +
-                  args.join('&');
+    script.src = this.host_ + '/apis/ajax/playground/jsonpSamples?' +
+        args.join('&');
     document.body.appendChild(script);
   }
 };
@@ -249,7 +250,7 @@ playground.CodeWidget.prototype.runCode_ = function() {
     var code = self.editor_.getCode();
     code = self.originalCode_.replace(self.shownCode_, code);
     code = code.replace('{{ key }}', playground.CodeWidget.savedByTheGoogAPIKey);
-    var cacheCodeLoc = 'http://code.google.com/apis/ajax/playground/cacheCode';
+    var cacheCodeLoc = '//code.google.com/apis/ajax/playground/cacheCode';
   	playground.CodeWidget.downloadUrl(cacheCodeLoc, function(self) {
   	  return function(responseText, status) {
   	    var token = responseText;

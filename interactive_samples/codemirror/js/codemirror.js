@@ -10,6 +10,9 @@
 // below. You can also assign to it after loading.
 var CodeMirrorConfig = window.CodeMirrorConfig || {};
 
+var host = (window.location.host.indexOf('localhost:') == -1) ?
+            '//code.google.com/apis/ajax/playground/' : '';
+
 var CodeMirror = (function(){
   function setDefaults(object, defaults) {
     for (var option in defaults) {
@@ -184,10 +187,10 @@ var CodeMirror = (function(){
     // Hack to work around a bunch of IE8-specific problems.
     html.push("<meta http-equiv=\"X-UA-Compatible\" content=\"IE=EmulateIE7\"/>");
     forEach(options.stylesheet, function(file) {
-      html.push("<link rel=\"stylesheet\" type=\"text/css\" href=\"" + file + "\"/>");
+      html.push("<link rel=\"stylesheet\" type=\"text/css\" href=\"" + host + file + "\"/>");
     });
     forEach(options.basefiles.concat(options.parserfile), function(file) {
-      html.push("<script type=\"text/javascript\" src=\"" + options.path + file + "\"></script>");
+      html.push("<script type=\"text/javascript\" src=\"" + host + options.path + file + "\"></script>");
     });
     html.push("</head><body style=\"border: 0px none;\" class=\"editbox\" spellcheck=\"" +
               (options.disableSpellcheck ? "false" : "true") + "\"></body></html>");
