@@ -419,7 +419,7 @@ class GetTOC(webapp.RequestHandler):
       if (self.isValidCallback(cb)):
         self.response.out.write(cb + '(' + the_response_script + ');')
       else:
-        self.error(500)
+        self.error(403)
         self.response.out.write('Illegal Callback');
     else:
       self.response.out.write(the_response_script)
