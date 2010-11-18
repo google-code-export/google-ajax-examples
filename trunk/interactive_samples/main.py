@@ -31,6 +31,7 @@ from google.appengine.api import memcache
 import logging
 import hmac
 import base64
+import re
 
 from google.appengine.ext import webapp
 from google.appengine.api import users
@@ -384,6 +385,13 @@ class GetTOC(webapp.RequestHandler):
         the_file.close()
     return simplejson.dumps({'codeArray' : codeArray})
 
+  def isValidCallback(self, cb):
+    safe_callback_pattern = re.compile('^[a-zA-Z0-9\.]*$')
+    if (safe_callback_pattern.match(cb) != None):
+      return True
+    else:
+      return False
+
   def get(self):
     types = self.request.get('type')
     cb = self.request.get('cb')
@@ -404,11 +412,15 @@ class GetTOC(webapp.RequestHandler):
         if the_response_script == '':
           the_response_script = self.getAllTOCs()
       memcache.set('TOC:' + types, the_response_script, 600)
-    self.response.headers['Expires'] = "Fri, 01 Jan 1990 00:00:00 GMT"
+    self.response.headers['Expires'] = 'Fri, 01 Jan 1990 00:00:00 GMT'
     self.response.headers['content-type'] = 'text/javascript'
     self.response.headers['cache-control'] = 'no-cache, no-store, max-age=0, must-revalidate'
     if cb:
-      self.response.out.write(cb + '(' + the_response_script + ');')
+      if (self.isValidCallback(cb)):
+        self.response.out.write(cb + '(' + the_response_script + ');')
+      else:
+        self.error(500)
+        self.response.out.write('Illegal Callback');
     else:
       self.response.out.write(the_response_script)
 
