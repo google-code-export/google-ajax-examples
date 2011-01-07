@@ -140,16 +140,21 @@ def verify_xsrf_token(method):
   def wrapper(self, *args, **kwargs):
     c = Cookie.SimpleCookie()
     c.load(self.request.headers['Cookie'])
-    if c.has_key("SID"):
-      cookieVal = "safe" + c["SID"].value[6:20]
+    cookieVal = ""
+    if c.has_key("PREF"):
+      cookieVal = "safe" + c["PREF"].value[6:20]
     if c.has_key("dev_appserver_login"):
       cookieVal = "safe" + c["dev_appserver_login"].value[6:20]
     if cookieVal and cookieVal == self.request.get('sc'):
       return method(self, *args, **kwargs)
     else:
-      logging.debug(self.request.headers['Cookie'])
-      logging.debug('cookieVal: ' + cookieVal)
-      logging.debug(self.request.get('sc'))
+      errorString = 'Has PREF key? ' + str(c.has_key("PREF")) + '\n'
+      if c.has_key("PREF"):
+        errorString += 'PREF is: ' + c["PREF"].value[6:20] + '\n'
+      errorString += 'Cookie string: ' + self.request.headers['Cookie'] + '\n'
+      errorString += 'cookieVal: ' + cookieVal
+      errorString += 'sc: ' + self.request.get('sc')
+      logging.error(errorString)
       self.error(500)
       self.response.out.write("Unauthorized.  Do you have cookies enabled?  If not, please enable them.  If you still experience this error, please e-mail lisbakke+playground@google.com");
       return
