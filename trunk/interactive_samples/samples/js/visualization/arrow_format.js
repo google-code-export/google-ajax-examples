@@ -5,6 +5,7 @@ function drawVisualization() {
   data.addColumn('number', 'Revenues Change');
   data.addRows(5);
   data.setCell(0, 1, 12, '12.0%');
+  data.setCell(0, 0, 'Computer');
   data.setCell(1, 0, 'Sports');
   data.setCell(1, 1, -7.3, '-7.3%');
   data.setCell(2, 0, 'Toys');
@@ -16,9 +17,9 @@ function drawVisualization() {
 
   // Create and draw the visualization.
   var table = new google.visualization.Table(document.getElementById('visualization'));
-  
+
   var formatter = new google.visualization.TableArrowFormat();
   formatter.format(data, 1); // Apply formatter to second column
-  
+
   table.draw(data, {allowHtml: true, showRowNumber: true});
 }
