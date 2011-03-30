@@ -1,0 +1,26 @@
+<html>
+  <head>
+    <title>iframe caching demo</title>
+    <script src="//{{ host }}/iframes/lib.js"></script>
+    <script>
+      function newIframe() {
+        var iframe = document.createElement('iframe');
+        iframe.height = '80';
+        iframe.width = '600';
+        iframe.src = dupif.genIframeUrl();
+        document.getElementById('container').appendChild(iframe);
+
+        document.getElementById('log').innerHTML += 'iframe URL ' + iframe.src + '<br/>';
+      }
+
+      function go() {
+        newIframe();
+      }
+    </script>
+  </head>
+  <body onload="go()">
+    <div id="container"></div>
+    <div id="log"></div>
+    <a href="/html/blank.html">link</a>
+  </body>
+</html>

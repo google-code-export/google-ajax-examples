@@ -1,5 +1,5 @@
 application: ajax-apis
-version: 1
+version: 2
 runtime: python
 api_version: 1
 
@@ -39,3 +39,6 @@ handlers:
 - url: /two-page-search-alt
   static_files: html/two_page_search_hidden_query.html
   upload: html/two_page_search_hidden_query.html
+
+- url: /iframes.*
+  script: iframes/main.py
