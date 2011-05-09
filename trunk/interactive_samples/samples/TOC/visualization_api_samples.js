@@ -6,8 +6,13 @@
                  {"docsUrl": "http://code.google.com/apis/visualization/documentation/gallery/annotatedtimeline.html", "boilerplateLoc": "samples/boilerplateHTML/visualization/annotatedtimeline.html", "files":["samples/js/visualization/annotatedtimeline.js"], "sampleName":"Annotated Time Line", "tags": ""},
                  {"docsUrl": "http://code.google.com/apis/visualization/documentation/gallery/areachart.html", "boilerplateLoc": "samples/boilerplateHTML/visualization/areachart.html", "files":["samples/js/visualization/areachart.js"], "sampleName":"Area Chart", "tags": ""},
                  {"docsUrl": "http://code.google.com/apis/visualization/documentation/gallery/barchart.html", "boilerplateLoc": "samples/boilerplateHTML/visualization/barchart.html", "files":["samples/js/visualization/barchart.js"], "sampleName":"Bar Chart", "tags": ""},
+                 {"docsUrl": "http://code.google.com/apis/visualization/documentation/gallery/candlestickchart.html", "boilerplateLoc": "samples/boilerplateHTML/visualization/candlestick.html", "files":["samples/js/visualization/candlestick.js"], "sampleName":"Candlestick Chart", "tags": ""},
+                 {"docsUrl": "http://code.google.com/apis/visualization/documentation/reference.html#google_visualization_charteditor", "boilerplateLoc": "samples/boilerplateHTML/visualization/charteditor.html", "files":["samples/js/visualization/charteditor.js"], "sampleName":"Chart Editor", "tags": ""},
+                 {"docsUrl": "http://code.google.com/apis/visualization/documentation/reference.html#chartwrapperobject", "boilerplateLoc": "samples/boilerplateHTML/visualization/chartwrapper.html", "files":["samples/js/visualization/chartwrapper.js"], "sampleName":"Chart Wrapper", "tags": ""},
                  {"docsUrl": "http://code.google.com/apis/visualization/documentation/gallery/columnchart.html", "boilerplateLoc": "samples/boilerplateHTML/visualization/columnchart.html", "files":["samples/js/visualization/columnchart.js"], "sampleName":"Column Chart", "tags": ""},
+                 {"docsUrl": "http://code.google.com/apis/visualization/documentation/gallery/combochart.html", "boilerplateLoc": "samples/boilerplateHTML/visualization/combochart.html", "files":["samples/js/visualization/combochart.js"], "sampleName":"Combo Chart", "tags": ""},
                  {"docsUrl": "http://code.google.com/apis/visualization/documentation/gallery/gauge.html", "boilerplateLoc": "samples/boilerplateHTML/visualization/gauge.html", "files":["samples/js/visualization/gauge.js"], "sampleName":"Gauge", "tags": ""},
+                 {"docsUrl": "http://code.google.com/apis/visualization/documentation/gallery/geochart.html", "boilerplateLoc": "samples/boilerplateHTML/visualization/geochart.html", "files":["samples/js/visualization/geochart.js"], "sampleName":"Geo Chart", "tags": ""},
                  {"docsUrl": "http://code.google.com/apis/visualization/documentation/gallery/geomap.html", "boilerplateLoc": "samples/boilerplateHTML/visualization/geomap.html", "files":["samples/js/visualization/geomap.js"], "sampleName":"Geo Map", "tags": ""},
                  {"docsUrl": "http://code.google.com/apis/visualization/documentation/gallery/genericimagechart.html", "boilerplateLoc": "samples/boilerplateHTML/visualization/imagechart.html", "files":["samples/js/visualization/imagechart.js"], "sampleName":"Image Chart", "tags": ""},
                  {"docsUrl": "http://code.google.com/apis/visualization/documentation/gallery/imageareachart.html", "boilerplateLoc": "samples/boilerplateHTML/visualization/imageareachart.html", "files":["samples/js/visualization/imageareachart.js"], "sampleName":"Image Area Chart", "tags": ""},
@@ -35,9 +40,21 @@
          {"docsUrl": "http://code.google.com/apis/visualization/documentation/gallery/motionchart.html", "boilerplateLoc": "samples/boilerplateHTML/visualization/motionchart_time_formats.html", "files":["samples/js/visualization/motionchart_time_formats.js"], "sampleName":"Motion Chart Time Formats", "tags": ""},
          {"docsUrl": "http://code.google.com/apis/visualization/documentation/gallery/table.html", "boilerplateLoc":"samples/boilerplateHTML/visualization/table_dimensions.html", "files":["samples/js/visualization/table_dimensions.js"], "sampleName":"Table Dimensions", "tags": ""},
          {"docsUrl": "http://code.google.com/apis/visualization/documentation/gallery/table.html", "boilerplateLoc":"samples/boilerplateHTML/visualization/table_paging.html", "files":["samples/js/visualization/table_paging.js"], "sampleName":"Table Paging", "tags": ""}
-
       ],
       "docsUrl": "http://code.google.com/apis/visualization/documentation/gallery.html"
+    },
+    {
+      "category":"Visualization-Controls and Dashboards",
+      "samples": [
+		    {"docsUrl": "http://code.google.com/apis/charts/interactive/docs/gallery/controls.html", "boilerplateLoc": "samples/boilerplateHTML/visualization/controls.html", "files":["samples/js/visualization/simple_dashboard.js"], "sampleName": "Simple dashboard", "tags": ""},
+        {"docsUrl": "http://code.google.com/apis/chart/interactive/docs/gallery/controls.html", "boilerplateLoc": "samples/boilerplateHTML/visualization/controls.html", "files":["samples/js/visualization/dashboard.js"], "sampleName": "Full dashboard", "tags": ""},
+        {"docsUrl": "http://code.google.com/apis/chart/interactive/docs/gallery/controls.html", "boilerplateLoc": "samples/boilerplateHTML/visualization/controls.html", "files":["samples/js/visualization/stringfilter.js"], "sampleName": "StringFilter Control", "tags": ""},
+        {"docsUrl": "http://code.google.com/apis/chart/interactive/docs/gallery/controls.html", "boilerplateLoc": "samples/boilerplateHTML/visualization/controls.html", "files":["samples/js/visualization/numberrangefilter.js"], "sampleName": "NumberRangeFilter Control", "tags": ""},
+        {"docsUrl": "http://code.google.com/apis/chart/interactive/docs/gallery/controls.html", "boilerplateLoc": "samples/boilerplateHTML/visualization/controls.html", "files":["samples/js/visualization/categoryfilter.js"], "sampleName": "CategoryFilter Control", "tags": ""},
+        {"docsUrl": "http://code.google.com/apis/chart/interactive/docs/gallery/controls.html", "boilerplateLoc": "samples/boilerplateHTML/visualization/controls_with_buttons.html", "files":["samples/js/visualization/programmatic_controls.js"], "sampleName": "Programmatic Control Changes", "tags": ""},
+        {"docsUrl": "http://code.google.com/apis/chart/interactive/docs/gallery/controls.html", "boilerplateLoc": "samples/boilerplateHTML/visualization/controls.html", "files":["samples/js/visualization/dependent_controls.js"], "sampleName": "Dependent Controls", "tags": ""}
+      ],
+      "docsUrl": "http://code.google.com/apis/chart/interactive/docs/gallery/controls.html"
     },
     {
       "category":"Visualization-Tools",
@@ -90,6 +107,7 @@
       "samples": [
         {"boilerplateLoc":"samples/boilerplateHTML/visualization/simple_query.html", "files":["samples/js/visualization/simple_query.js"], "sampleName":"Data Source Request", "tags": ""},
         {"boilerplateLoc":"samples/boilerplateHTML/visualization/query_language.html", "files":["samples/js/visualization/query_language.js"], "sampleName":"Using The Query Language", "tags": ""},
+        {"docsUrl": "http://code.google.com/apis/visualization/documentation/reference.html#chartwrapperobject", "boilerplateLoc":"samples/boilerplateHTML/visualization/chartwrapper_query.html", "files":["samples/js/visualization/chartwrapper_query.js"], "sampleName":"ChartWrapper with remote data", "tags": ""},
         {"docsUrl": "http://code.google.com/apis/visualization/documentation/querylanguage.html", "boilerplateLoc":"samples/boilerplateHTML/visualization/more_query_options.html", "files":["samples/js/visualization/more_query_options.js"], "sampleName":"More Query Options", "tags": ""}
       ],
       "docsUrl": "http://code.google.com/apis/visualization/documentation/queries.html"
