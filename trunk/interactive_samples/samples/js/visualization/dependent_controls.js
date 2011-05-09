@@ -13,20 +13,17 @@ function drawVisualization() {
     ['France', 'Provence', 'Nice', 348556]
   ]);
   
-  // Define shared user interface options.
-  var uiOptions = {
-    'labelStacking': 'vertical',
-    'allowTyping': false,
-    'allowMultiple': false    
-  };
-  
   // Define category pickers for 'Country', 'Region/State' and 'City'
   var countryPicker = new google.visualization.ControlWrapper({
     'controlType': 'CategoryFilter',
     'containerId': 'control1',
     'options': {
       'filterColumnLabel': 'Country',
-      'ui': uiOptions
+      'ui': {
+        'labelStacking': 'vertical',
+        'allowTyping': false,
+        'allowMultiple': false    
+      }
     }
   });
 
@@ -35,7 +32,11 @@ function drawVisualization() {
     'containerId': 'control2',
     'options': {
       'filterColumnLabel': 'Region/State',
-      'ui': uiOptions
+      'ui': {
+        'labelStacking': 'vertical',
+        'allowTyping': false,
+        'allowMultiple': false    
+      }
     }
   });
   
@@ -44,7 +45,11 @@ function drawVisualization() {
     'containerId': 'control3',
     'options': {
       'filterColumnLabel': 'City',
-      'ui': uiOptions
+      'ui': {
+        'labelStacking': 'vertical',
+        'allowTyping': false,
+        'allowMultiple': false    
+      }
     }
   });
   
