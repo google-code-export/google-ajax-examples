@@ -80,14 +80,14 @@ function loadPlayer() {
   var atts = { id: "ytPlayer" };
   // All of the magic handled by SWFObject (http://code.google.com/p/swfobject/)
   swfobject.embedSWF("http://www.youtube.com/v/" + videoID + 
-                     "&enablejsapi=1&playerapiid=player1", 
-                     "videoDiv", "480", "295", "8", null, null, params, atts);
+                     "?version=3&enablejsapi=1&playerapiid=player1", 
+                     "videoDiv", "480", "295", "9", null, null, params, atts);
                      
   // Now do it all again with a different player
   var videoID2 = "GMUlhuTkM3w"
   var params = { allowScriptAccess: "always" };
   var atts = { id: "ytPlayer2" };
   swfobject.embedSWF("http://www.youtube.com/v/" + videoID2 + 
-                    "&enablejsapi=1&playerapiid=player2", 
-                    "videoDiv2", "425", "344", "8", null, null, params, atts);
+                    "?version=3&enablejsapi=1&playerapiid=player2", 
+                    "videoDiv2", "425", "344", "9", null, null, params, atts);
 }
