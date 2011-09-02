@@ -416,7 +416,7 @@ class GetTOC(webapp.RequestHandler):
         the_response_script = self.getTOCsByType(types)
         if the_response_script == '':
           the_response_script = self.getAllTOCs()
-      memcache.set('TOC:' + types, the_response_script, 600)
+      #memcache.set('TOC:' + types, the_response_script, 600)
     self.response.headers['Expires'] = 'Fri, 01 Jan 1990 00:00:00 GMT'
     self.response.headers['content-type'] = 'text/javascript'
     self.response.headers['cache-control'] = 'no-cache, no-store, max-age=0, must-revalidate'
