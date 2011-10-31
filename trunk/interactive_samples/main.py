@@ -111,6 +111,14 @@ def grabSavedCode(self, user):
   else:
     return None
 
+def isValidCallback(cb):
+  """Returns true if the callback name is safe."""
+  safe_callback_pattern = re.compile('^[a-zA-Z0-9\.]*$')
+  if (safe_callback_pattern.match(cb) != None):
+    return True
+  else:
+    return False
+
 def formatSavedCodeToJSONArr(self, savedCodeArr):
   # format the array into an array of JSON entries that conforms to the
   # ajax_apis_samples.js format
@@ -380,6 +388,7 @@ class GetTOC(webapp.RequestHandler):
         codeArray.extend(simplejson.loads(the_file.read())['codeArray'])
       the_file.close()
     return simplejson.dumps({'codeArray' : codeArray})
+
   def getTOCsByType(self, types):
     codeArray = []
     splitTypes = types.split('|')
@@ -389,13 +398,6 @@ class GetTOC(webapp.RequestHandler):
         codeArray.extend(simplejson.loads(the_file.read())['codeArray'])
         the_file.close()
     return simplejson.dumps({'codeArray' : codeArray})
-
-  def isValidCallback(self, cb):
-    safe_callback_pattern = re.compile('^[a-zA-Z0-9\.]*$')
-    if (safe_callback_pattern.match(cb) != None):
-      return True
-    else:
-      return False
 
   def get(self):
     types = self.request.get('type')
@@ -421,7 +423,7 @@ class GetTOC(webapp.RequestHandler):
     self.response.headers['content-type'] = 'text/javascript'
     self.response.headers['cache-control'] = 'no-cache, no-store, max-age=0, must-revalidate'
     if cb:
-      if (self.isValidCallback(cb)):
+      if (isValidCallback(cb)):
         self.response.out.write(cb + '(' + the_response_script + ');')
       else:
         self.error(403)
@@ -584,7 +586,12 @@ class ServeJSONPSamples(webapp.RequestHandler):
     if context:
       response['context'] = context
     response['samplename'] = samplename
-    self.response.out.write(callback + '(' + simplejson.dumps(response) + ');')
+    if (isValidCallback(callback)):
+      self.response.out.write(callback + '(' + simplejson.dumps(response) + ');')
+    else:
+      self.error(403)
+      self.response.out.write('Illegal Callback')
+
 def main():
   application = webapp.WSGIApplication([('/', Main),
                                         ('/save', Save),
