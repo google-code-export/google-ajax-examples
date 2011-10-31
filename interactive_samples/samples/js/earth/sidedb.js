@@ -21,7 +21,7 @@ function initCB(instance) {
   ge = instance;
   ge.getWindow().setVisibility(true);
 
-  // Call the function which loads a secondary GEE virtual server
+  // Call the function which loads a secondary globe from GEE or Earth Builder.
   // so users automatically see data from both servers.
   addSideDatabase();
 
@@ -54,7 +54,7 @@ function initCB(instance) {
       alert('ALERT! Failed to add side database connection!');
   }
 
-  /** Add the secondary GEE virtual server. 
+  /** Add the URL for the globe served by Earth Enterprise or Earth Builder.
   *     This function operates similarly to the File => Add Database feature
   *     in Google Earth EC.
   */
