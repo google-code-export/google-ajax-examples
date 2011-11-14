@@ -446,7 +446,7 @@
 
   InteractiveSample.prototype.loadCodesiteFeed = function() {
     var script = document.createElement('script');
-    script.src = 'http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&q=http://code.google.com/feeds/p/google-ajax-examples/svnchanges/basic&num=20&callback=is.addNewSampleMarkers';
+    script.src = '//ajax.googleapis.com/ajax/services/feed/load?v=1.0&q=http://code.google.com/feeds/p/google-ajax-examples/svnchanges/basic&num=20&callback=is.addNewSampleMarkers';
     script.type = 'text/javascript';
     document.body.appendChild(script);
   }
