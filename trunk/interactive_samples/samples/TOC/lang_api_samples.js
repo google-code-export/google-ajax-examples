@@ -1,22 +1,6 @@
 {
   "codeArray" : [
     {
-      "category":"Language-Translation",
-      "samples":[
-        {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/language/translation/translate.js"], "sampleName":"Translate", "tags": "Basic Translate"},
-        {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/language/translation/batch_translate.js"], "sampleName":"Batch Translate", "tags": "JSONP, Translate to All Languages"},
-        {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/language/translation/detect_language.js"], "sampleName":"Language Detect", "tags": "Detect, Languages Enum"}
-      ],
-      "docsUrl": "http://code.google.com/apis/ajaxlanguage/documentation/reference.html"
-    },
-    {
-      "category":"Language-Methods and Enums",
-      "samples":[
-        {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis/isTranslatable.html","files":["samples/js/language/methodsEnums/language_check.js"],"sampleName":"Is It Translatable","tags":"languages isTranslatable isFontRenderingSupported closure"}
-      ],
-      "docsUrl":"http://code.google.com/apis/ajaxlanguage/documentation/reference.html"
-    },
-    {
       "category":"Language-Transliteration",
       "samples":[
         {"boilerplateLoc":"samples/boilerplateHTML/ajaxapis.html", "files":["samples/js/language/transliteration/transliterate.js"], "sampleName":"Transliterate Hindi", "tags": "Textarea, Hindi"},
