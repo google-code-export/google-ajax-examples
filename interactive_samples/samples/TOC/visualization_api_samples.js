@@ -28,6 +28,7 @@
                  {"docsUrl": "http://code.google.com/apis/visualization/documentation/gallery/piechart.html", "boilerplateLoc": "samples/boilerplateHTML/visualization/piechart.html", "files":["samples/js/visualization/piechart.js"], "sampleName":"Pie Chart", "tags": ""},
                  {"docsUrl": "http://code.google.com/apis/visualization/documentation/gallery/scatterchart.html", "boilerplateLoc": "samples/boilerplateHTML/visualization/scatterchart.html", "files":["samples/js/visualization/scatterchart.js"], "sampleName":"Scatter Chart", "tags": ""},
                  {"docsUrl": "http://code.google.com/apis/visualization/documentation/gallery/sparkline.html", "boilerplateLoc": "samples/boilerplateHTML/visualization/sparkline.html", "files":["samples/js/visualization/sparkline.js"], "sampleName":"Sparkline", "tags": ""},
+                 {"docsUrl": "http://code.google.com/apis/visualization/documentation/gallery/steppedareachart.html", "boilerplateLoc": "samples/boilerplateHTML/visualization/steppedareachart.html", "files":["samples/js/visualization/steppedareachart.js"], "sampleName":"Stepped Area Chart", "tags": ""},
                  {"docsUrl": "http://code.google.com/apis/visualization/documentation/gallery/table.html", "boilerplateLoc": "samples/boilerplateHTML/visualization/table.html", "files":["samples/js/visualization/table.js"], "sampleName":"Table", "tags": ""},
                  {"docsUrl": "http://code.google.com/apis/visualization/documentation/gallery/treemap.html", "boilerplateLoc": "samples/boilerplateHTML/visualization/treemap.html", "files":["samples/js/visualization/treemap.js"], "sampleName":"Tree Map", "tags": ""}
       ],
@@ -47,7 +48,7 @@
     {
       "category":"Visualization-Controls and Dashboards",
       "samples": [
-		    {"docsUrl": "http://code.google.com/apis/charts/interactive/docs/gallery/controls.html", "boilerplateLoc": "samples/boilerplateHTML/visualization/controls.html", "files":["samples/js/visualization/simple_dashboard.js"], "sampleName": "Simple dashboard", "tags": ""},
+        {"docsUrl": "http://code.google.com/apis/charts/interactive/docs/gallery/controls.html", "boilerplateLoc": "samples/boilerplateHTML/visualization/controls.html", "files":["samples/js/visualization/simple_dashboard.js"], "sampleName": "Simple dashboard", "tags": ""},
         {"docsUrl": "http://code.google.com/apis/chart/interactive/docs/gallery/controls.html", "boilerplateLoc": "samples/boilerplateHTML/visualization/controls.html", "files":["samples/js/visualization/dashboard.js"], "sampleName": "Full dashboard", "tags": ""},
         {"docsUrl": "http://code.google.com/apis/chart/interactive/docs/gallery/controls.html", "boilerplateLoc": "samples/boilerplateHTML/visualization/controls.html", "files":["samples/js/visualization/stringfilter.js"], "sampleName": "StringFilter Control", "tags": ""},
         {"docsUrl": "http://code.google.com/apis/chart/interactive/docs/gallery/controls.html", "boilerplateLoc": "samples/boilerplateHTML/visualization/controls.html", "files":["samples/js/visualization/numberrangefilter.js"], "sampleName": "NumberRangeFilter Control", "tags": ""},
