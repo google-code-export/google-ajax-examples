@@ -10,15 +10,15 @@ function drawVisualization() {
     ['Aaron', 'Male', 3, 1],
     ['Margareth', 'Female', 42, 8],
     ['Miranda', 'Female', 33, 6]
-  ]);	
-	
+  ]);
+
   // Define a slider control for the Age column.
   var slider = new google.visualization.ControlWrapper({
     'controlType': 'NumberRangeFilter',
     'containerId': 'control1',
     'options': {
       'filterColumnLabel': 'Age',
-	  'ui': {'labelStacking': 'vertical'}
+    'ui': {'labelStacking': 'vertical'}
     }
   });
 
@@ -29,7 +29,7 @@ function drawVisualization() {
     'options': {
       'filterColumnLabel': 'Gender',
       'ui': {
-	    'labelStacking': 'vertical',
+      'labelStacking': 'vertical',
         'allowTyping': false,
         'allowMultiple': false
       }
@@ -49,7 +49,7 @@ function drawVisualization() {
       'pieSliceText': 'label'
     },
     // Instruct the piechart to use colums 0 (Name) and 3 (Donuts Eaten)
-	  // from the 'data' DataTable.
+    // from the 'data' DataTable.
     'view': {'columns': [0, 3]}
   });
 

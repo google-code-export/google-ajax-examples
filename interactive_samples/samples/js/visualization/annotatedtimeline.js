@@ -30,7 +30,7 @@ function drawVisualization() {
   data.setValue(5, 0, new Date(2008, 1 ,6));
   data.setValue(5, 1, 33322);
   data.setValue(5, 4, 39463);
-  
+
   var annotatedtimeline = new google.visualization.AnnotatedTimeLine(
       document.getElementById('visualization'));
   annotatedtimeline.draw(data, {'displayAnnotations': true});

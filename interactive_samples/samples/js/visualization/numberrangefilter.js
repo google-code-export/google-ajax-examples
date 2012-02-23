@@ -22,7 +22,7 @@ function drawVisualization() {
       'maxValue': 60
     }
   });
-  
+
   // Define a bar chart
   var barChart = new google.visualization.ChartWrapper({
     'chartType': 'BarChart',

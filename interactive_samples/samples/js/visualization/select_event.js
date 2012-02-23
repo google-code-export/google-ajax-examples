@@ -7,7 +7,7 @@
 function drawVisualization() {
   visualization = new google.visualization.Table(document.getElementById('table'));
   visualization.draw(data, null);
-  
+
   // Add our selection handler.
   google.visualization.events.addListener(visualization, 'select', selectHandler);
 }

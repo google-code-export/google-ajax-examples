@@ -8,7 +8,7 @@ function drawVisualization() {
 
       // fill the area under the lines
       options.fill = true;
-     
+
       // create a grid for the chart
       options.chg = '25.0,25.0,4.0,4.0';
 
@@ -45,7 +45,7 @@ function drawVisualization() {
       dataTable.setValue(5, 2, 20);
       dataTable.setValue(6, 2, 10);
       dataTable.setValue(7, 2, 5);
-      
+
       var chart = new google.visualization.ImageChart(document.getElementById('visualization'));
       chart.draw(dataTable, options);
 }

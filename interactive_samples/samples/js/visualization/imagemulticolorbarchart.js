@@ -17,12 +17,12 @@ function drawVisualization() {
     ['i', 58],
     ['j', 48]
   ]);
-  
+
   var red = 'ff0000';
   var green = '00ff00';
   var yellow = 'ffff00';
-  
-  // Loop over the data table to create the color specification. 
+
+  // Loop over the data table to create the color specification.
   var colors = [];
   for (var i = 0; i < data.getNumberOfRows(); i++) {
     var value = data.getValue(i, 1);
@@ -35,5 +35,5 @@ function drawVisualization() {
 
   // Create and draw the visualization.
   new google.visualization.ImageChart(document.getElementById('visualization')).
-    draw(data, options);  
+    draw(data, options);
 }

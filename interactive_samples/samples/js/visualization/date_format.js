@@ -13,7 +13,7 @@ function drawVisualization() {
 
   // Create and draw the visualization.
   var table = new google.visualization.Table(document.getElementById('visualization'));
-    
+
   var formatter = new google.visualization.DateFormat({formatType:'short'});
   formatter.format(data, 0);
 

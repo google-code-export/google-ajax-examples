@@ -1,10 +1,10 @@
 function drawVisualization() {
-	
-  var time = [['2000W01', '2000W02'], 
+
+  var time = [['2000W01', '2000W02'],
               ['2002Q3', '2002Q4'],
-              [1990, 1991], 
+              [1990, 1991],
               [(new Date(2000, 0, 1)), (new Date(2000, 0, 2))]];
-  
+
   var columnType;
   switch (timeUnits) {
    case 0:
@@ -12,13 +12,13 @@ function drawVisualization() {
      columnType = 'string';
      break;
    case 2:
-	 columnType = 'number';
-	 break;
+   columnType = 'number';
+   break;
    case 3:
-	 columnType = 'date';
-	 break;  
+   columnType = 'date';
+   break;
   }
-  
+
   var data = new google.visualization.DataTable();
   data.addRows(6);
   data.addColumn('string', 'Fruit');

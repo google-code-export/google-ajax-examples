@@ -14,7 +14,7 @@ function drawVisualization() {
   data.setValue(7,0,511);
   data.setValue(8,0,505);
   data.setValue(9,0,509);
-  
+
   data.setValue(0,1,132);
   data.setValue(1,1,131);
   data.setValue(2,1,137);
@@ -28,5 +28,5 @@ function drawVisualization() {
 
   // Create and draw the visualization.
   new google.visualization.ImageSparkLine(
-	  document.getElementById('visualization')).draw(data, null);
+    document.getElementById('visualization')).draw(data, null);
 }

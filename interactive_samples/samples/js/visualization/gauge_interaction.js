@@ -8,12 +8,12 @@ function drawGauge() {
 
   gauge = new google.visualization.Gauge(document.getElementById('gauge'));
   gaugeOptions = {
-      min: 0, 
-      max: 280, 
+      min: 0,
+      max: 280,
       yellowFrom: 200,
       yellowTo: 250,
-      redFrom: 250, 
-      redTo: 280, 
+      redFrom: 250,
+      redTo: 280,
       minorTicks: 5
   };
   gauge.draw(gaugeData, gaugeOptions);

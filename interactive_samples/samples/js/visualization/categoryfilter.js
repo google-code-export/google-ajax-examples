@@ -7,7 +7,7 @@ function drawVisualization() {
     ['Disk', 7],
     ['Network', 54]
   ]);
-  
+
   // Define a category picker for the 'Metric' column.
   var categoryPicker = new google.visualization.ControlWrapper({
     'controlType': 'CategoryFilter',
@@ -23,7 +23,7 @@ function drawVisualization() {
     // Define an initial state, i.e. a set of metrics to be initially selected.
     'state': {'selectedValues': ['CPU', 'Memory']}
   });
-  
+
   // Define a gauge chart.
   var gaugeChart = new google.visualization.ChartWrapper({
     'chartType': 'Gauge',

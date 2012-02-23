@@ -15,7 +15,7 @@ function drawVisualization() {
   data.setValue(4, 1, 600);
   data.setValue(5, 0, 'RU');
   data.setValue(5, 1, 700);
-	
+
   var geochart = new google.visualization.GeoChart(
       document.getElementById('visualization'));
   geochart.draw(data, {width: 556, height: 347});

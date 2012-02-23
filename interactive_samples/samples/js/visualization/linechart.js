@@ -19,7 +19,7 @@ function drawVisualization() {
   data.addRow(["L", 3.5, 0.5, 1]);
   data.addRow(["M", 1, 1, 0.5]);
   data.addRow(["N", 1, 0.5, 1]);
- 
+
   // Create and draw the visualization.
   new google.visualization.LineChart(document.getElementById('visualization')).
       draw(data, {curveType: "function",
