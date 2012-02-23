@@ -1,7 +1,7 @@
 var options = {'showRowNumber': true};
 function drawVisualization() {
   // Create and populate the data table.
-  var dataAsJson = 
+  var dataAsJson =
   {cols:[
     {id:'A',label:'Name',type:'string'},
     {id:'B',label:'Height',type:'number'},
@@ -25,16 +25,16 @@ function drawVisualization() {
   {c:[{v:'Handerson'},{v:175.0,f:'175'},{v:true,f:'TRUE'},{v:[6,57,36,0],f:'6:57:36'}]},
   {c:[{v:'Vornoy'},{v:170.0,f:'170'},{v:true,f:'TRUE'},{v:[13,12,0,0],f:'13:12:00'}]}]};
   data = new google.visualization.DataTable(dataAsJson);
-  
+
   // Set the width and height options using the UI controls.
   options['width'] = null;
   options['height'] = null;
-  
+
   // Create and draw the visualization.
   visualization = new google.visualization.Table(document.getElementById('table'));
   draw();
 }
 
 function draw() {
-  visualization.draw(data, options);  
+  visualization.draw(data, options);
 }

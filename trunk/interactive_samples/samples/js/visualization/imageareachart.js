@@ -17,5 +17,5 @@ function drawVisualization() {
 
   // Create and draw the visualization.
   new google.visualization.ImageAreaChart(document.getElementById('visualization')).
-      draw(data, null);  
+      draw(data, null);
 }

@@ -19,10 +19,10 @@ function drawVisualization() {
 
   // Create and draw the visualization.
   var table = new google.visualization.Table(document.getElementById('visualization'));
-	  
+
   var formatter = new google.visualization.TableNumberFormat(
       {prefix: "$", negativeColor: 'red', negativeParens: true});
   formatter.format(data, 1); // Apply formatter to second column
-	  
+
   table.draw(data, {allowHtml: true, showRowNumber: true});
 }

@@ -26,7 +26,7 @@ function drawVisualization() {
   data.setValue(3, 4, 1334);
   data.setValue(3, 5, 'Out of Stock');
   data.setValue(3, 6, 'Ran out of stock on pens at 4pm');
-  data.setValue(3, 7, 16345); 
+  data.setValue(3, 7, 16345);
   data.setValue(4, 0, new Date(2009, 1 ,5));
   data.setValue(4, 1, 41476);
   data.setValue(4, 2, 'Bought Pens');
@@ -37,7 +37,7 @@ function drawVisualization() {
   data.setValue(5, 1, 33322);
   data.setValue(5, 4, 3463);
   data.setValue(5, 7, 33665);
- 
+
   var annotatedtimeline = new google.visualization.AnnotatedTimeLine(
       document.getElementById('visualization'));
   annotatedtimeline.draw(data, {

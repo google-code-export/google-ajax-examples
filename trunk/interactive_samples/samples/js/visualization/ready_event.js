@@ -5,7 +5,7 @@ function handleButtonClick() {
 
 function drawVisualization() {
   // To see the data that this visualization uses, browse to
-  // http://spreadsheets.google.com/ccc?key=pCQbetd-CptH5QNY89vLtAg	
+  // http://spreadsheets.google.com/ccc?key=pCQbetd-CptH5QNY89vLtAg
   var query = new google.visualization.Query(
       'http://spreadsheets.google.com/tq?key=pCQbetd-CptH5QNY89vLtAg&pub=1');
   query.send(handleResponse);

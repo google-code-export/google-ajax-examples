@@ -1,5 +1,5 @@
 // To see the data that this visualization uses, browse to
-// http://spreadsheets.google.com/pub?key=rYQm6lTXPH8dHA6XGhJVFsA 
+// http://spreadsheets.google.com/pub?key=rYQm6lTXPH8dHA6XGhJVFsA
 var query = new google.visualization.Query(
     'http://spreadsheets.google.com/tq?key=rYQm6lTXPH8dHA6XGhJVFsA&pub=1');
 
@@ -14,10 +14,10 @@ function handleQueryResponse(response) {
     return;
   }
   data = response.getDataTable();
-  var table = new google.visualization.Table(document.getElementById('querytable'));  
+  var table = new google.visualization.Table(document.getElementById('querytable'));
   table.draw(data, {'showRowNumber': true});
   if (isFirstTime) {
-	init();  
+  init();
   }
 }
 

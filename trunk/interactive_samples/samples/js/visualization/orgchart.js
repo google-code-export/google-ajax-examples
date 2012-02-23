@@ -7,7 +7,7 @@ function drawVisualization() {
   data.addRows(5);
   data.setCell(0, 0, 'Mike');
   data.setCell(0, 2, 'The President');
-  data.setCell(1, 0, 
+  data.setCell(1, 0,
       'Jim', 'Jim<br/><font color="red"><i>Vice President<i></font>');
   data.setCell(1, 1, 'Mike');
   data.setCell(2, 0, 'Alice');

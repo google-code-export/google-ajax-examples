@@ -41,7 +41,7 @@ function drawVisualization() {
 
   // 10 pixels font size for the labels.
   var fontSize = 10;
- 
+
   // Priority is not so important here, but Google Chart API requires it.
   var priority = 0;
 
@@ -49,5 +49,5 @@ function drawVisualization() {
 
   // Create and draw the visualization.
   new google.visualization.ImageChart(document.getElementById('visualization')).
-    draw(data, options);  
+    draw(data, options);
 }

@@ -15,7 +15,7 @@ function drawVisualization() {
   data.setValue(4, 1, 600);
   data.setValue(5, 0, 'RU');
   data.setValue(5, 1, 700);
-	
+
   var geomap = new google.visualization.GeoMap(
       document.getElementById('visualization'));
   geomap.draw(data, null);

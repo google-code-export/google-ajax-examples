@@ -18,7 +18,7 @@ function drawOrgChartAndTable() {
 
   var table = new google.visualization.Table(document.getElementById('table'));
   table.draw(data, null);
-  
+
   // When the table is selected, update the orgchart.
   google.visualization.events.addListener(table, 'select', function() {
     orgchart.setSelection(table.getSelection());
@@ -27,5 +27,5 @@ function drawOrgChartAndTable() {
   // When the orgchart is selected, update the table visualization.
   google.visualization.events.addListener(orgchart, 'select', function() {
     table.setSelection(orgchart.getSelection());
-  });  
+  });
 }

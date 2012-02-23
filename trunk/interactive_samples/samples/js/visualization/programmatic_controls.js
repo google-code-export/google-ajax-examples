@@ -40,7 +40,7 @@ function drawVisualization() {
   // Create the dashboard
   var dashboard = new google.visualization.Dashboard(
       document.getElementById('dashboard'));
-  
+
   // Register a listener to be notified once the dashboard is ready.
   google.visualization.events.addListener(dashboard, 'ready', dashboardReady);
 
@@ -52,16 +52,16 @@ function drawVisualization() {
 function dashboardReady() {
   // The dashboard is ready to accept interaction. Configure the buttons to
   // programmatically affect the dashboard when clicked.
-  
+
   // Change the slider selected range when clicked.
   document.getElementById('rangeButton').onclick = function() {
     slider.setState({'lowValue': 2, 'highValue': 5});
     slider.draw();
   };
-  
+
   // Change the pie chart rendering options when clicked.
   document.getElementById('optionsButton').onclick = function() {
     piechart.setOption('is3D', true);
     piechart.draw();
-  }; 
+  };
 }

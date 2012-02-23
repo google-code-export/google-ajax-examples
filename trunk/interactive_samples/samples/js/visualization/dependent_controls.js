@@ -12,7 +12,7 @@ function drawVisualization() {
     ['France', 'Provence', 'Marseille', 852395],
     ['France', 'Provence', 'Nice', 348556]
   ]);
-  
+
   // Define category pickers for 'Country', 'Region/State' and 'City'
   var countryPicker = new google.visualization.ControlWrapper({
     'controlType': 'CategoryFilter',
@@ -22,7 +22,7 @@ function drawVisualization() {
       'ui': {
         'labelStacking': 'vertical',
         'allowTyping': false,
-        'allowMultiple': false    
+        'allowMultiple': false
       }
     }
   });
@@ -35,11 +35,11 @@ function drawVisualization() {
       'ui': {
         'labelStacking': 'vertical',
         'allowTyping': false,
-        'allowMultiple': false    
+        'allowMultiple': false
       }
     }
   });
-  
+
   var cityPicker = new google.visualization.ControlWrapper({
     'controlType': 'CategoryFilter',
     'containerId': 'control3',
@@ -48,11 +48,11 @@ function drawVisualization() {
       'ui': {
         'labelStacking': 'vertical',
         'allowTyping': false,
-        'allowMultiple': false    
+        'allowMultiple': false
       }
     }
   });
-  
+
   // Define a bar chart to show 'Population' data
   var barChart = new google.visualization.ChartWrapper({
     'chartType': 'BarChart',
@@ -65,7 +65,7 @@ function drawVisualization() {
     // Configure the barchart to use columns 2 (City) and 3 (Population)
     'view': {'columns': [2, 3]}
   });
-  
+
   // Create the dashboard.
   new google.visualization.Dashboard(document.getElementById('dashboard')).
     // Configure the controls so that:
@@ -76,5 +76,5 @@ function drawVisualization() {
     bind(regionPicker, cityPicker).
     bind(cityPicker, barChart).
     // Draw the dashboard
-    draw(data);   
+    draw(data);
 }
