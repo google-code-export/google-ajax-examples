@@ -1,31 +1,14 @@
 function drawVisualization() {
   // Some raw data (not necessarily accurate)
-  var countries =
-    ['Bolivia', 'Ecuador',
-     'Madagascar', 'Papua  Guinea', 'Rwanda'];
-  var months = ['2004/05', '2005/06', '2006/07', '2007/08', '2008/09'];
-  var productionByCountry = [[165, 135, 157, 139, 136],
-                             [938, 1120, 1167, 1110, 691],
-                             [522, 599, 587, 615, 629],
-                             [998, 1268, 807, 968, 1026],
-                             [450, 288, 397, 215, 366]];
+  var data = google.visualization.arrayToDataTable([
+    ['Month',   'Bolivia', 'Ecuador', 'Madagascar', 'Papua New Guinea', 'Rwanda'],
+    ['2004/05',    165,      938,         522,             998,           450],
+    ['2005/06',    135,      1120,        599,             1268,          288],
+    ['2006/07',    157,      1167,        587,             807,           397],
+    ['2007/08',    139,      1110,        615,             968,           215],
+    ['2008/09',    136,      691,         629,             1026,          366]
+  ]);
 
-  // Create and populate the data table.
-  var data = new google.visualization.DataTable();
-  data.addColumn('string', 'Month');
-  for (var i = 0; i < countries.length; ++i) {
-    data.addColumn('number', countries[i]);
-  }
-  data.addRows(months.length);
-  for (var i = 0; i < months.length; ++i) {
-    data.setCell(i, 0, months[i]);
-  }
-  for (var i = 0; i < countries.length; ++i) {
-    var country = productionByCountry[i];
-    for (var month = 0; month < months.length; ++month) {
-      data.setCell(month, i + 1, country[month]);
-    }
-  }
   // Create and draw the visualization.
   var ac = new google.visualization.AreaChart(document.getElementById('visualization'));
   ac.draw(data, {

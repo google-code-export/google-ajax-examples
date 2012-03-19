@@ -1,10 +1,8 @@
 function drawGauge() {
-  gaugeData = new google.visualization.DataTable();
-  gaugeData.addColumn('number', 'Engine');
-  gaugeData.addColumn('number', 'Torpedo');
-  gaugeData.addRows(2);
-  gaugeData.setCell(0, 0, 120);
-  gaugeData.setCell(0, 1, 80);
+  gaugeData = google.visualization.arrayToDataTable([
+    ['Engine', 'Torpedo'],
+    [120, 80]
+  ]);
 
   gauge = new google.visualization.Gauge(document.getElementById('gauge'));
   gaugeOptions = {
