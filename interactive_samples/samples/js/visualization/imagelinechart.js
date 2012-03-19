@@ -1,15 +1,11 @@
 function drawVisualization() {
   // Create and populate the data table.
-  var data = new google.visualization.DataTable();
-  data.addColumn('string', 'Name');
-  data.addColumn('number', 'Height');
-  data.addRows(3);
-  data.setCell(0, 0, 'Tong Ning mu');
-  data.setCell(1, 0, 'Huang Ang fa');
-  data.setCell(2, 0, 'Teng nu');
-  data.setCell(0, 1, 174);
-  data.setCell(1, 1, 523);
-  data.setCell(2, 1, 86);
+  var data = google.visualization.arrayToDataTable([
+    ['Name', 'Height', 'Smokes'],
+    ['Tong Ning mu', 174, true],
+    ['Huang Ang fa', 523, false],
+    ['Teng nu', 86, true]
+  ]);
 
   // Create and draw the visualization.
   new google.visualization.ImageLineChart(document.getElementById('visualization')).

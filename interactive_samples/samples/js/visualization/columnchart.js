@@ -1,30 +1,14 @@
 function drawVisualization() {
   // Create and populate the data table.
-  var data = new google.visualization.DataTable();
-  var raw_data = [['Austria', 1336060, 1538156, 1576579, 1600652, 1968113, 1901067],
-                  ['Belgium', 3817614, 3968305, 4063225, 4604684, 4013653, 6792087],
-                  ['Czech Republic', 974066, 928875, 1063414, 940478, 1037079, 1037327],
-                  ['Finland', 1104797, 1151983, 1156441, 1167979, 1207029, 1284795],
-                  ['France', 6651824, 5940129, 5714009, 6190532, 6420270, 6240921],
-                  ['Germany', 15727003, 17356071, 16716049, 18542843, 19564053, 19830493]];
-
-  var years = [2003, 2004, 2005, 2006, 2007, 2008];
-
-  data.addColumn('string', 'Year');
-  for (var i = 0; i  < raw_data.length; ++i) {
-    data.addColumn('number', raw_data[i][0]);
-  }
-
-  data.addRows(years.length);
-
-  for (var j = 0; j < years.length; ++j) {
-    data.setValue(j, 0, years[j].toString());
-  }
-  for (var i = 0; i  < raw_data.length; ++i) {
-    for (var j = 1; j  < raw_data[i].length; ++j) {
-      data.setValue(j-1, i+1, raw_data[i][j]);
-    }
-  }
+  var data = google.visualization.arrayToDataTable([
+    ['Year', 'Austria', 'Belgium', 'Czech Republic', 'Finland', 'France', 'Germany'],
+    ['2003',  1336060,   3817614,       974066,       1104797,   6651824,  15727003],
+    ['2004',  1538156,   3968305,       928875,       1151983,   5940129,  17356071],
+    ['2005',  1576579,   4063225,       1063414,      1156441,   5714009,  16716049],
+    ['2006',  1600652,   4604684,       940478,       1167979,   6190532,  18542843],
+    ['2007',  1968113,   4013653,       1037079,      1207029,   6420270,  19564053],
+    ['2008',  1901067,   6792087,       1037327,      1284795,   6240921,  19830493]
+  ]);
 
   // Create and draw the visualization.
   new google.visualization.ColumnChart(document.getElementById('visualization')).

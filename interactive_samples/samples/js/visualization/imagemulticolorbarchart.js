@@ -2,10 +2,7 @@
 // by calculating the color of each bar based on the data.
 function drawVisualization() {
   // Create and populate the data table.
-  var data = new google.visualization.DataTable();
-  data.addColumn('string');
-  data.addColumn('number');
-  data.addRows([
+  var data = google.visualization.arrayToDataTable([
     ['a', 14],
     ['b', 47],
     ['c', 80],
@@ -16,7 +13,8 @@ function drawVisualization() {
     ['h', 23],
     ['i', 58],
     ['j', 48]
-  ]);
+  // Treat first row as data as well.
+  ], true);
 
   var red = 'ff0000';
   var green = '00ff00';

@@ -73,10 +73,11 @@ myvisualization.MyTable.prototype.escapeHtml = function(text) {
 // This is a simple usage of the visualization.
 var drawVisualizations = function() {
   // Create and populate a data table.
-  var data = new google.visualization.DataTable();
-  data.addColumn('string', 'Force');
-  data.addColumn('number', 'Level');
-  data.addRows([['Fire', 1], ['Water', 5]]);
+  var data = google.visualization.arrayToDataTable([
+    ['Force', 'Level'],
+    ['Fire',     1],
+    ['Water',    5]
+  ]);
 
   // Instantiate our table object without line numbers.
   var vis_without_line_numbers = new myvisualization.MyTable(document.getElementById('visualization_without_line_numbers'));
