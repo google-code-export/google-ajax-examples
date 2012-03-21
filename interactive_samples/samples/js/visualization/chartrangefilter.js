@@ -14,16 +14,10 @@ function drawVisualization() {
            'chartArea': {'width': '90%'},
            'hAxis': {'baselineColor': 'none'}
          },
-         // Display a single series that shows the average of the stock open and close values.
-         // Thus, this view has two columns: the date (axis) and the stock average (line series).
+         // Display a single series that shows the closing value of the stock.
+         // Thus, this view has two columns: the date (axis) and the stock value (line series).
          'chartView': {
-           'columns': [
-             0, {
-               'calc': function(dataTable, rowIndex) {
-                 return (dataTable.getValue(rowIndex, 2) + dataTable.getValue(rowIndex, 3));
-                },
-               'type': 'number'
-             }]
+           'columns': [0, 3]
          },
          // 1 day in milliseconds = 24 * 60 * 60 * 1000 = 86,400,000
          'minRangeSize': 86400000
