@@ -4,7 +4,7 @@ function drawVisualization() {
     ['Label', 'Value'],
     ['Memory', 80],
     ['CPU', 55],
-    ['Network', 68],
+    ['Network', 68]
   ]);
 
   // Create and draw the visualization.
