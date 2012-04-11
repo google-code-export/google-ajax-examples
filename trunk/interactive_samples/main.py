@@ -587,6 +587,7 @@ class ServeJSONPSamples(webapp.RequestHandler):
       response['context'] = context
     response['samplename'] = samplename
     if (isValidCallback(callback)):
+      self.response.headers['Content-Type'] = 'application/json; charset=utf-8'
       self.response.out.write(callback + '(' + simplejson.dumps(response) + ');')
     else:
       self.error(403)
