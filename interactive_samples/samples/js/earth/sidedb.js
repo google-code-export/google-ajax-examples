@@ -29,15 +29,11 @@ function initCB(instance) {
   ge.getOptions().setStatusBarVisibility(true);
   ge.getNavigationControl().setVisibility(ge.VISIBILITY_AUTO);
 
-  // Add Google Earth layers
-  ge.getLayerRoot().enableLayerById(ge.LAYER_BORDERS, true);
-  ge.getLayerRoot().enableLayerById(ge.LAYER_ROADS, true);
-
   // Update the view in Google Earth
   var lookAt = ge.createLookAt('');
-  lookAt.setLatitude(41.26);
-  lookAt.setLongitude(-100.00);
-  lookAt.setRange(800000.0); //default is 0.0
+  lookAt.setLatitude(29.0);
+  lookAt.setLongitude(-95.0);
+  lookAt.setRange(1200000); //default is 0.0
   ge.getView().setAbstractView(lookAt);
   }
 
@@ -60,7 +56,7 @@ function initCB(instance) {
   */
   function addSideDatabase() {
     window.google.earth.addSideDatabase(
-      ge, "https://earthbuilder.google.com/08112974690991164587-14021399993526185904-4/kh/",
+      ge, "https://earthbuilder.google.com/10446176163891957399-13516001307527776624-4/kh/",
       sideDatabaseSuccess,
       sideDatabaseFail,
       {
