@@ -59,7 +59,7 @@ function buttonClick() {
   // create the <div>
   var div = document.createElement('DIV');
   div.innerHTML =
-          '<img src="http://www.google.com/googlegulp/images/logo.gif"><br>'
+          '<img src="//www.google.com/googlegulp/images/logo.gif"><br>'
           + '<a href="http://www.google.com/googlegulp/">Google Gulp</a>';
   balloon.setContentDiv(div);
 
