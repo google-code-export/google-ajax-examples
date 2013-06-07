@@ -58,7 +58,7 @@ function buttonClick() {
 
   // Google logo.
   balloon.setContentString(
-      '<img src="http://www.google.com/intl/en_ALL/images/logo.gif"><br>'
+      '<img src="//www.google.com/intl/en_ALL/images/logo.gif"><br>'
       + '<font size=20>Earth Plugin</font><br><font size=-2>sample info '
       + 'window</font>');
 

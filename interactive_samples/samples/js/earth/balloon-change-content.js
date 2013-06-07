@@ -59,7 +59,7 @@ function buttonClick1() {
 
   // Google logo.
   balloon.setContentString(
-      '<img src="http://www.google.com/intl/en_ALL/images/logo.gif"><br>'
+      '<img src="//www.google.com/intl/en_ALL/images/logo.gif"><br>'
       + '<font size=20>Earth Plugin</font><br><font size=-2>sample info '
       + 'window</font>');
 
@@ -72,7 +72,7 @@ function buttonClick2() {
   if (balloon) {
     // Pigeon Rank
     var content =
-      '<img src="http://www.google.com/technology/pigeon_system.jpg">' +
+      '<img src="//www.google.com/technology/pigeon_system.jpg">' +
       '<br>PigeonRank&#153; Technology';
     balloon.setFeature(placemark); // optional
     balloon.setMaxWidth(800);
