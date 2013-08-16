@@ -48,7 +48,7 @@
     {
       "category":"Visualization-Controls and Dashboards",
       "samples": [
-        {"docsUrl": "http://code.google.com/apis/charts/interactive/docs/gallery/controls.html", "boilerplateLoc": "samples/boilerplateHTML/visualization/controls.html", "files":["samples/js/visualization/simple_dashboard.js"], "sampleName": "Simple dashboard", "tags": ""},
+        {"docsUrl": "http://code.google.com/apis/chart/interactive/docs/gallery/controls.html", "boilerplateLoc": "samples/boilerplateHTML/visualization/controls.html", "files":["samples/js/visualization/simple_dashboard.js"], "sampleName": "Simple dashboard", "tags": ""},
         {"docsUrl": "http://code.google.com/apis/chart/interactive/docs/gallery/controls.html", "boilerplateLoc": "samples/boilerplateHTML/visualization/controls.html", "files":["samples/js/visualization/dashboard.js"], "sampleName": "Full dashboard", "tags": ""},
         {"docsUrl": "http://code.google.com/apis/chart/interactive/docs/gallery/controls.html", "boilerplateLoc": "samples/boilerplateHTML/visualization/controls.html", "files":["samples/js/visualization/stringfilter.js"], "sampleName": "StringFilter Control", "tags": ""},
         {"docsUrl": "http://code.google.com/apis/chart/interactive/docs/gallery/controls.html", "boilerplateLoc": "samples/boilerplateHTML/visualization/controls.html", "files":["samples/js/visualization/numberrangefilter.js"], "sampleName": "NumberRangeFilter Control", "tags": ""},
