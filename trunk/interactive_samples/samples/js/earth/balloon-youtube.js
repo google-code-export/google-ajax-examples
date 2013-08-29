@@ -55,7 +55,7 @@ function initCallback(instance) {
         '&nbsp;<object width="400" height="300"><param name="movie" '
         + 'value="http://www.youtube.com/v/6mrG_bsqC6k&hl=en&fs=1"/>'
         + '<param name="allowFullScreen" value="true"/>'
-        + '<embed src="http://www.youtube.com/v/6mrG_bsqC6k&hl=en&fs=1" '
+        + '<embed src="//www.youtube.com/v/6mrG_bsqC6k&hl=en&fs=1" '
         + 'type="application/x-shockwave-flash" allowfullscreen="true" '
         + 'width="400" height="300"></embed></object>');
 
