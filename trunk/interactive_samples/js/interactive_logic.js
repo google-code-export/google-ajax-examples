@@ -64,7 +64,7 @@
         }
       }
     }
-    
+
     for (var i in newSamples) {
       if (newSamples.hasOwnProperty(i)) {
         var sample = this.sampleFileNameToObject(i);
@@ -78,9 +78,9 @@
             parentCategory.appendChild(newCatSup);
           }
         }
-      }        
+      }
     }
-  };    
+  };
 
   InteractiveSample.prototype.addShowHideClicks = function() {
     var i;
@@ -209,7 +209,7 @@
 
         if (i == 0 && j == 0 && window.location.hash.length <= 1) {
           this.showSample(item.sampleName, true)();
-          this.hideAllCategoriesExcept(categoryDiv);          
+          this.hideAllCategoriesExcept(categoryDiv);
         }
 
         if (window.location.hash.length > 0) {
@@ -223,7 +223,7 @@
         if (window.expandedCategory && category.replace(' ', '').toLowerCase().indexOf(window.expandedCategory) != -1 && window.location.hash.length <= 1) {
           this.hideAllCategoriesExcept(categoryDiv);
           if (j == 0) {
-            this.showSample(item.sampleName)();            
+            this.showSample(item.sampleName)();
           }
         }
 
@@ -282,7 +282,7 @@
     var curFilename = me.getCurFilename();
     me.changeSamplesBoilerplateTo(curFilename, '');
   };
-  
+
   InteractiveSample.prototype.setDocsUrl = function(url) {
     this.docsUrl = url;
     if (!this.docsUrl) {
@@ -290,9 +290,9 @@
     } else {
       $('#docsButton').show();
     }
-    
+
   };
-  
+
   InteractiveSample.prototype.viewDocs = function() {
     if (this.docsUrl) {
       window.open(this.docsUrl, "_is_docs");
@@ -541,7 +541,7 @@
     var title = $('<div>' + (catSplit[1] ? catSplit[1] : catSplit[0]) + '&nbsp;&nbsp;&raquo;&nbsp;&nbsp;' + sampleName + '</div>');
     if (sampleObj.docsUrl || sampleObj.categoryDocsUrl) {
       this.setDocsUrl(sampleObj.docsUrl || sampleObj.categoryDocsUrl);
-      // 
+      //
       // var docLink = $('&nbsp;<a href="' +
       //                 (sampleObj.docsUrl || sampleObj.categoryDocsUrl) +
       //                 '" target="_blank" class="docsLink">docs</a>');
@@ -794,7 +794,7 @@
     this.createAutoComplete();
     this.setAutoCompleteClicks();
   };
-  
+
   UIEffects.prototype.initSearchBox = function() {
     var searchBox = $('#search');
     var searchPlaceholder = searchBox.attr('placeholder');
@@ -894,7 +894,7 @@
         dragging = false;
         heightEls.height(200);
       });
-    
+
     $(document)
       .mouseup(function() {
         if (!dragging)
@@ -1024,7 +1024,7 @@
         breakPointsArray.push(i);
       }
     }
-    
+
     // If we are breaking inside of a function, make sure to only grab the
     // rest of the function for code.
     function findCodeSelection(code, startIndex) {
@@ -1040,10 +1040,10 @@
         }
         return findCodeSelection(code, endBracketLoc);
       } else {
-        return code; 
+        return code;
       }
     }
-    
+
     function addBreakPointCode(codeToGoIn, lineNum) {
       var bpCode = '\nwindow.curBreakLineNum = ' + lineNum + ';\n';
       bpCode += 'window.setContinue(false);\n';
@@ -1063,7 +1063,7 @@
       bpCode += 'breakpointAtLine'+lineNum+'();\n';
       return bpCode;
     }
-    
+
     for (var i = breakPointsArray.length - 1; i >= 0; i--){
       // for each one of these, we need to go to that line in the string and insert extra code.
       var breakPointLine = breakPointsArray[i];
@@ -1115,7 +1115,7 @@
   };
 
   RunBox.prototype.createIframeOrPopout = function(response) {
-    var url = 'http://savedbythegoog.appspot.com/retrieve_cache?unique_id=' + response;
+    var url =  location.protocol + '//savedbythegoog.appspot.com/retrieve_cache?unique_id=' + response;
     if (!is.runBox.runBoxPoppedOut) {
       window.is.runBox.createIframe(url);
     } else {
@@ -1137,7 +1137,7 @@
       }
 
       postVars.code = code;
-      $.post(cacheCodeLoc, postVars, window.is.runBox.createIframeOrPopout);      
+      $.post(cacheCodeLoc, postVars, window.is.runBox.createIframeOrPopout);
     }
   }
 
