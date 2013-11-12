@@ -342,7 +342,7 @@ class Save(webapp.RequestHandler):
       jscode = jscode.replace('&#x000a;', '\n');
       sampleName =  self.request.get('sampleName')
       tags = self.request.get('tags')
-      boilerplateLoc = self.request.get('boilerplateLoc')
+      boilerplateLoc = cgi.escape(self.request.get('boilerplateLoc'), quote=True)
       if id and jscode:
         hashLink = self.updateCode(id, jscode, boilerplateLoc)
       elif jscode and sampleName:
