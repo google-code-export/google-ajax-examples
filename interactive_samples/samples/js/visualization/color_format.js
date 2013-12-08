@@ -13,7 +13,7 @@ function drawVisualization() {
   // Create and draw the visualization.
   var table = new google.visualization.Table(document.getElementById('visualization'));
 
-  var formatter = new google.visualization.TableColorFormat();
+  var formatter = new google.visualization.ColorFormat();
   formatter.addRange(-20000, 0, 'white', 'orange');
   formatter.addRange(20000, null, 'red', '#33ff33');
   formatter.format(data, 1); // Apply formatter to second column

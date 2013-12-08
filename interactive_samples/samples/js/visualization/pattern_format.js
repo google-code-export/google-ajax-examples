@@ -11,7 +11,7 @@ function drawVisualization() {
   // Create and draw the visualization.
   var table = new google.visualization.Table(document.getElementById('visualization'));
 
-  var formatter = new google.visualization.TablePatternFormat('<a href="mailto:{1}">{0}</a>');
+  var formatter = new google.visualization.PatternFormat('<a href="mailto:{1}">{0}</a>');
   formatter.format(data, [0, 1]); // Apply formatter and set the formatted value of the first column.
 
   var view = new google.visualization.DataView(data);
