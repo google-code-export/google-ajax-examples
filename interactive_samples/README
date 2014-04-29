@@ -1,0 +1,5 @@
+How to update this app:
+
+1) cd into interactive_samples
+2) Run python production_preparation.py, enter secret key when prompted.  This creates interactive_copy as a sibling directory to interactive_samples.
+3) appcfg.py update interactive_copy/
