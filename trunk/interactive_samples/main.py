@@ -422,8 +422,12 @@ class GetTOC(webapp.RequestHandler):
     self.response.headers['Expires'] = 'Fri, 01 Jan 1990 00:00:00 GMT'
     self.response.headers['content-type'] = 'text/javascript'
     self.response.headers['cache-control'] = 'no-cache, no-store, max-age=0, must-revalidate'
+    self.response.headers['X-Content-Type-Options'] = 'nosniff'
+    self.response.headers['Content-Disposition'] = 'attachment; filename="f.txt"'
+
     if cb:
       if (isValidCallback(cb)):
+        self.response.out.write('/* api response */\n')
         self.response.out.write(cb + '(' + the_response_script + ');')
       else:
         self.error(403)
